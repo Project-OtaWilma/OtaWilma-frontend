@@ -1,0 +1,402 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none !important;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+    font-family: 'regular';
+    scrollbar-width: thin;
+}
+
+@font-face {
+    font-family: 'semi-bold';
+    src: url(../assets/fonts/Inconsolata-SemiBold.ttf);
+}
+
+
+@font-face {
+    font-family: 'regular';
+    src: url(../assets/fonts/Inconsolata-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'light';
+    src: url(../assets/fonts/Inconsolata-Light.ttf);
+}
+
+:root {
+    /*Loaded in runtime*/
+}
+
+h1 {
+    color: var(--font-h1);
+    font-family: 'semi-bold';
+}
+
+h2 {
+    color: var(--font-h2);
+}
+
+h3 {
+    color: var(--font-h3);
+}
+
+body {
+    overflow-y: hidden;
+}
+
+/* Custom Scrollbars */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-darker);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--background-darker-hover);
+}
+
+.container {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+
+    background-color: var(--accent-main);
+
+    display: flex;
+    align-items: center;
+
+    z-index: 2;
+}
+
+.top .user-info {
+    width: 300px;
+    height: 100%;
+
+    margin-left: 50px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.user-info .user-data {
+    width: 90%;
+    height: 120%;
+
+    margin-bottom: -25px;
+
+    background-color: white;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.155);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-info h1 {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-bottom: 2px;
+}
+
+.user-info h2 {
+    font-size: 15px;
+    padding-left: 25px;
+}
+
+.top .logo-img {
+    width: 60px;
+    height: 80%;
+
+    margin-left: 10px;
+
+    background-size: cover;
+    background-position: center center;
+}
+
+.top .logo-text {
+    color: white;
+    font-size: 30px;
+    padding: 5px;
+}
+
+.top button {
+    background: none;
+    padding: 15px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top h5 {
+    color: white;
+    font-size: 17px;
+}
+
+.top button:hover {
+    background-color: rgba(255, 255, 255, 0.174) !important;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    max-width: 1000px;
+
+    padding-top: 50px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    border-right: solid 1px var(--background-darker-hover);
+    border-left: solid 1px var(--background-darker-hover);
+}
+
+.side-bar {
+    width: 250px;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-right: solid 1px var(--background-darker);
+
+    text-align: start;
+}
+
+.side-bar h1 {
+    width: 90%;
+    margin: 3px;
+    margin-left: 5px;
+}
+
+.side-bar h2 {
+    width: 90%;
+    margin: 2px;
+    padding-left: 3px;
+    margin-left: 15px;
+}
+
+.side-bar h3 {
+    width: 90%;
+    margin: 2px;
+    margin-left: 25px;
+}
+
+.settings-content {
+    width: 100%;
+    height: 100%;
+    margin-left: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-content div {
+    width: 100%;
+    height: 90%;
+
+    overflow-y: scroll;
+}
+
+.settings-content div div {
+    width: unset;
+    height: unset;
+}
+
+#hidden {
+    display: none;
+}
+
+
+
+.theme-list {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px;
+    margin: 10px;
+
+    flex-wrap: wrap;
+}
+
+.theme {
+    margin: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme .theme-new {
+    width: 200px;
+    height: 100px;
+
+    margin: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: dashed 3px var(--background-darker);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.16);
+}
+
+.theme .theme-preview {
+    width: 200px;
+    height: 100px;
+
+    margin: 5px;
+
+    background-color: white;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.16);
+}
+
+.theme-preview .main {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+}
+
+.main .secondary {
+    width: 50%;
+    height: 100%;
+    background-color: var(--background-darker);
+}
+
+.main .text {
+    width: 100%;
+
+
+    border-top: solid 3px var(--accent-main);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.main h1 {
+    padding: 2px;
+    margin-left: 3px;
+}
+
+.main h2 {
+    padding: 2px;
+    margin-left: 7px;
+}
+
+.colors form {
+    margin: 10px;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-left: solid 1px var(--background-darker);
+}
+
+.colors form h2 {
+    padding: 2px;
+}
+
+.colors form h3 {
+    padding: 2px;
+}
+
+.colors form input {
+    margin: 2px;
+}
+
+.preview img {
+    width: 450px;
+    height: 300px;
+
+    margin: 20px;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.16);
+}
+
+.background-submit {
+    margin: 10px;
+    padding: 5px;
+
+    background-color: var(--background-darker);
+    border-left: solid 3px var(--accent-main);
+}
+
+.background h2 {
+    margin: 10px;
+    font-size: 17px;
+}
+
+.background form {
+    margin: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.background input {
+    width: 30px;
+    font-family: 'semi-bold';
+}
+
+.background-input {
+    margin: 5px;
+
+    display: flex;
+    flex-direction: column !important;
+    align-items: unset !important;
+}
+
+.background-input h2 {
+    margin: 10px;
+}
+
+.background-input input {
+    margin: 10px;
+    padding: 5px;
+
+    width: 50% !important;
+    font-family: 'regular' !important;
+    background-color: var(--background-darker);
+}

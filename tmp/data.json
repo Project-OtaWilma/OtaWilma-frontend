@@ -1,0 +1,16 @@
+{
+    "frontpage": {
+        "main": "SCHEDULE",
+        "bottom-left": "MESSAGES",
+        "bottom-right": "NEWS",
+        "right-top": "NONE",
+        "right-bottom": "GRADES"
+    },
+    "themes": [
+        {
+            "light": {
+                
+            }
+        }
+    ]
+}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtaWilma - Asetukset</title>
+
+    <link rel="stylesheet" href="settings.css">
+    <script src="settings.js"></script>
+
+    <script src="../scripts/theme-manager.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top">
+            <div class="user-info">
+                <div class="user-data">
+                    <h1>Tuukka Moilanen</h1>
+                    <h2>Opiskelija</h2>
+                </div>
+            </div>
+            <div class="logo-img"></div>
+            <h1 class="logo-text">OtaWilma</h1>
+            <button>
+                <h5>Viestit</h5>
+            </button>
+            <button>
+                <h5>Opinnot</h5>
+            </button>
+            <button>
+                <h5>Kurssitarjotin</h5>
+            </button>
+            <button>
+                <h5>Tiedotteet</h5>
+            </button>
+            <button>
+                <h5>Asetukset</h5>
+            </button>
+        </div>
+        <div class="content">
+
+            <div class="side-bar">
+
+                <h1>Teema</h1>
+                <h2>Valitse teema</h2>
+                <h3>Vaalea teema</h3>
+                <h3>Tumma teema</h3>
+                <h2>Omat teemasi</h2>
+                <h3>Luo uusi teema</h3>
+
+                <h1>Muokkaa teemaa</h1>
+                <h3>Pääväri</h3>
+                <h3>Toissijainen väri</h3>
+                <h2>Taustojen väri</h2>
+                <h3>Tausta</h3>
+                <h3>Tummempi tausta</h3>
+                <h2>Fonttien väri</h2>
+                <h3>Otsikot</h3>
+                <h3>Alaotsikot</h3>
+                <h3>Lisäykset</h3>
+
+                <h1>Taustakuva</h1>
+                <h2>Esikatselu</h2>
+                <h2>Valitse taustakuva</h2>
+                <h3>Linkki</h3>
+                <h2>Taustakuvan tehosteet</h2>
+                <h3>Sumennus</h3>
+                <h3>Läpinäkyvyys</h3>
+                <h3>Kirkkaus</h3>
+                <h3>Sumennus</h3>
+                <h3>Kontrasti</h3>
+                <h3>Saturaatio</h3>
+                <h3>Harmaasävyt</h3>
+                <h3>Seepia</h3>
+                <h3>Värin taitto</h3>
+                <h3>Käänteisväri</h3>
+
+                <h1>Yhteydet</h1>
+                <h2>Jaa lukujärjestyksesi</h2>
+                <h2>Jaa kurssivalintasi</h2>
+                <h2>Jaa arvosanasi</h2>
+                <h1>Kehittäjälle</h1>
+                <h2>Lähdekoodi</h2>
+                <h2>Kustomoitu CSS</h2>
+            </div>
+            <div class="settings-content">
+                <div class="colors">
+                    <h1>Valitse Teema</h1>
+                    <div class="theme-list">
+                        <div class="theme">
+                            <h2>Vaalea Teema</h2>
+                            <div class="theme-preview" id="light">
+                                <div class="main">
+                                    <div class="text">
+                                        <h1>OtaWilma</h1>
+                                        <h2>Teema</h2>
+                                    </div>
+                                    <div class="secondary"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme">
+                            <h2>Tumma Teema</h2>
+                            <div class="theme-preview" id="dark">
+                                <div class="main">
+                                    <div class="text">
+                                        <h1>OtaWilma</h1>
+                                        <h2>Teema</h2>
+                                    </div>
+                                    <div class="secondary"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h1>Omat Teemasi</h1>
+                    <div class="theme-list">
+                        <div class="theme">
+                            <div class="theme-preview" id="dark">
+                                <div class="main">
+                                    <div class="text">
+                                        <h1>Oma</h1>
+                                        <h2>Teema</h2>
+                                    </div>
+                                    <div class="secondary"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="theme">
+                            <div class="theme-new">
+                                <h3>Luo Teema</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <h1>Muokkaa teemaa</h1>
+                    <form>
+                        <label for="accent-main">Pääväri</label>
+                        <h3>Korostettujen osien ensisijainen väri</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <form>
+                        <label for="accent-main">Toissijainen väri</label>
+                        <h3>Joidenkin osien toissijainen väri</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <h1>Taustojen väri</h1>
+                    <form>
+                        <label for="accent-main">Tausta</label>
+                        <h3>Ensisijainen väri taustalle</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <form>
+                        <label for="accent-main">Tausta (valittu)</label>
+                        <h3>Ensisijainen väri taustalle sen ollessa valittuna</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <form>
+                        <label for="accent-main">Tummempi tausta</label>
+                        <h3>Tummemmanpien taustojen väri</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <form>
+                        <label for="accent-main">Tummempi tausta (valittu)</label>
+                        <h3>Tummempien taustojen väri valittuna</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <h1>Fonttien väri</h1>
+                    <form>
+                        <label for="accent-main">Otsikot</label>
+                        <h3>Otsikoiden väri. Tyypillisesti sama päävärin kanssa</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <form>
+                        <label for="accent-main">Alaotsikot</label>
+                        <h3>Alaotsikoiden väri. Tyypillisesti musta tai valkoinen</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                    <form>
+                        <label for="accent-main">Lisäykset</label>
+                        <h3>Lisäyksien väri. Tyypillisesti hieman muita fontteja haileampi</h3>
+                        <input type="color" name="accent-main" id="">
+                    </form>
+                </div>
+                <div class="background" id="hidden">
+                    <div class="preview">
+                        <h1>Esikatselu</h1>
+                        <img src="" alt="">
+                    </div>
+                    <h1>Valitse taustakuva</h1>
+                    <form class="background-input">
+                        <label for="accent-main">Linkki</label>
+                        <h3>Taustakuvasi linkkinä</h3>
+                        <input type="url" name="" id="" placeholder="https://sivustoni.com">
+                    </form>
+                    <button class="background-submit">Aseta</button>
+                    <h1>Taustakuvan tehosteet</h1>
+                    <form>
+                        <label for="accent-main">Sumennus |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Läpinäkyvyys |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Kirkkaus |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Kontrasti |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Saturaatio |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Harmaasävyt |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Seepia |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Värin taitto |&nbsp;</label>
+                        <input type="number" name="" id="" min="-180" max="180" value="0">
+                    </form>
+                    <form>
+                        <label for="accent-main">Käänteisväri |&nbsp;</label>
+                        <input type="number" name="" id="" min="0" value="0">
+                    </form>
+                </div>
+                <div class="connections" id="hidden"></div>
+                <div class="advanced" id="hidden"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,325 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none !important;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+    font-family: 'regular';
+    scrollbar-width: thin;
+}
+
+@font-face {
+    font-family: 'semi-bold';
+    src: url(../assets/fonts/Inconsolata-SemiBold.ttf);
+}
+
+
+@font-face {
+    font-family: 'regular';
+    src: url(../assets/fonts/Inconsolata-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'light';
+    src: url(../assets/fonts/Inconsolata-Light.ttf);
+}
+
+:root {
+    --accent-main: #003366;
+
+    --background-main: rgb(255, 255, 255);
+    --background-darker: rgb(239, 240, 243);
+    --background-darker-hover: rgb(228, 228, 230);
+
+    --font-h1: #003366;
+    --font-h2: rgb(23, 23, 23);
+    --font-h3: rgb(223, 223, 223);
+
+    --login-main: #4D8500;
+    --login-lighter: rgb(41, 163, 41);
+    --error: rgb(213, 50, 50);
+}
+
+h1 {
+    color: var(--font-h1);
+    font-family: 'semi-bold';
+}
+
+h2 {
+    color: var(--font-h2);
+}
+
+h3 {
+    color: var(--font-h3);
+}
+
+body {
+    overflow-y: hidden;
+}
+
+.container {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+
+    background-color: var(--accent-main);
+
+    display: flex;
+    align-items: center;
+
+    z-index: 2;
+}
+
+.top .user-info {
+    width: 300px;
+    height: 100%;
+
+    margin-left: 50px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.user-info .user-data {
+    width: 90%;
+    height: 120%;
+
+    margin-bottom: -25px;
+
+    background-color: white;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.155);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-info h1 {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-bottom: 2px;
+}
+
+.user-info h2 {
+    font-size: 15px;
+    padding-left: 25px;
+}
+
+.top .logo-img {
+    width: 60px;
+    height: 80%;
+
+    margin-left: 10px;
+
+    background-size: cover;
+    background-position: center center;
+}
+
+.top .logo-text {
+    color: white;
+    font-size: 30px;
+    padding: 5px;
+}
+
+.top button {
+    background: none;
+    padding: 15px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top h5 {
+    color: white;
+    font-size: 17px;
+}
+
+.top button:hover {
+    background-color: rgba(255, 255, 255, 0.174) !important;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    padding-top: 50px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.categories {
+    width: 350px;
+    height: 90%;
+
+    border-right: solid 1px var(--background-darker);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.categories div {
+    padding: 5px;
+    margin: 10px;
+    width: 80%;
+
+    border-left: solid 3px var(--background-darker);
+}
+
+.categories div h1 {
+    font-size: 20px;
+    padding: 2px;
+    padding-bottom: 5px;
+}
+
+.categories #selected {
+    border-left: solid 3px var(--accent-main);
+}
+
+.messages {
+    width: 350px;
+    height: 90%;
+
+    border-right: solid 1px var(--background-darker);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-object {
+    margin: 10px;
+    padding: 10px;
+
+    border-left: solid 3px var(--background-darker-hover);
+}
+
+.message-object:nth-child(odd) {
+    background-color: var(--background-darker);
+}
+
+.message-object h1 {
+    font-size: 17px;
+    padding: 2px;
+}
+
+.message-object h2 {
+    padding: 2px;
+}
+
+.message-object h2:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.message-object h3 {
+    padding-top: 8px;
+    padding: 2px;
+}
+
+#selected {
+    border-left: solid 3px var(--accent-main);
+}
+
+.message-content {
+    width: 100%;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+
+
+    background-color: var(--background-darker);
+}
+
+.message-content h1 {
+    font-size: 27px;
+    margin: 10px;
+    padding: 10px;
+
+    max-width: 1200px;
+}
+
+.message-content .info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+    max-width: 1200px;
+}
+
+.message-content .info ul {
+    margin: 20px;
+}
+
+.info ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.message-content .main-content {
+    font-size: 16px;
+    padding: 20px;
+
+    max-width: 1200px;
+}
+
+.main-content p {
+    color: var(--font-h2);
+    padding: 5px;
+}
+
+p strong {
+    font-family: 'semi-bold';
+}
+
+.message-content .responses {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.responses div {
+    margin: 5px;
+    padding: 5px;
+
+    border-left: solid 3px var(--accent-main);
+}
+
+.responses div h1 {
+    font-size: 20px;
+    margin: 0;
+    padding: 5px;
+}
+
+.responses div p {
+    font-size: 16px;
+    padding: 5px;
+}
