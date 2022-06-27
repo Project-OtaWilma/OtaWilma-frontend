@@ -1,0 +1,2190 @@
+{
+    "Äidinkieli ja kirjallisuus, suomen kieli ja kirjallisuus": {
+        "courses": [
+            {
+                "code": "ÄI01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI07",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI08",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ÄI09",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ÄI10",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ÄI11",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ÄI12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI14",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI15",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI16",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI17",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI18",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI19",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ÄI20",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Äidinkieli ja kirjallisuus, suomi toisena kielenä ja kirjallisuus": {
+        "courses": [
+            {
+                "code": "S201",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S202",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S203",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S204",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S205",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S206",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S207",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S208",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "S209",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "S210",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "S211",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Ruotsi, A-oppimäärä": {
+        "courses": [
+            {
+                "code": "RUA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUA07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RUA08",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RUA09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RUA10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RUA11",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Ruotsi, B1-oppimäärä": {
+        "courses": [
+            {
+                "code": "RUB11",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUB12",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUB13",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUB14",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUB15",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RUB16",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RUB17",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RUB18",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RUB19",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RUB10",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Englanti, A-oppimäärä": {
+        "courses": [
+            {
+                "code": "ENA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ENA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ENA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ENA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ENA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ENA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ENA07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ENA08",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ENA09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ENA10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ENA11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ENA12",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Espanja, A-oppimäärä": {
+        "courses": [
+            {
+                "code": "EAA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "EAA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "EAA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "EAA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "EAA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "EAA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "EAA07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAA08",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Italia, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "IAB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "IAB308",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Ranska, A-oppimäärä": {
+        "courses": [
+            {
+                "code": "RAA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RAA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RAA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RAA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RAA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RAA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "RAA07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAA08",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAA09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RAA10",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Saksa, A-oppimäärä": {
+        "courses": [
+            {
+                "code": "SAA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "SAA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "SAA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "SAA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "SAA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "SAA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "SAA07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAA08",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAA11",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Venäjä, A-oppimäärä": {
+        "courses": [
+            {
+                "code": "VEA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "VEA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "VEA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "VEA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "VEA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "VEA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "VEA07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEA08",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Espanja, B2-oppimäärä": {
+        "courses": [
+            {
+                "code": "EAB201",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB202",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB203",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB204",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB205",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB206",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB207",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB208",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Ranska, B2-oppimäärä": {
+        "courses": [
+            {
+                "code": "RAB201",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB202",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB203",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB204",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB205",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB206",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB207",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB208",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB209",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RAB209",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RAB210",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Saksa, B2-oppimäärä": {
+        "courses": [
+            {
+                "code": "SAB201",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB202",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB203",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB204",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB205",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB206",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB207",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB208",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Venäjä, B2-oppimäärä": {
+        "courses": [
+            {
+                "code": "VEB201",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB202",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB203",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB204",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB205",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB206",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB207",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB208",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Espanja, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "EAB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "EAB308",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Ranska, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "RAB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB308",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "RAB309",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "RAB310",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Saksa, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "SAB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "SAB308",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Venäjä, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "VEB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "VEB308",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Kiina, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "KIB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KIB308",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Japani, B3-oppimäärä": {
+        "courses": [
+            {
+                "code": "JPB301",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB302",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB303",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB304",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB305",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB306",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB307",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "JPB308",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Matematiikan yhteinen opintokokonaisuus": {
+        "courses": [
+            {
+                "code": "MAY01",
+                "type": "c-type136 a-val"
+            }
+        ]
+    },
+    "Matematiikan pitkä oppimäärä": {
+        "courses": [
+            {
+                "code": "MAA01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA07",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA08",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA09",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAA10",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MAA11",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MAA12",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MAA13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA14",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA15",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA16",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA17",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA18",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA20",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAA21",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Matematiikan lyhyt oppimäärä": {
+        "courses": [
+            {
+                "code": "MAB01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB04",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB05",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB06",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB07",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MAB08",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MAB09",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MAB10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MAB11",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Biologia": {
+        "courses": [
+            {
+                "code": "BI01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "BI02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "BI03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "BI04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "BI05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "BI06",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "BID07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "BI14",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Maantiede": {
+        "courses": [
+            {
+                "code": "GE01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "GE02",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "GE03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "GE04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "GE05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "GE06",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Fysiikka": {
+        "courses": [
+            {
+                "code": "FY01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "FY02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "FY03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FY04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FY05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FY06",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FY07",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FY08",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FY09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY14",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY15",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY16",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY17",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY18",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FY19",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Kemia": {
+        "courses": [
+            {
+                "code": "KE01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "KE02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "KE03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KE04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KE05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KE06",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KE07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KE08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KE09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KE11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KE12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KE13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KE14",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Filosofia": {
+        "courses": [
+            {
+                "code": "FI01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "FI02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "FI03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FI04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "FI05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FI06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FI07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "FI08",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Psykologia": {
+        "courses": [
+            {
+                "code": "PS01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "PS02",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "PS03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "PS04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "PS05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "PS06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "PS07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "PS08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "PS09",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Historia": {
+        "courses": [
+            {
+                "code": "HI01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "HI02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "HI03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "HI04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "HI05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "HI06",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "HI07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "HI08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "HI09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "HI10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "HI11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "HI12",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Yhteiskuntaoppi": {
+        "courses": [
+            {
+                "code": "YH01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "YH02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "YH03",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "YH04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "YH05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH14",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "YH15",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Uskonto/elämänkatsomustieto": {
+        "courses": [
+            {
+                "code": "ET01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ET02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "ET03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ET04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ET05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "ET06",
+                "type": "c-type137 a-val"
+            }
+        ]
+    },
+    "Terveystieto": {
+        "courses": [
+            {
+                "code": "TE01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "TE02",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "TE03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "TE04",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Liikunta": {
+        "courses": [
+            {
+                "code": "LI01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "LI02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "LI03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "LI04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "LI05",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "LI06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "LI07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "LI08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "LI09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "LI10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "LI11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "LI12",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Musiikki": {
+        "courses": [
+            {
+                "code": "MU01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MU02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "MU03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MU04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "MU05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MU13",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Kuvataide": {
+        "courses": [
+            {
+                "code": "KU01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "KU02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "KU03",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KU04",
+                "type": "c-type137 a-val"
+            },
+            {
+                "code": "KU05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "KU12",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Opinto-ohjaus": {
+        "courses": [
+            {
+                "code": "OP01",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "OP02",
+                "type": "c-type136 a-val"
+            },
+            {
+                "code": "OP03",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Teatteri": {
+        "courses": [
+            {
+                "code": "TEA01",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA02",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA03",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA04",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA13",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEA14",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Media": {
+        "courses": [
+            {
+                "code": "ME01",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME02",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME03",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME04",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "ME09",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Lukiodiplomit": {
+        "courses": [
+            {
+                "code": "KOLD1",
+                "type": "c-type138 a-val"
+            },
+            {
+                "code": "KULD2",
+                "type": "c-type138 a-val"
+            },
+            {
+                "code": "KÄLD3",
+                "type": "c-type138 a-val"
+            },
+            {
+                "code": "LILD4",
+                "type": "c-type138 a-val"
+            },
+            {
+                "code": "MELD5",
+                "type": "c-type138 a-val"
+            },
+            {
+                "code": "MULD6",
+                "type": "c-type138 a-val"
+            },
+            {
+                "code": "TELD08",
+                "type": "c-type138 a-val"
+            }
+        ]
+    },
+    "Temaattiset opinnot": {
+        "courses": [
+            {
+                "code": "TO01",
+                "type": "c-type146 a-val"
+            },
+            {
+                "code": "TO02",
+                "type": "c-type146 a-val"
+            },
+            {
+                "code": "TO03",
+                "type": "c-type146 a-val"
+            }
+        ]
+    },
+    "Teknologia": {
+        "courses": [
+            {
+                "code": "TEC01",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC02",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC03",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC04",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TEC10",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "OTA-opinnot": {
+        "courses": [
+            {
+                "code": "OTA01",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA02",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA03",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA04",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA06",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA07",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA08",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA09",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA10",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA11",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA12",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "OTA13",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Korkeakouluopinnot": {
+        "courses": [
+            {
+                "code": "MOO01",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MOO02",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "GSE01",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "Muut opinnot": {
+        "courses": [
+            {
+                "code": "MUO1",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MUO2",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MUO3",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "MUO4",
+                "type": "c-type141 a-val"
+            }
+        ]
+    },
+    "OÄIun": {
+        "courses": [
+            {
+                "code": "OÄIun1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIun8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "OÄIar": {
+        "courses": [
+            {
+                "code": "OÄIar1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIar8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "OÄIfa": {
+        "courses": [
+            {
+                "code": "OÄIfa1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIfa8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "OÄIku": {
+        "courses": [
+            {
+                "code": "OÄIku1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIku8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "OÄIma": {
+        "courses": [
+            {
+                "code": "OÄIma1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIma8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "OÄIso": {
+        "courses": [
+            {
+                "code": "OÄIso1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIso8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "OÄIve": {
+        "courses": [
+            {
+                "code": "OÄIve1",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve2",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve3",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve4",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve5",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve6",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve7",
+                "type": "c-type151 a-val"
+            },
+            {
+                "code": "OÄIve8",
+                "type": "c-type151 a-val"
+            }
+        ]
+    },
+    "Talous ja nuoret": {
+        "courses": [
+            {
+                "code": "TAT01",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TAT02",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TAT03",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TAT04",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TAT05",
+                "type": "c-type141 a-val"
+            },
+            {
+                "code": "TAT06",
+                "type": "c-type141 a-val"
+            }
+        ]
+    }
+}

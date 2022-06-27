@@ -1,0 +1,358 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none !important;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+    font-family: 'regular';
+    scrollbar-width: thin;
+}
+
+@font-face {
+    font-family: 'semi-bold';
+    src: url(../assets/fonts/Inconsolata-SemiBold.ttf);
+}
+
+
+@font-face {
+    font-family: 'regular';
+    src: url(../assets/fonts/Inconsolata-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'light';
+    src: url(../assets/fonts/Inconsolata-Light.ttf);
+}
+
+:root {}
+
+h1 {
+    color: var(--font-h1);
+    font-family: 'semi-bold';
+}
+
+h2 {
+    color: var(--font-h2);
+}
+
+h3 {
+    color: var(--font-h3);
+}
+
+body {
+    overflow-y: hidden;
+}
+
+/* Custom Scrollbars */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-darker);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--background-darker-hover);
+}
+
+.loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: black;
+    pointer-events: none;
+    z-index: 20;
+
+    transition: opacity .6s ease-in-out !important;
+}
+
+.container {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+
+    background-color: var(--accent-main);
+
+    display: flex;
+    align-items: center;
+
+    z-index: 2;
+}
+
+.top .user-info {
+    width: 300px;
+    height: 100%;
+
+    margin-left: 50px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.user-info .user-data {
+    width: 90%;
+    height: 120%;
+
+    margin-bottom: -25px;
+
+    background-color: white;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.155);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-info h1 {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-bottom: 2px;
+}
+
+.user-info h2 {
+    font-size: 15px;
+    padding-left: 25px;
+}
+
+.top .logo-img {
+    width: 60px;
+    height: 80%;
+
+    margin-left: 10px;
+
+    background-size: cover;
+    background-position: center center;
+}
+
+.top .logo-text {
+    color: white;
+    font-size: 30px;
+    padding: 5px;
+}
+
+.top button {
+    background: none;
+    padding: 15px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top h5 {
+    color: white;
+    font-size: 17px;
+    pointer-events: none;
+}
+
+.top h1 {
+    pointer-events: none;
+}
+
+.top button:hover {
+    background-color: rgba(255, 255, 255, 0.174) !important;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    padding-top: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.tray-list {
+    height: 90%;
+    width: 250px;
+
+    border-right: solid 2px var(--border-main);
+
+    overflow-y: scroll;
+}
+
+.tray-list .tray {
+    margin: 20px;
+}
+
+.tray h1 {
+    padding: 5px;
+}
+
+.tray .period-list {
+    padding: 5px;
+
+    border-left: solid 2px var(--border-main);
+}
+
+.period-list h2 {
+    padding: 5px;
+}
+
+.tray-main {
+    height: 90%;
+    width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.tray-main .period {
+    width: 90%;
+    height: auto;
+
+    margin-top: 30px;
+
+    background-color: var(--background-darker);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.period h1 {
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+
+    border-bottom: solid 2px var(--border-darker);
+}
+
+.period .bar {
+    width: 90%;
+
+    margin: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.bar h2 {
+    padding: 10px;
+}
+
+.bar .course-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.course-list .course {
+    margin: 2.5px;
+    padding: 2.5px;
+
+    background-color: aqua;
+
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.279);
+}
+
+.course#selected {
+    background-color: rgb(0, 107, 107);
+    border: solid 2px black;
+    color: white;
+}
+
+.course#disabled {
+    background-color: rgb(178, 178, 178);
+    opacity: 75%;
+
+    border: solid 1px gray;
+    box-shadow: none;
+    color: rgb(90, 90, 90);
+
+    pointer-events: none;
+}
+
+.course#unavailable {
+    opacity: 50%;
+}
+
+
+.tray-info {
+    height: 90%;
+    width: 350px;
+
+    border-left: solid 2px var(--border-main);
+
+    overflow-y: scroll;
+}
+
+.tray-info h1 {
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+
+    border-bottom: solid 2px var(--border-main);
+}
+
+.tray-info h3 {
+    margin: 5px;
+}
+
+.tray-info .course-info,
+.tray-info .teacher-info {
+    margin: 20px;
+}
+
+.course-info h1,
+.teacher-info h1 {
+    font-size: 17px;
+    border: none;
+    margin: 5px;
+    padding: 0;
+}
+
+.tray-info ul {
+    margin: 5px;
+}
+
+.tray-info ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.tray-info ul a:nth-child(3) {
+    color: var(--font-h3);
+}
+
+.tray-info .course-action {
+    padding: 7px;
+    margin: 5px;
+
+    border-radius: 3px;
+    color: white;
+    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+}

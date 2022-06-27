@@ -306,6 +306,8 @@ body {
     background: var(--background-darker-hover);
 }
 
+/* News */
+
 .news {
     width: 95%;
     height: 95%;
@@ -350,7 +352,7 @@ body {
     font-family: 'semi-bold';
 }
 
-
+/* Messages */
 
 .messages {
     width: 95%;
@@ -401,6 +403,12 @@ body {
 
     border: solid 1px var(--border-main);
     border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.message-object:hover>h1 {
+    filter: brightness(200%);
 }
 
 #unread {
@@ -426,6 +434,7 @@ body {
     font-family: 'semi-bold';
 }
 
+/* Grades */
 
 .grades {
     width: 95%;
@@ -433,7 +442,7 @@ body {
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -474,6 +483,8 @@ body {
 .grade-object ul {
     margin-left: 15px;
 }
+
+/* Schedule */
 
 
 #full-schedule {

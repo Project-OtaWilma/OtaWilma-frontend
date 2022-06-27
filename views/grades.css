@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none !important;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+    font-family: 'regular';
+    scrollbar-width: thin;
+}
+
+@font-face {
+    font-family: 'semi-bold';
+    src: url(../assets/fonts/Inconsolata-SemiBold.ttf);
+}
+
+
+@font-face {
+    font-family: 'regular';
+    src: url(../assets/fonts/Inconsolata-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'light';
+    src: url(../assets/fonts/Inconsolata-Light.ttf);
+}
+
+:root {
+    --L2021-mandatory-main: #BFFFBF;
+    --L2021-mandatory-selected: #009B00;
+    --L2021-g-optional-main: #80FFFF;
+    --L2021-g-optional-selected: #0080C0;
+    --L2021-l-optional-main: #8080C0;
+    --L2021-l-optional-selected: #800080;
+    --L2021-diploma-main: #BFBFFF;
+    --L2021-diploma-selected: #00009B;
+}
+
+h1 {
+    color: var(--font-h1);
+    font-family: 'semi-bold';
+}
+
+h2,
+a {
+    color: var(--font-h2);
+}
+
+h3 {
+    color: var(--font-h3);
+}
+
+h4 {
+    color: var(--font-h4);
+}
+
+h5 {
+    color: var(--font-h5);
+}
+
+
+body {
+    overflow: hidden;
+}
+
+.loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: black;
+    pointer-events: none;
+    z-index: 20;
+
+    transition: opacity .6s ease-in-out !important;
+}
+
+.container {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--background-main);
+}
+
+.background {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+
+    background-color: var(--accent-main);
+
+    display: flex;
+    align-items: center;
+
+    z-index: 2;
+}
+
+.top .user-info {
+    width: 300px;
+    height: 100%;
+
+    margin-left: 50px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.user-info .user-data {
+    width: 90%;
+    height: 120%;
+
+    margin-bottom: -25px;
+
+    background-color: var(--background-main);
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.155);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-info h1 {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-bottom: 2px;
+}
+
+.user-info h2 {
+    font-size: 15px;
+    padding-left: 25px;
+}
+
+.top .logo-img {
+    width: 60px;
+    height: 80%;
+
+    margin-left: 10px;
+
+    background-size: cover;
+    background-position: center center;
+}
+
+.top .logo-text {
+    color: var(--background-main);
+    font-size: 30px;
+    padding: 5px;
+}
+
+.top button {
+    background: none;
+    padding: 15px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top h5 {
+    color: var(--background-main);
+    font-size: 17px;
+    pointer-events: none;
+}
+
+.top h1 {
+    pointer-events: none;
+}
+
+.top button:hover {
+    background-color: rgba(255, 255, 255, 0.174) !important;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.main {
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.main .gradebook {
+    width: 100%;
+    height: 90%;
+
+    background-color: var(--background-darker);
+
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.gradebook .subject {
+    padding-left: 10px;
+
+    border-left: solid 1px var(--border-darker);
+}
+
+.subject ul {
+    margin: 5px;
+}
+
+.subject ul a {
+    font-size: 20px;
+}
+
+.subject ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.gradebook .course-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    align-items: center;
+}
+
+.course-list div {
+    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    margin: 1px;
+    margin-bottom: 2.5px;
+    margin-top: 2.5px;
+
+
+    font-size: 19px;
+
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.765);
+}
+
+
+.main .overview {
+    width: 400px;
+}
+
+.c-type136 {
+    background-color: var(--L2021-mandatory-main);
+}
+
+.c-type136 {
+    background-color: var(--L2021-mandatory-main);
+}
+
+.c-type137 {
+    background-color: var(--L2021-g-optional-main);
+}
+
+.c-type138 {
+    background-color: var(--L2021-diploma-main);
+}
+
+.c-type141,
+.c-type146,
+.c-type151 {
+    background-color: var(--L2021-l-optional-main);
+}

@@ -12,6 +12,7 @@
     <script src="frontpage.js"></script>
     <script src="/scripts/theme-manager.js"></script>
     <script src="/scripts/nav-manager.js"></script>
+    <script src="/scripts/requests.js"></script>
 </head>
 
 <body>
@@ -35,7 +36,7 @@
             <button id="/views/frontpage.html">
                 <h5>Opinnot</h5>
             </button>
-            <button id="/views/frontpage.html">
+            <button id="/views/course-tray.html">
                 <h5>Kurssitarjotin</h5>
             </button>
             <button id="/views/frontpage.html">
@@ -47,7 +48,7 @@
         </div>
         <div class="content">
             <div class="left-panel">
-                <div class="main-container">
+                <div class="main-container" id="main">
                     <!-- DEBUG - schedule -->
                     <div class="schedule" id="full-schedule">
                         <div class="info">
@@ -295,10 +296,10 @@
                     <!-- DEBUG-END - schedule -->
                 </div>
                 <div class="bottom-container">
-                    <div class="right-container">
+                    <div class="right-container" id="bottom-right">
 
                     </div>
-                    <div class="left-container">
+                    <div class="left-container" id="bottom-left">
                         <!--DEBUG - grades-->
                         <div class="grades">
                             <h1>Opinnot</h1>
@@ -389,7 +390,7 @@
                 </div>
             </div>
             <div class="right-panel">
-                <div class="top-container">
+                <div class="top-container" id="right-top">
                     <!--DEBUG - news-->
                     <div class="news">
                         <h1>Tiedotteet</h1>
@@ -414,44 +415,8 @@
                     </div>
                     <!--DEBUG-END - news-->
                 </div>
-                <div class="bottom-container">
-                    <!--DEBUG - messages-->
-                    <div class="messages">
-                        <h1>Viestit</h1>
-                        <h2>Lukemattomat</h2>
-                        <div class="message-object" id="unread">
-                            <h1>Testi</h1>
-                            <h4>13.06.2022 16:17</h4>
-                            <h4>HEI Heikkinen Matti</h4>
-                            <h3>2 vastausta</h3>
-                        </div>
-                        <h2>Vanhat</h2>
-                        <div class="message-object">
-                            <h1>Testi</h1>
-                            <h4>13.06.2022 16:17</h4>
-                            <h4>HEI Heikkinen Matti</h4>
-                            <h3>2 vastausta</h3>
-                        </div>
-                        <div class="message-object">
-                            <h1>Testi</h1>
-                            <h4>13.06.2022 16:17</h4>
-                            <h4>HEI Heikkinen Matti</h4>
-                            <h3>2 vastausta</h3>
-                        </div>
-                        <div class="message-object">
-                            <h1>Testi</h1>
-                            <h4>13.06.2022 16:17</h4>
-                            <h4>HEI Heikkinen Matti</h4>
-                            <h3>2 vastausta</h3>
-                        </div>
-                        <div class="message-object">
-                            <h1>Testi</h1>
-                            <h4>13.06.2022 16:17</h4>
-                            <h4>HEI Heikkinen Matti</h4>
-                            <h3>2 vastausta</h3>
-                        </div>
-                    </div>
-                    <!--DEBUG-END - messages-->
+                <div class="bottom-container" id="right-bottom">
+
                 </div>
             </div>
         </div>
