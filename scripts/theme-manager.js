@@ -1,26 +1,40 @@
+
+const defaults = ['light', 'dark'];
+
+const state = {
+    config: {},
+    current: {
+        id: null,
+        theme: {}
+    },
+    themes: []
+}
+
 const fetchConfig = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        console.log(session);
+
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier" });
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
 
         fetch(`http://localhost:3000/api/sessions/config/get/${session}`)
             .then(async (res) => {
+                const json = await res.json();
+
                 switch (res.status) {
                     case 200:
-                        const json = await res.json().catch(err => { return reject(err) });
                         return resolve(json);
                     case 400:
-
-                        return reject({ err: "Invalid session identifier", error: res.status })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Couldn't reach servers", error: res.status })
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
                 }
             })
             .catch(err => {
-                return reject({ err: "Couldn't reach servers (config)", error: err })
+                return reject({ err: "Failed to reach servers (OtaWilma-API)", status: 503 })
             })
     });
 }
@@ -30,42 +44,106 @@ const fetchTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
 
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
         fetch(`http://localhost:3000/api/themes/get/${session}/${id}`)
             .then(async (res) => {
+                const json = await res.json();
+
                 switch (res.status) {
                     case 200:
-                        const json = await res.json().catch(err => { return reject(err) });
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid session identifier", error: res.status })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Couldn't reach servers (theme)", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
                 }
+            })
+            .catch(err => {
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
+            })
+    });
+}
+
+const InitializeThemes = () => {
+    return new Promise((resolve, reject) => {
+
+        fetchConfig()
+            .then(config => {
+                state.config = config;
+                state.current.id = config['current-theme'];
+
+                fetchTheme(state.current.id)
+                    .then(theme => {
+                        state.current.theme = theme;
+                        loadTheme(theme);
+                        return resolve();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
             })
             .catch(err => {
                 return reject(err);
             })
+    })
+}
+
+const loadTheme = (theme) => {
+    const root = document.documentElement;
+    const background = document.getElementById('background');
+    const colors = Object.keys(theme.colors);
+
+    colors.forEach(key => {
+        root.style.setProperty(key, theme.colors[key]);
     });
+
+    background.style.background = `url(${theme.background.url})`;
+
+    const filter = `
+    blur(${theme.background.blur}px)
+     opacity(${theme.background.opacity}%)
+     brightness(${theme.background.brightness}%)
+     contrast(${theme.background.contrast}%)
+     saturate(${theme.background.saturate}%)
+     grayscale(${theme.background.grayscale}%)
+     sepia(${theme.background.sepia}%)
+     hue-rotate(${theme.background['hue-rotate']}deg)
+     invert(${theme.background.invert}%)
+    `;
+
+    background.style.filter = filter;
 }
 
 const fetchThemeList = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
 
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
         fetch(`http://localhost:3000/api/themes/list/${session}`)
             .then(async (res) => {
+                const json = await res.json();
+
                 switch (res.status) {
                     case 200:
-                        const json = await res.json().catch(err => { return reject(err) });
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid session identifier", error: res.status })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Couldn't reach servers (list)", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
                 }
             })
             .catch(err => {
-                return reject(err);
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
             })
     });
 }
@@ -73,6 +151,11 @@ const fetchThemeList = () => {
 const setTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
         fetch(`http://localhost:3000/api/sessions/config/current-theme/set/${session}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -82,18 +165,21 @@ const setTheme = (id) => {
 
         })
             .then(async (res) => {
+                const json = await res.json();
+
                 switch (res.status) {
                     case 200:
-                        const json = await res.json().catch(err => { return reject(err) });
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid session identifier", error: res.status })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Couldn't reach servers", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
                 }
             })
             .catch(err => {
-                return reject(err);
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
             })
     });
 }
@@ -101,6 +187,11 @@ const setTheme = (id) => {
 const editThemeColors = (id, key, value) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
         fetch(`http://localhost:3000/api/themes/edit/colors/${session}/${id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -111,18 +202,21 @@ const editThemeColors = (id, key, value) => {
 
         })
             .then(async (res) => {
+                const json = await res.json();
+
                 switch (res.status) {
                     case 200:
-                        const json = await res.json().catch(err => { return reject(err) });
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid session identifier", error: res.status })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Couldn't reach servers", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
                 }
             })
             .catch(err => {
-                return reject(err);
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
             })
     });
 }
@@ -130,6 +224,11 @@ const editThemeColors = (id, key, value) => {
 const editThemeBackground = (id, key, value) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
         fetch(`http://localhost:3000/api/themes/edit/background/${session}/${id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -140,18 +239,21 @@ const editThemeBackground = (id, key, value) => {
 
         })
             .then(async (res) => {
+                const json = await res.json();
+
                 switch (res.status) {
                     case 200:
-                        const json = await res.json().catch(err => { return reject(err) });
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid session identifier", error: res.status })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Couldn't reach servers", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
                 }
             })
             .catch(err => {
-                return reject(err);
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
             })
     });
 }

@@ -1,27 +1,33 @@
 
 const Login = (credentials = { username: String, password: String }) => {
     return new Promise(async (resolve, reject) => {
-        fetch('http://localhost:3000/api/login', {
+        fetch('http://localhost:3001/api/login/', {
             method: "POST",
-            headers: {'Content-Type': 'application/json'}, 
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials)
         })
-        .then(async (res) => {
-            const json = await res.json().catch(err => { return reject(err) });
+            .then(async (res) => {
+                const json = await res.json();
 
-            if(json.err) {
-                return reject({error: json.err, details: res.status});
-            }
+                switch (res.status) {
+                    case 200:
+                        const Wilma2SID = json['Wilma2SID'];
+                        const StudentID = json['studentID'];
 
-            if(json.session) {
-                console.log(json.session);
-                document.cookie = `Wilma2SID=${json.session}`;
-                return resolve(true);
-            }
-        })
-        .catch(err => {
-            return reject({error: 'failed to reach servers', details: err});
-        })
+                        document.cookie = `Wilma2SID=${Wilma2SID}; SameSite=Lax; Secure;`;
+                        document.cookie = `StudentID=${StudentID}; SameSite=Lax; Secure;`;
+
+                        window.location = '/views/frontpage.html';
+                        return resolve();
+                    case 401:
+                        return reject({ err: json.err })
+                    case 400:
+                        return reject({ err: json.err })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'failed to reach servers', status: 503 });
+            })
     })
 }
 
@@ -30,5 +36,4 @@ const Login = (credentials = { username: String, password: String }) => {
 
 const Account = {
     Login,
-
 }

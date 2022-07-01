@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     Initialize();
+
 });
 
 const Initialize = async () => {
@@ -8,18 +9,19 @@ const Initialize = async () => {
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const credentials = {
             username: loginForm['username'].value,
             password: loginForm['password'].value
         }
 
         Account.Login(credentials)
-        .then(() => {
+            .then(() => {
 
-        })
-        .catch(err => {
-            loginError.textContent = err.error;
-        })
+            })
+            .catch(err => {
+                console.log(err);
+                loginError.textContent = err.err;
+            })
     })
 }

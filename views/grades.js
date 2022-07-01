@@ -2,15 +2,21 @@ document.addEventListener('DOMContentLoaded', () => {
     Initialize();
 });
 
-const defaults = ['light', 'dark'];
-
-const state = {
-    config: {},
-    current: {
-        id: null,
-        theme: {}
-    },
-    themes: []
+const grades = {
+    'S': 'Suoritettu',
+    'O': 'Osallistunut',
+    'K': 'Keskeytynyt',
+    'P': 'Puuttuva suoritys',
+    '0': 'Hylätty',
+    '1': 'Välttävä',
+    '2': 'Tyydyttävä',
+    '3': 'Hyvä',
+    '4': 'Hylätty',
+    '5': 'Välttävä',
+    '6': 'Kohtalainen',
+    '8': 'Hyvä',
+    '9': 'Kiitettävä',
+    '10': 'Erinomainen'
 }
 
 const Initialize = async () => {
@@ -18,66 +24,17 @@ const Initialize = async () => {
     await InitializeThemes();
 
     setupBook();
+    await loadBook();
 
     document.getElementById('loading').style.opacity = 0;
 }
 
-const InitializeThemes = () => {
-    return new Promise((resolve, reject) => {
-
-        fetchConfig()
-            .then(config => {
-                state.config = config;
-                state.current.id = config['current-theme'];
-
-                fetchTheme(state.current.id)
-                    .then(theme => {
-                        state.current.theme = theme;
-                        loadTheme(theme);
-                        return resolve();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    })
-            })
-            .catch(err => {
-                console.error(err);
-            })
-    })
-}
-
-const loadTheme = (theme) => {
-    const root = document.documentElement;
-    const background = document.getElementById('background');
-    const colors = Object.keys(theme.colors);
-
-    colors.forEach(key => {
-        root.style.setProperty(key, theme.colors[key]);
-    });
-
-    background.style.background = `url(${theme.background.url})`;
-
-    const filter = `
-    blur(${theme.background.blur}px)
-     opacity(${theme.background.opacity}%)
-     brightness(${theme.background.brightness}%)
-     contrast(${theme.background.contrast}%)
-     saturate(${theme.background.saturate}%)
-     grayscale(${theme.background.grayscale}%)
-     sepia(${theme.background.sepia}%)
-     hue-rotate(${theme.background['hue-rotate']}deg)
-     invert(${theme.background.invert}%)
-    `;
-
-    background.style.filter = filter;
-}
-
 const setupBook = () => {
     const root = document.getElementById('gradebook')
-    fetch('../assets/static/course-list.json')
-        .then(async (res) => {
-            const list = await res.json();
+    const courseInfoRoot = document.getElementById('course-info');
 
+    fectchCourseList()
+        .then(list => {
             Object.keys(list).forEach(subject => {
                 const subjectElement = document.createElement('div');
                 subjectElement.className = 'subject';
@@ -88,22 +45,87 @@ const setupBook = () => {
                 key.textContent = `${subject} `;
 
                 const value = document.createElement('a');
-                value.textContent = '10';
+                value.id = subject;
 
                 const courseList = document.createElement('div');
                 courseList.className = 'course-list';
-
-
 
                 ul.appendChild(key);
                 ul.appendChild(value);
                 subjectElement.appendChild(ul);
                 subjectElement.appendChild(courseList);
 
-                list[subject].courses.forEach(course => {
+                Object.keys(list[subject]).forEach(c => {
+                    const course = list[subject][c];
                     const courseObject = document.createElement('div');
                     courseObject.className = course.type;
-                    courseObject.textContent = course.code;
+                    courseObject.id = c;
+
+                    courseObject.addEventListener('click', (e) => {
+                        fetchCourse(e.target.getAttribute('data-code'))
+                            .then(info => {
+                                delete info['name'];
+                                delete info['type'];
+
+
+                                info = {
+                                    ...{
+                                        'Arvosana': e.target.getAttribute('data-grade'),
+                                        'Suoritettu': e.target.getAttribute('data-date'),
+                                        'Opettaja': e.target.getAttribute('data-teacher'),
+                                        'Lisätietoja': e.target.getAttribute('data-info')
+                                    }, ...info
+                                }
+
+                                info['Opintopisteitä'] = e.target.getAttribute('data-points') ? e.target.getAttribute('data-points') : info['Opintopisteitä']
+
+                                courseInfoRoot.replaceChildren([]);
+
+                                const titleElement = document.createElement('h1');
+                                titleElement.textContent = `${c} - ${course.name}`;
+
+                                courseInfoRoot.appendChild(titleElement);
+
+                                Object.keys(info).forEach(key => {
+                                    if (info[key] && info[key] != 'null') {
+                                        const fieldElement = document.createElement('ul');
+
+
+                                        const keyElement = document.createElement('a');
+                                        keyElement.textContent = `${key}: `;
+
+                                        const valueElement = document.createElement('a');
+                                        valueElement.innerHTML = info[key];
+                                        valueElement.className = key;
+
+                                        fieldElement.appendChild(keyElement);
+                                        fieldElement.appendChild(valueElement);
+
+                                        courseInfoRoot.appendChild(fieldElement);
+                                    }
+                                });
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            })
+                    })
+
+                    const code = document.createElement('h4');
+                    code.textContent = c;
+
+                    const infoObject = document.createElement('div');
+                    infoObject.className = 'course-info';
+
+                    const name = document.createElement('h2');
+                    name.textContent = course.name;
+
+                    courseObject.setAttribute('data-name', course.name);
+                    courseObject.setAttribute('data-code', c);
+                    courseObject.appendChild(code);
+
+                    infoObject.appendChild(name);
+                    courseObject.appendChild(infoObject);
+
 
                     courseList.appendChild(courseObject);
                 });
@@ -112,4 +134,64 @@ const setupBook = () => {
             });
 
         })
+}
+
+const loadBook = () => {
+    return new Promise((resolve, reject) => {
+        const overViewRoot = document.getElementById('overview')
+        const overview = [
+            'Lu21 pakollinen moduuli',
+            'Lu21 valtakunnallinen valinnainen moduuli',
+            'Lu21 paikallinen opintojakso',
+            'Yhteensä',
+            'Keskiarvo',
+            'Lukuaineiden keskiarvo'
+        ]
+
+        fetchGradeBook('')
+            .then(list => {
+
+
+                overview.forEach(key => {
+                    const ulElement = document.createElement('ul');
+                    const keyElement = document.createElement('a');
+                    keyElement.textContent = `${key} `;
+                    const valueElement = document.createElement('a');
+                    valueElement.textContent = list[key];
+
+                    ulElement.appendChild(keyElement);
+                    ulElement.appendChild(valueElement);
+                    overViewRoot.appendChild(ulElement);
+                    delete list[key];
+                });
+
+
+                Object.keys(list).forEach(s => {
+                    const subject = list[s];
+
+                    const gradeElement = document.getElementById(s);
+                    gradeElement.textContent = subject.grade;
+
+                    Object.keys(subject.courses).forEach(c => {
+                        const course = subject.courses[c];
+                        const courseElement = document.getElementById(course.code);
+
+                        if (courseElement) {
+                            courseElement.className = `${courseElement.className}-graded`
+                            courseElement.setAttribute('data-grade', `${course.grade} - ${grades[course.grade]}`);
+                            courseElement.setAttribute('data-points', course.points);
+                            courseElement.setAttribute('data-date', course.date);
+                            courseElement.setAttribute('data-teacher', course.teacher);
+                            courseElement.setAttribute('data-info', course.info);
+
+                            const textElement = courseElement.getElementsByTagName('h4')[0];
+                            textElement.textContent = course.grade;
+                        }
+
+                    })
+                })
+
+                return resolve();
+            })
+    })
 }

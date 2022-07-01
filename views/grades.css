@@ -70,11 +70,15 @@ body {
     width: 100%;
     height: 100%;
 
-    background-color: black;
+    background-color: white;
     pointer-events: none;
     z-index: 20;
 
-    transition: opacity .6s ease-in-out !important;
+    background-image: url(/assets/img/loading-book.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transition: opacity .3s ease-in-out !important;
 }
 
 .container {
@@ -86,7 +90,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
 
     background-color: var(--background-main);
 }
@@ -198,34 +202,46 @@ body {
     height: 100%;
 
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: row;
 }
 
 .main {
+    position: absolute;
     width: 80%;
-    height: 100%;
+    height: 90%;
+
+    margin-top: 75px;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-end;
 }
 
 .main .gradebook {
+    position: absolute;
     width: 100%;
     height: 90%;
 
     background-color: var(--background-darker);
 
-    overflow-y: scroll;
-
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.gradebook .subject {
+.gradebook .course-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    width: calc(100% - 350px);
+    height: 100%;
+    left: 0;
+
+    overflow-y: scroll;
+}
+
+.subject {
     padding-left: 10px;
 
     border-left: solid 1px var(--border-darker);
@@ -251,44 +267,161 @@ body {
     align-items: center;
 }
 
-.course-list div {
+.course-list div:hover>.course-info {
+    opacity: 1;
+}
+
+.course-list div h4 {
+    pointer-events: none;
+}
+
+.c-type136,
+.c-type136,
+.c-type137,
+.c-type138,
+.c-type141,
+.c-type146,
+.c-type151,
+.c-type136-graded,
+.c-type136-graded,
+.c-type137-graded,
+.c-type138-graded,
+.c-type141-graded,
+.c-type146-graded,
+.c-type151-graded {
     padding: 3px;
     padding-left: 6px;
     padding-right: 6px;
+
+    width: 45px;
+    text-align: left;
+    overflow: hidden;
 
     margin: 1px;
     margin-bottom: 2.5px;
     margin-top: 2.5px;
 
+    cursor: pointer;
 
     font-size: 19px;
 
     box-shadow: 1px 1px rgba(0, 0, 0, 0.765);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-
-.main .overview {
-    width: 400px;
+.c-type136-graded h4,
+.c-type136-graded h4,
+.c-type137-graded h4,
+.c-type138-graded h4 {
+    color: white;
 }
 
 .c-type136 {
     background-color: var(--L2021-mandatory-main);
 }
 
-.c-type136 {
-    background-color: var(--L2021-mandatory-main);
+.c-type136-graded {
+    background-color: var(--L2021-mandatory-selected);
 }
 
 .c-type137 {
     background-color: var(--L2021-g-optional-main);
 }
 
+.c-type137-graded {
+    background-color: var(--L2021-g-optional-selected);
+}
+
 .c-type138 {
     background-color: var(--L2021-diploma-main);
+}
+
+.c-type138-graded {
+    background-color: var(--L2021-diploma-selected);
 }
 
 .c-type141,
 .c-type146,
 .c-type151 {
     background-color: var(--L2021-l-optional-main);
+}
+
+.c-type141-graded,
+.c-type146-graded,
+.c-type151-graded {
+    background-color: var(--L2021-l-optional-selected);
+}
+
+.course-info {
+    position: absolute;
+    opacity: 0;
+
+    margin-top: 65px;
+    padding: 5px;
+
+    background-color: black;
+
+    transition: opacity .2s ease-in-out;
+
+    pointer-events: none;
+}
+
+.course-info h2 {
+    color: white;
+}
+
+.gradebook .course-info-container {
+    position: absolute;
+    width: 350px;
+    height: 100%;
+    right: 0;
+
+    overflow-y: scroll;
+
+    border-left: solid 1px var(--border-darker);
+}
+
+.overview-content {
+    width: 90%;
+    height: auto;
+    margin: 10px;
+
+    background-color: var(--background-darker);
+}
+
+.course-lops {
+    width: 90%;
+    height: auto;
+    margin: 10px;
+
+    background-color: var(--background-darker);
+}
+
+.course-lops h1,
+.overview-content h1 {
+    margin: 5px;
+    padding: 5px;
+}
+
+
+.course-lops ul,
+.overview-content ul {
+    margin: 5px;
+    padding: 5px;
+}
+
+.course-lops ul a:nth-child(2),
+.overview-content ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.Sisältö,
+.Tavoitteet,
+.Kuvaus {
+    font-family: 'regular' !important;
+    font-style: italic;
 }

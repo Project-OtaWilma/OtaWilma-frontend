@@ -61,11 +61,15 @@ body {
     width: 100%;
     height: 100%;
 
-    background-color: black;
+    background-color: white;
     pointer-events: none;
     z-index: 20;
 
-    transition: opacity .6s ease-in-out !important;
+    background-image: url(/assets/img/loading-book.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transition: opacity .3s ease-in-out !important;
 }
 
 .container {
@@ -288,6 +292,7 @@ body {
     justify-content: center;
 }
 
+
 /* Custom Scrollbars */
 
 ::-webkit-scrollbar {
@@ -486,9 +491,9 @@ body {
 
 /* Schedule */
 
-
 #full-schedule {
     width: 95%;
+    min-width: 750px;
     height: 95%;
 
     background-color: var(--background-main);
@@ -497,10 +502,6 @@ body {
     flex-direction: column;
 
     overflow-y: scroll;
-}
-
-#full-schedule h1 {
-    display: none;
 }
 
 #full-schedule .info {
@@ -523,6 +524,15 @@ body {
     align-items: center;
 }
 
+.schedule-board#special {
+    display: none;
+}
+
+.schedule-board#normal {
+    display: flex;
+}
+
+
 #full-schedule .schedule-board .column {
     width: calc((93% / 5));
     height: 100%;
@@ -533,17 +543,19 @@ body {
     height: 100%;
 }
 
-#full-schedule .schedule-board .info-column .row {
+#full-schedule .info-column .row {
     width: 100%;
     height: 100%;
     height: calc((95% / 5));
 }
 
-#full-schedule .schedule-board .info-column .info-row {
+
+
+#full-schedule .info-column .info-row {
     height: 5%;
 }
 
-#full-schedule .schedule-board .column .info-row {
+#full-schedule .column .info-row {
     height: 5%;
     display: flex;
     justify-content: center;
@@ -556,9 +568,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    display: flex;
+    flex-direction: column;
 }
 
-#full-schedule .row .data {
+#full-schedule .row-half {
+    height: calc((95% / 2));
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#full-schedule .row .data,
+#full-schedule .row-half .data {
     width: 95%;
     height: 90%;
 
@@ -570,14 +595,41 @@ body {
     justify-content: center;
 }
 
-#full-schedule .row .data h2:nth-child(1) {
-    display: none;
-}
-
 #full-schedule .row .data h2,
 #full-schedule .row .data h3 {
     margin: 2px;
 }
+
+
+#full-schedule .data .group-info {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    width: 150px;
+    min-height: 75px;
+    border-left: solid 3px var(--accent-main);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .2s ease-in-out;
+
+    padding: 5px;
+}
+
+.data:hover>.group-info {
+    opacity: 1 !important;
+}
+
 
 #scaled-schedule {
     width: 95%;
@@ -635,6 +687,74 @@ body {
     border-left: solid 3px #A6CAF0;
 }
 
-#scaled-schedule .data h2:nth-child(1) {
+/* error */
+
+.error-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 30;
+    background-color: white;
+}
+
+.error-object {
+    width: 350px;
+
+    min-width: 128px;
+    min-height: 128px;
+
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 4px;
+}
+
+.error-image {
+    width: 256px;
+    height: 256px;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
+}
+
+.error-object h1 {
+    margin: 15px;
+    color: black;
+}
+
+.error-object h2 {
+    margin: 15px;
+    color: rgb(30, 30, 30);
+    text-align: center;
+}
+
+.error-object h3 {
+    color: rgb(215, 215, 215);
+    text-align: center;
+}
+
+.error-object h5 {
+    margin: 15px;
+    padding: 7px;
+
+    text-align: center;
+
+    border-radius: 100px;
+
     font-family: 'semi-bold';
+    font-size: 17px;
+    color: white;
+
+    background-color: rgb(200, 60, 60);
 }

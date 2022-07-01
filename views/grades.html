@@ -11,11 +11,13 @@
 
     <script src="grades.js"></script>
     <script src="/scripts/nav-manager.js"></script>
+    <script src="/scripts/requests.js"></script>
     <script src="/scripts/theme-manager.js"></script>
+    <script src="/scripts/error-manager.js"></script>
 </head>
 
 <body>
-    <div class="loading-screen" , id="loading"></div>
+    <div class="loading-screen" id="loading"></div>
     <div class="container">
         <div class="background" id="background"></div>
         <div class="top" id="top">
@@ -32,7 +34,7 @@
             <button id="/views/messages.html">
                 <h5>Viestit</h5>
             </button>
-            <button id="/views/frontpage.html">
+            <button id="/views/grades.html">
                 <h5>Opinnot</h5>
             </button>
             <button id="/views/course-tray.html">
@@ -47,9 +49,18 @@
         </div>
         <div class="content">
             <div class="main">
-                <div class="gradebook" id="gradebook">
-                </div>
-                <div class="overview">
+                <div class="gradebook">
+                    <div class="course-container" id="gradebook">
+
+                    </div>
+                    <div class="course-info-container">
+                        <div class="overview-content" id="overview">
+                            <h1>Yhteenveto</h1>
+                        </div>
+                        <div class="course-lops" id="course-info">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
