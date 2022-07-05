@@ -1,183 +1,166 @@
-<div class="schedule" id="full-schedule">
-    <div class="info">
-        <h1>Työjärjestys</h1>
-        <form name="date-form">
-            <input type="date" name="date-input" id="date-input">
+<div class="schedule">
+    <div class="schedule-left">
+        <div class="clock">
+            <div class="clock-marking-x"></div>
+            <div class="clock-marking-y"></div>
+            <div class="clock-marking one"></div>
+            <div class="clock-marking two"></div>
+            <div class="clock-marking three"></div>
+            <div class="clock-marking four"></div>
+            <div class="inner-circle">
+                <div class="hand sec" id="clock-sec"></div>
+                <div class="hand min" id="clock-min"></div>
+                <div class="hand hour" id="clock-hour"></div>
+                <div class="center"></div>
+            </div>
+        </div>
+        <h1 id="current-time">13.22.45</h1>
+        <h2>3 Heinäkuuta 2022</h2>
+        <form id="date-form">
+            <button id="previous-week">
+                < </button>
+                    <input type="date" name="date-input" id="date-input">
+                    <button id="next-week">></button>
         </form>
+
     </div>
-    <div class="schedule-board" id="normal">
-        <div class="info-column">
-            <div class="info-row"></div>
-            <div class="row">
-                <h2>8.30</h2>
+    <div class="schedule-right">
+
+        <div class="day" style="grid-area: monday;">
+            <div class="date" style="grid-area: date;">
+                <h1 id="1.date"></h1>
             </div>
-            <div class="row">
-                <h2>10.00</h2>
+            <div id="1.08:30-11:30" class="hour" style="grid-area: hour-6; filter: brightness(105%); display: none;">
+                <h1>08:30 - 11.30</h1>
             </div>
-            <div class="row">
-                <h2>11.20</h2>
+            <div id="1.08:30-09:45" class="hour" style="grid-area: hour-1; filter: brightness(105%); opacity: 0">
+                <h1>08:30 - 09:45</h1>
             </div>
-            <div class="row">
-                <h2>13.30</h2>
+            <div id="1.10:00-11:15" class="hour" style="grid-area: hour-2; opacity: 0">
+                <h1>10:00 - 11:15</h1>
             </div>
-            <div class="row">
-                <h2>15.00</h2>
+            <div id="1.11:20-13:15" class="hour" style="grid-area: hour-3; filter: brightness(95%); opacity: 0">
+                <h1>11:20 - 13:15</h1>
+            </div>
+            <div id="1.13:30-14:45" class="hour" style="grid-area: hour-4; opacity: 0">
+                <h1>13:30 - 14:45</h1>
+            </div>
+            <div id="1.15:00-16:15" class="hour" style="grid-area: hour-5; filter: brightness(105%); opacity: 0">
+                <h1>15:00 - 16:15</h1>
+            </div>
+            <div id="1.12:30-15:30" class="hour" style="grid-area: hour-7; filter: brightness(105%); display: none;">
+                <h1>12:30 - 15:30</h1>
             </div>
         </div>
-        <div class="column">
-            <div class="info-row">Ma</div>
-            <div class="row" id="1.0">
-
+        <div class="day" style="grid-area: tuesday;">
+            <div class="date" style="grid-area: date;">
+                <h1 id="2.date"></h1>
             </div>
-            <div class="row" id="1.1">
-
+            <div id="2.08:30-11:30" class="hour" style="grid-area: hour-6; filter: brightness(105%); display: none;">
+                <h1>08:30 - 11.30</h1>
             </div>
-            <div class="row" id="1.2">
-
+            <div id="2.08:30-09:45" class="hour" style="grid-area: hour-1; filter: brightness(105%); opacity: 0">
+                <h1>08:30 - 09:45</h1>
+                <div class="data">
+                    <h2>FI02.2</h2>
+                    <h2>HEI</h2>
+                    <h2>3212</h2>
+                </div>
             </div>
-            <div class="row" id="1.3">
-
+            <div id="2.10:00-11:15" class="hour" style="grid-area: hour-2; opacity: 0">
+                <h1>10:00 - 11:15</h1>
             </div>
-            <div class="row" id="1.4">
-
+            <div id="2.11:20-13:15" class="hour" style="grid-area: hour-3; filter: brightness(95%); opacity: 0">
+                <h1>11:20 - 13:15</h1>
             </div>
-        </div>
-        <div class="column">
-            <div class="info-row">Ti</div>
-            <div class="row" id="2.0">
-
+            <div id="2.13:30-14:45" class="hour" style="grid-area: hour-4; opacity: 0">
+                <h1>13:30 - 14:45</h1>
             </div>
-            <div class="row" id="2.1">
-
+            <div id="2.15:00-16:15" class="hour" style="grid-area: hour-5; filter: brightness(105%); opacity: 0">
+                <h1>15:00 - 16:15</h1>
             </div>
-            <div class="row" id="2.2">
-
-            </div>
-            <div class="row" id="2.3">
-
-            </div>
-            <div class="row" id="2.4">
-
+            <div id="2.12:30-15:30" class="hour" style="grid-area: hour-7; filter: brightness(105%); display: none;">
+                <h1>12:30 - 15:30</h1>
             </div>
         </div>
-        <div class="column">
-            <div class="info-row">Ke</div>
-            <div class="row" id="3.0">
-
+        <div class="day" style="grid-area: wednesday;">
+            <div class="date" style="grid-area: date;">
+                <h1 id="3.date"></h1>
             </div>
-            <div class="row" id="3.1">
-
+            <div id="3.08:30-11:30" class="hour" style="grid-area: hour-6; filter: brightness(105%); display: none;">
+                <h1>08:30 - 11.30</h1>
             </div>
-            <div class="row" id="3.2">
-
+            <div id="3.08:30-09:45" class="hour" style="grid-area: hour-1; filter: brightness(105%); opacity: 0">
+                <h1>08:30 - 09:45</h1>
             </div>
-            <div class="row" id="3.3">
-
+            <div id="3.10:00-11:15" class="hour" style="grid-area: hour-2; opacity: 0">
+                <h1>10:00 - 11:15</h1>
             </div>
-            <div class="row" id="3.4">
-
+            <div id="3.11:20-13:15" class="hour" style="grid-area: hour-3; filter: brightness(95%); opacity: 0">
+                <h1>11:20 - 13:15</h1>
             </div>
-        </div>
-        <div class="column">
-            <div class="info-row">To</div>
-            <div class="row" id="4.0">
-
+            <div id="3.13:30-14:45" class="hour" style="grid-area: hour-4; opacity: 0">
+                <h1>13:30 - 14:45</h1>
             </div>
-            <div class="row" id="4.1">
-
+            <div id="3.15:00-16:15" class="hour" style="grid-area: hour-5; filter: brightness(105%); opacity: 0">
+                <h1>15:00 - 16:15</h1>
             </div>
-            <div class="row" id="4.2">
-
-            </div>
-            <div class="row" id="4.3">
-
-            </div>
-            <div class="row" id="4.4">
-
+            <div id="3.12:30-15:30" class="hour" style="grid-area: hour-7; filter: brightness(105%); display: none;;">
+                <h1>12:30 - 15:30</h1>
             </div>
         </div>
-        <div class="column">
-            <div class="info-row">Pe</div>
-            <div class=" row" id="5.0">
-
+        <div class="day" style="grid-area: thursday;">
+            <div class="date" style="grid-area: date;">
+                <h1 id="4.date"></h1>
             </div>
-            <div class="row" id="5.1">
-
+            <div id="4.08:30-11:30" class="hour" style="grid-area: hour-6; filter: brightness(105%); display: none;">
+                <h1>08:30 - 11.30</h1>
             </div>
-            <div class="row" id="5.2">
-
+            <div id="4.08:30-09:45" class="hour" style="grid-area: hour-1; filter: brightness(105%); opacity: 0">
+                <h1>08:30 - 09:45</h1>
             </div>
-            <div class="row" id="5.3">
-
+            <div id="4.10:00-11:15" class="hour" style="grid-area: hour-2; opacity: 0">
+                <h1>10:00 - 11:15</h1>
             </div>
-            <div class="row" id="5.4">
-
+            <div id="4.11:20-13:15" class="hour" style="grid-area: hour-3; filter: brightness(95%); opacity: 0">
+                <h1>11:20 - 13:15</h1>
             </div>
-        </div>
-    </div>
-    <div class="schedule-board" id="special">
-        <div class="info-column">
-            <div class="info-row"></div>
-            <div class="row">
-                <h2>8.30</h2>
+            <div id="4.13:30-14:45" class="hour" style="grid-area: hour-4; opacity: 0">
+                <h1>13:30 - 14:45</h1>
             </div>
-            <div class="row">
-                <h2>10.00</h2>
+            <div id="4.15:00-16:15" class="hour" style="grid-area: hour-5; filter: brightness(105%); opacity: 0">
+                <h1>15:00 - 16:15</h1>
             </div>
-            <div class="row">
-                <h2>11.20</h2>
-            </div>
-            <div class="row">
-                <h2>13.30</h2>
-            </div>
-            <div class="row">
-                <h2>15.00</h2>
+            <div id="4.12:30-15:30" class="hour" style="grid-area: hour-7; filter: brightness(105%); display: none;">
+                <h1>12:30 - 15:30</h1>
             </div>
         </div>
-        <div class="column">
-            <div class="info-row">Ma</div>
-            <div class="row-half" id="1.5">
-
+        <div class="day" style="grid-area: friday;">
+            <div class="date" style="grid-area: date;">
+                <h1 id="5.date"></h1>
+            </div id="5.date">
+            <div id="5.08:30-11:30" class="hour" style="grid-area: hour-6; filter: brightness(105%); display: none;">
+                <h1>08:30 - 11.30</h1>
             </div>
-            <div class="row-half" id="1.6">
-
+            <div id="5.08:30-09:45" class="hour" style="grid-area: hour-1; filter: brightness(105%); opacity: 0">
+                <h1>08:30 - 09:45</h1>
             </div>
-        </div>
-        <div class="column">
-            <div class="info-row">Ti</div>
-            <div class="row-half" id="2.5">
-
+            <div id="5.10:00-11:15" class="hour" style="grid-area: hour-2; opacity: 0">
+                <h1>10:00 - 11:15</h1>
             </div>
-            <div class="row-half" id="2.6">
-
+            <div id="5.11:20-13:15" class="hour" style="grid-area: hour-3; filter: brightness(95%); opacity: 0">
+                <h1>11:20 - 13:15</h1>
             </div>
-        </div>
-        <div class="column">
-            <div class="info-row">Ke</div>
-            <div class="row-half" id="3.5">
-
+            <div id="5.13:30-14:45" class="hour" style="grid-area: hour-4; opacity: 0">
+                <h1>13:30 - 14:45</h1>
             </div>
-            <div class="row-half" id="3.6">
-
+            <div id="5.15:00-16:15" class="hour" style="grid-area: hour-5; filter: brightness(105%); opacity: 0">
+                <h1>15:00 - 16:15</h1>
             </div>
-        </div>
-        <div class="column">
-            <div class="info-row">To</div>
-            <div class="row-half" id="4.5">
-
-            </div>
-            <div class="row-half" id="4.6">
-
-            </div>
-        </div>
-        <div class="column">
-            <div class="info-row">Pe</div>
-            <div class="row-half" id="5.5">
-
-            </div>
-            <div class="row-half" id="5.6">
-
+            <div id="5.12:30-15:30" class="hour" style="grid-area: hour-7; filter: brightness(105%); display: none;">
+                <h1>12:30 - 15:30</h1>
             </div>
         </div>
     </div>
+</div>
 </div>

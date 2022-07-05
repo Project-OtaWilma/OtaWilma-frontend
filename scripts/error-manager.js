@@ -2,7 +2,7 @@ const errors = {
     503: {
         status: 'Palvelin',
         name: 'Palvelimeen ei saatu yhteyttä',
-        description: 'Palvelimeen ei syystä tai toisesta saada yhteyttä. Varmista verkkoyhteytesi ja selvitä, että esiintyykö vastaava ongelma muilla.'
+        description: 'Palvelimeen ei syystä tai toisesta saada yhteyttä.'
     },
     501: {
         status: 'Wilma',

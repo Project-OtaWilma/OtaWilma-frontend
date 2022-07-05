@@ -27,19 +27,42 @@
     src: url(../assets/fonts/Inconsolata-Light.ttf);
 }
 
-:root {}
+:root {
+    --L2021-mandatory-main: #BFFFBF;
+    --L2021-mandatory-selected: #266626;
+    --L2021-g-optional-main: #80FFFF;
+    --L2021-g-optional-selected: #006666;
+    --L2021-l-optional-main: #8080C0;
+    --L2021-l-optional-selected: #000027;
+    --L2021-diploma-main: #BFBFFF;
+    --L2021-diploma-selected: #00009B;
+
+    --L2016-l-optional-main: #E8E8FF;
+    --L2016-l-optional-selected: #4F4F66;
+    --L2016-g-optional-main: #FFC1C1;
+    --L2016-g-optional-selected: #662828;
+}
 
 h1 {
     color: var(--font-h1);
     font-family: 'semi-bold';
 }
 
-h2 {
+h2,
+a {
     color: var(--font-h2);
 }
 
 h3 {
     color: var(--font-h3);
+}
+
+h4 {
+    color: var(--font-h4);
+}
+
+h5 {
+    color: var(--font-h5);
 }
 
 body {
@@ -80,7 +103,6 @@ body {
     transition: opacity .3s ease-in-out !important;
 }
 
-
 .container {
     position: absolute;
 
@@ -91,6 +113,18 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    background-color: var(--background-main);
+}
+
+.background {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
 
 .top {
@@ -124,7 +158,7 @@ body {
 
     margin-bottom: -25px;
 
-    background-color: white;
+    background-color: var(--background-darker);
 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.155);
 
@@ -186,20 +220,27 @@ body {
 
 .content {
     position: absolute;
-    width: 100%;
-    height: 100%;
-
-    padding-top: 50px;
+    width: 75%;
+    height: 85%;
 
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
+
+    box-shadow: 0 0 15px var(--shadow-main);
 }
 
 .tray-list {
-    height: 90%;
+    position: absolute;
+    height: 100%;
     width: 250px;
+
+    left: 0;
+
+    border-left: solid 10px var(--accent-main);
+
+    background-color: var(--background-main);
 
     border-right: solid 2px var(--border-main);
 
@@ -222,15 +263,26 @@ body {
 
 .period-list h2 {
     padding: 5px;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.period-list h2:hover {
+    opacity: 50%;
 }
 
 .tray-main {
-    height: 90%;
-    width: 50%;
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 250px - 350px);
+
+    left: 250px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    background-color: var(--background-main);
 
     overflow-y: scroll;
 }
@@ -241,7 +293,9 @@ body {
 
     margin-top: 30px;
 
-    background-color: var(--background-darker);
+    background-color: var(--background-main);
+
+    border-bottom: solid 1px var(--border-main);
 
     display: flex;
     flex-direction: column;
@@ -262,8 +316,7 @@ body {
     margin: 10px;
 
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
 }
 
 .bar h2 {
@@ -276,22 +329,63 @@ body {
     flex-wrap: wrap;
 }
 
-.course-list .course {
+.course-list div {
     margin: 2.5px;
     padding: 2.5px;
 
-    background-color: aqua;
+    cursor: pointer;
 
     box-shadow: 1px 1px rgba(0, 0, 0, 0.279);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.course#selected {
+.course-list div:hover>.course-data {
+    opacity: 1;
+}
+
+.course-data {
+    opacity: 0;
+    margin-top: 100px !important;
+
+    position: absolute;
+
+    background-color: black;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: opacity .2s ease-in-out;
+
+    pointer-events: none;
+}
+
+.course-data h2 {
+    padding: 2px;
+    margin: 0;
+    font-size: 13px;
+    color: white;
+}
+
+.course-list div#selected {
     background-color: rgb(0, 107, 107);
     border: solid 2px black;
     color: white;
 }
 
-.course#disabled {
+/*
+    course hashes
+
+    will only work for periods in:
+    "Espoon kesälukio 2022"
+    "Otaniemen lukio 2021-2022"
+    "Otaniemen lukio 2022-2023"
+    "Otaniemen lukio 21-22, opiskelijat 18, 19 ja 20"
+*/
+
+.ksuor-off {
     background-color: rgb(178, 178, 178);
     opacity: 75%;
 
@@ -302,16 +396,85 @@ body {
     pointer-events: none;
 }
 
-.course#unavailable {
-    opacity: 50%;
+.k70F27363_35245-off,
+.k70F27363_35780-off,
+.kAB14633F_1381-off,
+.kAB14633F_1388-off {
+    background-color: var(--L2021-mandatory-main);
+}
+
+.k70F27363_35249-off {
+    background-color: var(--L2021-g-optional-main);
+}
+
+.k70F27363_35253-off,
+.kAB14633F_1519-off {
+    background-color: var(--L2021-l-optional-main);
+}
+
+.k70F27363_35763-off {
+    background-color: var(--L2016-l-optional-main);
+}
+
+.k70F27363_35783-off {
+    background-color: var(--L2016-g-optional-main);
+}
+
+.k70F27363_35245-on,
+.k70F27363_35780-on,
+.kAB14633F_1381-on,
+.kAB14633F_1388-on {
+    background-color: var(--L2021-mandatory-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white;
+}
+
+.k70F27363_35249-on {
+    background-color: var(--L2021-g-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white;
+}
+
+.k70F27363_35253-on,
+.kAB14633F_1519-on {
+    background-color: var(--L2021-l-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white;
+}
+
+.k70F27363_35763-on {
+    background-color: var(--L2016-l-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white;
+}
+
+.k70F27363_35783-on {
+    background-color: var(--L2016-g-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white;
 }
 
 
 .tray-info {
-    height: 90%;
+    height: 100%;
     width: 350px;
 
+    position: absolute;
+    right: 0;
+
     border-left: solid 2px var(--border-main);
+
+    background-color: var(--background-main);
 
     overflow-y: scroll;
 }

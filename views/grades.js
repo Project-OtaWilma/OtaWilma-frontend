@@ -14,6 +14,7 @@ const grades = {
     '4': 'Hylätty',
     '5': 'Välttävä',
     '6': 'Kohtalainen',
+    '7': 'Tyydyttävä',
     '8': 'Hyvä',
     '9': 'Kiitettävä',
     '10': 'Erinomainen'

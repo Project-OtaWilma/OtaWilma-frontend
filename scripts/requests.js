@@ -25,7 +25,45 @@ const fetchMessages = () => {
                     case 500:
                         return reject({ err: "Internal server error", status: 500 })
                     case 501:
-                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 503 })
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
+}
+
+const fetchNews = () => {
+    return new Promise((resolve, reject) => {
+        const Wilma2SID = getCookie('Wilma2SID');
+
+        if (!Wilma2SID) {
+            return reject({ err: 'Missing Wilma2SID', error: 401, redirect: true });
+        }
+
+        fetch('http://localhost:3001/api/news/current?limit=20', {
+            headers: {
+                'Wilma2SID': Wilma2SID
+            }
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
                     default:
                         return reject({ err: 'Received an unexpected response from servers', status: res.status })
                 }
@@ -63,7 +101,7 @@ const fetchGradeBook = (filter) => {
                     case 500:
                         return reject({ err: "Internal server error", status: 500 })
                     case 501:
-                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 403 })
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
                     default:
                         return reject({ err: 'Received an unexpected response from servers', status: res.status })
                 }
@@ -94,7 +132,7 @@ const fectchCourseList = () => {
                     case 500:
                         return reject({ err: "Internal server error", status: 500 })
                     case 501:
-                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 403 })
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
                     default:
                         return reject({ err: 'Received an unexpected response from servers', status: res.status })
                 }
@@ -124,7 +162,7 @@ const fetchCourse = (id) => {
                     case 500:
                         return reject({ err: "Internal server error", status: 500 })
                     case 501:
-                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 403 })
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
                     default:
                         return reject({ err: 'Received an unexpected response from servers', status: res.status })
                 }
@@ -135,7 +173,7 @@ const fetchCourse = (id) => {
     })
 }
 
-const fetchSchedule = (date = { dd: String, mm: String, yyyy: String }) => {
+const fetchSchedule = (date = Date) => {
     return new Promise((resolve, reject) => {
 
         const Wilma2SID = getCookie('Wilma2SID');
@@ -149,7 +187,7 @@ const fetchSchedule = (date = { dd: String, mm: String, yyyy: String }) => {
             return reject({ err: 'Missing StudentID', status: 400 });
         }
 
-        fetch(`http://localhost:3001/api/schedule/${date.mm}.${date.dd}.${date.yyyy}`, {
+        fetch(`http://localhost:3001/api/schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`, {
             method: 'GET',
             headers: {
                 Wilma2SID: Wilma2SID,
@@ -169,7 +207,7 @@ const fetchSchedule = (date = { dd: String, mm: String, yyyy: String }) => {
                     case 500:
                         return reject({ err: "Internal server error", status: 500 })
                     case 501:
-                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 403 })
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
                     default:
                         return reject({ err: 'Received an unexpected response from servers', status: res.status })
                 }
@@ -179,4 +217,131 @@ const fetchSchedule = (date = { dd: String, mm: String, yyyy: String }) => {
                 return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
             })
     })
+}
+
+const fetchTrayList = () => {
+    return new Promise((resolve, reject) => {
+        const Wilma2SID = getCookie('Wilma2SID');
+
+        if (!Wilma2SID) {
+            return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
+        }
+
+        fetch(`http://localhost:3001/api/course-tray/list`, {
+            method: 'GET',
+            headers: {
+                Wilma2SID: Wilma2SID
+            }
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
+}
+
+const fetchPeriod = (hash) => {
+    return new Promise((resolve, reject) => {
+        const Wilma2SID = getCookie('Wilma2SID');
+        const StudentID = getCookie('StudentID');
+
+        if (!Wilma2SID) {
+            return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
+        }
+
+        if (!StudentID) {
+            return reject({ err: 'Missing StudentID', status: 400 });
+        }
+
+
+
+        fetch(`http://localhost:3001/api/course-tray/${hash}`, {
+            method: 'GET',
+            headers: {
+                Wilma2SID: Wilma2SID,
+                StudentID: StudentID,
+            }
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
+}
+
+const fetchTrayCourse = (hash) => {
+    return new Promise((resolve, reject) => {
+        const Wilma2SID = getCookie('Wilma2SID');
+
+        if (!Wilma2SID) {
+            return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
+        }
+
+
+
+        fetch(`http://localhost:3001/api/course-tray/courses/${hash}`, {
+            method: 'GET',
+            headers: {
+                Wilma2SID: Wilma2SID,
+            }
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
 }

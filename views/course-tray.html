@@ -11,6 +11,7 @@
 
     <script src="course-tray.js"></script>
     <script src="/scripts/nav-manager.js"></script>
+    <script src="/scripts/requests.js"></script>
     <script src="/scripts/theme-manager.js"></script>
     <script src="/scripts/error-manager.js"></script>
 </head>
@@ -47,209 +48,44 @@
             </button>
         </div>
         <div class="content">
-            <div class="tray-list">
-                <div class="tray">
-                    <h1>Espoon kesälukio</h1>
-                    <div class="period-list">
-                        <h2>Kesälukion tarjotin</h2>
-                    </div>
-                </div>
-                <div class="tray">
-                    <h1>Otaniemen lukio 2021 - 2022</h1>
-                    <div class="period-list">
-                        <h2>1.vsk tarjotin Periodi 1A</h2>
-                        <h2>1.vsk tarjotin Periodi 1B</h2>
-                        <h2>1.vsk tarjotin Periodi 2A</h2>
-                        <h2>1.vsk tarjotin Periodi 2B</h2>
-                        <h2>1.vsk tarjotin Periodi 3A</h2>
-                        <h2>1.vsk tarjotin Periodi 3B</h2>
-                        <h2>1.vsk tarjotin Periodi 4A</h2>
-                        <h2>1.vsk tarjotin Periodi 4B</h2>
-                        <h2>1.vsk tarjotin Periodi 5A</h2>
-                        <h2>1.vsk tarjotin Periodi 5B</h2>
-                    </div>
-                </div>
-                <div class="tray">
-                    <h1>Otaniemen lukio 2022 - 2023</h1>
-                    <div class="period-list">
-                        <h2>1A. periodi</h2>
-                        <h2>1B. periodi</h2>
-                        <h2>2A. periodi</h2>
-                        <h2>2B. periodi</h2>
-                        <h2>3A. periodi</h2>
-                        <h2>3B. periodi</h2>
-                        <h2>4A. periodi</h2>
-                        <h2>4B. periodi</h2>
-                        <h2>5A. periodi</h2>
-                        <h2>5B. periodi</h2>
-                    </div>
-                </div>
+            <div class="tray-list" id="tray-list">
+
             </div>
-            <div class="tray-main">
-                <div class="period">
-                    <h1>1A. periodi (Otaniemen lukio, espoo)</h1>
-                    <div class="bar">
-                        <h2>1:</h2>
-                        <div class="course-list">
-                            <div class="course" id="selected">FY01.1</div>
-                            <div class="course" id="disabled">Fy01.1</div>
-                            <div class="course" id="unavailable">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>2:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>3:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>4:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>5:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>6:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>7:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>8:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                    <div class="bar">
-                        <h2>9:</h2>
-                        <div class="course-list">
-                            <div class="course">FY01.1</div>
-                            <div class="course">Fy01.1</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="tray-main" id="tray-main">
+
             </div>
             <div class="tray-info">
+                <h1>Toiminnot</h1>
+                <div class="options">
+                    <form>
+                        <h2>Hae kurssia</h2>
+                        <input type="text" placeholder="Esim. MAA15.1">
+                        <button>Hae</button>
+                    </form>
+                    <form>
+                        <h2>Suodata kursseja</h2>
+                        <h3>Oppiaine</h3>
+                        <select>
+                            <option value="">Kaikki</option>
+                            <option value="">FY</option>
+                            <option value="">KE</option>
+                            <option value="">MA</option>
+                        </select>
+                        <h3>LOPS</h3>
+                        <select>
+                            <option value="">Molemmat</option>
+                            <option value="">LOPS 2021</option>
+                            <option value="">LOPS 2016</option>
+                        </select>
+                        <h3>Opettaja</h3>
+                        <select>
+                            <option value="">Kaikki</option>
+                            <option value="">HEI Heikkinen Matti</option>
+                            <option value="">SAV Saarikivi Ville</option>
+                        </select>
+                    </form>
+                    <button>Suodata</button>
+                </div>
                 <h1>Tietoa kurssista</h1>
                 <div class="course-info">
                     <h1>Fysiikka luonnontieteenä</h1>

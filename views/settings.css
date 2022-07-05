@@ -14,6 +14,8 @@
         background .3s ease-in-out,
         opacity .3s ease-in-out,
         border .3s ease-in-out;
+
+    border-radius: 3px !important;
 }
 
 @font-face {
