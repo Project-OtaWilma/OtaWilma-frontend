@@ -29,7 +29,7 @@ const errors = {
 const displayError = (err) => {
 
     if (err.redirect) {
-        window.location = '/index.html'
+        window.location = `/index.html?error=${err.status}`
         return;
     }
 
@@ -56,6 +56,14 @@ const displayError = (err) => {
     const description = document.createElement('h2');
     description.textContent = errors[err.status].description;
 
+    const infoTitle = document.createElement('h4');
+    const infoContent = document.createElement('h7');
+
+    if(err.info) {
+        infoTitle.textContent = 'Ilmoita seuraavat tiedot kehittäjälle';
+        infoContent.textContent = err.info;
+    }
+
 
     const statusElement = document.createElement('h5');
     statusElement.textContent = `${err.status} - ${errors[err.status].status}`;
@@ -64,6 +72,8 @@ const displayError = (err) => {
     error.appendChild(title);
     error.appendChild(titleRaw);
     error.appendChild(description);
+    error.appendChild(infoTitle);
+    error.appendChild(infoContent);
     error.appendChild(statusElement);
 
     root.appendChild(error);

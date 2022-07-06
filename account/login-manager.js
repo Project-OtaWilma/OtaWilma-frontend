@@ -31,9 +31,28 @@ const Login = (credentials = { username: String, password: String }) => {
     })
 }
 
+const createAccout = () => {
+    return new Promise((resolve, reject) => {
+        fetch('http://localhost:3000/api/sessions/config/create',
+        {
+            method: 'POST'
+        })
+        .then(async (res) => {
+            const json = await res.json();
+    
+            switch(res.status) {
+                case 200:
+                    const session = json['session'];
+                    document.cookie = `session=${session}; SameSite=Lax; Secure;`;
+                    return resolve();
+            }
+        })
+    })
+}
 
 
 
 const Account = {
     Login,
+    createAccout
 }
