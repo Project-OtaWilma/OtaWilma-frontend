@@ -60,6 +60,7 @@ h5 {
 }
 
 body {
+    background: black;
     overflow-y: hidden;
 }
 
@@ -120,6 +121,7 @@ body {
     background-size: cover !important;
     background-repeat: no-repeat !important;
 
+    filter: var(--background-filter);
 }
 
 .top {
@@ -214,12 +216,9 @@ body {
 
 .content {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 85%;
 
-    max-width: 1000px;
-
-    padding-top: 50px;
 
     display: flex;
     align-items: center;
@@ -229,11 +228,16 @@ body {
     border-left: solid 1px var(--border-darker);
 
     background-color: var(--background-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
 }
 
 .side-bar {
+    position: absolute;
     width: 250px;
-    height: 90%;
+    height: 95%;
+
+    left: 0;
 
     display: flex;
     flex-direction: column;
@@ -250,6 +254,8 @@ body {
     margin: 3px;
     margin-left: 5px;
     cursor: pointer;
+
+    transition: opacity .2s ease-in-out;
 }
 
 .side-bar h2 {
@@ -257,6 +263,8 @@ body {
     margin: 2px;
     padding-left: 3px;
     margin-left: 15px;
+
+    transition: opacity .2s ease-in-out;
 }
 
 .side-bar h3 {
@@ -265,30 +273,21 @@ body {
     margin-left: 25px;
 }
 
+.side-bar h1:hover {
+    opacity: 50%;
+}
+
 .settings-content {
-    width: 100%;
+    position: absolute;
+    width: calc(100% - 250px);
+    left: 250px;
+
     height: 100%;
-    padding-left: 30px;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     overflow-y: scroll;
-}
-
-.settings-content div {
-    width: 100%;
-    height: auto;
-
-    margin-top: 50px;
-}
-
-.settings-content div div {
-    width: unset;
-    height: unset;
-
-    margin-top: unset;
 }
 
 #hidden {
@@ -299,7 +298,7 @@ body {
     display: flex;
     flex-direction: row;
 
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     padding: 15px;
@@ -310,7 +309,8 @@ body {
 
 .theme {
     margin: 10px;
-    padding: 10px;
+    width: 200px;
+    height: 100px;
 
     display: flex;
     flex-direction: column;
@@ -318,20 +318,42 @@ body {
     align-items: center;
 
     cursor: pointer;
-}
 
-#selected .theme-preview {
+    overflow: hidden;
+
     box-shadow: 0 0 15px var(--shadow-main);
 }
 
-.theme h2 {
-    margin: 10px;
+.theme-background {
+    width: 220px;
+    height: 120px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+}
+
+.theme-main {
+    position: absolute;
+
+    width: 120px;
+    height: 80px;
+}
+
+.theme-main h1 {
+    font-size: 15px;
+    margin: 5px;
+}
+
+.theme-main h2 {
+    font-size: 12px;
+    margin: 5px;
 }
 
 .theme .theme-new {
-    width: 200px;
-    height: 100px;
-
     user-select: none;
     -webkit-user-select: none;
 
@@ -341,50 +363,9 @@ body {
     align-items: center;
     justify-content: center;
 
-    border: dashed 3px var(--border-main);
-    box-shadow: 0 0 15px var(--shadow-main);
-}
+    border-radius: 7px;
+    /*box-shadow: 0 0 15px var(--shadow-main);*/
 
-.theme .theme-preview {
-    width: 200px;
-    height: 100px;
-
-    margin: 5px;
-
-    box-shadow: 0 0 15px var(--shadow-main);
-}
-
-.theme-preview .main {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-}
-
-.main .secondary {
-    width: 50%;
-    height: 100%;
-}
-
-.main .text {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-}
-
-.main h1 {
-    padding: 2px;
-    margin-left: 3px;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.main h2 {
-    padding: 2px;
-    margin-left: 7px;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .editor-disabled {
@@ -412,21 +393,54 @@ body {
     padding: 2px;
 }
 
-.colors form input {
-    margin: 2px;
-    width: 50px;
-    background: none;
+.colors .color-input {
+    width: 54px;
+    margin: 5px;
+    padding: 2px;
+
+    border-radius: 0 !important;
+
+    background: white;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
-.preview img {
+.colors .opacity-input {
+    width: 45px;
+    margin: 5px;
+
+    padding: 2px;
+    border: solid 2px white;
+
+    border-radius: 0 !important;
+
+    background: black;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+
+    color: white;
+}
+
+.preview {
     width: 450px;
     height: 300px;
 
-    margin: -10px;
     margin: 20px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.preview img {
+    width: 105%;
+    height: 105%;
 
     box-shadow: 0 0 15px var(--shadow-main);
 
+    filter: var(--background-filter);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -470,4 +484,50 @@ body {
     width: 50% !important;
     font-family: 'regular' !important;
     background-color: var(--background-darker);
+}
+
+.settings-help {
+    position: absolute;
+    width: 250px;
+    height: 100%;
+
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-help .info {
+    width: 80%;
+    padding: 10px;
+    margin: 20px;
+
+    border-radius: 0 !important;
+    border-left: solid 1px var(--border-main);
+}
+
+.info h1 {
+    font-size: 17px;
+    margin: 10px;
+}
+
+.info h2 {
+    font-size: 16px;
+    margin: 10px;
+}
+
+.info h3 {
+    font-size: 14px;
+    margin: 10px;
+}
+
+.settings-content .colors,
+.settings-content .backgrounds,
+.settings-content .connections,
+.settings-content .advanced {
+    width: calc(100% - 250px);
+    height: auto;
+
+    padding: 50px;
 }

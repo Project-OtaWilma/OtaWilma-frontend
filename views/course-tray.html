@@ -8,6 +8,7 @@
     <title>OtaWilma - Kurssitarjotin</title>
 
     <link rel="stylesheet" href="course-tray.css">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon-16x16.png">
 
     <script src="course-tray.js"></script>
     <script src="/scripts/nav-manager.js"></script>
@@ -27,7 +28,6 @@
                     <h2>Opiskelija</h2>
                 </div>
             </div>
-            <div class="logo-img"></div>
             <button id="/views/frontpage.html">
                 <h1 class="logo-text">OtaWilma</h1>
             </button>
@@ -40,7 +40,7 @@
             <button id="/views/course-tray.html">
                 <h5>Kurssitarjotin</h5>
             </button>
-            <button id="/views/frontpage.html">
+            <button id="/views/news.html">
                 <h5>Tiedotteet</h5>
             </button>
             <button id="/views/settings.html">
@@ -60,31 +60,31 @@
                     <form>
                         <h2>Hae kurssia</h2>
                         <input type="text" placeholder="Esim. MAA15.1">
-                        <button>Hae</button>
+                        <button id="search-button">Hae</button>
                     </form>
                     <form>
                         <h2>Suodata kursseja</h2>
                         <h3>Oppiaine</h3>
-                        <select>
+                        <select id="filter-courses">
                             <option value="">Kaikki</option>
                             <option value="">FY</option>
                             <option value="">KE</option>
                             <option value="">MA</option>
                         </select>
                         <h3>LOPS</h3>
-                        <select>
-                            <option value="">Molemmat</option>
-                            <option value="">LOPS 2021</option>
-                            <option value="">LOPS 2016</option>
+                        <select id="select-lops">
+                            <option value="both">Molemmat</option>
+                            <option value="L2021">LOPS 2021</option>
+                            <option value="L2016">LOPS 2016</option>
                         </select>
                         <h3>Opettaja</h3>
-                        <select>
-                            <option value="">Kaikki</option>
-                            <option value="">HEI Heikkinen Matti</option>
-                            <option value="">SAV Saarikivi Ville</option>
+                        <select id="filter-teachers">
+                            <option value="all">Kaikki</option>
+                            <option value="HEI">HEI Heikkinen Matti</option>
+                            <option value="SAV">SAV Saarikivi Ville</option>
                         </select>
                     </form>
-                    <button>Suodata</button>
+                    <button id="filter-button">Suodata</button>
                 </div>
                 <h1>Tietoa kurssista</h1>
                 <div class="course-info">

@@ -175,7 +175,6 @@ body {
 
     background-size: cover;
     background-position: center center;
-    background-image: url(/assets/img/otakarhu.svg);
 }
 
 .top .logo-text {
@@ -213,128 +212,134 @@ body {
     width: 75%;
     height: 85%;
 
-    background-color: var(--background-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 
     box-shadow: 0 0 15px var(--shadow-main);
 
     border-left: solid 10px var(--accent-main);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+    background-color: var(--background-main);
 }
 
-.categories {
+.side-bar {
     position: absolute;
-    width: 300px;
-    height: 95%;
-
     left: 0;
-
-    border-right: solid 1px var(--border-main);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.categories div {
-    padding: 5px;
-    margin: 10px;
-    width: 80%;
-
-    border-left: solid 3px var(--border-main);
-}
-
-.categories div h1 {
-    font-size: 20px;
-    padding: 2px;
-    padding-bottom: 5px;
-}
-
-.category-selected {
-    border-left: solid 3px var(--accent-main) !important;
-}
-
-.messages {
-    position: absolute;
     width: 300px;
-    height: 95%;
+    height: 100%;
 
-    left: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-    border-right: solid 1px var(--border-main);
+.current,
+.static,
+.old {
+    margin: 20px;
+
+    height: 30%;
+    width: 95%;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    border-left: solid 3px var(--accent-main);
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
 
     overflow-y: scroll;
 }
 
-.message-object {
-    margin: 10px;
+
+.current h1,
+.static h1,
+.old h1 {
+    width: 90%;
+    font-size: 20px;
+    width: auto;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+
+    border-bottom: solid 1px var(--border-main);
+}
+
+.news-object-current {
+    margin: 5px;
     padding: 10px;
-
-    width: 80%;
-
-    border-left: solid 3px var(--accent-main);
-
-    background-color: var(--background-main);
-
-    box-shadow: 0 0 15px var(--shadow-main);
 }
 
-.message-object.Full,
-.message-object.ExpiredReg {
-    border-left: solid 3px var(--error) !important;
+.news-object-current h1:hover {
+    opacity: 50%;
 }
 
-.message-object .calendar {
-    width: 25px;
-    height: 25px;
 
-    background-image: url(/assets/img/calendar.svg);
-}
-
-.message-object h1 {
+.news-object-current h1 {
     font-size: 17px;
-    padding: 2px;
+    text-align: left;
+    margin: 2px;
 
     cursor: pointer;
 
     transition: opacity .2s ease-in-out;
 }
 
-.message-object h1:hover {
-    opacity: 50%;
+.news-object-current h3 {
+    padding: 5px;
+    margin: 5px;
+
+    border-left: solid 1px var(--border-main);
 }
 
-.message-object h2 {
-    padding: 2px;
+.news-object-current h4 {
+    margin: 10px;
 }
 
-.message-object h2:nth-child(2) {
-    font-family: 'semi-bold';
+
+.news-object-static {
+    width: 80%;
+    margin: 5px;
+    padding: 10px;
+
+    cursor: pointer;
+
+    border: solid 1px var(--border-main);
+    border-radius: 7px;
 }
 
-.message-object h3 {
-    padding-top: 8px;
-    padding: 2px;
+.news-object-static:hover>h4 {
+    opacity: 100%;
 }
 
-#selected {
-    border-left: solid 3px var(--accent-main);
+.news-object-static h1 {
+    width: 90%;
+    font-size: 17px;
+    text-align: left;
+
+    margin: 2px;
+    padding: 10px;
+
+    pointer-events: none;
 }
 
-.message-content {
+.news-object-static h4 {
+    padding: 10px;
+    opacity: 40%;
+
+    transition: opacity .2s ease-in-out;
+    pointer-events: none;
+}
+
+.news-content {
     position: absolute;
-    left: calc(300px + 300px);
-    width: calc(100% - (300px + 300px + 25px));
+    width: calc(100% - 300px);
+    left: 300px;
     height: 95%;
-
-    background-color: var(--background-main);
 
     display: flex;
     flex-direction: column;
@@ -343,110 +348,33 @@ body {
     overflow-y: scroll;
 }
 
-.message-content h1 {
-    font-size: 27px;
-    margin: 10px;
-    padding: 10px;
-
-    max-width: 1200px;
-}
-
-.message-content .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
+.news-content * {
     width: 90%;
+    padding: 5px;
+    height: auto;
 
-    padding-bottom: 40px;
-    border-bottom: solid 1px var(--border-main);
+    color: var(--font-h2);
+
+    line-height: 1.3;
+    font-family: 'arial';
 }
 
-.message-content .info ul {
+.news-content h1 {
+    font-size: 20px;
     margin: 20px;
 }
 
-.info ul a:nth-child(2) {
-    font-family: 'semi-bold';
-}
-
-.main-content {
-    font-size: 16px;
-    padding: 20px;
-
-    width: 90%;
-
-    padding-top: 40px;
-    padding-bottom: 40px;
-    border-bottom: solid 1px var(--border-main);
-}
-
-.main-content * {
-    color: var(--font-h2);
-    font-family: 'arial';
-    padding: 5px;
-    line-height: 1.3;
-}
-
-.main-content strong,
-.main-content b {
+.news-content strong,
+.news-content b {
     font-weight: bold;
 }
 
-.main-content .wilma-link {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-
-    transition: opacity .2s ease-in-out;
+.news-content .printout-footer {
+    display: none;
 }
 
-.wilma-link:hover {
-    opacity: 50%;
-}
-
-.wilma-link .icon {
-    width: 15px;
-    height: 15px;
-    background-image: url(/assets/img/external-link.svg);
-    background-size: cover;
-    background-position: center center;
-}
-
-.wilma-link h6 {
-    font-size: 12px;
-}
-
-.message-content .responses {
-    width: 90%;
-    margin-top: 20px;
-}
-
-.message-reply {
-    margin: 5px;
-    padding: 5px;
-
-    border-left: solid 3px var(--accent-main);
-}
-
-.responses div * {
-    color: var(--font-h2);
-    font-family: 'arial';
-    font-size: 17px;
-    padding: 5px;
-}
-
-.responses div h4 {
-    font-size: 12px;
-    padding: 10px;
-
-    font-family: 'regular';
-
-    opacity: 75%;
+.news-content .__cf_email__ {
+    pointer-events: none;
+    color: red;
+    opacity: 30%;
 }

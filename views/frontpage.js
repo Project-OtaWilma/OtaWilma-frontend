@@ -16,7 +16,6 @@ const Initialize = async () => {
     
     await InitializeLayout().catch(err => {
         displayError(err);
-        console.log(err);
         throw err;
     })
     
@@ -40,26 +39,26 @@ const InitializeLayout = () => {
             switch (type) {
                 case 'MESSAGES':
                     
-                    loadMessages(key).catch(err => {
+                    await loadMessages(key).catch(err => {
                         return reject(err);
                     })
                     state.config.frontpage['MESSAGES'] = key;
                     break;
                 case 'NEWS':
-                    loadNews(key).catch(err => {
+                    await loadNews(key).catch(err => {
                         return reject(err);
                     });
                     state.config.frontpage['NEWS'] = key;
                     break;
                 case 'GRADES':
                     
-                    loadGrades(key).catch(err => {
+                    await loadGrades(key).catch(err => {
                         return reject(err);
                     })
                     state.config.frontpage['GRADES'] = key;
                     break;
                 case 'SCHEDULE':
-                    loadSchedule(key).catch(err => {
+                    await loadSchedule(key).catch(err => {
                         return reject(err);
                     })
                     state.config.frontpage['SCHEDULE'] = key;
@@ -90,29 +89,29 @@ const loadMessages = async (key) => {
         root.appendChild(messageRoot);
 
 
-        fetchMessages()
+        fetchMessages('inbox', 10)
             .then(list => {
+
                 list.forEach(message => {
                     const messageObject = document.createElement('div');
                     messageObject.className = 'message-object';
-                    messageObject.id = message.Id;
+                    messageObject.id = message.id;
 
                     messageObject.addEventListener('click', () => {
-                        // TODO
-                        console.log(messageObject.id);
+                        window.location =`/views/messages.html?message=${messageObject.id}`;
                     });
 
                     const subject = document.createElement('h1');
-                    subject.textContent = message.Subject;
+                    subject.textContent = message.subject;
 
                     const timestamp = document.createElement('h4');
-                    timestamp.textContent = message.TimeStamp;
+                    timestamp.textContent = message.timeStamp;
 
                     const sender = document.createElement('h4');
-                    sender.textContent = message.Sender;
+                    sender.textContent = message.senders[0].name;
 
                     const replies = document.createElement('h3');
-                    replies.textContent = message.Replies ? `${message.Replies} ${message.Replies == "1" ? 'vastaus' : 'vastausta'}` : '';
+                    replies.textContent = message.replies ? `${message.replies} ${message.replies == "1" ? 'vastaus' : 'vastausta'}` : '';
 
                     messageObject.appendChild(subject);
                     messageObject.appendChild(timestamp);
@@ -239,7 +238,7 @@ const loadNews = (key) => {
         root.appendChild(newsRoot);
 
 
-        fetchNews()
+        fetchNews('current', 10)
         .then(list => {
             Object.keys(list).forEach(date => {
                 const news = list[date];
@@ -247,9 +246,13 @@ const loadNews = (key) => {
                 news.forEach(n => {
                     const newsObject = document.createElement('div');
                     newsObject.className = 'news-object';
-
+                    
                     const titleObject = document.createElement('h1');
                     titleObject.textContent = n.title;
+                    titleObject.id = n.href;
+                    titleObject.addEventListener('click', (e) => {
+                        window.location = `/views/news.html?news=${e.target.id}`
+                    })
 
                     const dateObject = document.createElement('h4');
                     dateObject.textContent = date;

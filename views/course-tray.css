@@ -125,6 +125,8 @@ body {
     background-position: center center !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
+
+    filter: var(--background-filter);
 }
 
 .top {
@@ -378,7 +380,9 @@ body {
 /*
     course hashes
 
-    will only work for periods in:
+    "why the hell would they use different hashes for different schools, the course types are the same..."
+
+    thereforte, will only work for periods in:
     "Espoon kesälukio 2022"
     "Otaniemen lukio 2021-2022"
     "Otaniemen lukio 2022-2023"
@@ -464,7 +468,6 @@ body {
     color: white;
 }
 
-
 .tray-info {
     height: 100%;
     width: 350px;
@@ -491,6 +494,49 @@ body {
     margin: 5px;
 }
 
+.tray-info form {
+    margin: 20px;
+}
+
+.tray-info select {
+    padding: 5px;
+    margin: 5px;
+
+    background: none;
+    color: var(--font-h2);
+}
+
+.tray-info #filter-button {
+    margin: 20px;
+}
+
+.tray-info input {
+    padding: 10px;
+    margin: 5px;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    font-style: italic;
+    font-size: 15px;
+}
+
+.tray-info button {
+    padding: 7px;
+    margin: 5px;
+
+    border-radius: 3px;
+    color: white;
+    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+
+    transition: opacity .2s ease-in-out;
+}
+
+.tray-info button:hover {
+    opacity: 75%;
+}
+
+
 .tray-info .course-info,
 .tray-info .teacher-info {
     margin: 20px;
@@ -514,13 +560,4 @@ body {
 
 .tray-info ul a:nth-child(3) {
     color: var(--font-h3);
-}
-
-.tray-info .course-action {
-    padding: 7px;
-    margin: 5px;
-
-    border-radius: 3px;
-    color: white;
-    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
 }

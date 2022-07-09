@@ -29,7 +29,7 @@ const errors = {
 const displayError = (err) => {
 
     if (err.redirect) {
-        window.location = `/index.html?error=${err.status}`
+        window.location = err.info ?  `/index.html?error=${err.status}` : `/index.html`
         return;
     }
 

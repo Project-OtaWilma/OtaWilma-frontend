@@ -112,6 +112,8 @@ body {
     background-position: center center !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
+
+    filter: var(--background-filter);
 }
 
 .top {
@@ -173,6 +175,7 @@ body {
 
     background-size: cover;
     background-position: center center;
+    background-image: url(/assets/img/otakarhu.svg);
 }
 
 .top .logo-text {
@@ -445,7 +448,15 @@ body {
     font-size: 17px;
     text-align: left;
     margin: 2px;
+    cursor: pointer;
+
+    transition: opacity .2s ease-in-out;
 }
+
+.news-object h1:hover {
+    opacity: 50%;
+}
+
 
 .news-object h3 {
     padding: 5px;

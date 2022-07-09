@@ -8,6 +8,8 @@
     <title>OtaWilma - Asetukset</title>
 
     <link rel="stylesheet" href="settings.css">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon-16x16.png">
+
     <script src="settings.js"></script>
     <script src="/scripts/theme-manager.js"></script>
     <script src="/scripts/nav-manager.js"></script>
@@ -27,7 +29,6 @@
                     <h2>Opiskelija</h2>
                 </div>
             </div>
-            <div class="logo-img"></div>
             <button id="/views/frontpage.html">
                 <h1 class="logo-text">OtaWilma</h1>
             </button>
@@ -40,7 +41,7 @@
             <button id="/views/course-tray.html">
                 <h5>Kurssitarjotin</h5>
             </button>
-            <button id="/views/frontpage.html">
+            <button id="/views/news.html">
                 <h5>Tiedotteet</h5>
             </button>
             <button id="/views/settings.html">
@@ -48,7 +49,6 @@
             </button>
         </div>
         <div class="content">
-
             <div class="side-bar" id="side-bar">
 
                 <h1 class="themes">Teemat</h1>
@@ -104,7 +104,7 @@
                     </div>
                     <h1 id="own-themes">Omat teemasi</h1>
                     <div class="theme-list" id="custom-themes">
-                        <div class="theme">
+                        <div class="theme" style="order: 9999;">
                             <div class="theme-new">
                                 <h3>Luo Teema</h3>
                             </div>
@@ -117,8 +117,8 @@
                 </div>
                 <div class="backgrounds">
                     <h1 id="backgrounds">Taustakuva</h1>
+                    <h1>Esikatselu</h1>
                     <div class="preview">
-                        <h1>Esikatselu</h1>
                         <img src="" alt="" id="background-preview">
                     </div>
                     <div class="editor-disabled" id="background-editor">
@@ -169,6 +169,20 @@
                 </div>
                 <div class="connections"></div>
                 <div class="advanced"></div>
+            </div>
+            <div class="settings-help">
+                <div class="info">
+                    <h1>OtaWilma asetukset</h1>
+                    <h2>Teemat</h2>
+                    <h3>Voit valita oletusteemojen väliltä ja luoda halutessasi myös omia teemoja. Tehokkaalla
+                        editorilla voit mukauttaa Wilmasi värejä sekä taustakuvia
+                    </h3>
+                    <h2>Ota yhteyttä</h2>
+                    <h3>Onko sinulla muutosehdotuksia oletusteemaan?</h3>
+                    <h3>Onko jokin asetus jota haluaisit muokata mutta et voi</h3>
+                    <h3>Raportoi ongelmasta</h3>
+
+                </div>
             </div>
         </div>
     </div>

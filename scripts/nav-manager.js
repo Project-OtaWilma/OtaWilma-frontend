@@ -10,3 +10,7 @@ const InitializeNavBar = () => {
         })
     });
 }
+
+const redirectToWilma = (path) => {
+    window.open(`https://espoo.inschool.fi/${path}`)
+}

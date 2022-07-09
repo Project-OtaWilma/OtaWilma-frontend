@@ -7,7 +7,12 @@ const state = {
         id: null,
         theme: {}
     },
-    themes: []
+    themes: [],
+    messages: {
+        categories : {
+            current: 'inbox'
+        }
+    }
 }
 
 const fetchConfig = () => {
@@ -116,7 +121,7 @@ const loadTheme = (theme) => {
      invert(${theme.background.invert}%)
     `;
 
-    background.style.filter = filter;
+    root.style.setProperty('--background-filter', filter);
 }
 
 const fetchThemeList = () => {
@@ -266,17 +271,15 @@ const getCookie = (name) => {
 
 const hexToRgb = (hex, opacity) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
     return result ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16),
-        a: opacity / 100
+        a: opacity
     } : null;
 }
 
 const rgbToHex = (r, g, b) => '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
-
-const parseRgb = (raw) => {
-    return raw.replace(/[^\d,]/g, '').split(',');
-}
+const parseRgb = (input) => input.split("(")[1].split(")")[0].split(",").map(c => Number.parseFloat(c));
 

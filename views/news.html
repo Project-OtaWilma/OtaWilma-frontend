@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OtaWilma - Viestit</title>
+    <title>OtaWilma - Tiedotteet</title>
 
-    <link rel="stylesheet" href="messages.css">
+    <link rel="stylesheet" href="news.css">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon-16x16.png">
 
-    <script src="messages.js"></script>
+    <script src="news.js"></script>
     <script src="/scripts/requests.js"></script>
     <script src="/scripts/nav-manager.js"></script>
     <script src="/scripts/theme-manager.js"></script>
@@ -48,22 +48,18 @@
             </button>
         </div>
         <div class="content">
-            <div class="categories" id="categories">
-            </div>
-            <div class="messages" id="message-list">
-
-            </div>
-            <div class="message-content">
-                <h1 id="message-title"></h1>
-                <div class="info" id="message-info">
-
+            <div class="side-bar">
+                <div class="current" id="current">
+                    <h1>Nykyiset tiedotteet</h1>
                 </div>
-                <div class="main-content" id="message-content">
-
+                <div class="static" id="static">
+                    <h1>Pysyvät tiedotteet</h1>
                 </div>
-                <div class="responses" id="message-responses">
+                <div class="old" id="old">
+                    <h1>Vanhat tiedotteet</h1>
                 </div>
             </div>
+            <div class="news-content" id="content"></div>
         </div>
     </div>
 </body>
