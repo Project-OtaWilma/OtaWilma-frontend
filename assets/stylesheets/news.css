@@ -1,0 +1,260 @@
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    border-left: solid 10px var(--accent-main);
+
+    background-color: var(--background-main);
+}
+
+.side-bar {
+    position: absolute;
+    left: 0;
+    width: 300px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.current,
+.static,
+.old {
+    margin: 20px;
+
+    height: 30%;
+    width: 95%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-left: solid 3px var(--accent-main);
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    overflow-y: scroll;
+}
+
+
+.current h1,
+.static h1,
+.old h1 {
+    width: 90%;
+    font-size: 20px;
+    width: auto;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+
+    border-bottom: solid 1px var(--border-main);
+}
+
+.news-object-current {
+    margin: 5px;
+    padding: 10px;
+}
+
+.news-object-current h1:hover {
+    opacity: 50%;
+}
+
+
+.news-object-current h1 {
+    font-size: 17px;
+    text-align: left;
+    margin: 2px;
+
+    cursor: pointer;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.news-object-current h3 {
+    padding: 5px;
+    margin: 5px;
+
+    border-left: solid 1px var(--border-main);
+}
+
+.news-object-current h4 {
+    margin: 10px;
+}
+
+
+.news-object-static {
+    width: 80%;
+    margin: 5px;
+    padding: 10px;
+
+    cursor: pointer;
+
+    border: solid 1px var(--border-main);
+    border-radius: 7px;
+}
+
+.news-object-static:hover>h4 {
+    opacity: 100%;
+}
+
+.news-object-static h1 {
+    width: 90%;
+    font-size: 17px;
+    text-align: left;
+
+    margin: 2px;
+    padding: 10px;
+
+    pointer-events: none;
+}
+
+.news-object-static h4 {
+    padding: 10px;
+    opacity: 40%;
+
+    transition: opacity .2s ease-in-out;
+    pointer-events: none;
+}
+
+.news-content {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    height: 95%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.news-content * {
+    width: 90%;
+    padding: 5px;
+    height: auto;
+
+    color: var(--font-h2);
+
+    line-height: 1.3;
+    font-family: 'arial';
+}
+
+.news-content h1 {
+    font-size: 20px;
+    margin: 20px;
+}
+
+.news-content strong,
+.news-content b {
+    font-weight: bold;
+}
+
+.news-content .printout-footer {
+    display: none;
+}
+
+.news-content .__cf_email__ {
+    pointer-events: none;
+    color: red;
+    opacity: 30%;
+}
+
+/* error */
+
+.error {
+    color: red;
+}
+
+.error-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 30;
+    background-color: white;
+}
+
+.error-object {
+    width: 350px;
+
+    min-width: 128px;
+    min-height: 128px;
+
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 4px;
+}
+
+.error-image {
+    width: 256px;
+    height: 256px;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
+}
+
+.error-object h1 {
+    margin: 15px;
+    color: black;
+}
+
+.error-object h2 {
+    margin: 15px;
+    color: rgb(30, 30, 30);
+    text-align: center;
+}
+
+.error-object h3 {
+    color: rgb(215, 215, 215);
+    text-align: center;
+}
+
+.error-object h4 {
+    padding: 10px;
+}
+
+.error-object h7 {
+    padding: 10px;
+
+    border-radius: 7px;
+
+    background-color: rgb(47, 47, 47);
+    color: rgb(200, 60, 60);
+}
+
+.error-object h5 {
+    margin: 15px;
+    padding: 7px;
+
+    text-align: center;
+
+    border-radius: 100px;
+
+    font-family: 'semi-bold';
+    font-size: 17px;
+    color: white;
+
+    background-color: rgb(200, 60, 60);
+}

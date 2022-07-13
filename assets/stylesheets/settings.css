@@ -1,217 +1,8 @@
 * {
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none !important;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-
-    font-family: 'regular';
-    scrollbar-width: thin;
-
-    transition: color .3s ease-in-out,
-        background .3s ease-in-out,
-        opacity .3s ease-in-out,
-        border .3s ease-in-out;
-
-    border-radius: 3px !important;
-}
-
-@font-face {
-    font-family: 'semi-bold';
-    src: url(../assets/fonts/Inconsolata-SemiBold.ttf);
-}
-
-
-@font-face {
-    font-family: 'regular';
-    src: url(../assets/fonts/Inconsolata-Regular.ttf);
-}
-
-@font-face {
-    font-family: 'light';
-    src: url(../assets/fonts/Inconsolata-Light.ttf);
-}
-
-:root {}
-
-h1 {
-    color: var(--font-h1);
-    font-family: 'semi-bold';
-}
-
-h2,
-label,
-input {
-    color: var(--font-h2);
-}
-
-h3 {
-    color: var(--font-h3);
-}
-
-h4 {
-    color: var(--font-h4);
-}
-
-h5 {
-    color: var(--font-h5);
-}
-
-body {
-    background: black;
-    overflow-y: hidden;
-}
-
-/* Custom Scrollbars */
-
-::-webkit-scrollbar {
-    width: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--background-main);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--background-darker);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--background-darker-hover);
-}
-
-.loading-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    background-color: white;
-    pointer-events: none;
-    z-index: 20;
-
-    background-image: url(/assets/img/loading-book.gif);
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    transition: opacity .3s ease-in-out !important;
-}
-
-.container {
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    background-color: var(--background-main);
-}
-
-.background {
-    position: absolute;
-    width: 110%;
-    height: 110%;
-
-    background-position: center center !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-
-    filter: var(--background-filter);
-}
-
-.top {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 50px;
-
-    background-color: var(--accent-main);
-
-    display: flex;
-    align-items: center;
-
-    z-index: 2;
-}
-
-.top .user-info {
-    width: 300px;
-    height: 100%;
-
-    margin-left: 50px;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.user-info .user-data {
-    width: 90%;
-    height: 120%;
-
-    margin-bottom: -25px;
-
-    box-shadow: 0 0 15px var(--shadow-main);
-
-    background-color: var(--background-darker);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.user-info h1 {
-    font-size: 20px;
-    padding-left: 20px;
-    padding-bottom: 2px;
-}
-
-.user-info h2 {
-    font-size: 15px;
-    padding-left: 25px;
-}
-
-.top .logo-img {
-    width: 60px;
-    height: 80%;
-
-    margin-left: 10px;
-
-    background-size: cover;
-    background-position: center center;
-}
-
-.top .logo-text {
-    font-size: 30px;
-    padding: 5px;
-}
-
-.top button {
-    background: none;
-    padding: 15px;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.top h5 {
-    color: white;
-    font-size: 17px;
-    pointer-events: none;
-}
-
-.top h1 {
-    pointer-events: none;
-}
-
-.top button:hover {
-    background-color: rgba(255, 255, 255, 0.174) !important;
+    transition: color .2s ease-in-out,
+        background .2s ease-in-out,
+        opacity .2s ease-in-out,
+        border .2s ease-in-out !important;
 }
 
 .content {
@@ -225,7 +16,7 @@ body {
     flex-direction: row;
 
     border-right: solid 1px var(--border-darker);
-    border-left: solid 1px var(--border-darker);
+    border-left: solid 10px var(--accent-main);
 
     background-color: var(--background-main);
 
@@ -324,6 +115,10 @@ body {
     box-shadow: 0 0 15px var(--shadow-main);
 }
 
+.theme.selected {
+    box-shadow: 0 0 15px var(--shadow-darker);
+}
+
 .theme-background {
     width: 220px;
     height: 120px;
@@ -334,6 +129,8 @@ body {
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
+
+    pointer-events: none;
 }
 
 .theme-main {
@@ -341,16 +138,22 @@ body {
 
     width: 120px;
     height: 80px;
+
+    pointer-events: none;
 }
 
 .theme-main h1 {
     font-size: 15px;
     margin: 5px;
+
+    pointer-events: none;
 }
 
 .theme-main h2 {
     font-size: 12px;
     margin: 5px;
+
+    pointer-events: none;
 }
 
 .theme .theme-new {
@@ -364,8 +167,41 @@ body {
     justify-content: center;
 
     border-radius: 7px;
-    /*box-shadow: 0 0 15px var(--shadow-main);*/
+}
 
+
+.theme-options button:nth-child(1) {
+    background-image: url(/assets/img/edit.svg);
+}
+
+.theme-options button:nth-child(2) {
+    background-image: url(/assets/img/delete.svg);
+}
+
+.theme-options button:hover {
+    border: solid red 2px;
+}
+
+.editor-loading-screen {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+
+
+    background-image: url(/assets/img/loading-gears.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 85px 85px;
+
+    filter: brightness(0);
+
+    transition: opacity .3s ease-in-out !important;
+}
+
+.settings-content {
+    filter: none;
 }
 
 .editor-disabled {
@@ -393,7 +229,7 @@ body {
     padding: 2px;
 }
 
-.colors .color-input {
+.color-input {
     width: 54px;
     margin: 5px;
     padding: 2px;
@@ -405,7 +241,8 @@ body {
     -moz-appearance: textfield;
 }
 
-.colors .opacity-input {
+.opacity-input,
+.number-input {
     width: 45px;
     margin: 5px;
 
@@ -420,6 +257,7 @@ body {
 
     color: white;
 }
+
 
 .preview {
     width: 450px;
@@ -524,10 +362,87 @@ body {
 
 .settings-content .colors,
 .settings-content .backgrounds,
+.settings-content .theme-actions,
 .settings-content .connections,
 .settings-content .advanced {
     width: calc(100% - 250px);
     height: auto;
 
     padding: 50px;
+}
+
+.theme-actions h2 {
+    margin: 10px;
+    color: var(--error);
+    opacity: 75%;
+    cursor: pointer;
+}
+
+.theme-actions h2:hover {
+    opacity: 100%;
+}
+
+.removal-popup {
+    position: fixed;
+    width: 300px;
+    height: 200px;
+
+    padding: 10px;
+
+    background-color: var(--background-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    left: calc((100% - 300px) / 2);
+    top: calc((100% - 200px) / 2);
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.removal-popup .img {
+    width: 65px;
+    height: 65px;
+
+    margin: 10px;
+
+    background-image: url(/assets/img/delete.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.removal-popup h1 {
+    width: 85%;
+    text-align: center;
+    margin: 5px;
+
+    color: var(--error);
+}
+
+.removal-popup h3 {
+    width: 85%;
+    text-align: center;
+    margin: 5px;
+}
+
+.removal-popup h3 strong {
+    color: var(--error);
+}
+
+.removal-popup button {
+    padding: 7px;
+    margin: 5px;
+
+    border-radius: 3px;
+    color: white;
+    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+
+    transition: opacity .2s ease-in-out;
+}
+
+.removal-popup button:hover {
+    opacity: 75%;
 }

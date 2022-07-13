@@ -190,8 +190,18 @@ const fetchGradeBook = (filter) => {
 
 const fectchCourseList = () => {
     return new Promise((resolve, reject) => {
+        const url = 'http://localhost:3001/api/lops/courses/list';
+        
+        if(cacheAvailable) {
+            loadCache('course-cache', url)
+            .then(theme => {
+                console.warn('Loaded course-list from cache')
+                return resolve(theme);
+            })
+            .catch(() => {})
+        }
 
-        fetch('http://localhost:3001/api/lops/courses/list', {
+        fetch(url, {
             method: 'GET'
         })
             .then(async (res) => {
@@ -200,6 +210,7 @@ const fectchCourseList = () => {
 
                 switch (res.status) {
                     case 200:
+                        appendCache('course-cache', url);
                         return resolve(json);
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })
@@ -221,8 +232,18 @@ const fectchCourseList = () => {
 
 const fetchCourse = (id) => {
     return new Promise((resolve, reject) => {
+        const url = `http://localhost:3001/api/lops/courses/get/${id}`;
+        
+        if(cacheAvailable) {
+            loadCache('course-cache', url)
+            .then(theme => {
+                console.warn('Loaded course from cache')
+                return resolve(theme);
+            })
+            .catch(() => {})
+        }
 
-        fetch(`http://localhost:3001/api/lops/courses/get/${id}`, {
+        fetch(url, {
             method: 'GET'
         })
             .then(async (res) => {
@@ -230,6 +251,7 @@ const fetchCourse = (id) => {
 
                 switch (res.status) {
                     case 200:
+                        appendCache('course-cache', url)
                         return resolve(json);
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })

@@ -1,11 +1,12 @@
-
+const cacheAvailable = 'caches' in window;
 const defaults = ['light', 'dark'];
 
 const state = {
     config: {},
     current: {
         id: null,
-        theme: {}
+        theme: {},
+        element: null
     },
     themes: [],
     messages: {
@@ -18,17 +19,28 @@ const state = {
 const fetchConfig = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+        const url = `http://localhost:3000/api/sessions/config/get/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
 
-        fetch(`http://localhost:3000/api/sessions/config/get/${session}`)
+        if(cacheAvailable) {
+            loadCache('config-cache', url)
+            .then(config => {
+                console.warn('Loaded config from cache')
+                return resolve(config);
+            })
+            .catch(() => {})
+        }
+
+        fetch(url)
             .then(async (res) => {
                 const json = await res.json();
 
                 switch (res.status) {
                     case 200:
+                        appendCache('config-cache', url);
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid request", error: json, status: 400 })
@@ -44,21 +56,31 @@ const fetchConfig = () => {
     });
 }
 
-
 const fetchTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
 
-        fetch(`http://localhost:3000/api/themes/get/${session}/${id}`)
+        if(cacheAvailable) {
+            loadCache('theme-cache', url)
+            .then(theme => {
+                console.warn(`Loaded theme from cache: ${url.split('/').reverse()[0]}`)
+                return resolve(theme);
+            })
+            .catch(() => {})
+        }
+
+        fetch(url)
             .then(async (res) => {
                 const json = await res.json();
 
                 switch (res.status) {
                     case 200:
+                        appendCache('theme-cache', url);
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid request", error: json, status: 400 })
@@ -74,14 +96,14 @@ const fetchTheme = (id) => {
     });
 }
 
+
 const InitializeThemes = () => {
     return new Promise((resolve, reject) => {
-
         fetchConfig()
             .then(config => {
                 state.config = config;
                 state.current.id = config['current-theme'];
-
+                
                 fetchTheme(state.current.id)
                     .then(theme => {
                         state.current.theme = theme;
@@ -98,27 +120,29 @@ const InitializeThemes = () => {
     })
 }
 
+
+
 const loadTheme = (theme) => {
     const root = document.documentElement;
     const background = document.getElementById('background');
     const colors = Object.keys(theme.colors);
 
     colors.forEach(key => {
-        root.style.setProperty(key, theme.colors[key]);
+        root.style.setProperty(key, theme.colors[key].value);
     });
 
-    background.style.background = `url(${theme.background.url})`;
+    background.style.background = `url(${theme.background.url.value})`;
 
     const filter = `
-    blur(${theme.background.blur}px)
-     opacity(${theme.background.opacity}%)
-     brightness(${theme.background.brightness}%)
-     contrast(${theme.background.contrast}%)
-     saturate(${theme.background.saturate}%)
-     grayscale(${theme.background.grayscale}%)
-     sepia(${theme.background.sepia}%)
-     hue-rotate(${theme.background['hue-rotate']}deg)
-     invert(${theme.background.invert}%)
+    blur(${theme.background.blur.value}px)
+     opacity(${theme.background.opacity.value}%)
+     brightness(${theme.background.brightness.value}%)
+     contrast(${theme.background.contrast.value}%)
+     saturate(${theme.background.saturate.value}%)
+     grayscale(${theme.background.grayscale.value}%)
+     sepia(${theme.background.sepia.value}%)
+     hue-rotate(${theme.background['hue-rotate'].value}deg)
+     invert(${theme.background.invert.value}%)
     `;
 
     root.style.setProperty('--background-filter', filter);
@@ -127,17 +151,30 @@ const loadTheme = (theme) => {
 const fetchThemeList = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+        const url = `http://localhost:3000/api/themes/list/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
 
-        fetch(`http://localhost:3000/api/themes/list/${session}`)
+        
+        if(cacheAvailable) {
+            loadCache('theme-cache', url)
+            .then(config => {
+                console.warn('Loaded theme-list from cache')
+                return resolve(config);
+            })
+            .catch(() => {})
+        }
+        
+
+        fetch(url)
             .then(async (res) => {
                 const json = await res.json();
 
                 switch (res.status) {
                     case 200:
+                        appendCache('theme-cache', url);
                         return resolve(json);
                     case 400:
                         return reject({ err: "Invalid session identifier", error: res.status })
@@ -156,10 +193,13 @@ const fetchThemeList = () => {
 const setTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+        const url = `http://localhost:3000/api/sessions/config/get/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
+
+        if(cacheAvailable) removeCache('config-cache', url);
 
         fetch(`http://localhost:3000/api/sessions/config/current-theme/set/${session}`, {
             method: 'POST',
@@ -189,13 +229,95 @@ const setTheme = (id) => {
     });
 }
 
-const editThemeColors = (id, key, value) => {
+const createTheme = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+        const url = `http://localhost:3000/api/sessions/config/get/${session}`;
+        const list = `http://localhost:3000/api/themes/list/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
+
+        if(cacheAvailable) removeCache('config-cache', url);
+        if(cacheAvailable) removeCache('theme-cache', list);
+
+        fetch(`http://localhost:3000/api/themes/create/${session}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: "Invalid session identifier", error: res.status })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                    default:
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
+            })
+    });
+}
+
+const deleteTheme = (id) => {
+    return new Promise((resolve, reject) => {
+        const session = getCookie('session');
+        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
+        const config = `http://localhost:3000/api/sessions/config/get/${session}`;
+        const list = `http://localhost:3000/api/themes/list/${session}`;
+
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
+        if(cacheAvailable) removeCache('theme-cache', url);
+        if(cacheAvailable) removeCache('config-cache', config);
+        if(cacheAvailable) removeCache('theme-cache', list);
+
+        fetch(`http://localhost:3000/api/themes/remove/${session}/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: "Invalid session identifier", error: res.status })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                    default:
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
+            })
+    });
+}
+
+const editThemeColors = (id, key, value) => {
+    return new Promise((resolve, reject) => {
+        const session = getCookie('session');
+        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
+        const list = `http://localhost:3000/api/themes/list/${session}`;
+
+
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400 });
+        }
+
+        if(cacheAvailable) removeCache('theme-cache', url);
+        if(cacheAvailable) removeCache('theme-cache', list);
 
         fetch(`http://localhost:3000/api/themes/edit/colors/${session}/${id}`, {
             method: 'POST',
@@ -229,10 +351,17 @@ const editThemeColors = (id, key, value) => {
 const editThemeBackground = (id, key, value) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
+        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
+        const list = `http://localhost:3000/api/themes/list/${session}`;
+
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400 });
         }
+
+        if(cacheAvailable) removeCache('theme-cache', url);
+        if(cacheAvailable) removeCache('theme-cache', list);
+
 
         fetch(`http://localhost:3000/api/themes/edit/background/${session}/${id}`, {
             method: 'POST',
@@ -267,6 +396,75 @@ const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+const loadCache = (cache, path) => {
+    return new Promise((resolve, reject) => {
+        caches.open(cache)
+        .then(cache => {
+
+            cache.match(path).then(async (res) => {
+
+                if(!res) return reject({err: "Resource doesn't exists in cache"})
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    default:
+                        cache.delete(path);
+                        return reject({err: "Resource doesn't exists in cache"})
+                }
+            })
+            .catch(() => {
+                cache.delete(path);
+                return reject({err: 'Failed to access cached resource', status: 500.3});
+            })
+        })
+        .catch(() => {
+            return reject({ err: 'Failed to acess cache', status: 500.3 });
+        })
+    });
+}
+
+const appendCache = (cache, path) => {
+    return new Promise((resolve, reject) => {
+        caches.open(cache)
+        .then(cache => {
+
+            cache.add(path).then(() => {
+                return resolve();
+            })
+            .catch(err => {
+                console.log(err);
+                return reject({err: 'Failed to add cache resource', status: 500.3});
+            })
+
+        })
+        .catch(() => {
+            return reject({ err: 'Failed to acess cache', status: 500.3 });
+        })
+    });
+}
+
+const removeCache = (cache, path) => {
+    return new Promise((resolve, reject) => {
+        caches.open(cache)
+        .then(cache => {
+
+            cache.delete(path).then(() => {
+                return resolve();
+            })
+            .catch(() => {
+                return reject({err: 'Failed to delete cached resource', status: 500.3});
+            })
+
+        })
+        .catch(() => {
+            return reject({ err: 'Failed to acess cache', status: 500.3 });
+        })
+    });
 }
 
 const hexToRgb = (hex, opacity) => {

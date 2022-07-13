@@ -1,3 +1,8 @@
+window.addEventListener('unhandledrejection', function (e) {
+    displayError({err: 'Failed to render the page', status: 500.3, info: e.reason.message});
+})
+
+
 const errors = {
     503: {
         status: 'Palvelin',
@@ -13,6 +18,11 @@ const errors = {
         status: 'OtaWilma',
         name: 'Sisäinen palvelinvirhe',
         description: 'OtaWilman palvelin epäonnistui pyyntösi käsittelyssä. Ilmoita ongelmasta kehittäjälle'
+    },
+    500.3: {
+        status: 'OtaWilma',
+        name: 'Selainpuolen virhe',
+        description: 'Sivun lataus epäonnistui tuntemattomista syistä. Ilmoita ongelmasta kehittäjälle'
     },
     400: {
         status: 'Pyynnöt',
@@ -79,3 +89,4 @@ const displayError = (err) => {
     root.appendChild(error);
     document.body.appendChild(root);
 }
+

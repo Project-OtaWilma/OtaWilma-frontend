@@ -1,225 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none !important;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-
-    font-family: 'regular';
-    scrollbar-width: thin;
-}
-
-@font-face {
-    font-family: 'semi-bold';
-    src: url(../assets/fonts/Inconsolata-SemiBold.ttf);
-}
-
-
-@font-face {
-    font-family: 'regular';
-    src: url(../assets/fonts/Inconsolata-Regular.ttf);
-}
-
-@font-face {
-    font-family: 'light';
-    src: url(../assets/fonts/Inconsolata-Light.ttf);
-}
-
-:root {
-    --L2021-mandatory-main: #BFFFBF;
-    --L2021-mandatory-selected: #266626;
-    --L2021-g-optional-main: #80FFFF;
-    --L2021-g-optional-selected: #006666;
-    --L2021-l-optional-main: #8080C0;
-    --L2021-l-optional-selected: #000027;
-    --L2021-diploma-main: #BFBFFF;
-    --L2021-diploma-selected: #00009B;
-
-    --L2016-l-optional-main: #E8E8FF;
-    --L2016-l-optional-selected: #4F4F66;
-    --L2016-g-optional-main: #FFC1C1;
-    --L2016-g-optional-selected: #662828;
-}
-
-h1 {
-    color: var(--font-h1);
-    font-family: 'semi-bold';
-}
-
-h2,
-a {
-    color: var(--font-h2);
-}
-
-h3 {
-    color: var(--font-h3);
-}
-
-h4 {
-    color: var(--font-h4);
-}
-
-h5 {
-    color: var(--font-h5);
-}
-
-body {
-    overflow-y: hidden;
-}
-
-/* Custom Scrollbars */
-
-::-webkit-scrollbar {
-    width: 5px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--background-main);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--background-darker);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--background-darker-hover);
-}
-
-.loading-screen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    background-color: white;
-    pointer-events: none;
-    z-index: 20;
-
-    background-image: url(/assets/img/loading-book.gif);
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    transition: opacity .3s ease-in-out !important;
-}
-
-.container {
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    background-color: var(--background-main);
-}
-
-.background {
-    position: absolute;
-    width: 110%;
-    height: 110%;
-
-    background-position: center center !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-
-    filter: var(--background-filter);
-}
-
-.top {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 50px;
-
-    background-color: var(--accent-main);
-
-    display: flex;
-    align-items: center;
-
-    z-index: 2;
-}
-
-.top .user-info {
-    width: 300px;
-    height: 100%;
-
-    margin-left: 50px;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.user-info .user-data {
-    width: 90%;
-    height: 120%;
-
-    margin-bottom: -25px;
-
-    background-color: var(--background-darker);
-
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.155);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.user-info h1 {
-    font-size: 20px;
-    padding-left: 20px;
-    padding-bottom: 2px;
-}
-
-.user-info h2 {
-    font-size: 15px;
-    padding-left: 25px;
-}
-
-.top .logo-img {
-    width: 60px;
-    height: 80%;
-
-    margin-left: 10px;
-
-    background-size: cover;
-    background-position: center center;
-}
-
-.top .logo-text {
-    color: white;
-    font-size: 30px;
-    padding: 5px;
-}
-
-.top button {
-    background: none;
-    padding: 15px;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.top h5 {
-    color: white;
-    font-size: 17px;
-    pointer-events: none;
-}
-
-.top h1 {
-    pointer-events: none;
-}
-
-.top button:hover {
-    background-color: rgba(255, 255, 255, 0.174) !important;
-}
-
 .content {
     position: absolute;
     width: 75%;
@@ -371,10 +149,9 @@ body {
     color: white;
 }
 
-.course-list div#selected {
-    background-color: rgb(0, 107, 107);
-    border: solid 2px black;
-    color: white;
+.course-list div {
+    color: var(--course-tray-h1);
+    padding: 4px;
 }
 
 /*
@@ -395,7 +172,7 @@ body {
 
     border: solid 1px gray;
     box-shadow: none;
-    color: rgb(90, 90, 90);
+    color: rgb(90, 90, 90) !important;
 
     pointer-events: none;
 }
@@ -432,7 +209,7 @@ body {
     border: solid 3px black;
 
     box-shadow: none;
-    color: white;
+    color: white !important;
 }
 
 .k70F27363_35249-on {
@@ -440,7 +217,7 @@ body {
     border: solid 3px black;
 
     box-shadow: none;
-    color: white;
+    color: white !important;
 }
 
 .k70F27363_35253-on,
@@ -449,7 +226,7 @@ body {
     border: solid 3px black;
 
     box-shadow: none;
-    color: white;
+    color: white !important;
 }
 
 .k70F27363_35763-on {
@@ -457,7 +234,7 @@ body {
     border: solid 3px black;
 
     box-shadow: none;
-    color: white;
+    color: white !important;
 }
 
 .k70F27363_35783-on {
@@ -465,7 +242,7 @@ body {
     border: solid 3px black;
 
     box-shadow: none;
-    color: white;
+    color: white !important;
 }
 
 .tray-info {
@@ -560,4 +337,93 @@ body {
 
 .tray-info ul a:nth-child(3) {
     color: var(--font-h3);
+}
+
+/* error */
+
+.error {
+    color: red;
+}
+
+.error-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 30;
+    background-color: white;
+}
+
+.error-object {
+    width: 350px;
+
+    min-width: 128px;
+    min-height: 128px;
+
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 4px;
+}
+
+.error-image {
+    width: 256px;
+    height: 256px;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
+}
+
+.error-object h1 {
+    margin: 15px;
+    color: black;
+}
+
+.error-object h2 {
+    margin: 15px;
+    color: rgb(30, 30, 30);
+    text-align: center;
+}
+
+.error-object h3 {
+    color: rgb(215, 215, 215);
+    text-align: center;
+}
+
+.error-object h4 {
+    padding: 10px;
+}
+
+.error-object h7 {
+    padding: 10px;
+
+    border-radius: 7px;
+
+    background-color: rgb(47, 47, 47);
+    color: rgb(200, 60, 60);
+}
+
+.error-object h5 {
+    margin: 15px;
+    padding: 7px;
+
+    text-align: center;
+
+    border-radius: 100px;
+
+    font-family: 'semi-bold';
+    font-size: 17px;
+    color: white;
+
+    background-color: rgb(200, 60, 60);
 }

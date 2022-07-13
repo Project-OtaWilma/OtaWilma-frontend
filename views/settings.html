@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OtaWilma - Asetukset</title>
 
-    <link rel="stylesheet" href="settings.css">
-    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/assets/stylesheets/style.css">
+    <link rel="stylesheet" href="/assets/stylesheets/settings.css">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon.ico">
 
-    <script src="settings.js"></script>
-    <script src="/scripts/theme-manager.js"></script>
-    <script src="/scripts/nav-manager.js"></script>
-    <script src="/scripts/error-manager.js"></script>
+    <script src="/assets/scripts/settings.js"></script>
+    <script src="/assets/scripts/theme-manager.js"></script>
+    <script src="/assets/scripts/nav-manager.js"></script>
+    <script src="/assets/scripts/error-manager.js"></script>
 </head>
 
 <body>
@@ -89,6 +90,9 @@
                 <h3>Värin taitto</h3>
                 <h3>Käänteisväri</h3>
 
+                <h1 class="theme-options">Teeman toiminnot</h1>
+                <h2>Poista teema</h2>
+
                 <h1>Yhteydet</h1>
                 <h2>Jaa lukujärjestyksesi</h2>
                 <h2>Jaa kurssivalintasi</h2>
@@ -97,6 +101,7 @@
                 <h2>Lähdekoodi</h2>
                 <h2>Kustomoitu CSS</h2>
             </div>
+            <div class="editor-loading-screen" id="editor-loading-screen"></div>
             <div class="settings-content" id="content">
                 <div class="colors">
                     <h1 id="themes">Teemat</h1>
@@ -104,7 +109,7 @@
                     </div>
                     <h1 id="own-themes">Omat teemasi</h1>
                     <div class="theme-list" id="custom-themes">
-                        <div class="theme" style="order: 9999;">
+                        <div class="theme" style="order: 9999;" id="new-theme">
                             <div class="theme-new">
                                 <h3>Luo Teema</h3>
                             </div>
@@ -131,40 +136,55 @@
                         <h1 id="background-effects">Taustakuvan tehosteet</h1>
                         <form>
                             <label>Sumennus |&nbsp;</label>
-                            <input type="number" id="blur" min="0" value="0">
+                            <input class="number-input" type="number" id="blur" min="0" value="0">
                         </form>
                         <form>
                             <label>Läpinäkyvyys |&nbsp;</label>
-                            <input type="number" id="opacity" min="0" value="0">
+                            <input class="number-input" type="number" id="opacity" min="0" value="0">
                         </form>
                         <form>
                             <label>Kirkkaus |&nbsp;</label>
-                            <input type="number" id="brightness" min="0" value="0">
+                            <input class="number-input" type="number" id="brightness" min="0" value="0">
                         </form>
                         <form>
                             <label>Kontrasti |&nbsp;</label>
-                            <input type="number" id="contrast" min="0" value="0">
+                            <input class="number-input" type="number" id="contrast" min="0" value="0">
                         </form>
                         <form>
                             <label>Saturaatio |&nbsp;</label>
-                            <input type="number" id="saturate" min="0" value="0">
+                            <input class="number-input" type="number" id="saturate" min="0" value="0">
                         </form>
                         <form>
                             <label>Harmaasävyt |&nbsp;</label>
-                            <input type="number" id="grayscale" min="0" value="0">
+                            <input class="number-input" type="number" id="grayscale" min="0" value="0">
                         </form>
                         <form>
                             <label>Seepia |&nbsp;</label>
-                            <input type="number" id="sepia" min="0" value="0">
+                            <input class="number-input" type="number" id="sepia" min="0" value="0">
                         </form>
                         <form>
                             <label>Värin taitto |&nbsp;</label>
-                            <input type="number" id="hue-rotate" min="-180" max="180" value="0">
+                            <input class="number-input" type="number" id="hue-rotate" min="-180" max="180" value="0">
                         </form>
                         <form>
                             <label>Käänteisväri |&nbsp;</label>
-                            <input type="number" id="invert" min="0" value="0">
+                            <input class="number-input" type="number" id="invert" min="0" value="0">
                         </form>
+                        <form>
+                            <label>Reunojen pyöristys |&nbsp;</label>
+                            <input class="number-input" type="number" id="rounded-edges" min="0" value="0">
+                        </form>
+                    </div>
+                </div>
+                <div class="theme-actions">
+                    <h1 class="theme-options">Teeman toiminnot</h1>
+                    <h2 id="delete-theme">Poista Teema</h2>
+                    <div class="removal-popup" id="removal-confirmation">
+                        <div class="img"></div>
+                        <h1>Oletko varma että haluat poistaa teeman?</h1>
+                        <h3>Toimintoa <strong>ei</strong> voida perua.</h3>
+                        <button id="confirm-delete">Poista Teema</button>
+                        <h2 id="cancel-delete">Peruuta</h2>
                     </div>
                 </div>
                 <div class="connections"></div>

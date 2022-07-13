@@ -10,15 +10,15 @@ const Initialize = async () => {
         throw err;
     })
 
-    /* Load layout afterwards to seemingly increase loading speeds */
-    document.getElementById('loading').style.opacity = 0;
-
+    
     
     await InitializeLayout().catch(err => {
         displayError(err);
         throw err;
     })
     
+    /* Load layout afterwards to seemingly increase loading speeds */
+    document.getElementById('loading').style.opacity = 0;
 }
 
 const InitializeLayout = () => {
@@ -254,10 +254,10 @@ const loadNews = (key) => {
                         window.location = `/views/news.html?news=${e.target.id}`
                     })
 
-                    const dateObject = document.createElement('h4');
+                    const dateObject = document.createElement('h2');
                     dateObject.textContent = date;
 
-                    const senderObject = document.createElement('h4');
+                    const senderObject = document.createElement('h2');
                     senderObject.textContent = n.sender.name;
 
                     const descriptionObject = document.createElement('h3');
