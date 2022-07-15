@@ -1,5 +1,6 @@
 const cacheAvailable = 'caches' in window;
 const defaults = ['light', 'dark'];
+const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api'
 
 const state = {
     config: {},
@@ -23,7 +24,7 @@ const state = {
 const fetchConfig = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/sessions/config/get/${session}`;
+        const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true});
@@ -62,7 +63,7 @@ const fetchConfig = () => {
 
 const fetchDefaultTheme = (id) => {
     return new Promise((resolve, reject) => {
-        const url = `http://localhost:3000/api/themes/defaults/get/${id}`;
+        const url = `${otaWilmaAPi}/themes/defaults/get/${id}`;
 
         if(cacheAvailable) {
             loadCache('theme-cache', url)
@@ -98,7 +99,7 @@ const fetchDefaultTheme = (id) => {
 const fetchTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
+        const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
@@ -202,7 +203,7 @@ const loadTheme = (theme) => {
 const fetchThemeList = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/themes/list/${session}`;
+        const url = `${otaWilmaAPi}/themes/list/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
@@ -244,7 +245,7 @@ const fetchThemeList = () => {
 const setTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/sessions/config/get/${session}`;
+        const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
@@ -252,7 +253,7 @@ const setTheme = (id) => {
 
         if(cacheAvailable) removeCache('config-cache', url);
 
-        fetch(`http://localhost:3000/api/sessions/config/current-theme/set/${session}`, {
+        fetch(`${otaWilmaAPi}/sessions/config/current-theme/set/${session}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -283,8 +284,8 @@ const setTheme = (id) => {
 const createTheme = () => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/sessions/config/get/${session}`;
-        const list = `http://localhost:3000/api/themes/list/${session}`;
+        const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
+        const list = `${otaWilmaAPi}/themes/list/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
@@ -293,7 +294,7 @@ const createTheme = () => {
         if(cacheAvailable) removeCache('config-cache', url);
         if(cacheAvailable) removeCache('theme-cache', list);
 
-        fetch(`http://localhost:3000/api/themes/create/${session}`, {
+        fetch(`${otaWilmaAPi}/themes/create/${session}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -320,9 +321,9 @@ const createTheme = () => {
 const deleteTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
-        const config = `http://localhost:3000/api/sessions/config/get/${session}`;
-        const list = `http://localhost:3000/api/themes/list/${session}`;
+        const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
+        const config = `${otaWilmaAPi}/sessions/config/get/${session}`;
+        const list = `${otaWilmaAPi}/themes/list/${session}`;
 
         if (!session) {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
@@ -332,7 +333,7 @@ const deleteTheme = (id) => {
         if(cacheAvailable) removeCache('config-cache', config);
         if(cacheAvailable) removeCache('theme-cache', list);
 
-        fetch(`http://localhost:3000/api/themes/remove/${session}/${id}`, {
+        fetch(`${otaWilmaAPi}/themes/remove/${session}/${id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -359,8 +360,8 @@ const deleteTheme = (id) => {
 const editThemeColors = (id, key, value) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
-        const list = `http://localhost:3000/api/themes/list/${session}`;
+        const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
+        const list = `${otaWilmaAPi}/themes/list/${session}`;
 
 
         if (!session) {
@@ -370,7 +371,7 @@ const editThemeColors = (id, key, value) => {
         if(cacheAvailable) removeCache('theme-cache', url);
         if(cacheAvailable) removeCache('theme-cache', list);
 
-        fetch(`http://localhost:3000/api/themes/edit/colors/${session}/${id}`, {
+        fetch(`${otaWilmaAPi}/themes/edit/colors/${session}/${id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -402,8 +403,8 @@ const editThemeColors = (id, key, value) => {
 const editThemeBackground = (id, key, value) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
-        const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
-        const list = `http://localhost:3000/api/themes/list/${session}`;
+        const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
+        const list = `${otaWilmaAPi}/themes/list/${session}`;
 
 
         if (!session) {
@@ -414,7 +415,7 @@ const editThemeBackground = (id, key, value) => {
         if(cacheAvailable) removeCache('theme-cache', list);
 
 
-        fetch(`http://localhost:3000/api/themes/edit/background/${session}/${id}`, {
+        fetch(`${otaWilmaAPi}/themes/edit/background/${session}/${id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

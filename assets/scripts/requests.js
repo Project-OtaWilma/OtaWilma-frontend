@@ -1,3 +1,6 @@
+const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
+// const wilmaAPI = 'http://localhost:3001/api/';
+
 const fetchMessages = (path, limit) => {
     return new Promise((resolve, reject) => {
         const Wilma2SID = getCookie('Wilma2SID');
@@ -6,7 +9,7 @@ const fetchMessages = (path, limit) => {
             return reject({ err: 'Missing Wilma2SID', error: 401, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/messages/${path}/?limit=${limit}`, {
+        fetch(`${wilmaAPI}messages/${path}/?limit=${limit}`, {
             headers: {
                 'Wilma2SID': Wilma2SID
             }
@@ -44,7 +47,7 @@ const fetchMessageContent = (hash) => {
             return reject({ err: 'Missing Wilma2SID', error: 401, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/messages/${hash}`, {
+        fetch(`${wilmaAPI}messages/${hash}`, {
             headers: {
                 'Wilma2SID': Wilma2SID
             }
@@ -82,7 +85,7 @@ const fetchNews = (path, limit) => {
             return reject({ err: 'Missing Wilma2SID', error: 401, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/news/${path}?limit=${limit}`, {
+        fetch(`${wilmaAPI}/news/${path}?limit=${limit}`, {
             headers: {
                 'Wilma2SID': Wilma2SID
             }
@@ -120,7 +123,7 @@ const fetchNewsContent = (hash) => {
             return reject({ err: 'Missing Wilma2SID', error: 401, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/news/${hash}`, {
+        fetch(`${wilmaAPI}news/${hash}`, {
             headers: {
                 'Wilma2SID': Wilma2SID
             }
@@ -158,7 +161,7 @@ const fetchGradeBook = (filter) => {
             return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/gradebook/?filter=${filter}`, {
+        fetch(`${wilmaAPI}gradebook/?filter=${filter}`, {
             headers: {
                 'Wilma2SID': Wilma2SID
             }
@@ -190,7 +193,7 @@ const fetchGradeBook = (filter) => {
 
 const fectchCourseList = () => {
     return new Promise((resolve, reject) => {
-        const url = 'http://localhost:3001/api/lops/courses/list';
+        const url = `${wilmaAPI}lops/courses/list`;
         
         if(cacheAvailable) {
             loadCache('course-cache', url)
@@ -232,7 +235,7 @@ const fectchCourseList = () => {
 
 const fetchCourse = (id) => {
     return new Promise((resolve, reject) => {
-        const url = `http://localhost:3001/api/lops/courses/get/${id}`;
+        const url = `${wilmaAPI}lops/courses/get/${id}`;
         
         if(cacheAvailable) {
             loadCache('course-cache', url)
@@ -285,7 +288,7 @@ const fetchSchedule = (date = Date) => {
             return reject({ err: 'Missing StudentID', status: 400 });
         }
 
-        fetch(`http://localhost:3001/api/schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`, {
+        fetch(`${wilmaAPI}schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`, {
             method: 'GET',
             headers: {
                 Wilma2SID: Wilma2SID,
@@ -325,7 +328,7 @@ const fetchTrayList = () => {
             return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/course-tray/list`, {
+        fetch(`${wilmaAPI}course-tray/list`, {
             method: 'GET',
             headers: {
                 Wilma2SID: Wilma2SID
@@ -371,7 +374,7 @@ const fetchPeriod = (hash) => {
 
 
 
-        fetch(`http://localhost:3001/api/course-tray/${hash}`, {
+        fetch(`${wilmaAPI}course-tray/${hash}`, {
             method: 'GET',
             headers: {
                 Wilma2SID: Wilma2SID,
@@ -406,7 +409,7 @@ const fetchPeriod = (hash) => {
 const fetchTrayCourse = (hash) => {
     return new Promise((resolve, reject) => {
         const Wilma2SID = getCookie('Wilma2SID');
-        const url = `http://localhost:3001/api/course-tray/courses/${hash}`;
+        const url = `${wilmaAPI}course-tray/courses/${hash}`;
 
         if (!Wilma2SID) {
             return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
@@ -451,7 +454,7 @@ const fetchTrayCourseInfo = (hash) => {
             return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
         }
 
-        fetch(`http://localhost:3001/api/course-tray/courses/info/${hash}`, {
+        fetch(`${wilmaAPI}course-tray/courses/info/${hash}`, {
             method: 'GET',
             headers: {
                 Wilma2SID: Wilma2SID,
@@ -497,7 +500,7 @@ const CourseTraySelect = (hash) => {
 
 
 
-        fetch(`http://localhost:3001/api/course-tray/select/${hash}`, {
+        fetch(`${wilmaAPI}course-tray/select/${hash}`, {
             method: 'POST',
             headers: {
                 Wilma2SID: Wilma2SID,
@@ -546,7 +549,7 @@ const CourseTrayDeselect = (hash) => {
 
 
 
-        fetch(`http://localhost:3001/api/course-tray/deselect/${hash}`, {
+        fetch(`${wilmaAPI}course-tray/deselect/${hash}`, {
             method: 'POST',
             headers: {
                 Wilma2SID: Wilma2SID,

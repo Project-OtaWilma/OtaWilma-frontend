@@ -1,7 +1,7 @@
 
 const Login = (credentials = { username: String, password: String }) => {
     return new Promise(async (resolve, reject) => {
-        fetch('http://localhost:3001/api/login/', {
+        fetch('https://wilma-api.tuukk.dev/api/login/', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials)
@@ -32,7 +32,7 @@ const Login = (credentials = { username: String, password: String }) => {
 
 const validateOtaWilmaAccount = (hash) => {
     return new Promise((resolve, reject) => {
-        fetch(`http://localhost:3000/api/sessions/config/get/${hash}`)
+        fetch(`https://otawilma-api.tuukk.dev/api/sessions/config/get/${hash}`)
         .then(async (res) => {
             const json = await res.json();
     
@@ -51,7 +51,7 @@ const validateOtaWilmaAccount = (hash) => {
 
 const createAccout = () => {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3000/api/sessions/config/create',
+        fetch('https://otawilma-api.tuukk.dev/api/sessions/config/create',
         {
             method: 'POST'
         })
