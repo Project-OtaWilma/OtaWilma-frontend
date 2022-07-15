@@ -12,6 +12,11 @@
 }
 
 @font-face {
+    font-family: 'bold';
+    src: url(../fonts/Inconsolata-Bold.ttf);
+}
+
+@font-face {
     font-family: 'semi-bold';
     src: url(../fonts/Inconsolata-SemiBold.ttf);
 }
@@ -22,10 +27,6 @@
     src: url(../fonts/Inconsolata-Regular.ttf);
 }
 
-@font-face {
-    font-family: 'light';
-    src: url(../fonts/Inconsolata-Light.ttf);
-}
 
 /* Custom Scrollbars */
 
@@ -118,6 +119,7 @@ body {
     background-repeat: no-repeat !important;
 
     filter: var(--background-filter);
+    pointer-events: none;
 }
 
 .top {
@@ -200,4 +202,20 @@ body {
 
 .top button:hover {
     background-color: rgba(255, 255, 255, 0.174) !important;
+}
+
+.disclaimer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 1580px) {
+    .container {
+        display: none;
+    }
 }

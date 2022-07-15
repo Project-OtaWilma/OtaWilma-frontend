@@ -1,98 +1,9 @@
-* {
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none !important;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-
-    font-family: 'regular';
-}
-
-@font-face {
-    font-family: 'semi-bold';
-    src: url(./assets/fonts/Inconsolata-SemiBold.ttf);
-}
-
-
-@font-face {
-    font-family: 'regular';
-    src: url(./assets/fonts/Inconsolata-Regular.ttf);
-}
-
-@font-face {
-    font-family: 'light';
-    src: url(./assets/fonts/Inconsolata-Light.ttf);
-}
-
-
-:root {
-    --accent-main: #003366;
-
-    --background-main: rgb(255, 255, 255);
-    --background-darker: rgb(239, 240, 243);
-
-    --font-h1: #003366;
-    --font-h2: rgb(23, 23, 23);
-    --font-h3: rgb(223, 223, 223);
-
-    --login-main: #4D8500;
-    --login-lighter: rgb(41, 163, 41);
-    --error: rgb(213, 50, 50);
-}
-
-h1 {
-    color: var(--font-h1);
-    font-family: 'semi-bold';
-}
-
-h2 {
-    color: var(--font-h2);
-}
-
-h3 {
-    color: var(--font-h3);
-}
-
-.container {
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.top {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 50px;
-
-    background-color: var(--accent-main);
-
-    display: flex;
-    align-items: center;
-}
-
-.logo-img {
-    width: 60px;
-    height: 80%;
-
-    margin-left: 10px;
-
-    background-size: cover;
-    background-position: center center;
-}
-
-.logo-text {
-    color: white;
+.top .logo-text {
+    color: var(--font-h4);
     font-size: 30px;
     padding: 5px;
+
+    margin-left: 20px;
 }
 
 .detail {
@@ -101,6 +12,186 @@ h3 {
 
     background-color: var(--accent-main);
 }
+
+.container {
+    flex-direction: row !important;
+}
+
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    max-width: 1300px;
+
+    display: flex;
+    flex-direction: row;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.left,
+.right {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left {
+    left: 0;
+    background-color: var(--background-darker);
+
+    background-image: url(/assets/img/otakarhu.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    background-size: 50%;
+}
+
+.right {
+    left: 50%;
+    border-top: solid 50px var(--accent-main);
+}
+
+.right h1 {
+    width: 50%;
+    text-align: center;
+
+    font-size: 30px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.right h2 {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 20px;
+
+    font-size: 17px;
+    padding: 10px;
+}
+
+.login-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form h3 {
+    width: 100%;
+    text-align: left;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 7px;
+    margin: 10px;
+
+    font-size: 17px;
+
+    border: solid 1px var(--border-main);
+    border-radius: 5px;
+
+    background: none !important;
+}
+
+.login-form .info {
+    width: 100%;
+}
+
+.login-form h3 strong {
+    cursor: pointer;
+}
+
+.info h2 {
+    width: 100%;
+    font-size: 13px;
+    opacity: 75%;
+    border-left: solid 1px var(--border-main);
+}
+
+input::placeholder {
+    color: rgba(35, 35, 35, 0.342);
+    font-style: italic;
+}
+
+.terms-of-service {
+    margin: 5px;
+    width: 75%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.terms-of-service h2 {
+    margin: 0;
+    font-size: 13px;
+    opacity: 75%;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.terms-of-service h2:hover {
+    opacity: 100% !important;
+}
+
+.terms-of-service h2 strong {
+    color: var(--font-h1);
+    font-family: 'regular';
+
+    cursor: pointer;
+}
+
+.terms-of-service input {
+    margin-left: 5px;
+}
+
+.right button {
+    margin: 20px;
+    padding: 10px;
+    margin-bottom: 60px;
+    width: 200px;
+
+    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+
+    color: white;
+
+    align-self: center;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.right button:hover {
+    opacity: 65%;
+}
+
+.login-error {
+    width: 80%;
+    font-size: 14px;
+    text-align: center;
+    color: var(--error);
+}
+
+.right h6 {
+    position: absolute;
+    left: 20px;
+    bottom: 70px;
+
+    opacity: 20%;
+}
+
+
+/*
 
 .main {
     position: absolute;
@@ -196,7 +287,8 @@ h3 {
     background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
 
     color: white;
-    font-family: 'light';
+
+    box-shadow: 0 0 15px var(--shadow-main);
 
     align-self: center;
 }
@@ -211,9 +303,6 @@ h3 {
     left: 5px;
 }
 
-
-
-/* Terms of service*/
 
 .terms-of-service {
     position: absolute;
@@ -321,90 +410,4 @@ ul a strong {
     color: black;
     font-family: 'semi-bold';
 }
-
-.error {
-    color: red;
-}
-
-.error-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 30;
-    background-color: white;
-}
-
-.error-object {
-    width: 350px;
-
-    min-width: 128px;
-    min-height: 128px;
-
-    height: auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    background-color: white;
-    border-radius: 4px;
-}
-
-.error-image {
-    width: 256px;
-    height: 256px;
-    background-size: cover;
-    background-position: center center;
-    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
-}
-
-.error-object h1 {
-    margin: 15px;
-    color: black;
-}
-
-.error-object h2 {
-    margin: 15px;
-    color: rgb(30, 30, 30);
-    text-align: center;
-}
-
-.error-object h3 {
-    color: rgb(215, 215, 215);
-    text-align: center;
-}
-
-.error-object h4 {
-    padding: 10px;
-}
-
-.error-object h7 {
-    padding: 10px;
-
-    border-radius: 7px;
-
-    background-color: rgb(47, 47, 47);
-    color: rgb(200, 60, 60);
-}
-
-.error-object h5 {
-    margin: 15px;
-    padding: 7px;
-
-    text-align: center;
-
-    border-radius: 100px;
-
-    font-family: 'semi-bold';
-    font-size: 17px;
-    color: white;
-
-    background-color: rgb(200, 60, 60);
-}
+/*

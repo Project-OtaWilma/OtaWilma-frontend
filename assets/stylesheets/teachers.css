@@ -1,0 +1,226 @@
+.content {
+    position: absolute;
+    width: 55%;
+    height: 85%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+    background-color: var(--background-main);
+}
+
+.side-bar {
+    position: absolute;
+    width: 300px;
+    height: 95%;
+
+    left: 0;
+
+    border-right: solid 1px var(--border-main);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+
+.main {
+    position: absolute;
+    width: calc(100% - 300px);
+    height: 100%;
+    left: 300px;
+
+    display: flex;
+    justify-content: center;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.submit-review {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    opacity: 50%;
+    width: 200px;
+
+
+    transition: opacity .2s ease-in-out;
+
+    cursor: pointer;
+}
+
+.submit-review:hover {
+    opacity: 100%;
+}
+
+.submit-review .icon {
+    width: 20px;
+    height: 20px;
+
+    background-image: url(/assets/img/external-link.svg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.teacher-info {
+    position: absolute;
+    width: 90%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.teacher {
+    width: 50%;
+}
+
+.teacher ul {
+    margin: 20px;
+}
+
+.teacher ul a {
+    font-family: 20px;
+}
+
+.teacher ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.teacher-info h1 {
+    width: 50%;
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+
+    font-size: 20px;
+    border-bottom: solid 1px var(--border-main);
+}
+
+.teacher-info h2 {
+    margin: 10px;
+    padding: 0;
+
+    opacity: 50%;
+}
+
+.reviews {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.sliders,
+.adjectives {
+    width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider-container {
+    width: 90%;
+    padding: 5px;
+    padding-left: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-left: solid 3px var(--accent-main);
+}
+
+.slider-container h1 {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 90%;
+    font-size: 17px;
+    border: none;
+}
+
+.slider {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.slider-base {
+    width: 100%;
+    height: 20px;
+    margin: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    border-bottom: solid 1px var(--accent-main);
+
+}
+
+.slider-base h2 {
+    position: absolute;
+    opacity: 50%;
+    padding: 5px;
+
+    font-size: 12px;
+}
+
+.indicator {
+    height: 70%;
+    width: 2px;
+    background-color: var(--accent-main);
+
+    margin-left: 50%;
+}
+
+.adjective-container {
+    width: 90%;
+    margin: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    line-height: 1.5;
+
+}
+
+.adjective-container ul {
+    width: 75%;
+    margin-left: 25%;
+    padding: 12px;
+
+    color: var(--accent-main);
+
+    border-left: solid 3px var(--accent-main);
+}
+
+.adjective-container ul a {
+    padding: 5px;
+
+    color: var(--accent-main);
+}
+
+.adjective-container ul a:nth-child(2) {
+    padding: 2px;
+    border: solid 1px var(--font-h2);
+
+    border-radius: 3px !important;
+    opacity: 75%;
+
+    color: var(--font-h2);
+}

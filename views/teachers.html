@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtaWilma - Kurssitarjotin</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/style.css">
+    <link rel="stylesheet" href="/assets/stylesheets/teachers.css">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon.ico">
+
+    <script src="/assets/scripts/teachers.js"></script>
+    <script src="/assets/scripts/nav-manager.js"></script>
+    <script src="/assets/scripts/requests.js"></script>
+    <script src="/assets/scripts/theme-manager.js"></script>
+    <script src="/assets/scripts/error-manager.js"></script>
+</head>
+
+<body>
+    <div class="disclaimer">OtaWilma on vielä kehityksen alaisena, ja toiminta on toistaiseksi rajattu laitteisiin
+        joiden leveys on vähintään 1500px</div>
+    <div class="loading-screen" id="loading"></div>
+    <div class="container">
+        <div class="background" id="background"></div>
+        <div class="top" id="top">
+            <div class="user-info">
+                <div class="user-data">
+                    <h1>Tuukka Moilanen</h1>
+                    <h2>Opiskelija</h2>
+                </div>
+            </div>
+            <button id="/views/frontpage.html">
+                <h1 class="logo-text">OtaWilma</h1>
+            </button>
+            <button id="/views/messages.html">
+                <h5>Viestit</h5>
+            </button>
+            <button id="/views/grades.html">
+                <h5>Opinnot</h5>
+            </button>
+            <button id="/views/course-tray.html">
+                <h5>Kurssitarjotin</h5>
+            </button>
+            <button id="/views/news.html">
+                <h5>Tiedotteet</h5>
+            </button>
+            <button id="/views/settings.html">
+                <h5>Asetukset</h5>
+            </button>
+        </div>
+        <div class="content">
+            <div class="side-bar">
+
+            </div>
+            <div class="main">
+                <div class="teacher-info">
+                    <h1>Matti Heikkinen</h1>
+                    <div class="teacher">
+                        <ul>
+                            <a>Työtehtävä: </a>
+                            <a>Matematiikka, fysiikka, TT-vastaava</a>
+                        </ul>
+                        <ul>
+                            <a>Sähköposti: </a>
+                            <a>matti.heikkinen@opetus.fi</a>
+                        </ul>
+                        <div class="submit-review">
+                            <div class="icon"></div>
+                            <h2>Arvioi opetustyyliä</h2>
+                        </div>
+                    </div>
+                    <div class="reviews">
+                        <div class="sliders">
+                            <h1>Opettajan pitämät kurssit</h1>
+                            <div class="slider-container">
+                                <h1>Tuntien tahti</h1>
+                                <div class="slider">
+                                    <h2>Nopea</h2>
+                                    <h2>Keskinopea</h2>
+                                    <h2>Hidas</h2>
+                                </div>
+                                <div class="slider-base">
+                                    <h2>(50.00%)</h2>
+                                    <div class="indicator"></div>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <h1>Tuntien aiheiden soveltavuus</h1>
+                                <div class="slider">
+                                    <h2>Soveltavaa</h2>
+                                    <h2>Materiaalin mukaan</h2>
+                                    <h2>Perusteet</h2>
+                                </div>
+                                <div class="slider-base">
+                                    <h2>(50.00%)</h2>
+                                    <div class="indicator"></div>
+                                </div>
+                            </div>
+                            <div class="slider-container">
+                                <h1>Arvioitavien tehtävien haastavuus</h1>
+                                <div class="slider">
+                                    <h2>Haastavia</h2>
+                                    <h2>Tavallisia</h2>
+                                    <h2>Helppoja</h2>
+                                </div>
+                                <div class="slider-base">
+                                    <h2>(50.00%)</h2>
+                                    <div class="indicator"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="adjectives">
+                            <h1>Opettajaa kuvaavat hyvin adjektiivit</h1>
+                            <h2>72 arviota</h2>
+
+                            <div class="adjective-container">
+                                <ul>
+                                    <a>Motivoiva</a>
+                                    <a>99%</a>
+                                </ul>
+                                <ul>
+                                    <a>Oppilasläheinen</a>
+                                    <a>50%</a>
+                                </ul>
+                                <ul>
+                                    <a>Reilu</a>
+                                    <a>35%</a>
+                                </ul>
+                                <ul>
+                                    <a>Rento</a>
+                                    <a>20%</a>
+                                </ul>
+                            </div>
+                            <div class="adjective-container">
+                                <ul>
+                                    <a>Motivoiva</a>
+                                    <a>99%</a>
+                                </ul>
+                                <ul>
+                                    <a>Oppilasläheinen</a>
+                                    <a>50%</a>
+                                </ul>
+                                <ul>
+                                    <a>Reilu</a>
+                                    <a>35%</a>
+                                </ul>
+                                <ul>
+                                    <a>Rento</a>
+                                    <a>20%</a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

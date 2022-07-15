@@ -13,6 +13,10 @@ const state = {
         categories : {
             current: 'inbox'
         }
+    },
+    filters: {
+        subjects: [],
+        teachers: []
     }
 }
 
@@ -22,7 +26,7 @@ const fetchConfig = () => {
         const url = `http://localhost:3000/api/sessions/config/get/${session}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true});
         }
 
         if(cacheAvailable) {
@@ -56,13 +60,48 @@ const fetchConfig = () => {
     });
 }
 
+const fetchDefaultTheme = (id) => {
+    return new Promise((resolve, reject) => {
+        const url = `http://localhost:3000/api/themes/defaults/get/${id}`;
+
+        if(cacheAvailable) {
+            loadCache('theme-cache', url)
+            .then(theme => {
+                console.warn(`Loaded theme from cache: ${url.split('/').reverse()[0]}`)
+                return resolve(theme);
+            })
+            .catch(() => {})
+        }
+
+        fetch(url)
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        appendCache('theme-cache', url);
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: "Invalid request", error: json, status: 400 })
+                    case 401:
+                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                    default:
+                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: "Couldn't reach servers (OtaWilma-API)", status: 503 })
+            })
+    });
+}
+
 const fetchTheme = (id) => {
     return new Promise((resolve, reject) => {
         const session = getCookie('session');
         const url = `http://localhost:3000/api/themes/get/${session}/${id}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         if(cacheAvailable) {
@@ -120,7 +159,19 @@ const InitializeThemes = () => {
     })
 }
 
-
+const InitializeThemesDefault = () => {
+    return new Promise((resolve, reject) => {
+        fetchDefaultTheme('light')
+        .then(theme => {
+            state.current.theme = theme;
+            loadTheme(theme);
+            return resolve();
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    })
+}
 
 const loadTheme = (theme) => {
     const root = document.documentElement;
@@ -154,7 +205,7 @@ const fetchThemeList = () => {
         const url = `http://localhost:3000/api/themes/list/${session}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         
@@ -196,7 +247,7 @@ const setTheme = (id) => {
         const url = `http://localhost:3000/api/sessions/config/get/${session}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         if(cacheAvailable) removeCache('config-cache', url);
@@ -236,7 +287,7 @@ const createTheme = () => {
         const list = `http://localhost:3000/api/themes/list/${session}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         if(cacheAvailable) removeCache('config-cache', url);
@@ -274,7 +325,7 @@ const deleteTheme = (id) => {
         const list = `http://localhost:3000/api/themes/list/${session}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         if(cacheAvailable) removeCache('theme-cache', url);
@@ -313,7 +364,7 @@ const editThemeColors = (id, key, value) => {
 
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         if(cacheAvailable) removeCache('theme-cache', url);
@@ -356,7 +407,7 @@ const editThemeBackground = (id, key, value) => {
 
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400 });
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
         if(cacheAvailable) removeCache('theme-cache', url);

@@ -17,7 +17,6 @@ const Initialize = async () => {
         throw err;
     })
     
-    /* Load layout afterwards to seemingly increase loading speeds */
     document.getElementById('loading').style.opacity = 0;
 }
 

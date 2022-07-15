@@ -90,13 +90,80 @@
     border-bottom: solid 2px var(--border-darker);
 }
 
-.period .bar {
+.period-actions {
+    width: 80%;
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide-period {
+    width: 25px;
+    height: 25px;
+
+    background: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide-period:hover,
+.disable-period:hover {
+    opacity: 40%;
+    transform: scale(1.1);
+}
+
+.hide-period h6 {
+    width: 80%;
+    height: 80%;
+    padding-left: 10px;
+
+    margin: 2px;
+
+    background-image: url(/assets/img/up.svg);
+    background-position: center center;
+    background-size: contain;
+
+    transform: rotate(0);
+
+    transition: transform .3s ease-in-out;
+}
+
+.hide-period .open {
+    transform: rotate(180deg) !important;
+}
+
+
+.disable-period {
+    width: 25px;
+    height: 25px;
+
+    margin: 2px;
+
+    background: none;
+
+    background-image: url(/assets/img/close.svg);
+    background-position: center center;
+    background-size: contain;
+
+    transition: transform .3s ease-in-out;
+}
+
+
+.period.open .bar {
     width: 90%;
 
     margin: 10px;
 
     display: flex;
     flex-direction: column;
+}
+
+.period.closed .bar {
+    display: none;
 }
 
 .bar h2 {
@@ -140,6 +207,7 @@
     transition: opacity .2s ease-in-out;
 
     pointer-events: none;
+    z-index: 2;
 }
 
 .course-data h2 {
@@ -147,11 +215,27 @@
     margin: 0;
     font-size: 13px;
     color: white;
+    text-align: center;
 }
 
 .course-list div {
     color: var(--course-tray-h1);
     padding: 4px;
+}
+
+.course-list div.disa {
+    text-decoration: line-through;
+}
+
+.course-list div.matched,
+.course-list div.disa.matched {
+    font-family: 'bold';
+    color: red;
+}
+
+.course-list div.filtered,
+.course-list div.disa.filtered {
+    display: none;
 }
 
 /*
@@ -280,7 +364,7 @@
     margin: 5px;
 
     background: none;
-    color: var(--font-h2);
+    color: rgb(82, 82, 82);
 }
 
 .tray-info #filter-button {
@@ -296,6 +380,14 @@
 
     font-style: italic;
     font-size: 15px;
+}
+
+.search-result {
+    padding-left: 10px;
+    margin-left: 10px !important;
+    opacity: 75%;
+
+    border-left: solid var(--font-h2);
 }
 
 .tray-info button {
@@ -339,91 +431,68 @@
     color: var(--font-h3);
 }
 
-/* error */
-
-.error {
-    color: red;
+.Tavoitteet,
+.Sisältö,
+.Kuvaus {
+    font-family: 'regular' !important;
+    font-style: italic;
+    line-height: 1.25;
+    opacity: 75%;
 }
 
-.error-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 30;
-    background-color: white;
-}
-
-.error-object {
-    width: 350px;
-
-    min-width: 128px;
-    min-height: 128px;
-
+.error-popup {
+    opacity: 0;
+    position: absolute;
+    width: 300px;
     height: auto;
 
+    padding: 5px;
+
+    left: 50px;
+    bottom: 50px;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    border-left: solid 5px var(--error);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity .3s ease-in-out;
+
+    pointer-events: none;
+}
+
+.error-popup .icon {
+    width: 75px;
+    height: 75px;
+    margin: 10px;
+
+    background-image: url(/assets/img/error.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.error-popup .error-details {
+    width: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    background-color: white;
-    border-radius: 4px;
-}
-
-.error-image {
-    width: 256px;
-    height: 256px;
-    background-size: cover;
-    background-position: center center;
-    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
-}
-
-.error-object h1 {
-    margin: 15px;
-    color: black;
-}
-
-.error-object h2 {
-    margin: 15px;
-    color: rgb(30, 30, 30);
     text-align: center;
 }
 
-.error-object h3 {
-    color: rgb(215, 215, 215);
-    text-align: center;
+.error-popup .error-details h1 {
+    color: var(--error);
+    margin: 5px;
 }
 
-.error-object h4 {
-    padding: 10px;
-}
-
-.error-object h7 {
-    padding: 10px;
-
-    border-radius: 7px;
-
-    background-color: rgb(47, 47, 47);
-    color: rgb(200, 60, 60);
-}
-
-.error-object h5 {
-    margin: 15px;
-    padding: 7px;
-
-    text-align: center;
-
-    border-radius: 100px;
-
-    font-family: 'semi-bold';
-    font-size: 17px;
-    color: white;
-
-    background-color: rgb(200, 60, 60);
+.error-popup .error-details h2 {
+    margin: 5px;
+    opacity: 75%;
 }

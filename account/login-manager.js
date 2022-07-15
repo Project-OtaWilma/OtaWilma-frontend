@@ -17,7 +17,6 @@ const Login = (credentials = { username: String, password: String }) => {
                         document.cookie = `Wilma2SID=${Wilma2SID}; SameSite=Lax; Secure;`;
                         document.cookie = `StudentID=${StudentID}; SameSite=Lax; Secure;`;
 
-                        window.location = '/views/frontpage.html';
                         return resolve();
                     case 401:
                         return reject({ err: json.err })
@@ -31,6 +30,25 @@ const Login = (credentials = { username: String, password: String }) => {
     })
 }
 
+const validateOtaWilmaAccount = (hash) => {
+    return new Promise((resolve, reject) => {
+        fetch(`http://localhost:3000/api/sessions/config/get/${hash}`)
+        .then(async (res) => {
+            const json = await res.json();
+    
+            switch(res.status) {
+                case 200:
+                    return resolve();
+                case 400:
+                    return reject({err: 'Invalid session identifier', status: 400})
+            }
+        })
+        .catch(err => {
+            return reject({ err: 'Failed to reach servers', status: 503 });
+        })
+    });
+}
+
 const createAccout = () => {
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3000/api/sessions/config/create',
@@ -42,10 +60,15 @@ const createAccout = () => {
     
             switch(res.status) {
                 case 200:
-                    const session = json['session'];
+                    console.log(json);
+                    const session = json['session']['hash'];
+                    console.log(session);
                     document.cookie = `session=${session}; SameSite=Lax; Secure;`;
                     return resolve();
             }
+        })
+        .catch(err => {
+            return reject({ err: 'Failed to reach servers', status: 503 });
         })
     })
 }
@@ -54,5 +77,6 @@ const createAccout = () => {
 
 const Account = {
     Login,
+    validateOtaWilmaAccount,
     createAccout
 }

@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="/assets/stylesheets/style.css">
     <link rel="stylesheet" href="/assets/stylesheets/course-tray.css">
-    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon.ico">
 
     <script src="/assets/scripts/course-tray.js"></script>
     <script src="/assets/scripts/nav-manager.js"></script>
@@ -60,62 +60,30 @@
                 <div class="options">
                     <form>
                         <h2>Hae kurssia</h2>
-                        <input type="text" placeholder="Esim. MAA15.1">
+                        <input id="search-input" type="text" placeholder="Esim. MAA15.1">
                         <button id="search-button">Hae</button>
                     </form>
+                    <h3 class="search-result" id="search-error"></h3>
                     <form>
                         <h2>Suodata kursseja</h2>
                         <h3>Oppiaine</h3>
-                        <select id="filter-courses">
-                            <option value="">Kaikki</option>
-                            <option value="">FY</option>
-                            <option value="">KE</option>
-                            <option value="">MA</option>
+                        <select id="filter-subject">
                         </select>
                         <h3>LOPS</h3>
-                        <select id="select-lops">
-                            <option value="both">Molemmat</option>
+                        <select id="filter-lops">
+                            <option value="">Molemmat</option>
                             <option value="L2021">LOPS 2021</option>
                             <option value="L2016">LOPS 2016</option>
                         </select>
                         <h3>Opettaja</h3>
                         <select id="filter-teachers">
-                            <option value="all">Kaikki</option>
-                            <option value="HEI">HEI Heikkinen Matti</option>
-                            <option value="SAV">SAV Saarikivi Ville</option>
                         </select>
                     </form>
                     <button id="filter-button">Suodata</button>
                 </div>
                 <h1>Tietoa kurssista</h1>
-                <div class="course-info">
-                    <h1>Fysiikka luonnontieteenä</h1>
-                    <h3>Fy01.1</h3>
-                    <ul>
-                        <a>Tyyppi: </a>
-                        <a>Lu21 pakollinen moduuli</a>
-                    </ul>
-                    <ul>
-                        <a>Opintoviikkoja: </a>
-                        <a>0.5</a>
-                    </ul>
-                    <ul>
-                        <a>Opintopisteitä: </a>
-                        <a>1</a>
-                    </ul>
-                    <ul>
-                        <a> Keskeiset sisällöt: </a>
-                        <a>
-                            • suure ja yksikkö sekä SI-järjestelmä
-                            • mittaaminen, tulosten kerääminen, niiden esittäminen graafisesti ja luotettavuuden
-                            arviointi
-                            • graafinen malli ja lineaarinen malli
-                            • yksinkertaisen kokeellisen tutkimuksen suunnitteleminen ja toteutus
-                            Moduulin keskeisiä sisältöjä voidaan tarkastella esimerkiksi seuraavissa temaattisissa
-                            yhteyksissä: liikeilmiöt, tiheysmittaukset ja putoamiskiihtyvyys.
-                        </a>
-                    </ul>
-                    <button class="course-action" id="course-action">Valitse</button>
+                <div class="course-info" id="course-info">
+
                 </div>
                 <h1>Tietoa opettajasta</h1>
                 <div class="teacher-info">
@@ -157,6 +125,13 @@
                         <a>Kurssin kokeiden tyyli</a>
                         <a>Laskut</a>
                     </ul>
+                </div>
+            </div>
+            <div class="error-popup" id="error-popup">
+                <div class="icon"></div>
+                <div class="error-details">
+                    <h1>Kurssin valintaa ei voitu muuttaa</h1>
+                    <h2 id="error-details"></h2>
                 </div>
             </div>
         </div>
