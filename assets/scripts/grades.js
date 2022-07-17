@@ -41,21 +41,30 @@ const setupBook = () => {
         const root = document.getElementById('gradebook')
         const courseInfoRoot = document.getElementById('course-info');
         
-    
+        const translations = {
+            'OÄIun': 'Lukiokoulutusta täydentävä oma äidinkieli (unkari)',
+            'OÄIve': 'Lukiokoulutusta täydentävä oma äidinkieli (venäjä)',
+            'OÄIar': 'Lukiokoulutusta täydentävä oma äidinkieli (arabia)',
+            'OÄIfa': 'Lukiokoulutusta täydentävä oma äidinkieli (farsi/dari)',
+            'OÄIku': 'Lukiokoulutusta täydentävä oma äidinkieli (kurdi)',
+            'OÄIma': 'Lukiokoulutusta täydentävä oma äidinkieli (mandariinikiina)',
+            'OÄIso': 'Lukiokoulutusta täydentävä oma äidinkieli (somali)',
+            'OÄIve': 'Lukiokoulutusta täydentävä oma äidinkieli (venäjä)'
+        }
+
         fectchCourseList()
             .then(list => {
-                Object.keys(list).forEach(subject => {
-                    
+                Object.keys(list).forEach(subject => {             
                     const subjectElement = document.createElement('div');
                     subjectElement.className = 'subject';
     
                     const ul = document.createElement('ul');
     
                     const key = document.createElement('a');
-                    key.textContent = `${subject} `;
+                    key.textContent = `${Object.keys(translations).includes(subject) ? translations[subject] : subject} `;
     
                     const value = document.createElement('a');
-                    value.id = subject;
+                    value.id = Object.keys(translations).includes(subject) ? translations[subject] : subject;
     
                     const courseList = document.createElement('div');
                     courseList.className = 'course-list';
@@ -183,25 +192,28 @@ const loadBook = () => {
                     const subject = list[s];
                     
                     const gradeElement = document.getElementById(s);
-                    gradeElement.textContent = subject.grade;
-
-                    Object.keys(subject.courses).forEach(c => {
-                        const course = subject.courses[c];
-                        const courseElement = document.getElementById(course.code);
-
-                        if (courseElement) {
-                            courseElement.className = `${courseElement.className}-graded`
-                            courseElement.setAttribute('data-grade', `${course.grade} - ${grades[course.grade]}`);
-                            courseElement.setAttribute('data-points', course.points);
-                            courseElement.setAttribute('data-date', course.date);
-                            courseElement.setAttribute('data-teacher', course.teacher);
-                            courseElement.setAttribute('data-info', course.info);
-
-                            const textElement = courseElement.getElementsByTagName('h4')[0];
-                            textElement.textContent = course.grade;
-                        }
-
-                    })
+                    if(gradeElement) {
+                        console.log([s, gradeElement]);
+                        gradeElement.textContent = subject.grade;
+    
+                        Object.keys(subject.courses).forEach(c => {
+                            const course = subject.courses[c];
+                            const courseElement = document.getElementById(course.code);
+    
+                            if (courseElement) {
+                                courseElement.className = `${courseElement.className}-graded`
+                                courseElement.setAttribute('data-grade', `${course.grade} - ${grades[course.grade]}`);
+                                courseElement.setAttribute('data-points', course.points);
+                                courseElement.setAttribute('data-date', course.date);
+                                courseElement.setAttribute('data-teacher', course.teacher);
+                                courseElement.setAttribute('data-info', course.info);
+    
+                                const textElement = courseElement.getElementsByTagName('h4')[0];
+                                textElement.textContent = course.grade;
+                            }
+    
+                        })
+                    }
                 })
 
                 return resolve();

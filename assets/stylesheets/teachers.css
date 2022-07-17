@@ -23,8 +23,49 @@
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.side-bar div {
+    width: 90%;
+    border-left: solid 1px var(--border-main);
+    margin: 3px;
+}
+
+.side-bar .teacher {
+    width: auto;
+    border: none;
+    margin: 5px;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-self: center;
+}
+
+.side-bar h1 {
+    margin: 10px;
+    font-size: 30px;
+    font-family: 'semi-bold';
+}
+
+.teacher h2 {
+    margin-left: 10px;
+    opacity: 50%;
+    cursor: pointer;
+    transition: opacity .2s ease-in-out;
+}
+
+.teacher h3 {
+    margin: 2px;
+    margin-left: 10px;
+    font-size: 13px;
+}
+
+.teacher h2:hover {
+    opacity: 100%;
 }
 
 .main {
@@ -38,189 +79,363 @@
 
     overflow-y: scroll;
     overflow-x: hidden;
+
+
+
 }
 
-.submit-review {
+.top-container {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+
+    top: 0;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.teacher-adjectives,
+.teacher-personal-info {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.teacher-info {
+    width: 90%;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.teacher-info h1 {
+    margin: 10px;
+    padding: 10px;
+
+    font-size: 20px;
+
+    width: 80%;
+
+    align-self: center;
+
+    text-align: center;
+
+    border-bottom: solid 1px var(--border-main);
+}
+
+.actions {
+    width: 100%;
+    height: 50px;
+
+    align-self: center;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions div {
+    width: 49%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
     opacity: 50%;
-    width: 200px;
-
-
     transition: opacity .2s ease-in-out;
 
     cursor: pointer;
 }
 
-.submit-review:hover {
+.actions div:hover {
     opacity: 100%;
 }
 
-.submit-review .icon {
+.actions .icon {
     width: 20px;
     height: 20px;
+    margin: 5px;
 
     background-image: url(/assets/img/external-link.svg);
-    background-size: cover;
-    background-position: center center;
+    background-size: contain;
     background-repeat: no-repeat;
 }
 
-.teacher-info {
-    position: absolute;
+.about-me,
+.task-list,
+.contact-info {
+    margin: 10px;
+    padding: 10px;
+
+    border-left: solid 1px var(--border-main);
+}
+
+.about-me h2,
+.task-list h2,
+.contact-info h2,
+.comments h2 {
+    color: var(--font-h1);
+    margin-bottom: 10px;
+}
+
+.comments {
+    margin: 10px;
+    padding: 10px;
+
+    border-left: solid 1px var(--border-main);
+}
+
+.comments h3 {
+    padding: 10px;
+    margin: 10px;
+
+    border-radius: 5px !important;
+    border: solid 1px var(--border-main);
+
+    color: var(--font-h2);
+    font-family: 'arial';
+    opacity: 75%;
+
+    font-size: 13px;
+
+    overflow: hidden;
+}
+
+.adjective-list {
     width: 90%;
-    height: auto;
+    height: 90%;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    background-color: var(--background-darker);
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+    border-radius: 5px !important;
+
+    border-left: solid 5px var(--accent-main);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-.teacher {
-    width: 50%;
-}
-
-.teacher ul {
-    margin: 20px;
-}
-
-.teacher ul a {
-    font-family: 20px;
-}
-
-.teacher ul a:nth-child(2) {
-    font-family: 'semi-bold';
-}
-
-.teacher-info h1 {
-    width: 50%;
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
+.adjective-list h1 {
+    margin: 10px;
+    padding: 10px;
 
     font-size: 20px;
+
+    width: 80%;
+
+    align-self: center;
+
+    text-align: center;
     border-bottom: solid 1px var(--border-main);
 }
 
-.teacher-info h2 {
-    margin: 10px;
-    padding: 0;
-
-    opacity: 50%;
+.adjective-list h3 {
+    margin: 15px;
+    padding: 5px;
+    font-size: 13px;
 }
 
-.reviews {
-    width: 100%;
+.adjective-list h3 strong {
+    color: VAR(--font-h1);
+}
+
+.adjective {
+    margin: 10px;
+    padding: 5px;
+
+
     display: flex;
     flex-direction: row;
+    align-items: center;
+
+    background-color: var(--accent-main);
+
+    border-radius: 5px !important;
 }
 
-.sliders,
-.adjectives {
-    width: 50%;
+.adjective h2 {
+    padding: 5px;
+    color: var(--font-h4);
+}
+
+.adjective h3 {
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    opacity: 40%;
+}
+
+.bottom-container {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+
+    top: 50%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.course-pace,
+.course-applicability,
+.course-dificulty {
+    min-width: 300px;
+    height: 400px;
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
-.slider-container {
+
+.card {
     width: 90%;
-    padding: 5px;
-    padding-left: 15px;
+    height: 90%;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    background-color: var(--background-darker);
+
+    border-radius: 5px !important;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    border-left: solid 3px var(--accent-main);
+    border-left: solid 5px var(--accent-main);
 }
 
-.slider-container h1 {
-    margin: 0;
-    padding: 0;
-    margin-bottom: 5px;
-    text-align: center;
-    width: 90%;
-    font-size: 17px;
-    border: none;
-}
-
-.slider {
-    width: 95%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.slider-base {
-    width: 100%;
-    height: 20px;
-    margin: 10px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-
-    border-bottom: solid 1px var(--accent-main);
-
-}
-
-.slider-base h2 {
-    position: absolute;
-    opacity: 50%;
-    padding: 5px;
-
-    font-size: 12px;
-}
-
-.indicator {
-    height: 70%;
-    width: 2px;
-    background-color: var(--accent-main);
-
-    margin-left: 50%;
-}
-
-.adjective-container {
-    width: 90%;
-    margin: 10px;
+.card .title {
+    margin-top: -300px;
 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    line-height: 1.5;
-
 }
 
-.adjective-container ul {
-    width: 75%;
-    margin-left: 25%;
-    padding: 12px;
-
-    color: var(--accent-main);
-
-    border-left: solid 3px var(--accent-main);
+.title h3 {
+    margin: 2px;
 }
 
-.adjective-container ul a {
-    padding: 5px;
-
-    color: var(--accent-main);
+.card h6 {
+    display: none;
+    position: absolute;
+    font-size: 20px;
+    font-family: 'semi-bold';
+    color: var(--font-h1);
 }
 
-.adjective-container ul a:nth-child(2) {
-    padding: 2px;
-    border: solid 1px var(--font-h2);
+.circular-value {
+    opacity: 100%;
+    position: absolute;
+    margin: 20px;
+    width: 200px;
+    height: 200px;
 
-    border-radius: 3px !important;
-    opacity: 75%;
+    border-radius: 50% !important;
 
-    color: var(--font-h2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circular-value .pointer {
+    position: absolute;
+    height: 50%;
+    width: 2px;
+    background-color: var(--background-darker);
+    padding-top: 10px;
+
+    margin-bottom: 50%;
+
+    transform-origin: 50% 100%;
+}
+
+.pointer:nth-child(2) {
+    transform: rotateZ(120deg);
+}
+
+.pointer:nth-child(3) {
+    transform: rotateZ(-120deg);
+}
+
+.circular-value h2 {
+    position: absolute;
+    font-size: 14px;
+    font-family: 'semi-bold';
+
+    color: var(--font-h1);
+
+    text-shadow: 0 0 15px var(--shadow-darker);
+    z-index: 5;
+
+    width: 100px;
+    text-align: center;
+}
+
+.circular-value h2:nth-child(4) {
+    top: 50px;
+    right: -55px;
+    rotate: 70deg;
+}
+
+.circular-value h2:nth-child(5) {
+    bottom: -20px;
+}
+
+.circular-value h2:nth-child(6) {
+    top: 50px;
+    left: -55px;
+    rotate: -70deg;
+}
+
+.inner-circle {
+    position: absolute;
+    width: 85%;
+    height: 85%;
+
+    background-color: var(--background-darker);
+
+    border-radius: 50% !important;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-circle h1 {
+    font-size: 20px;
+    margin: 5px;
+}
+
+.inner-circle h3 {
+    pointer-events: none;
 }

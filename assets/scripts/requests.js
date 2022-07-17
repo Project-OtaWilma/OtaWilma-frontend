@@ -583,6 +583,72 @@ const CourseTrayDeselect = (hash) => {
     });
 }
 
+const fetchTeacherList = () => {
+    return new Promise((resolve, reject) => {
+
+        fetch(`${wilmaAPI}teachers/list`, {
+            method: 'GET'
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 303:
+                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
+}
+
+const fetchTeacherInfo = (name) => {
+    return new Promise((resolve, reject) => {
+
+        fetch(`${wilmaAPI}teachers/name/${name}`, {
+            method: 'GET'
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 303:
+                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
+}
+
 const getParameterByName = (name, url = window.location.href) => {
     name = name.replace(/[\[\]]/g, '\\$&');
 

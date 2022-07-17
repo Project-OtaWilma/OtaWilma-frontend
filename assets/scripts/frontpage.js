@@ -332,13 +332,15 @@ const loadSchedule = (key, date) => {
 
                 fetchSchedule(dateTime)
                     .then(schedule => {
+                        console.log(schedule);
                         Object.keys(schedule).filter(s => schedule[s].day.id <= 5 && schedule[s].day.id >= 1).forEach(d => {
                             const date = schedule[d];
                             document.getElementById(`${date.day.id}.date`).textContent = date.day.caption;
 
                             date.lessons.forEach((lesson, i) => {
                                 const slot = document.getElementById(lesson.slot);
-                                slot.style.opacity = 1;
+
+                                if(slot) slot.style.opacity = 1;
 
                                 lesson.groups.forEach((group, i) => {
                                     

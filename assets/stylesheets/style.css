@@ -209,13 +209,20 @@ body {
     width: 100%;
     height: 100%;
     color: white;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    display: none;
 }
 
 @media screen and (max-width: 1580px) {
     .container {
         display: none;
+    }
+
+    .disclaimer {
+        display: flex;
     }
 }
