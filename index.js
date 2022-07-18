@@ -46,12 +46,13 @@ const InitializeLoginForm = async () => {
     const loginButton = document.getElementById('login-button');
     const loginError = document.getElementById('login-error');
 
+    Array.from(document.getElementsByClassName('login-form')).forEach(e => e.addEventListener('submit', (e) => e.preventDefault()))
 
     sessionField.value = getCookie('session') ? getCookie('session') : null;
-
+    
+    if(sessionField.value.length > 0) requirements.forEach(r => { r.checked = true } );
     
     loginButton.addEventListener('click', async (e) => {
-        e.preventDefault();
         loginError.textContent = ''
 
         const accepted = requirements.map(r => r.checked)
@@ -72,7 +73,7 @@ const InitializeLoginForm = async () => {
                 .then(() => {
                     Account.Login(credentials)
                     .then(() => {
-                        document.cookie = `session=${sessionField.value}; SameSite=Lax; Secure;`;
+                        document.cookie = `session=${sessionField.value}; SameSite=Lax; Secure; max-age=31536000; path=/`;
                         window.location = '/views/frontpage.html';
                     })
                     .catch(err => {
@@ -94,7 +95,7 @@ const InitializeLoginForm = async () => {
         else {
             Account.Login(credentials)
             .then(() => {
-                createAccout()
+                createAccout(credentials.username)
                 .then(() => {
                     window.location = '/views/frontpage.html';
                 })

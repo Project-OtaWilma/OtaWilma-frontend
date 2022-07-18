@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OtaWilma - Kurssitarjotin</title>
+    <title>OtaWilma - Opettajat</title>
 
     <link rel="stylesheet" href="/assets/stylesheets/style.css">
     <link rel="stylesheet" href="/assets/stylesheets/teachers.css">
@@ -20,14 +20,14 @@
 
 <body>
     <div class="disclaimer">OtaWilma on vielä kehityksen alaisena, ja toiminta on toistaiseksi rajattu laitteisiin
-        joiden leveys on vähintään 1500px</div>
+        joiden leveys ja korkeus ovat vähintään 1200px ja 800px</div>
     <div class="loading-screen" id="loading"></div>
     <div class="container">
         <div class="background" id="background"></div>
         <div class="top" id="top">
             <div class="user-info">
                 <div class="user-data">
-                    <h1>Tuukka Moilanen</h1>
+                    <h1 id="username"></h1>
                     <h2>Opiskelija</h2>
                 </div>
             </div>
@@ -46,6 +46,9 @@
             <button id="/views/news.html">
                 <h5>Tiedotteet</h5>
             </button>
+            <button id="/views/teachers.html">
+                <h5>Opettajat</h5>
+            </button>
             <button id="/views/settings.html">
                 <h5>Asetukset</h5>
             </button>
@@ -53,11 +56,11 @@
         <div class="content">
             <div class="side-bar" id="teacher-list">
             </div>
-            <div class="main" id="main">
+            <div class="main" id="main" style="display: none;">
                 <div class=" top-container">
                     <div class="teacher-personal-info">
                         <div class="teacher-info">
-                            <h1 id="name-field">Matti Heikkinen</h1>
+                            <h1 id="name-field"></h1>
                             <div class="actions">
                                 <div class="open" id="open-button">
                                     <div class="icon"></div>
@@ -69,44 +72,25 @@
                                 </div>
                             </div>
                             <div class="task-list" id="task-list">
-                                <h2>Tehtävä</h2>
-                                <h3>Matematiikka</h3>
-                                <h3>Fysiikka</h3>
-                                <h3>TT-vastuuhenkilö</h3>
+                                <h2></h2>
+                                <h3></h3>
+                                <h3></h3>
+                                <h3></h3>
                             </div>
                             <div class="contact-info" id="contact-info">
-                                <h2>Yhteystiedot</h2>
-                                <h3>matti.heikkinen@opetus.fi</h3>
+                                <h2></h2>
+                                <h3></h3>
                             </div>
                             <div class="comments" id="comments">
-                                <h2>Julkiset kommentit</h2>
-                                <h3>Ihana opettaja</h3>
-                                <h3>Mahtava opettaja</h3>
+                                <h2></h2>
+                                <h3></h3>
+                                <h3></h3>
                             </div>
                         </div>
                     </div>
                     <div class="teacher-adjectives">
-                        <div class="adjective-list">
-                            <h1>Opettajaa kuvaavat hyvin adjektiivit</h1>
-                            <h3 id="ajdective-title"><strong>23</strong> opiskelijaa ovat arvioineet opettajaa
-                                <strong>Matti
-                                    Heikkinen</strong> seuraavasti:</h3>
-                            <div class="adjective" style="width: 90%;">
-                                <h2>Motivoiva</h2>
-                                <h3>(90%)</h3>
-                            </div>
-                            <div class="adjective" style="width: 78%;">
-                                <h2>Oppilasläheinen</h2>
-                                <h3>(78%)</h3>
-                            </div>
-                            <div class="adjective" style="width: 52%;">
-                                <h2>Rento</h2>
-                                <h3>(52%)</h3>
-                            </div>
-                            <div class="adjective" style="width: 31%;">
-                                <h2>Reilu</h2>
-                                <h3>(31%)</h3>
-                            </div>
+                        <div class="adjective-list" id="adjective-list">
+
                         </div>
                     </div>
                 </div>
@@ -117,15 +101,14 @@
                                 <h3>Opettajan pitämien</h3>
                                 <h1>Tuntien tahti</h1>
                             </div>
-                            <h6>Ei riittävästi arvioita</h6>
-                            <div class="circular-value"
+                            <h6 id="course-pace-label">Ei riittävästi arvioita</h6>
+                            <div id="course-pace-value" class="circular-value"
                                 style="background: conic-gradient(var(--accent-main) 0deg 190deg, transparent 0deg);">
                                 <div class="pointer"></div>
                                 <div class="pointer"></div>
                                 <div class="pointer"></div>
                                 <div class="inner-circle">
-                                    <h1>Tavallinen</h1>
-                                    <h3>(78%)</h3>
+                                    <h1 id="course-pace-text"></h1>
                                 </div>
                             </div>
                         </div>
@@ -136,15 +119,13 @@
                                 <h3>Opettajan pitämien</h3>
                                 <h1>Tuntien soveltavuus</h1>
                             </div>
-                            <h6>Ei riittävästi arvioita</h6>
-                            <div class="circular-value"
-                                style="background: conic-gradient(var(--accent-main) 0deg 250deg, transparent 0deg);">
+                            <h6 id="course-applicability-label">Ei riittävästi arvioita</h6>
+                            <div id="course-applicability-value" class="circular-value">
                                 <div class="pointer"></div>
                                 <div class="pointer"></div>
                                 <div class="pointer"></div>
                                 <div class="inner-circle">
-                                    <h1>Soveltava</h1>
-                                    <h3>(78%)</h3>
+                                    <h1 id="course-applicability-text"></h1>
                                 </div>
                             </div>
                         </div>
@@ -155,15 +136,13 @@
                                 <h3>Opettajan pitämien</h3>
                                 <h1>Tuntien haastavuus</h1>
                             </div>
-                            <h6>Ei riittävästi arvioita</h6>
-                            <div class="circular-value"
-                                style="background: conic-gradient(var(--accent-main) 0deg 53deg, transparent 0deg);">
+                            <h6 id="course-difficulty-label">Ei riittävästi arvioita</h6>
+                            <div id="course-difficulty-value" class="circular-value">
                                 <div class="pointer"></div>
                                 <div class="pointer"></div>
                                 <div class="pointer"></div>
                                 <div class="inner-circle">
-                                    <h1>Helppo</h1>
-                                    <h3>(78%)</h3>
+                                    <h1 id="course-difficulty-text"></h1>
                                 </div>
                             </div>
                         </div>

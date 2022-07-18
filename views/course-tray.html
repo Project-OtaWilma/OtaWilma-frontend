@@ -19,13 +19,15 @@
 </head>
 
 <body>
+    <div class="disclaimer">OtaWilma on vielä kehityksen alaisena, ja toiminta on toistaiseksi rajattu laitteisiin
+        joiden leveys ja korkeus ovat vähintään 1200px ja 800px</div>
     <div class="loading-screen" id="loading"></div>
     <div class="container">
         <div class="background" id="background"></div>
         <div class="top" id="top">
             <div class="user-info">
                 <div class="user-data">
-                    <h1>Tuukka Moilanen</h1>
+                    <h1 id="username"></h1>
                     <h2>Opiskelija</h2>
                 </div>
             </div>
@@ -43,6 +45,9 @@
             </button>
             <button id="/views/news.html">
                 <h5>Tiedotteet</h5>
+            </button>
+            <button id="/views/teachers.html">
+                <h5>Opettajat</h5>
             </button>
             <button id="/views/settings.html">
                 <h5>Asetukset</h5>
@@ -86,45 +91,8 @@
 
                 </div>
                 <h1>Tietoa opettajasta</h1>
-                <div class="teacher-info">
-                    <h1>HEI Heikkinen Matti</h1>
-                    <ul>
-                        <a>Nimi</a>
-                        <a>Matti Heikkinen</a>
-                    </ul>
-                    <ul>
-                        <a>Tehtävä</a>
-                        <a>Fysiikka, Matematiikka, TT-vastuuhenkilö</a>
-                    </ul>
-                    <ul>
-                        <a>Sähköpostiosoite</a>
-                        <a>matti.heikkinen@opetus.espoo.fi</a>
-                    </ul>
-                    <h1>Tietoa</h1>
-                    <ul>
-                        <a>Kurssien saatavuus</a>
-                        <a>Äärimmäisen suosittuja</a>
-                    </ul>
-                    <ul>
-                        <a>Kurssien koettu haastavuus</a>
-                        <a>Helppo</a>
-                    </ul>
-                    <ul>
-                        <a>Kurssien koettu tahti</a>
-                        <a>Nopea</a>
-                    </ul>
-                    <ul>
-                        <a>Tunneilla annetut tehtävät</a>
-                        <a>Hyvin vähän tehtäviä</a>
-                    </ul>
-                    <ul>
-                        <a>Kotiin annetut tehtävät</a>
-                        <a>Kirjan tehtävät</a>
-                    </ul>
-                    <ul>
-                        <a>Kurssin kokeiden tyyli</a>
-                        <a>Laskut</a>
-                    </ul>
+                <div class="teacher-info" id="teacher-info">
+
                 </div>
             </div>
             <div class="error-popup" id="error-popup">

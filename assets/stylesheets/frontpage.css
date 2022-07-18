@@ -11,10 +11,10 @@
 
 .content .main {
     position: absolute;
-    width: 75%;
-    height: 75%;
+    width: 100%;
+    height: 85%;
 
-    max-width: 1300px;
+    max-width: 1500px;
 
     display: flex;
     flex-direction: column;
@@ -49,7 +49,7 @@
     width: 30%;
     height: 100%;
 
-    max-width: 300px;
+    max-width: 350px;
 
     display: flex;
     flex-direction: row;
@@ -86,7 +86,7 @@
     width: 30%;
 
     min-width: 200px;
-    max-width: 300px;
+    max-width: 350px;
 
     display: flex;
     flex-direction: column;
@@ -136,6 +136,9 @@
     flex-direction: row;
 
     background-color: var(--background-main);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .day {
@@ -155,6 +158,9 @@
 .hour {
     height: calc((100% / 5) - 20px);
     width: calc(100% - 4px);
+
+    min-height: 75px;
+    max-height: 75px;
     margin: 2px;
 
     display: flex;
@@ -200,6 +206,56 @@
 .data h2:nth-child(2),
 .data h2:nth-child(3) {
     opacity: 50%;
+}
+
+.warning {
+    position: absolute;
+    top: calc(5 * 85px);
+    left: 0px;
+
+    width: 200px;
+    height: 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    display: none;
+}
+
+.warning h1 {
+    width: 90%;
+
+    padding: 5px;
+
+    border-bottom: solid 1px var(--error);
+
+    text-align: center;
+
+    color: var(--error);
+    font-size: 13px;
+}
+
+.hour.external {
+    margin-top: 60px;
+    min-height: unset;
+    max-height: unset;
+    height: auto;
+}
+
+.hour.external .data {
+    flex-direction: column;
+
+    height: auto;
+}
+
+.hour.external .data h1 {
+    order: -1;
+    padding: 0;
+    margin: 3px;
 }
 
 /* News */
@@ -382,6 +438,8 @@
     padding: 5px;
     margin: 15px;
 
+    margin-left: 20px;
+
     border-bottom: solid 1px var(--border-main);
 }
 
@@ -390,10 +448,17 @@
     margin: 5px;
 
     border-left: solid 1px var(--border-main);
+
+    margin-left: 20px;
 }
 
 .overview ul {
     padding: 5px;
+}
+
+.grade-object {
+    margin: 5px;
+    margin-left: 20px;
 }
 
 .grade-object h1 {
@@ -401,6 +466,7 @@
     text-align: start;
     border: none;
     margin: 2px;
+
 }
 
 .grade-object ul {

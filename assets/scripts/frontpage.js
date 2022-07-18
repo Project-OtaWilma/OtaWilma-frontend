@@ -278,16 +278,26 @@ const loadNews = (key) => {
 }
 
 const loadSchedule = (key, date) => {
+    const weekdays = {
+        '1': 'maanantai',
+        '2': 'tiistai',
+        '3': 'keskiviikko',
+        '4': 'torstai',
+        '5': 'perjantai'
+    }
+    
     return new Promise((resolve, reject) => {
         const dateTime = date ? date : new Date(2022, 7, 11);
         const dateString = dateTime.toLocaleDateString().split('/').reverse().join('-');
         const root = document.getElementById(key);
         
         fetch('../assets/static/schedule.html')
-            .then(async (res) => {
-                const html = await res.text();
-                root.innerHTML = html;
+        .then(async (res) => {
+            const html = await res.text();
+            root.innerHTML = html;
 
+                const invalidRoot = document.getElementById('course-list');
+            
                 const clockSec = document.getElementById('clock-sec');
                 const clockMin = document.getElementById('clock-min');
                 const clockHour = document.getElementById('clock-hour');
@@ -332,46 +342,51 @@ const loadSchedule = (key, date) => {
 
                 fetchSchedule(dateTime)
                     .then(schedule => {
-                        console.log(schedule);
                         Object.keys(schedule).filter(s => schedule[s].day.id <= 5 && schedule[s].day.id >= 1).forEach(d => {
                             const date = schedule[d];
                             document.getElementById(`${date.day.id}.date`).textContent = date.day.caption;
 
                             date.lessons.forEach((lesson, i) => {
-                                const slot = document.getElementById(lesson.slot);
+                                const invalid = !document.getElementById(lesson.slot);
+                                
+                                if(invalid) document.getElementById('warning-label').style.display = 'flex';
 
-                                if(slot) slot.style.opacity = 1;
+                                const slot = document.getElementById(lesson.slot) ? document.getElementById(lesson.slot) : document.getElementById(`${lesson.slot.split('.')[0]}.warning`);
+                                
+                                slot.style.opacity = 1;
 
                                 lesson.groups.forEach((group, i) => {
-                                    
-                                    if(slot) {
 
-                                        const data = document.createElement('div');
-                                        data.className = 'data';
+                                    const data = document.createElement('div');
+                                    data.className = 'data';
 
-                                        const name = document.createElement('h2');
-                                        name.textContent = group.code;
+                                    const name = document.createElement('h2');
+                                    name.textContent = group.code;
 
-                                        const teacher = document.createElement('h2');
-                                        if(group.teachers) {
-                                            teacher.textContent = group.teachers[0].caption;
-                                        }
-
-                                        const room = document.createElement('h2');
-
-                                        if(group.rooms) {
-                                            room.textContent = group.rooms[0].caption;
-                                        }
-
-                                        
-                                        data.appendChild(teacher);
-                                        data.appendChild(name);
-                                        data.appendChild(room);
-                                        slot.appendChild(data);
+                                    const teacher = document.createElement('h2');
+                                    if(group.teachers) {
+                                        teacher.textContent = group.teachers[0].caption;
                                     }
-                                    
-                                });
 
+                                    const room = document.createElement('h2');
+
+                                    if(group.rooms) {
+                                        room.textContent = group.rooms[0].caption;
+                                    }
+
+                                    data.appendChild(teacher);
+                                    data.appendChild(name);
+                                    data.appendChild(room);
+                                    slot.appendChild(data);
+
+                                    if(invalid) {
+                                        const time = document.createElement('h1');
+                                        time.textContent = lesson.slot.replace(lesson.slot.charAt(0)+".", weekdays[lesson.slot.charAt(0)] + " ")
+
+                                        data.appendChild(time);
+                                    }
+                                });
+                                
                             })
                         })
 
@@ -384,9 +399,5 @@ const loadSchedule = (key, date) => {
             .catch(err => {
                 return reject(err);
             })
-
-        
-
-
     })
 }

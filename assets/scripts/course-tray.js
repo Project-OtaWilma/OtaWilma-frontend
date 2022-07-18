@@ -57,6 +57,9 @@ const InitializeTrayList = () => {
             })
             return resolve();
         })
+        .catch(err => {
+            return reject(err);
+        })
         
     });
 }
@@ -64,6 +67,13 @@ const InitializeTrayList = () => {
 const loadPeriod = (hash, title) => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('tray-main');
+
+        if(!state.periods.includes(hash)) {
+            state.periods.push(hash);
+        }
+        else {
+            return;
+        }
 
         fetchPeriod(hash)
         .then(period => {
@@ -86,8 +96,6 @@ const loadPeriod = (hash, title) => {
             hideButton.addEventListener('click', () => {
                 textElement.className = textElement.className == 'closed' ? 'open' : 'closed';
                 periodElement.className = periodElement.className == 'period closed' ? 'period open' : 'period closed';
-
-                
             })
 
             const disableButton = document.createElement('button');
@@ -96,6 +104,7 @@ const loadPeriod = (hash, title) => {
             disableButton.addEventListener('click', () => {
                 periodElement.remove();
                 setupFilters();
+                state.periods.splice(state.periods.indexOf(hash), 1);
             })
 
             hideButton.appendChild(textElement);
@@ -154,13 +163,18 @@ const loadPeriod = (hash, title) => {
                             e.target.getAttribute('data-code'),
                             e.target.getAttribute('data-name'),
                             e.target.getAttribute('data-selected'),
-                            e.target.id);
+                            e.target.id).catch(err => {
+                                displayError(err);
+                            })
+                        
+                            loadTeacherInfo(e.target.getAttribute('data-teacher')).catch(err => {
+                                displayError(err);
+                            })
                     })
 
                     data.appendChild(nameElement);
                     data.appendChild(teacherElement);
                     data.appendChild(statusElement);
-
 
                     courseElement.appendChild(data);
                     courseList.appendChild(courseElement);
@@ -235,6 +249,8 @@ const loadCourseInfo = (code, name, selected, hash) => {
             })
 
             root.appendChild(actionButton);
+            // actionButton.scrollIntoView({behavior: "smooth", block: "center"})
+
 
             fetchTrayCourseInfo(hash)
             .then(info => {
@@ -250,6 +266,101 @@ const loadCourseInfo = (code, name, selected, hash) => {
 
         return resolve();
     });
+}
+
+const loadTeacherInfo = (teacher) => {
+    const translations = {
+        'school': 'Koulu',
+        'name': 'Nimi',
+        'task': 'Tehtävä',
+        'course-pace': 'Tuntien tahti ',
+        'course-applicability': 'Tuntien Soveltavuus ',
+        'course-style': 'Tuntien tyyli ',
+        'course-difficulty': 'Tuntien koettu haastavuus '
+    }
+
+    return new Promise((resolve, reject) => {
+        if(teacher == 'null') return resolve();
+
+        const root = document.getElementById('teacher-info')
+        root.replaceChildren([]);
+
+        const raw = teacher.split(' ').splice(1);
+        raw.push(raw.shift());
+
+        const name = raw.join(' ');
+        
+        const nameField = document.createElement('h1');
+        nameField.textContent = name;
+
+        root.appendChild(nameField);
+
+        fetchTeacherInfo(name)
+        .then(info => {
+            const feedback = info.feedback;
+            delete info['feedback'];
+            delete info['hash'];
+
+            delete feedback['reviews'];
+            delete feedback['comments'];
+            delete feedback['teacher-adjectives'];
+
+            Object.keys(info).forEach(key => {
+                const infoUl = document.createElement('ul');
+
+                const infoKey = document.createElement('a');
+                infoKey.textContent = `${translations[key]} `;
+
+                const infoValue = document.createElement('a');
+                infoValue.textContent = info[key];
+
+                infoUl.appendChild(infoKey);
+                infoUl.appendChild(infoValue);
+                root.appendChild(infoUl);
+            })
+
+            const titleElement = document.createElement('h1');
+            titleElement.textContent = 'Tiedot';
+
+            root.appendChild(titleElement);
+
+            Object.keys(feedback).forEach(key => {
+                const feedbackUl = document.createElement('ul');
+
+                const feedbackKey = document.createElement('a');
+                feedbackKey.textContent = translations[key];
+
+                const feedbackValue = document.createElement('a');
+                feedbackValue.textContent = parseFeedback(key, feedback[key]);
+
+                feedbackUl.appendChild(feedbackKey);
+                feedbackUl.appendChild(feedbackValue);
+                root.appendChild(feedbackUl);
+            })
+        })
+        .catch(err => {
+            const errorText = document.createElement('h1');
+            errorText.className = 'error-text';
+            
+            errorText.textContent = 'Opettajan tietojen hakeminen epäonnistui';
+            root.appendChild(errorText);
+        })
+    })
+}
+
+const parseFeedback = (key, value) => {
+    if(value == 'Ei riittävästi dataa') return 'Ei riittävästi dataa';
+
+    const options = {
+        'course-pace': ['Hidas', 'Tavallinen', 'Nopea'],
+        'course-applicability': ['Perusteet', 'Tavallinen', 'Soveltava'],
+        'course-style': ['Tehtäväpainotteinen', 'Satunnainen', 'Teoriapainotteinen'],
+        'course-difficulty': ['Helppo', 'Tavallinen', 'Haastava']
+    }
+
+    if((value * 180) <= 120) return options[key][0];
+    if((value * 180) > 120 && (value * 180) < 240) return options[key][1];
+    if((value * 180) >= 240) return options[key][2];
 }
 
 const setupSearch = () => {
@@ -487,7 +598,6 @@ const deselectCourse = (e, hash) => {
                 throw err;
         }
     })
-
 }
 
 const displayCourseError = (err) => {

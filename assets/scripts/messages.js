@@ -5,12 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const Initialize = async () => {
     InitializeNavBar();
+
     await InitializeThemes();
+
     InitializeCategories();
+
     await loadMessageList('inbox').catch(err => {
         displayError(err);
         throw err;
     })
+
     InitializeQuery();
 
     document.getElementById('loading').style.opacity = 0;
@@ -21,7 +25,9 @@ const InitializeQuery = () => {
 
     if(!hash) return;
 
-    loadMessageContent(hash);
+    loadMessageContent(hash).catch(err => {
+        displayError(err);
+    })
 }
 
 const InitializeCategories = () => {
@@ -71,7 +77,9 @@ const loadMessageList = (path) => {
                 title.textContent = message.subject;
                 title.id = message.id;
                 title.addEventListener('click', (e) => {
-                    loadMessageContent(e.target.id);
+                    loadMessageContent(e.target.id).catch(err => {
+                        displayError(err);
+                    });
                 });
 
                 const icon = document.createElement('div');

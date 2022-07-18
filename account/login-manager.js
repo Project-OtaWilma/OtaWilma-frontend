@@ -49,11 +49,13 @@ const validateOtaWilmaAccount = (hash) => {
     });
 }
 
-const createAccout = () => {
+const createAccout = (username) => {
     return new Promise((resolve, reject) => {
         fetch('https://otawilma-api.tuukk.dev/api/sessions/config/create',
         {
-            method: 'POST'
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({"username": username})
         })
         .then(async (res) => {
             const json = await res.json();
@@ -63,11 +65,14 @@ const createAccout = () => {
                     console.log(json);
                     const session = json['session']['hash'];
                     console.log(session);
-                    document.cookie = `session=${session}; SameSite=Lax; Secure;`;
+                    document.cookie = `session=${session}; SameSite=Lax; Secure; max-age=31536000; path=/`;;
                     return resolve();
+                default:
+                    return reject({err: 'Failed to create OtaWilma account', error: json, status: 500})
             }
         })
         .catch(err => {
+            console.log(err);
             return reject({ err: 'Failed to reach servers', status: 503 });
         })
     })

@@ -18,7 +18,10 @@ const state = {
     filters: {
         subjects: [],
         teachers: []
-    }
+    },
+    periods: [
+        
+    ]
 }
 
 const fetchConfig = () => {
@@ -178,6 +181,9 @@ const loadTheme = (theme) => {
     const root = document.documentElement;
     const background = document.getElementById('background');
     const colors = Object.keys(theme.colors);
+
+    const nameElement = document.getElementById('username');
+    if(nameElement) nameElement.textContent = state.config['username'].split('.').map(s =>  s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
 
     colors.forEach(key => {
         root.style.setProperty(key, theme.colors[key].value);

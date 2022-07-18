@@ -419,8 +419,23 @@
     padding: 0;
 }
 
+.error-text {
+    color: var(--error);
+}
+
+
 .tray-info ul {
     margin: 5px;
+}
+
+.teacher-info ul {
+    margin: 0;
+    margin-left: 10px;
+
+    padding: 4px;
+    padding-left: 10px;
+
+    border-left: solid 1px var(--border-main);
 }
 
 .tray-info ul a:nth-child(2) {

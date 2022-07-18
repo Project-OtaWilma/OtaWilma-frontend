@@ -15,9 +15,18 @@ const Initialize = async () => {
     /* Load layout afterwards to seemingly increase loading speeds */
     document.getElementById('loading').style.opacity = 0;
 
-    await loadNewsCurrent();
-    await loadNewsStatic();
-    await loadNewsOld();
+    await loadNewsCurrent().catch(err => {
+        displayError(err);
+        throw err;
+    });
+    await loadNewsStatic().catch(err => {
+        displayError(err);
+        throw err;
+    });
+    await loadNewsOld().catch(err => {
+        displayError(err);
+        throw err;
+    });
 }
 
 const InitializeQuery = () => {
@@ -122,7 +131,9 @@ const loadNewsOld = () => {
                 newsObject.className = 'news-object-static';
                 newsObject.id = news.href;
                 newsObject.addEventListener('click', (e) => {
-                    loadNewsContent(e.target.id);
+                    loadNewsContent(e.target.id).catch(err => {
+                        displayError(err);
+                    });
                 })
 
                 const titleObject = document.createElement('h1');

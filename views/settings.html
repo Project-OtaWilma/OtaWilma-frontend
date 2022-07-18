@@ -19,7 +19,7 @@
 
 <body>
     <div class="disclaimer">OtaWilma on vielä kehityksen alaisena, ja toiminta on toistaiseksi rajattu laitteisiin
-        joiden leveys on vähintään 1500px</div>
+        joiden leveys ja korkeus ovat vähintään 1200px ja 800px</div>
     <div class="loading-screen" id="loading"></div>
     <div class="container" id="container">
         <div class="background" id="background">
@@ -28,7 +28,7 @@
         <div class="top" id="top">
             <div class="user-info">
                 <div class="user-data">
-                    <h1>Tuukka Moilanen</h1>
+                    <h1 id="username"></h1>
                     <h2>Opiskelija</h2>
                 </div>
             </div>
@@ -46,6 +46,9 @@
             </button>
             <button id="/views/news.html">
                 <h5>Tiedotteet</h5>
+            </button>
+            <button id="/views/teachers.html">
+                <h5>Opettajat</h5>
             </button>
             <button id="/views/settings.html">
                 <h5>Asetukset</h5>
@@ -137,43 +140,43 @@
                         </form>
                         <h1 id="background-effects">Taustakuvan tehosteet</h1>
                         <form>
-                            <label>Sumennus |&nbsp;</label>
+                            <label>Sumennus [0 - 10] |&nbsp;</label>
                             <input class="number-input" type="number" id="blur" min="0" value="0">
                         </form>
                         <form>
-                            <label>Läpinäkyvyys |&nbsp;</label>
+                            <label>Läpinäkyvyys [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="opacity" min="0" value="0">
                         </form>
                         <form>
-                            <label>Kirkkaus |&nbsp;</label>
+                            <label>Kirkkaus [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="brightness" min="0" value="0">
                         </form>
                         <form>
-                            <label>Kontrasti |&nbsp;</label>
+                            <label>Kontrasti [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="contrast" min="0" value="0">
                         </form>
                         <form>
-                            <label>Saturaatio |&nbsp;</label>
+                            <label>Saturaatio [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="saturate" min="0" value="0">
                         </form>
                         <form>
-                            <label>Harmaasävyt |&nbsp;</label>
+                            <label>Harmaasävyt [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="grayscale" min="0" value="0">
                         </form>
                         <form>
-                            <label>Seepia |&nbsp;</label>
+                            <label>Seepia [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="sepia" min="0" value="0">
                         </form>
                         <form>
-                            <label>Värin taitto |&nbsp;</label>
+                            <label>Värin taitto [deg] |&nbsp;</label>
                             <input class="number-input" type="number" id="hue-rotate" min="-180" max="180" value="0">
                         </form>
                         <form>
-                            <label>Käänteisväri |&nbsp;</label>
+                            <label>Käänteisväri [%] |&nbsp;</label>
                             <input class="number-input" type="number" id="invert" min="0" value="0">
                         </form>
                         <form>
-                            <label>Reunojen pyöristys |&nbsp;</label>
+                            <label>Reunojen pyöristys [0 - 10] |&nbsp;</label>
                             <input class="number-input" type="number" id="rounded-edges" min="0" value="0">
                         </form>
                     </div>
@@ -199,11 +202,6 @@
                     <h3>Voit valita oletusteemojen väliltä ja luoda halutessasi myös omia teemoja. Tehokkaalla
                         editorilla voit mukauttaa Wilmasi värejä sekä taustakuvia
                     </h3>
-                    <h2>Ota yhteyttä</h2>
-                    <h3>Onko sinulla muutosehdotuksia oletusteemaan?</h3>
-                    <h3>Onko jokin asetus jota haluaisit muokata mutta et voi</h3>
-                    <h3>Raportoi ongelmasta</h3>
-
                 </div>
             </div>
         </div>

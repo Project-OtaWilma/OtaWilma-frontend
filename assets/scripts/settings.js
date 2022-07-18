@@ -52,9 +52,18 @@ const settings = {
 
 const Initialize = async () => {
     InitializeNavBar();
-    await InitializeThemes();
-    await InitializeSideBar();
-    await InitializeEditor();
+    await InitializeThemes().catch(err => {
+        displayError(err);
+        throw err;
+    });
+    await InitializeSideBar().catch(err => {
+        displayError(err);
+        throw err;
+    });
+    await InitializeEditor().catch(err => {
+        displayError(err);
+        throw err;
+    });
     
     document.getElementById('loading').style.opacity = 0;
 }
@@ -232,7 +241,7 @@ const onSetTheme = async (e) => {
             setLoadingScreen(false);
         })
         .catch(err => {
-            console.error(err);
+            displayError(err);
         });
     
 }
@@ -251,7 +260,12 @@ const onCreateTheme = async (e) => {
 
             setLoadingScreen(false);
         })
-
+        .catch(err => {
+            displayError(err);
+        })
+    })
+    .catch(err => {
+        displayError(err);
     })
 }
 
@@ -263,7 +277,6 @@ const setupColorEditor = () => {
         const type = state.current.theme.colors[key].type;
 
         switch(type) {
-
             case 'color': 
                 createColorInput(key, editor);
                 break;
@@ -290,7 +303,7 @@ const loadColorEditor = () => {
                 colorInput.value = hex;
         
                 const opacityInput = document.getElementById(`${key}.opacity`);
-                opacityInput.value = r[3];
+                opacityInput.value = r[3] * 100;
                 break;
             case 'number': 
                 const numberInput = document.getElementById(`${key}.number`);
@@ -301,21 +314,26 @@ const loadColorEditor = () => {
 }
 
 const onColorChanged = async (e) => {
+
     const form = e.target.parentNode;
     const key = (e.target.id).split('.')[0];
     const raw = hexToRgb(form['color'].value, form['opacity'].value);
-    const value = `rgba(${raw.r}, ${raw.g}, ${raw.b}, ${raw.a})`;
+    const value = `rgba(${raw.r}, ${raw.g}, ${raw.b}, ${raw.a / 100})`;
 
     setLoadingScreen(true);
 
-    await editThemeColors(state.current.id, key, value);
-
-    state.current.theme.colors[key].value = value;
+    await editThemeColors(state.current.id, key, value)
+    .then(() => {
+        state.current.theme.colors[key].value = value;
+        
+        loadThemePreview(state.current.id, state.current.theme);
+        loadTheme(state.current.theme);
     
-    loadThemePreview(state.current.id, state.current.theme);
-    loadTheme(state.current.theme);
-
-    setLoadingScreen(false);
+        setLoadingScreen(false);
+    })
+    .catch(err => {
+        displayError({err: 'Failed to set theme property', status: 400});
+    })
 }
 
 
@@ -325,6 +343,10 @@ const setupBackgroundEditor = () => {
 
         input.addEventListener('change', async (e) => {
             onBackgroundChanged(e);
+        })
+
+        input.parentElement.addEventListener('submit', (e) => {
+            e.preventDefault();
         })
     });
 }
@@ -348,15 +370,19 @@ const onBackgroundChanged = async (e) => {
 
     setLoadingScreen(true);
 
-    await editThemeBackground(state.current.id, e.target.id, e.target.value);
-
-    state.current.theme.background[e.target.id].value = e.target.value;
-    preview.src = state.current.theme.background.url.value;
+    await editThemeBackground(state.current.id, e.target.id, e.target.value)
+    .then(() => {
+        state.current.theme.background[e.target.id].value = e.target.value;
+        preview.src = state.current.theme.background.url.value;
+        
+        loadTheme(state.current.theme);
+        loadThemePreview(state.current.id, state.current.theme);
     
-    loadTheme(state.current.theme);
-    loadThemePreview(state.current.id, state.current.theme);
-
-    setLoadingScreen(false);
+        setLoadingScreen(false);
+    })
+    .catch(err => {
+        displayError(err)
+    })
 }
 
 const createColorInput = (key, root) => {
@@ -381,7 +407,7 @@ const createColorInput = (key, root) => {
     }
 
     const colorLabel = document.createElement('h3');
-    colorLabel.textContent = 'Väri';
+    colorLabel.textContent = 'Väri [RGB]';
 
     const colorInput = document.createElement('input');
     colorInput.type = type;
@@ -390,7 +416,7 @@ const createColorInput = (key, root) => {
     colorInput.className = `${type}-input`;
 
     const opacityLabel = document.createElement('h3');
-    opacityLabel.textContent = 'Läpinäkyvyys';
+    opacityLabel.textContent = 'Läpinäkyvyys [%]';
 
     const opacityInput = document.createElement('input');
     opacityInput.type = 'number';
@@ -401,6 +427,11 @@ const createColorInput = (key, root) => {
     formElement.addEventListener('change', async (e) => {
         onColorChanged(e);
     });
+
+    formElement.addEventListener('submit', (e) => {
+        e.preventDefault();
+        e.target.dispatchEvent(new Event('change'));
+    })
 
     formElement.appendChild(labelElement);
     formElement.appendChild(colorLabel);
@@ -460,9 +491,8 @@ const setupThemeActions = () => {
             location.reload();
         })
         .catch(err => {
-            return reject(err);
+            displayError(err);
         })
-        setRemovalPopup(false);
     })
 
     cancel.addEventListener('click', () => {
