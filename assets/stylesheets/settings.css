@@ -38,6 +38,9 @@
     border-right: solid 1px var(--border-main);
 
     text-align: start;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .side-bar h1 {
@@ -445,4 +448,28 @@
 
 .removal-popup button:hover {
     opacity: 75%;
+}
+
+.advanced a,
+.advanced h2 {
+    margin: 10px;
+}
+
+.advanced h3 {
+    width: 50%;
+    margin: 10px;
+    padding-left: 10px;
+
+    border-left: solid 1px var(--border-main);
+}
+
+.advanced .source {
+    color: var(--accent-main);
+
+    opacity: 75%;
+    cursor: pointer;
+}
+
+.source:hover {
+    opacity: 100%;
 }

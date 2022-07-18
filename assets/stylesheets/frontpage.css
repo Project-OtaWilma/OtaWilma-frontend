@@ -156,11 +156,11 @@
 }
 
 .hour {
-    height: calc((100% / 5) - 20px);
-    width: calc(100% - 4px);
+    height: auto;
+    width: 133px;
 
     min-height: 75px;
-    max-height: 75px;
+    max-height: 100px;
     margin: 2px;
 
     display: flex;
@@ -206,6 +206,33 @@
 .data h2:nth-child(2),
 .data h2:nth-child(3) {
     opacity: 50%;
+}
+
+.hour.special-1 {
+    position: absolute;
+    width: 133px;
+    margin-top: 25px;
+
+    height: auto;
+    max-height: unset;
+    min-height: 200px;
+    z-index: 2;
+
+    justify-content: flex-start;
+}
+
+.hour.special-2 {
+    position: absolute;
+    width: 133px;
+
+    top: 250px;
+
+    height: auto;
+    max-height: unset;
+    min-height: 200px;
+    z-index: 2;
+
+    justify-content: flex-start;
 }
 
 .warning {

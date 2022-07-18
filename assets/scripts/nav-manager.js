@@ -9,9 +9,9 @@ const InitializeNavBar = () => {
             }, 600);
         })
     });
-    const logout = document.getElementById('logout');
+    const logoutElement = document.getElementById('logout');
 
-    if(logout) {
+    if(logoutElement) {
         document.getElementById('logout').addEventListener('click', () => {
             logout()
             .then(() => {

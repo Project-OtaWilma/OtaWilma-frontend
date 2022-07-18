@@ -295,109 +295,114 @@ const loadSchedule = (key, date) => {
         .then(async (res) => {
             const html = await res.text();
             root.innerHTML = html;
-
-                const invalidRoot = document.getElementById('course-list');
             
-                const clockSec = document.getElementById('clock-sec');
-                const clockMin = document.getElementById('clock-min');
-                const clockHour = document.getElementById('clock-hour');
+            clockUpdate();
 
-                const currentTime = document.getElementById('current-time');
+            setInterval(() => {
+                clockUpdate();
+            }, 1000);
 
-                setInterval(() => {
-                    const d = new Date();
-                    clockSec.style.transform = `rotate(${((d.getSeconds() / 60) * 360) + 180}deg)`;
-                    clockMin.style.transform = `rotate(${((d.getMinutes() / 60) * 360) + ((d.getSeconds()/60)*6) + 180}deg)`;
-                    clockHour.style.transform = `rotate(${((d.getHours() / 12) * 360) + ((d.getMinutes()/60)*30) + 180}deg)`;
-                    currentTime.textContent = d.toLocaleTimeString();
-                }, 1000);
+            const dateForm = document.getElementById('date-form');
+            dateForm.addEventListener('submit', (e) => e.preventDefault());
 
-                const dateForm = document.getElementById('date-form');
-                dateForm.addEventListener('submit', (e) => e.preventDefault());
+            const dateInput = document.getElementById('date-input');
 
-                const dateInput = document.getElementById('date-input');
+            dateInput.value = dateString;
 
-                dateInput.value = dateString;
+            dateInput.addEventListener('change', (e) => {
+                const d = e.target.value.split('-');
 
-                dateInput.addEventListener('change', (e) => {
-                    const d = e.target.value.split('-');
+                loadSchedule(state.config.frontpage['SCHEDULE'], new Date(d[0], d[1], d[2]))
+            })
 
-                    loadSchedule(state.config.frontpage['SCHEDULE'], new Date(d[0], d[1], d[2]))
-                })
+            const previousPage = document.getElementById('previous-week');
+            previousPage.addEventListener('click', () => {
+                const d = dateInput.value.split('-').map(d => { return Number.parseInt(d); });
 
-                const previousPage = document.getElementById('previous-week');
-                previousPage.addEventListener('click', () => {
-                    const d = dateInput.value.split('-').map(d => { return Number.parseInt(d); });
+                loadSchedule(state.config.frontpage['SCHEDULE'], new Date(d[0], (d[1] - 1), d[2] - 7))
+                dateInput.value = `${d[0]}-${d[1]}-${d[2] - 7}`
+            });
 
-                    loadSchedule(state.config.frontpage['SCHEDULE'], new Date(d[0], (d[1] - 1), d[2] - 7))
-                    dateInput.value = `${d[0]}-${d[1]}-${d[2] - 7}`
-                });
+            const nextPage = document.getElementById('next-week');
+            nextPage.addEventListener('click', () => {
+                const d = dateInput.value.split('-').map(d => { return Number.parseInt(d); });
 
-                const nextPage = document.getElementById('next-week');
-                nextPage.addEventListener('click', () => {
-                    const d = dateInput.value.split('-').map(d => { return Number.parseInt(d); });
+                loadSchedule(state.config.frontpage['SCHEDULE'], new Date(d[0], (d[1] - 1), d[2] + 7))
+            }); 
 
-                    loadSchedule(state.config.frontpage['SCHEDULE'], new Date(d[0], (d[1] - 1), d[2] + 7))
-                }); 
+            fetchSchedule(dateTime)
+                .then(schedule => {
+                    Object.keys(schedule).filter(s => schedule[s].day.id <= 5 && schedule[s].day.id >= 1).forEach(d => {
+                        const date = schedule[d];
+                        document.getElementById(`${date.day.id}.date`).textContent = date.day.caption;
 
-                fetchSchedule(dateTime)
-                    .then(schedule => {
-                        Object.keys(schedule).filter(s => schedule[s].day.id <= 5 && schedule[s].day.id >= 1).forEach(d => {
-                            const date = schedule[d];
-                            document.getElementById(`${date.day.id}.date`).textContent = date.day.caption;
+                        date.lessons.forEach((lesson, i) => {
+                            const invalid = !document.getElementById(lesson.slot);
+                            
+                            if(invalid) document.getElementById('warning-label').style.display = 'flex';
 
-                            date.lessons.forEach((lesson, i) => {
-                                const invalid = !document.getElementById(lesson.slot);
-                                
-                                if(invalid) document.getElementById('warning-label').style.display = 'flex';
+                            const slot = document.getElementById(lesson.slot) ? document.getElementById(lesson.slot) : document.getElementById(`${lesson.slot.split('.')[0]}.warning`);
+                            
+                            slot.style.opacity = 1;
 
-                                const slot = document.getElementById(lesson.slot) ? document.getElementById(lesson.slot) : document.getElementById(`${lesson.slot.split('.')[0]}.warning`);
-                                
-                                slot.style.opacity = 1;
+                            lesson.groups.forEach((group, i) => {
 
-                                lesson.groups.forEach((group, i) => {
+                                const data = document.createElement('div');
+                                data.className = 'data';
 
-                                    const data = document.createElement('div');
-                                    data.className = 'data';
+                                const name = document.createElement('h2');
+                                name.textContent = group.code;
 
-                                    const name = document.createElement('h2');
-                                    name.textContent = group.code;
+                                const teacher = document.createElement('h2');
+                                if(group.teachers) {
+                                    teacher.textContent = group.teachers[0].caption;
+                                }
 
-                                    const teacher = document.createElement('h2');
-                                    if(group.teachers) {
-                                        teacher.textContent = group.teachers[0].caption;
-                                    }
+                                const room = document.createElement('h2');
 
-                                    const room = document.createElement('h2');
+                                if(group.rooms) {
+                                    room.textContent = group.rooms[0].caption;
+                                }
 
-                                    if(group.rooms) {
-                                        room.textContent = group.rooms[0].caption;
-                                    }
+                                data.appendChild(teacher);
+                                data.appendChild(name);
+                                data.appendChild(room);
+                                slot.appendChild(data);
 
-                                    data.appendChild(teacher);
-                                    data.appendChild(name);
-                                    data.appendChild(room);
-                                    slot.appendChild(data);
+                                if(invalid) {
+                                    const time = document.createElement('h1');
+                                    time.textContent = lesson.slot.replace(lesson.slot.charAt(0)+".", weekdays[lesson.slot.charAt(0)] + " ")
 
-                                    if(invalid) {
-                                        const time = document.createElement('h1');
-                                        time.textContent = lesson.slot.replace(lesson.slot.charAt(0)+".", weekdays[lesson.slot.charAt(0)] + " ")
-
-                                        data.appendChild(time);
-                                    }
-                                });
-                                
-                            })
+                                    data.appendChild(time);
+                                }
+                            });
+                            
                         })
+                    })
 
-                        return resolve();
-                    })
-                    .catch(err => {
-                        return reject(err);
-                    })
-            })
-            .catch(err => {
-                return reject(err);
-            })
+                    return resolve();
+                })
+                .catch(err => {
+                    return reject(err);
+                })
+        })
+        .catch(err => {
+            return reject(err);
+        })
     })
+}
+
+const clockUpdate = () => {
+    const clockSec = document.getElementById('clock-sec');
+    const clockMin = document.getElementById('clock-min');
+    const clockHour = document.getElementById('clock-hour');
+
+    const currentTime = document.getElementById('current-time');
+
+    const d = new Date();
+    clockSec.style.transform = `rotate(${((d.getSeconds() / 60) * 360) + 180}deg)`;
+    clockMin.style.transform = `rotate(${((d.getMinutes() / 60) * 360) + ((d.getSeconds()/60)*6) + 180}deg)`;
+    clockHour.style.transform = `rotate(${((d.getHours() / 12) * 360) + ((d.getMinutes()/60)*30) + 180}deg)`;
+    currentTime.textContent = d.toLocaleTimeString();
+
 }
