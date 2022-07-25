@@ -321,6 +321,7 @@ body {
 
 .error-object h4 {
     padding: 10px;
+    color: var(--font-h2);
 }
 
 .error-object h7 {

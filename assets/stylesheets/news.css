@@ -23,33 +23,78 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+
 }
 
-.current,
-.static,
-.old {
-    margin: 20px;
+.categories {
+    height: 50px;
+    width: 100%;
 
-    height: 30%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background-color: var(--accent-main);
+}
+
+.list {
+    position: absolute;
+    height: calc(100% - 50px - 2.5%);
     width: 95%;
+    top: 50px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    border-left: solid 3px var(--accent-main);
-    background-color: var(--background-main);
-    box-shadow: 0 0 15px var(--shadow-main);
+    border-right: solid 1px var(--border-main);
 
     overflow-y: scroll;
 }
 
+.categories div {
+    color: var(--font-h4);
+    font-size: 20px;
+    opacity: 65%;
 
-.current h1,
-.static h1,
-.old h1 {
+    cursor: pointer;
+    user-select: none;
+}
+
+.categories div:hover {
+    opacity: 85%;
+}
+
+.categories .selected {
+    font-family: 'semi-bold';
+    opacity: 100%;
+
+    pointer-events: none;
+}
+
+#current,
+#static,
+#old {
+    height: auto;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    display: none;
+}
+
+#current {
+    display: flex;
+}
+
+
+#current h1,
+#static h1,
+#old h1 {
     width: 90%;
     font-size: 20px;
     width: auto;
@@ -89,6 +134,7 @@
 
 .news-object-current h4 {
     margin: 10px;
+    color: var(--font-h2);
 }
 
 
@@ -121,6 +167,8 @@
 .news-object-static h4 {
     padding: 10px;
     opacity: 40%;
+
+    color: var(--font-h2);
 
     transition: opacity .2s ease-in-out;
     pointer-events: none;
@@ -170,91 +218,18 @@
     opacity: 30%;
 }
 
-/* error */
-
-.error {
-    color: red;
-}
-
-.error-container {
-    position: fixed;
-    width: 100%;
+.news-loading-screen {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
     height: 100%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 30;
-    background-color: white;
-}
-
-.error-object {
-    width: 350px;
-
-    min-width: 128px;
-    min-height: 128px;
-
-    height: auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    background-color: white;
-    border-radius: 4px;
-}
-
-.error-image {
-    width: 256px;
-    height: 256px;
-    background-size: cover;
+    background-image: url(/assets/img/loading-book.gif);
     background-position: center center;
-    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
-}
+    background-repeat: no-repeat;
+    background-size: 85px 85px;
 
-.error-object h1 {
-    margin: 15px;
-    color: black;
-}
+    filter: brightness(0);
 
-.error-object h2 {
-    margin: 15px;
-    color: rgb(30, 30, 30);
-    text-align: center;
-}
-
-.error-object h3 {
-    color: rgb(215, 215, 215);
-    text-align: center;
-}
-
-.error-object h4 {
-    padding: 10px;
-}
-
-.error-object h7 {
-    padding: 10px;
-
-    border-radius: 7px;
-
-    background-color: rgb(47, 47, 47);
-    color: rgb(200, 60, 60);
-}
-
-.error-object h5 {
-    margin: 15px;
-    padding: 7px;
-
-    text-align: center;
-
-    border-radius: 100px;
-
-    font-family: 'semi-bold';
-    font-size: 17px;
-    color: white;
-
-    background-color: rgb(200, 60, 60);
+    display: none;
 }

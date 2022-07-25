@@ -23,7 +23,7 @@ const Initialize = async () => {
 const InitializeQuery = () => {
     const hash = getParameterByName('message');
 
-    if(!hash) return;
+    if (!hash) return;
 
     loadMessageContent(hash).catch(err => {
         displayError(err);
@@ -36,7 +36,8 @@ const InitializeCategories = () => {
     const categories = {
         'Saapuneet': 'inbox',
         'Lähetetyt': 'outbox',
-        'Tapahtumakutsut': 'appointments'
+        'Tapahtumakutsut': 'appointments',
+        'OtaWilma': 'announcements'
     };
 
     Object.keys(categories).forEach(category => {
@@ -46,7 +47,7 @@ const InitializeCategories = () => {
             loadMessageList(div.id);
         })
 
-        
+
         const h1 = document.createElement('h1');
         h1.textContent = category;
 
@@ -57,7 +58,8 @@ const InitializeCategories = () => {
 
 const loadMessageList = (path) => {
     const root = document.getElementById('message-list');
-    root.replaceChildren([]);
+
+    setlistLoadingScreen(true);
 
     document.getElementById(state.messages.categories.current).className = '';
     document.getElementById(path).className = 'category-selected';
@@ -65,58 +67,60 @@ const loadMessageList = (path) => {
 
     return new Promise((resolve, reject) => {
         fetchMessages(path, 1000)
-        .then(list => {
+            .then(list => {
+                root.replaceChildren([]);
 
-            for (let i = 0; i < list.length; i++) {
-                const message = list[i];
-                
-                const messageObject = document.createElement('div');
-                messageObject.className = message.isEvent ?  `message-object ${message.status}` : 'message-object';
-                
-                const title = document.createElement('h1');
-                title.textContent = message.subject;
-                title.id = message.id;
-                title.addEventListener('click', (e) => {
-                    loadMessageContent(e.target.id).catch(err => {
-                        displayError(err);
+                for (let i = 0; i < list.length; i++) {
+                    const message = list[i];
+
+                    const messageObject = document.createElement('div');
+                    messageObject.className = message.isEvent ? `message-object ${message.status}` : 'message-object';
+
+                    const title = document.createElement('h1');
+                    title.textContent = message.subject;
+                    title.id = message.id;
+                    title.addEventListener('click', (e) => {
+                        loadMessageContent(e.target.id).catch(err => {
+                            displayError(err);
+                        });
                     });
-                });
 
-                const icon = document.createElement('div');
+                    const icon = document.createElement('div');
 
-                if(message.isEvent) {
-                    icon.className = 'calendar';
+                    if (message.isEvent) {
+                        icon.className = 'calendar';
+                    }
+
+                    const timeStamp = document.createElement('h2');
+                    timeStamp.textContent = message.timeStamp;
+
+                    const sender = document.createElement('h2');
+                    sender.textContent = message.senders[0].name;
+
+                    const replies = document.createElement('h3');
+                    replies.textContent = `${message.replies ? `${message.replies} ${message.replies > 1 ? 'vastausta' : 'vastaus'}` : ''}`;
+
+                    messageObject.appendChild(title);
+                    messageObject.appendChild(timeStamp);
+                    messageObject.appendChild(sender);
+                    messageObject.appendChild(replies);
+                    messageObject.appendChild(icon);
+
+                    root.appendChild(messageObject);
                 }
-
-                const timeStamp = document.createElement('h2');
-                timeStamp.textContent = message.timeStamp;
-
-                const sender = document.createElement('h2');
-                sender.textContent = message.senders[0].name;
-
-                const replies = document.createElement('h3');
-                replies.textContent = `${message.replies ? `${message.replies} ${message.replies > 1 ? 'vastausta' : 'vastaus'}` : ''}`;
-
-                messageObject.appendChild(title);
-                messageObject.appendChild(timeStamp);
-                messageObject.appendChild(sender);
-                messageObject.appendChild(replies);
-                messageObject.appendChild(icon);
-
-                root.appendChild(messageObject);
-            }
-            return resolve();
-        })
-        .catch(err => {
-            return reject(err);
-        })
+                setlistLoadingScreen(false);
+                return resolve();
+            })
+            .catch(err => {
+                return reject(err);
+            })
 
     })
 }
 
 const loadMessageContent = (id) => {
     return new Promise((resolve, reject) => {
-
+        setMessageLoadingScreen(true);
         const title = document.getElementById('message-title');
 
         const infoRoot = document.getElementById('message-info');
@@ -127,85 +131,98 @@ const loadMessageContent = (id) => {
         repliesRoot.replaceChildren([]);
 
         fetchMessageContent(id)
-        .then(list => {
-            const message = list[0];
+            .then(list => {
+                const message = list[0];
 
-            title.textContent = message.subject;
+                title.textContent = message.subject;
 
-            // Info
-            const senderUl = document.createElement('ul');
-            const senderKey = document.createElement('a');
-            senderKey.textContent = 'Lähettäjä(t) ';
+                // Info
+                const senderUl = document.createElement('ul');
+                const senderKey = document.createElement('a');
+                senderKey.textContent = 'Lähettäjä(t) ';
 
-            const senderValue = document.createElement('a');
-            senderValue.textContent = message.sender;
+                const senderValue = document.createElement('a');
+                senderValue.textContent = message.sender;
 
-            senderUl.appendChild(senderKey);
-            senderUl.appendChild(senderValue);
+                senderUl.appendChild(senderKey);
+                senderUl.appendChild(senderValue);
 
-            const recipientUl = document.createElement('ul');
-            const recipientKey = document.createElement('a');
-            recipientKey.textContent = 'Vastaanottaja(t) ';
+                const recipientUl = document.createElement('ul');
+                const recipientKey = document.createElement('a');
+                recipientKey.textContent = 'Vastaanottaja(t) ';
 
-            const recipientValue = document.createElement('a');
-            recipientValue.textContent = message.recipients;
+                const recipientValue = document.createElement('a');
+                recipientValue.textContent = message.recipients;
 
-            recipientUl.appendChild(recipientKey);
-            recipientUl.appendChild(recipientValue);
+                recipientUl.appendChild(recipientKey);
+                recipientUl.appendChild(recipientValue);
 
-            const timeStampUl = document.createElement('ul');
-            const timeStampKey = document.createElement('a');
-            timeStampKey.textContent = 'Lähetetty ';
+                const timeStampUl = document.createElement('ul');
+                const timeStampKey = document.createElement('a');
+                timeStampKey.textContent = 'Lähetetty ';
 
-            const timeStampValue = document.createElement('a');
-            timeStampValue.textContent = message.timeStamp;
+                const timeStampValue = document.createElement('a');
+                timeStampValue.textContent = message.timeStamp;
 
-            timeStampUl.appendChild(timeStampKey);
-            timeStampUl.appendChild(timeStampValue);
+                timeStampUl.appendChild(timeStampKey);
+                timeStampUl.appendChild(timeStampValue);
 
-            infoRoot.appendChild(senderUl);
-            infoRoot.appendChild(recipientUl);
-            infoRoot.appendChild(timeStampUl);
+                infoRoot.appendChild(senderUl);
+                infoRoot.appendChild(recipientUl);
+                infoRoot.appendChild(timeStampUl);
 
-            // Content
-            
-            contentRoot.innerHTML = message.content;
-            
-            const wilmaLink = document.createElement('div');
-            wilmaLink.className = 'wilma-link';
+                // Content
+                contentRoot.innerHTML = message.content;
 
-            wilmaLink.addEventListener('click', () => {
-                redirectToWilma(`messages/${id}?Cookie=Wilma2SID=${getCookie('Wilma2SID')}`);
+
+                if (message.fromWilma) {
+                    const wilmaLink = document.createElement('div');
+                    wilmaLink.className = 'wilma-link';
+
+                    const icon = document.createElement('div');
+                    icon.className = 'icon';
+
+                    const text = document.createElement('h6');
+                    text.textContent = 'Avaa Wilmassa';
+
+                    wilmaLink.appendChild(icon);
+                    wilmaLink.appendChild(text);
+
+                    wilmaLink.addEventListener('click', () => {
+                        redirectToWilma(`messages/${id}?Cookie=Wilma2SID=${getCookie('Wilma2SID')}`);
+                    })
+
+                    contentRoot.appendChild(wilmaLink);
+                }
+
+                // Replies
+                message.replies.forEach(reply => {
+                    const responseObject = document.createElement('div');
+                    responseObject.className = 'message-reply'
+
+                    const sender = document.createElement('h4');
+                    sender.textContent = `${reply.sender} ${reply.timeStamp}`;
+
+                    responseObject.innerHTML = reply.content;
+                    responseObject.appendChild(sender);
+
+                    repliesRoot.appendChild(responseObject);
+                })
+                setMessageLoadingScreen(false);
+                return resolve();
             })
-
-            const icon = document.createElement('div');
-            icon.className = 'icon';
-
-            const text = document.createElement('h6');
-            text.textContent = 'Avaa Wilmassa';
-
-            wilmaLink.appendChild(icon);
-            wilmaLink.appendChild(text);
-            contentRoot.appendChild(wilmaLink);
-
-            // Replies
-
-            message.replies.forEach(reply => {
-                const responseObject = document.createElement('div');
-                responseObject.className = 'message-reply'
-                
-                const sender = document.createElement('h4');
-                sender.textContent = `${reply.sender} ${reply.timeStamp}`;
-
-                responseObject.innerHTML = reply.content;
-                responseObject.appendChild(sender);
-
-                repliesRoot.appendChild(responseObject);
+            .catch(err => {
+                return reject(err);
             })
-            return resolve();
-        })
-        .catch(err => {
-            return reject(err);
-        })
     })
+}
+
+const setMessageLoadingScreen = (value) => {
+    document.getElementById('message-loading-screen').style.display = value ? 'flex' : 'none';
+    document.getElementById('message-container').style.filter = value ? 'blur(2px)' : 'none';
+}
+
+const setlistLoadingScreen = (value) => {
+    document.getElementById('list-loading-screen').style.display = value ? 'flex' : 'none';
+    document.getElementById('message-list').style.filter = value ? 'blur(2px)' : 'none';
 }

@@ -39,8 +39,7 @@ const Initialize = async () => {
 const setupBook = () => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('gradebook')
-        const courseInfoRoot = document.getElementById('course-info');
-        
+
         const translations = {
             'OÄIun': 'Lukiokoulutusta täydentävä oma äidinkieli (unkari)',
             'OÄIve': 'Lukiokoulutusta täydentävä oma äidinkieli (venäjä)',
@@ -54,39 +53,41 @@ const setupBook = () => {
 
         fectchCourseList()
             .then(list => {
-                Object.keys(list).forEach(subject => {             
+                Object.keys(list).forEach(subject => {
                     const subjectElement = document.createElement('div');
                     subjectElement.className = 'subject';
-    
+
                     const ul = document.createElement('ul');
-    
+
                     const key = document.createElement('a');
                     key.textContent = `${Object.keys(translations).includes(subject) ? translations[subject] : subject} `;
-    
+
                     const value = document.createElement('a');
                     value.id = Object.keys(translations).includes(subject) ? translations[subject] : subject;
-    
+
                     const courseList = document.createElement('div');
                     courseList.className = 'course-list';
-    
+
                     ul.appendChild(key);
                     ul.appendChild(value);
                     subjectElement.appendChild(ul);
                     subjectElement.appendChild(courseList);
-    
+
                     list[subject].forEach(course => {
-                        
+
                         const courseObject = document.createElement('div');
                         courseObject.className = course.type;
                         courseObject.id = course.code;
-    
+
                         courseObject.addEventListener('click', (e) => {
+                            loadCourse(e, course);
+                            /*
                             fetchCourse(e.target.getAttribute('data-code'))
                                 .then(info => {
                                     delete info['name'];
                                     delete info['type'];
-    
-    
+
+
                                     info = {
                                         ...{
                                             'Arvosana': e.target.getAttribute('data-grade'),
@@ -95,31 +96,31 @@ const setupBook = () => {
                                             'Lisätietoja': e.target.getAttribute('data-info')
                                         }, ...info
                                     }
-    
+
                                     info['Opintopisteitä'] = e.target.getAttribute('data-points') ? e.target.getAttribute('data-points') : info['Opintopisteitä']
-    
+
                                     courseInfoRoot.replaceChildren([]);
-    
+
                                     const titleElement = document.createElement('h1');
                                     titleElement.textContent = `${course.code} - ${course.name}`;
-    
+
                                     courseInfoRoot.appendChild(titleElement);
-    
+
                                     Object.keys(info).forEach(key => {
                                         if (info[key] && info[key] != 'null') {
                                             const fieldElement = document.createElement('ul');
-    
-    
+
+
                                             const keyElement = document.createElement('a');
                                             keyElement.textContent = `${key}: `;
-    
+
                                             const valueElement = document.createElement('a');
                                             valueElement.innerHTML = info[key];
                                             valueElement.className = key;
-    
+
                                             fieldElement.appendChild(keyElement);
                                             fieldElement.appendChild(valueElement);
-    
+
                                             courseInfoRoot.appendChild(fieldElement);
                                         }
                                     });
@@ -127,32 +128,90 @@ const setupBook = () => {
                                 .catch(err => {
                                     console.error(err);
                                 })
+                                */
                         })
-    
+
                         const code = document.createElement('h4');
                         code.textContent = course.code;
-    
+
                         const infoObject = document.createElement('div');
                         infoObject.className = 'course-info';
-    
+
                         const name = document.createElement('h2');
                         name.textContent = course.name;
-    
+
                         courseObject.setAttribute('data-name', course.name);
                         courseObject.setAttribute('data-code', course.code);
                         courseObject.appendChild(code);
-    
+
                         infoObject.appendChild(name);
                         courseObject.appendChild(infoObject);
-    
-    
+
+
                         courseList.appendChild(courseObject);
                     });
-    
+
                     root.appendChild(subjectElement);
                     return resolve();
                 });
-    
+
+            })
+            .catch(err => {
+                return reject(err);
+            })
+    })
+}
+
+const loadCourse = (e, course) => {
+    const courseInfoRoot = document.getElementById('course-info');
+
+    setLoadingScreen(true);
+
+    return new Promise((resolve, reject) => {
+        fetchCourse(e.target.getAttribute('data-code'))
+            .then(info => {
+                delete info['name'];
+                delete info['type'];
+
+                info = {
+                    ...{
+                        'Arvosana': e.target.getAttribute('data-grade'),
+                        'Suoritettu': e.target.getAttribute('data-date'),
+                        'Opettaja': e.target.getAttribute('data-teacher'),
+                        'Lisätietoja': e.target.getAttribute('data-info')
+                    }, ...info
+                }
+
+                info['Opintopisteitä'] = e.target.getAttribute('data-points') ? e.target.getAttribute('data-points') : info['Opintopisteitä']
+
+                courseInfoRoot.replaceChildren([]);
+
+                const titleElement = document.createElement('h1');
+                titleElement.textContent = `${course.code} - ${course.name}`;
+
+                courseInfoRoot.appendChild(titleElement);
+
+                Object.keys(info).forEach(key => {
+                    if (info[key] && info[key] != 'null') {
+                        const fieldElement = document.createElement('ul');
+
+
+                        const keyElement = document.createElement('a');
+                        keyElement.textContent = `${key}: `;
+
+                        const valueElement = document.createElement('a');
+                        valueElement.innerHTML = info[key];
+                        valueElement.className = key;
+
+                        fieldElement.appendChild(keyElement);
+                        fieldElement.appendChild(valueElement);
+
+                        courseInfoRoot.appendChild(fieldElement);
+                    }
+                });
+
+                setLoadingScreen(false);
+                return resolve();
             })
             .catch(err => {
                 return reject(err);
@@ -190,16 +249,16 @@ const loadBook = () => {
 
                 Object.keys(list).forEach(s => {
                     const subject = list[s];
-                    
+
                     const gradeElement = document.getElementById(s);
-                    if(gradeElement) {
+                    if (gradeElement) {
                         console.log([s, gradeElement]);
                         gradeElement.textContent = subject.grade;
-    
+
                         Object.keys(subject.courses).forEach(c => {
                             const course = subject.courses[c];
                             const courseElement = document.getElementById(course.code);
-    
+
                             if (courseElement) {
                                 courseElement.className = `${courseElement.className}-graded`
                                 courseElement.setAttribute('data-grade', `${course.grade} - ${grades[course.grade]}`);
@@ -207,11 +266,11 @@ const loadBook = () => {
                                 courseElement.setAttribute('data-date', course.date);
                                 courseElement.setAttribute('data-teacher', course.teacher);
                                 courseElement.setAttribute('data-info', course.info);
-    
+
                                 const textElement = courseElement.getElementsByTagName('h4')[0];
                                 textElement.textContent = course.grade;
                             }
-    
+
                         })
                     }
                 })
@@ -222,4 +281,9 @@ const loadBook = () => {
                 return reject(err);
             })
     })
+}
+
+const setLoadingScreen = (value) => {
+    document.getElementById('course-loading-screen').style.display = value ? 'flex' : 'none';
+    document.getElementById('course-info').style.filter = value ? 'blur(2px)' : 'none';
 }

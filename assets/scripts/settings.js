@@ -49,6 +49,8 @@ const settings = {
     }
 }
 
+const mimeTypes = ['png', 'svg', 'jpg', 'gif', 'webp']
+
 
 const Initialize = async () => {
     InitializeNavBar();
@@ -64,7 +66,7 @@ const Initialize = async () => {
         displayError(err);
         throw err;
     });
-    
+
     document.getElementById('loading').style.opacity = 0;
 }
 
@@ -96,29 +98,29 @@ const InitializeEditor = () => {
     return new Promise((resolve, reject) => {
         fetchThemeList()
             .then(async (list) => {
-                setupThemeList(state.themes);
-                
+                setupThemeList();
+
                 for (let i = 0; i < list.length; i++) {
                     const id = list[i];
 
                     const theme = await fetchTheme(id)
-                    .catch(err => {
-                        return reject(err);
-                    })
-                    
+                        .catch(err => {
+                            return reject(err);
+                        })
+
                     state.themes.push(theme);
-                    
+
                     createThemePreview(theme);
                     loadThemePreview(id, theme);
-                    
+
                 }
-                    
+
                 setupColorEditor();
                 loadColorEditor();
                 setupBackgroundEditor();
                 loadBackgroundEditor();
                 setupThemeActions();
-                
+
                 return resolve()
             })
             .catch(err => {
@@ -127,7 +129,7 @@ const InitializeEditor = () => {
     });
 }
 
-const setupThemeList = (list) => {
+const setupThemeList = () => {
     const newTheme = document.getElementById('new-theme');
 
     newTheme.addEventListener('click', () => {
@@ -138,6 +140,8 @@ const setupThemeList = (list) => {
 const createThemePreview = (theme) => {
     const defaultThemeContainer = document.getElementById('default-themes');
     const customThemeContainer = document.getElementById('custom-themes');
+
+    const themeCount = document.getElementById('theme-count');
 
     const translations = {
         'light': 'Vaalea teema',
@@ -170,19 +174,24 @@ const createThemePreview = (theme) => {
 
     mainElement.appendChild(h1);
     mainElement.appendChild(h2);
-    
+
     themeElement.appendChild(backgroundElement);
     themeElement.appendChild(mainElement);
 
 
     const root = defaults.includes(theme.hash) ? defaultThemeContainer : customThemeContainer;
     root.appendChild(themeElement);
+
+    const count = state.themes.length - 2;
+
+    themeCount.textContent = `${count} / 10`;
+    if (count >= 10) document.getElementById('new-theme').remove();
 }
 
 const loadThemePreview = (id, theme) => {
     const themeElement = document.getElementById(id);
 
-    if(state.current.id == id) {
+    if (state.current.id == id) {
         themeElement.className = 'theme selected';
     }
 
@@ -199,21 +208,21 @@ const loadThemePreview = (id, theme) => {
     `;
 
     themeElement
-    .style = `border-top: solid 10px ${theme.colors['--accent-main'].value};`;
-    
+        .style = `border-top: solid 10px ${theme.colors['--accent-main'].value};`;
+
     themeElement.getElementsByClassName('theme-background')[0]
         .style = `
         background: ${theme.background['url'].value ? `url(${theme.background['url'].value})` : theme.colors['--background-main'].value};
         filter: ${filter}
         `;
-    
+
     themeElement.getElementsByClassName('theme-main')[0]
         .style = `
         background-color: ${theme.colors['--background-main'].value};
         box-shadow: 0 0 10px ${theme.colors['--shadow-main'].value};
         border-left: solid 2px ${theme.colors['--accent-main'].value}
         `;
-    
+
     themeElement.getElementsByTagName('h1')[0]
         .style.color = theme.colors['--font-h1'].value;
 
@@ -225,7 +234,7 @@ const loadThemePreview = (id, theme) => {
 
 const onSetTheme = async (e) => {
     setLoadingScreen(true);
-    
+
     await setTheme(e.target.id);
     state.current.id = e.target.id;
 
@@ -243,49 +252,50 @@ const onSetTheme = async (e) => {
         .catch(err => {
             displayError(err);
         });
-    
+
 }
 
 const onCreateTheme = async (e) => {
     setLoadingScreen(true);
 
     createTheme()
-    .then(res => {
-        const hash = res.session.hash;
+        .then(res => {
+            const hash = res.session.hash;
 
-        fetchTheme(hash)
-        .then(theme => {
-            createThemePreview(theme);
-            loadThemePreview(hash, theme);
+            fetchTheme(hash)
+                .then(theme => {
+                    state.themes.push(theme);
+                    createThemePreview(theme);
+                    loadThemePreview(hash, theme);
 
-            setLoadingScreen(false);
+                    setLoadingScreen(false);
+                })
+                .catch(err => {
+                    displayError(err);
+                })
         })
         .catch(err => {
             displayError(err);
         })
-    })
-    .catch(err => {
-        displayError(err);
-    })
 }
 
 const setupColorEditor = () => {
     const editor = document.getElementById('theme-editor');
     editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
-    
+
     Object.keys(state.current.theme.colors).forEach(key => {
         const type = state.current.theme.colors[key].type;
 
-        switch(type) {
-            case 'color': 
+        switch (type) {
+            case 'color':
                 createColorInput(key, editor);
                 break;
-            case 'number': 
+            case 'number':
                 createNumberInput(key, editor);
                 break;
         }
     });
-    
+
 }
 
 const loadColorEditor = () => {
@@ -293,19 +303,19 @@ const loadColorEditor = () => {
         const editor = document.getElementById('theme-editor');
         editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
 
-        switch(state.current.theme.colors[key].type) {
+        switch (state.current.theme.colors[key].type) {
 
-            case 'color': 
+            case 'color':
                 const r = parseRgb(state.current.theme.colors[key].value);
                 const hex = rgbToHex(r[0], r[1], r[2]);
-        
+
                 const colorInput = document.getElementById(`${key}.color`);
                 colorInput.value = hex;
-        
+
                 const opacityInput = document.getElementById(`${key}.opacity`);
                 opacityInput.value = r[3] * 100;
                 break;
-            case 'number': 
+            case 'number':
                 const numberInput = document.getElementById(`${key}.number`);
                 numberInput.value = state.current.theme.colors[key].value;
                 break;
@@ -314,7 +324,6 @@ const loadColorEditor = () => {
 }
 
 const onColorChanged = async (e) => {
-
     const form = e.target.parentNode;
     const key = (e.target.id).split('.')[0];
     const raw = hexToRgb(form['color'].value, form['opacity'].value);
@@ -323,19 +332,18 @@ const onColorChanged = async (e) => {
     setLoadingScreen(true);
 
     await editThemeColors(state.current.id, key, value)
-    .then(() => {
-        state.current.theme.colors[key].value = value;
-        
-        loadThemePreview(state.current.id, state.current.theme);
-        loadTheme(state.current.theme);
-    
-        setLoadingScreen(false);
-    })
-    .catch(err => {
-        displayError({err: 'Failed to set theme property', status: 400});
-    })
-}
+        .then(() => {
+            state.current.theme.colors[key].value = value;
 
+            loadThemePreview(state.current.id, state.current.theme);
+            loadTheme(state.current.theme);
+
+            setLoadingScreen(false);
+        })
+        .catch(err => {
+            displayError({ err: 'Failed to set theme property', status: 400 });
+        })
+}
 
 const setupBackgroundEditor = () => {
     Object.keys(state.current.theme.background).forEach(key => {
@@ -348,6 +356,10 @@ const setupBackgroundEditor = () => {
         input.parentElement.addEventListener('submit', (e) => {
             e.preventDefault();
         })
+
+        input.addEventListener('submit', (e) => {
+            e.preventDefault();
+        })
     });
 }
 
@@ -357,6 +369,11 @@ const loadBackgroundEditor = () => {
 
     const preview = document.getElementById('background-preview');
     preview.src = state.current.theme.background.url.value;
+
+    const format = state.current.theme.background.url.value.split('.').reverse()[0];
+    const formatLabel = document.getElementById('format-label');
+    formatLabel.textContent = format;
+    formatLabel.style.color = mimeTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
 
     Object.keys(state.current.theme.background).forEach(key => {
         const input = document.getElementById(key);
@@ -371,18 +388,23 @@ const onBackgroundChanged = async (e) => {
     setLoadingScreen(true);
 
     await editThemeBackground(state.current.id, e.target.id, e.target.value)
-    .then(() => {
-        state.current.theme.background[e.target.id].value = e.target.value;
-        preview.src = state.current.theme.background.url.value;
-        
-        loadTheme(state.current.theme);
-        loadThemePreview(state.current.id, state.current.theme);
-    
-        setLoadingScreen(false);
-    })
-    .catch(err => {
-        displayError(err)
-    })
+        .then(() => {
+            state.current.theme.background[e.target.id].value = e.target.value;
+            preview.src = state.current.theme.background.url.value;
+
+            const format = state.current.theme.background.url.value.split('.').reverse()[0];
+            const formatLabel = document.getElementById('format-label');
+            formatLabel.textContent = format;
+            formatLabel.style.color = mimeTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
+
+            loadTheme(state.current.theme);
+            loadThemePreview(state.current.id, state.current.theme);
+
+            setLoadingScreen(false);
+        })
+        .catch(err => {
+            displayError(err)
+        })
 }
 
 const createColorInput = (key, root) => {
@@ -393,16 +415,16 @@ const createColorInput = (key, root) => {
 
     const section = Object.keys(settings).find(t => Object.keys(settings[t]).includes(key))
 
-    if(section) {
-        if(!sections.includes(section)) {
+    if (section) {
+        if (!sections.includes(section)) {
             sections.push(section);
-            
+
             const titleElement = document.createElement('h1');
             titleElement.textContent = section;
-            
+
             root.appendChild(titleElement);
         }
-        
+
         labelElement.textContent = settings[section][key];
     }
 
@@ -430,7 +452,6 @@ const createColorInput = (key, root) => {
 
     formElement.addEventListener('submit', (e) => {
         e.preventDefault();
-        e.target.dispatchEvent(new Event('change'));
     })
 
     formElement.appendChild(labelElement);
@@ -450,16 +471,16 @@ const createNumberInput = (key, root) => {
 
     const section = Object.keys(settings).find(t => Object.keys(settings[t]).includes(key))
 
-    if(section) {
-        if(!sections.includes(section)) {
+    if (section) {
+        if (!sections.includes(section)) {
             sections.push(section);
-            
+
             const titleElement = document.createElement('h1');
             titleElement.textContent = section;
-            
+
             root.appendChild(titleElement);
         }
-        
+
         labelElement.textContent = settings[section][key];
     }
 
@@ -486,13 +507,13 @@ const setupThemeActions = () => {
     confirm.addEventListener('click', () => {
         setLoadingScreen(true);
         deleteTheme(state.current.id)
-        .then(status => {
-            console.log(status);
-            location.reload();
-        })
-        .catch(err => {
-            displayError(err);
-        })
+            .then(status => {
+                console.log(status);
+                location.reload();
+            })
+            .catch(err => {
+                displayError(err);
+            })
     })
 
     cancel.addEventListener('click', () => {

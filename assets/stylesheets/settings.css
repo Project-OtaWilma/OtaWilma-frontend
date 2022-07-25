@@ -193,7 +193,7 @@
     z-index: 5;
 
 
-    background-image: url(/assets/img/loading-gears.gif);
+    background-image: url(/assets/img/loading-book.gif);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 85px 85px;
@@ -261,7 +261,6 @@
     color: white;
 }
 
-
 .preview {
     width: 450px;
     height: 300px;
@@ -291,6 +290,38 @@
 .backgrounds h2 {
     margin: 10px;
     font-size: 17px;
+}
+
+.format-disclaimer {
+    width: 50%;
+
+    margin: 10px;
+
+    margin-left: 20px;
+    margin-top: -10px;
+}
+
+.format-disclaimer h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.format-disclaimer h3 {
+    margin: 10px;
+    margin-left: 0;
+    padding: 4px;
+
+    font-size: 14px;
+
+    border-radius: 4px;
+
+    width: 30px;
+
+    text-align: center;
+
+    color: var(--login-lighter);
+
+    background-color: rgb(20, 20, 20);
 }
 
 .backgrounds form {
@@ -387,8 +418,8 @@
 
 .removal-popup {
     position: fixed;
-    width: 300px;
-    height: 200px;
+    width: 500px;
+    height: 400px;
 
     padding: 10px;
 

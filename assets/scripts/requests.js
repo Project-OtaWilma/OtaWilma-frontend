@@ -1,5 +1,5 @@
-const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-// const wilmaAPI = 'http://localhost:3001/api/';
+// const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
+const wilmaAPI = 'http://localhost:3001/api/';
 
 const fetchMessages = (path, limit) => {
     return new Promise((resolve, reject) => {
@@ -192,16 +192,16 @@ const fetchGradeBook = (filter) => {
 }
 
 const fectchCourseList = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const url = `${wilmaAPI}lops/courses/list`;
-        
-        if(cacheAvailable) {
-            loadCache('course-cache', url)
-            .then(theme => {
+
+        if (cacheAvailable) {
+            const list = await loadCache('course-cache', url).catch(() => { })
+
+            if (list) {
                 console.warn('Loaded course-list from cache')
-                return resolve(theme);
-            })
-            .catch(() => {})
+                return resolve(list);
+            }
         }
 
         fetch(url, {
@@ -234,17 +234,18 @@ const fectchCourseList = () => {
 }
 
 const fetchCourse = (id) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const url = `${wilmaAPI}lops/courses/get/${id}`;
-        
-        if(cacheAvailable) {
-            loadCache('course-cache', url)
-            .then(theme => {
-                console.warn('Loaded course from cache')
-                return resolve(theme);
-            })
-            .catch(() => {})
+
+        if (cacheAvailable) {
+            const course = await loadCache('course-cache', url).catch(() => { })
+
+            if (course) {
+                console.warn('Loaded course-list from cache')
+                return resolve(course);
+            }
         }
+
 
         fetch(url, {
             method: 'GET'
@@ -515,7 +516,7 @@ const CourseTraySelect = (hash) => {
                     case 200:
                         return resolve(json);
                     case 303:
-                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                        return reject({ err: 'Failed to perform action', error: json, status: 303 });
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })
                     case 401:
@@ -564,7 +565,7 @@ const CourseTrayDeselect = (hash) => {
                     case 200:
                         return resolve(json);
                     case 303:
-                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                        return reject({ err: 'Failed to perform action', error: json, status: 303 });
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })
                     case 401:
@@ -597,7 +598,7 @@ const fetchTeacherList = () => {
                     case 200:
                         return resolve(json);
                     case 303:
-                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                        return reject({ err: 'Failed to perform action', error: json, status: 303 });
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })
                     case 401:
@@ -618,7 +619,7 @@ const fetchTeacherList = () => {
 
 const fetchTeacherInfo = (name) => {
     return new Promise((resolve, reject) => {
-        
+
         fetch(`${wilmaAPI}teachers/name/${name}`, {
             method: 'GET'
         })
@@ -630,7 +631,7 @@ const fetchTeacherInfo = (name) => {
                     case 200:
                         return resolve(json);
                     case 303:
-                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                        return reject({ err: 'Failed to perform action', error: json, status: 303 });
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })
                     case 401:
@@ -661,7 +662,7 @@ const logout = () => {
         if (!StudentID) {
             return reject({ err: 'Missing StudentID', status: 400 });
         }
-        
+
         fetch(`${wilmaAPI}logout`, {
             method: 'POST',
             headers: {
@@ -677,7 +678,7 @@ const logout = () => {
                     case 200:
                         return resolve(json);
                     case 303:
-                        return reject({err: 'Failed to perform action', error: json, status: 303});
+                        return reject({ err: 'Failed to perform action', error: json, status: 303 });
                     case 400:
                         return reject({ err: 'Invalid request', error: json, status: 400 })
                     case 401:

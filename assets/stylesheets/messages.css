@@ -27,6 +27,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .categories div {
@@ -35,6 +37,10 @@
     width: 80%;
 
     border-left: solid 3px var(--border-main);
+}
+
+.categories div:hover>h1 {
+    opacity: 50%;
 }
 
 .categories div h1 {
@@ -239,4 +245,38 @@
     font-family: 'regular';
 
     opacity: 75%;
+}
+
+.list-loading-screen {
+    position: absolute;
+    height: 100%;
+    width: 300px;
+    left: 300px;
+
+    background-image: url(/assets/img/loading-book.gif);
+    background-size: 85px 85px;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    filter: brightness(0);
+
+    pointer-events: none;
+    display: none;
+}
+
+.message-loading-screen {
+    position: absolute;
+    height: 100%;
+    left: calc(300px + 300px);
+    width: calc(100% - (300px + 300px + 25px));
+
+    background-image: url(/assets/img/loading-book.gif);
+    background-size: 85px 85px;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    filter: brightness(0);
+
+    pointer-events: none;
+    display: none;
 }

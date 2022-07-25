@@ -1,6 +1,6 @@
 const cacheAvailable = 'caches' in window;
 const defaults = ['light', 'dark'];
-const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api'
+const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api';
 
 const state = {
     config: {},
@@ -11,8 +11,13 @@ const state = {
     },
     themes: [],
     messages: {
-        categories : {
+        categories: {
             current: 'inbox'
+        }
+    },
+    news: {
+        categories: {
+            current: 'current'
         }
     },
     filters: {
@@ -20,26 +25,27 @@ const state = {
         teachers: []
     },
     periods: [
-        
+
     ]
 }
 
+
 const fetchConfig = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
 
         if (!session) {
-            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true});
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) {
-            loadCache('config-cache', url)
-            .then(config => {
-                console.warn('Loaded config from cache')
+        if (cacheAvailable) {
+            const config = await loadCache('config-cache', url).catch(() => { });
+
+            if (config) {
+                console.warn(`Loaded config from cache`);
                 return resolve(config);
-            })
-            .catch(() => {})
+            }
         }
 
         fetch(url)
@@ -65,16 +71,16 @@ const fetchConfig = () => {
 }
 
 const fetchDefaultTheme = (id) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const url = `${otaWilmaAPi}/themes/defaults/get/${id}`;
 
-        if(cacheAvailable) {
-            loadCache('theme-cache', url)
-            .then(theme => {
-                console.warn(`Loaded theme from cache: ${url.split('/').reverse()[0]}`)
+        if (cacheAvailable) {
+            const theme = await loadCache('theme-cache', url).catch(() => { });
+
+            if (theme) {
+                console.warn(`Loaded default-theme from cache: ${url.split('/').reverse()[0]}`);
                 return resolve(theme);
-            })
-            .catch(() => {})
+            }
         }
 
         fetch(url)
@@ -100,7 +106,7 @@ const fetchDefaultTheme = (id) => {
 }
 
 const fetchTheme = (id) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
 
@@ -108,13 +114,13 @@ const fetchTheme = (id) => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) {
-            loadCache('theme-cache', url)
-            .then(theme => {
-                console.warn(`Loaded theme from cache: ${url.split('/').reverse()[0]}`)
+        if (cacheAvailable) {
+            const theme = await loadCache('theme-cache', url).catch(() => { })
+
+            if (theme) {
+                console.warn(`Loaded theme from cache: ${url.split('/').reverse()[0]}`);
                 return resolve(theme);
-            })
-            .catch(() => {})
+            }
         }
 
         fetch(url)
@@ -126,7 +132,7 @@ const fetchTheme = (id) => {
                         appendCache('theme-cache', url);
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid request", error: json, status: 400 })
+                        return reject({ err: "Invalid request", error: json, status: 400, info: session })
                     case 401:
                         return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
@@ -146,7 +152,7 @@ const InitializeThemes = () => {
             .then(config => {
                 state.config = config;
                 state.current.id = config['current-theme'];
-                
+
                 fetchTheme(state.current.id)
                     .then(theme => {
                         state.current.theme = theme;
@@ -166,14 +172,14 @@ const InitializeThemes = () => {
 const InitializeThemesDefault = () => {
     return new Promise((resolve, reject) => {
         fetchDefaultTheme('light')
-        .then(theme => {
-            state.current.theme = theme;
-            loadTheme(theme);
-            return resolve();
-        })
-        .catch(err => {
-            console.error(err);
-        })
+            .then(theme => {
+                state.current.theme = theme;
+                loadTheme(theme);
+                return resolve();
+            })
+            .catch(err => {
+                console.error(err);
+            })
     })
 }
 
@@ -183,7 +189,7 @@ const loadTheme = (theme) => {
     const colors = Object.keys(theme.colors);
 
     const nameElement = document.getElementById('username');
-    if(nameElement) nameElement.textContent = state.config['username'].split('.').map(s =>  s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+    if (nameElement) nameElement.textContent = state.config['username'].split('.').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
 
     colors.forEach(key => {
         root.style.setProperty(key, theme.colors[key].value);
@@ -207,7 +213,7 @@ const loadTheme = (theme) => {
 }
 
 const fetchThemeList = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/list/${session}`;
 
@@ -215,16 +221,14 @@ const fetchThemeList = () => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        
-        if(cacheAvailable) {
-            loadCache('theme-cache', url)
-            .then(config => {
-                console.warn('Loaded theme-list from cache')
-                return resolve(config);
-            })
-            .catch(() => {})
+        if (cacheAvailable) {
+            const list = await loadCache('theme-cache', url).catch(() => { });
+
+            if (list) {
+                console.warn(`Loaded theme-list from cache`);
+                return resolve(list);
+            }
         }
-        
 
         fetch(url)
             .then(async (res) => {
@@ -235,7 +239,7 @@ const fetchThemeList = () => {
                         appendCache('theme-cache', url);
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid session identifier", error: res.status })
+                        return reject({ err: "Invalid request", error: res.status })
                     case 401:
                         return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
                     default:
@@ -249,7 +253,7 @@ const fetchThemeList = () => {
 }
 
 const setTheme = (id) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
 
@@ -257,7 +261,7 @@ const setTheme = (id) => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) removeCache('config-cache', url);
+        if (cacheAvailable) removeCache('config-cache', url);
 
         fetch(`${otaWilmaAPi}/sessions/config/current-theme/set/${session}`, {
             method: 'POST',
@@ -288,7 +292,7 @@ const setTheme = (id) => {
 }
 
 const createTheme = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
         const list = `${otaWilmaAPi}/themes/list/${session}`;
@@ -297,8 +301,8 @@ const createTheme = () => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) removeCache('config-cache', url);
-        if(cacheAvailable) removeCache('theme-cache', list);
+        if (cacheAvailable) removeCache('config-cache', url);
+        if (cacheAvailable) removeCache('theme-cache', list);
 
         fetch(`${otaWilmaAPi}/themes/create/${session}`, {
             method: 'POST',
@@ -325,7 +329,7 @@ const createTheme = () => {
 }
 
 const deleteTheme = (id) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
         const config = `${otaWilmaAPi}/sessions/config/get/${session}`;
@@ -335,9 +339,9 @@ const deleteTheme = (id) => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) removeCache('theme-cache', url);
-        if(cacheAvailable) removeCache('config-cache', config);
-        if(cacheAvailable) removeCache('theme-cache', list);
+        if (cacheAvailable) removeCache('theme-cache', url);
+        if (cacheAvailable) removeCache('config-cache', config);
+        if (cacheAvailable) removeCache('theme-cache', list);
 
         fetch(`${otaWilmaAPi}/themes/remove/${session}/${id}`, {
             method: 'POST',
@@ -364,7 +368,7 @@ const deleteTheme = (id) => {
 }
 
 const editThemeColors = (id, key, value) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
         const list = `${otaWilmaAPi}/themes/list/${session}`;
@@ -374,8 +378,8 @@ const editThemeColors = (id, key, value) => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) removeCache('theme-cache', url);
-        if(cacheAvailable) removeCache('theme-cache', list);
+        if (cacheAvailable) removeCache('theme-cache', url);
+        if (cacheAvailable) removeCache('theme-cache', list);
 
         fetch(`${otaWilmaAPi}/themes/edit/colors/${session}/${id}`, {
             method: 'POST',
@@ -407,7 +411,7 @@ const editThemeColors = (id, key, value) => {
 }
 
 const editThemeBackground = (id, key, value) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
         const list = `${otaWilmaAPi}/themes/list/${session}`;
@@ -417,8 +421,8 @@ const editThemeBackground = (id, key, value) => {
             return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         }
 
-        if(cacheAvailable) removeCache('theme-cache', url);
-        if(cacheAvailable) removeCache('theme-cache', list);
+        if (cacheAvailable) removeCache('theme-cache', url);
+        if (cacheAvailable) removeCache('theme-cache', list);
 
 
         fetch(`${otaWilmaAPi}/themes/edit/background/${session}/${id}`, {
@@ -459,69 +463,69 @@ const getCookie = (name) => {
 const loadCache = (cache, path) => {
     return new Promise((resolve, reject) => {
         caches.open(cache)
-        .then(cache => {
+            .then(cache => {
 
-            cache.match(path).then(async (res) => {
+                cache.match(path).then(async (res) => {
 
-                if(!res) return reject({err: "Resource doesn't exists in cache"})
+                    if (!res) return reject({ err: "Resource doesn't exists in cache" })
 
-                const json = await res.json();
+                    const json = await res.json();
 
-                switch (res.status) {
-                    case 200:
-                        return resolve(json);
-                    default:
+                    switch (res.status) {
+                        case 200:
+                            return resolve(json);
+                        default:
+                            cache.delete(path);
+                            return reject({ err: "Resource doesn't exists in cache" })
+                    }
+                })
+                    .catch(() => {
                         cache.delete(path);
-                        return reject({err: "Resource doesn't exists in cache"})
-                }
+                        return reject({ err: 'Failed to access cached resource', status: 500.3 });
+                    })
             })
             .catch(() => {
-                cache.delete(path);
-                return reject({err: 'Failed to access cached resource', status: 500.3});
+                return reject({ err: 'Failed to acess cache', status: 500.3 });
             })
-        })
-        .catch(() => {
-            return reject({ err: 'Failed to acess cache', status: 500.3 });
-        })
     });
 }
 
 const appendCache = (cache, path) => {
     return new Promise((resolve, reject) => {
         caches.open(cache)
-        .then(cache => {
+            .then(cache => {
 
-            cache.add(path).then(() => {
-                return resolve();
-            })
-            .catch(err => {
-                console.log(err);
-                return reject({err: 'Failed to add cache resource', status: 500.3});
-            })
+                cache.add(path).then(() => {
+                    return resolve();
+                })
+                    .catch(err => {
+                        console.log(err);
+                        return reject({ err: 'Failed to add cache resource', status: 500.3 });
+                    })
 
-        })
-        .catch(() => {
-            return reject({ err: 'Failed to acess cache', status: 500.3 });
-        })
+            })
+            .catch(() => {
+                return reject({ err: 'Failed to acess cache', status: 500.3 });
+            })
     });
 }
 
 const removeCache = (cache, path) => {
     return new Promise((resolve, reject) => {
         caches.open(cache)
-        .then(cache => {
+            .then(cache => {
 
-            cache.delete(path).then(() => {
-                return resolve();
+                cache.delete(path).then(() => {
+                    return resolve();
+                })
+                    .catch(() => {
+                        return reject({ err: 'Failed to delete cached resource', status: 500.3 });
+                    })
+
             })
             .catch(() => {
-                return reject({err: 'Failed to delete cached resource', status: 500.3});
+                return reject({ err: 'Failed to access cache', status: 500.3 });
             })
-
-        })
-        .catch(() => {
-            return reject({ err: 'Failed to acess cache', status: 500.3 });
-        })
     });
 }
 

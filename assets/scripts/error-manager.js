@@ -1,8 +1,3 @@
-window.addEventListener('unhandledrejection', function (e) {
-    displayError({err: 'Failed to render the page', status: 500.3, info: e.reason.message});
-})
-
-
 const errors = {
     503: {
         status: 'Palvelin',
@@ -33,13 +28,18 @@ const errors = {
         status: 'Käyttöoikeudet',
         name: 'Puuttuvat oikeudet',
         description: 'Sinulla ei ole oikeutta pyytämääsi resurssiin. Yritä uudelleen kirjautumista jos uskot tämän olevan virhe'
+    },
+    429: {
+        status: 'Pyynnöt',
+        name: 'Odotas hetkinen',
+        description: 'Selaimesi lähettää tavallista enemmän pyyntöjä palvelimelle. Sinulla tuskin on kuitenkaan tarvetta luoda ja poistaa teemoja jatkuvasti. Jos epäilet että kyseessä on virhe, tarkista että selaimesi välimuisti on käytössä. Ota ongelmatilanteessa yhteyttä kehittäjään.'
     }
 }
 
 const displayError = (err) => {
 
     if (err.redirect) {
-        window.location = err.info ?  `/index.html?error=${err.status}` : `/index.html`
+        window.location = err.info ? `/index.html?error=${err.status}` : `/index.html`
         return;
     }
 
@@ -61,6 +61,7 @@ const displayError = (err) => {
 
     if (err.error) {
         titleRaw.textContent = err.error.err;
+        var raw = err.error.err;
     }
 
     const description = document.createElement('h2');
@@ -69,10 +70,6 @@ const displayError = (err) => {
     const infoTitle = document.createElement('h4');
     const infoContent = document.createElement('h7');
 
-    if(err.info) {
-        infoTitle.textContent = 'Ilmoita seuraavat tiedot kehittäjälle';
-        infoContent.textContent = err.info;
-    }
 
 
     const statusElement = document.createElement('h5');
@@ -83,7 +80,13 @@ const displayError = (err) => {
     error.appendChild(titleRaw);
     error.appendChild(description);
     error.appendChild(infoTitle);
-    error.appendChild(infoContent);
+
+    if (err.info) {
+        infoTitle.textContent = 'Ilmoita seuraavat tiedot kehittäjälle';
+        infoContent.innerHTML = `location: ${window.location.pathname}<br>error: ${raw}<br>info: ${err.info}`;
+        error.appendChild(infoContent);
+    }
+
     error.appendChild(statusElement);
 
     root.appendChild(error);
