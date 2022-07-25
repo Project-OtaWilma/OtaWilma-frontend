@@ -1,5 +1,5 @@
-// const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-const wilmaAPI = 'http://localhost:3001/api/';
+const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
+// const wilmaAPI = 'http://localhost:3001/api/';
 
 const fetchMessages = (path, limit) => {
     return new Promise((resolve, reject) => {
