@@ -10,6 +10,9 @@ const state = {
         element: null
     },
     themes: [],
+    frontpage: {
+        schedule: null
+    },
     messages: {
         categories: {
             current: 'inbox'
@@ -59,9 +62,9 @@ const fetchConfig = () => {
                     case 400:
                         return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {
@@ -94,9 +97,9 @@ const fetchDefaultTheme = (id) => {
                     case 400:
                         return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {
@@ -132,11 +135,11 @@ const fetchTheme = (id) => {
                         appendCache('theme-cache', url);
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid request", error: json, status: 400, info: session })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {
@@ -239,11 +242,11 @@ const fetchThemeList = () => {
                         appendCache('theme-cache', url);
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid request", error: res.status })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {
@@ -278,11 +281,11 @@ const setTheme = (id) => {
                     case 200:
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid session identifier", error: res.status })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {
@@ -315,11 +318,11 @@ const createTheme = () => {
                     case 200:
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid session identifier", error: res.status })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {
@@ -354,11 +357,11 @@ const deleteTheme = (id) => {
                     case 200:
                         return resolve(json);
                     case 400:
-                        return reject({ err: "Invalid session identifier", error: res.status })
+                        return reject({ err: "Invalid request", error: json, status: 400 })
                     case 401:
-                        return reject({ err: "Invalid session identifier (OtaWilma2SID)", error: json, status: 401, redirect: true })
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
                     default:
-                        return reject({ err: "Received an unexpected response from server", error: res.status })
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
                 }
             })
             .catch(err => {

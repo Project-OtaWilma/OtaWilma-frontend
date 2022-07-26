@@ -183,6 +183,7 @@ const loadMessageContent = (id) => {
                     icon.className = 'icon';
 
                     const text = document.createElement('h6');
+                    text.className = 'icon-text';
                     text.textContent = 'Avaa Wilmassa';
 
                     wilmaLink.appendChild(icon);

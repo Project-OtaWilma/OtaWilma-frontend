@@ -94,6 +94,38 @@ body {
     transition: opacity .3s ease-in-out !important;
 }
 
+
+.loading-indicator {
+    background-image: url(/assets/img/loading-book.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 85px 85px;
+
+    filter: brightness(0);
+
+    display: none;
+}
+
+.icon {
+    filter: brightness(0);
+}
+
+.icon-text {
+    filter: brightness(0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .loading-screen {
+        filter: invert();
+    }
+}
+
+@media (prefers-dark-interface) {
+    .loading-screen {
+        filter: invert();
+    }
+}
+
 .container {
     position: absolute;
 

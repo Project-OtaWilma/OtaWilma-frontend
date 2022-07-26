@@ -48,8 +48,8 @@ const settings = {
         '--error': 'Virheilmoitusten ensisijainen väri'
     }
 }
-
 const mimeTypes = ['png', 'svg', 'jpg', 'gif', 'webp']
+const nonTransparent = ['--accent-main', '--background-darker'];
 
 
 const Initialize = async () => {
@@ -117,9 +117,12 @@ const InitializeEditor = () => {
 
                 setupColorEditor();
                 loadColorEditor();
+
                 setupBackgroundEditor();
                 loadBackgroundEditor();
+
                 setupThemeActions();
+                loadThemeActions();
 
                 return resolve()
             })
@@ -246,6 +249,7 @@ const onSetTheme = async (e) => {
             loadTheme(theme);
             loadColorEditor();
             loadBackgroundEditor();
+            loadThemeActions();
 
             setLoadingScreen(false);
         })
@@ -439,12 +443,15 @@ const createColorInput = (key, root) => {
 
     const opacityLabel = document.createElement('h3');
     opacityLabel.textContent = 'Läpinäkyvyys [%]';
+    opacityLabel.style.display = nonTransparent.includes(key) ? 'none' : 'flex';
 
     const opacityInput = document.createElement('input');
     opacityInput.type = 'number';
     opacityInput.id = `${key}.opacity`;
     opacityInput.name = 'opacity';
     opacityInput.className = 'opacity-input';
+
+    opacityInput.style.display = nonTransparent.includes(key) ? 'none' : 'flex';
 
     formElement.addEventListener('change', async (e) => {
         onColorChanged(e);
@@ -519,6 +526,11 @@ const setupThemeActions = () => {
     cancel.addEventListener('click', () => {
         setRemovalPopup(false);
     })
+}
+
+const loadThemeActions = () => {
+    const actions = document.getElementById('theme-actions');
+    actions.className = defaults.includes(state.current.id) ? 'theme-actions disabled' : 'theme-actions';
 }
 
 const setRemovalPopup = (bool) => {

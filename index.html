@@ -32,7 +32,7 @@
             <div class="left">
 
             </div>
-            <div class="right">
+            <div class="right" id="login-container">
                 <h1>OtaWilma - Tervetuloa</h1>
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
                 <form class="login-form">
@@ -66,141 +66,7 @@
                 <button id="login-button">Kirjaudu sisään</button>
                 <h6>v0.5.6 BETA</h6>
             </div>
-        </div>
-
-        <div style="display: none;">
-            <div class="main" id="main">
-                <div class="detail"></div>
-                <div class="login">
-                    <form action="" name="login">
-                        <h1>OtaWilma - Kirjaudu</h1>
-                        <h2>Käyttäjätunnus</h2>
-                        <h3>Etunimi.sukunimi</h3>
-                        <input type="text" name="username">
-                        <h2>Salasana</h2>
-                        <h3>Turvallinen salasanasi</h3>
-                        <input type="password" name="password">
-                        <h3 id="login-error"></h3>
-                        <input type="submit" id="submit" value="Kirjaudu sisään">
-                        <a>Unohditko salasanasi?</a>
-                    </form>
-                </div>
-            </div>
-            <div class="terms-of-service" id="terms-of-service">
-                <div class="info-container">
-                    <div class="top-c">
-
-                    </div>
-                    <div class="content">
-                        <h1>Tervetuloa</h1>
-                        <h2>Tämän ohjelmiston tarkoituksena on parantaa jokapäiväistä käyttökokemustasi Wilmassa
-                            tarjoamalla
-                            sinulle useita jokapäiväsitä käyttökokemusta parantavia ominaisuuksia ja antamalla sinulle
-                            mahdollisuuden mukauttaa Wilman ulkonäköä.
-                        </h2>
-                        <h3>
-                            This software is designed to enhance your everyday experience with Wilma by providing you
-                            with a
-                            number of features that improve your everyday experience and by giving you the ability to
-                            customize
-                            the appearance of Wilma.
-                        </h3>
-                        <h2>
-                            <strong>
-                                Huomaa, että OtaWilma ei ole VISMA OY:n omistuksessa eikä hallinnassa.
-                            </strong>
-                        </h2>
-                        <h3>
-                            <strong>
-                                Please note that OtaWilma is not owned or controlled by VISMA OY.
-                            </strong>
-                        </h3>
-                        <h1>Turvallisuus</h1>
-                        <h2>
-                            OtaWilman rakennetavan vuoksi emme säilytä mitään henkilökohtaisia tietoja, kuten
-                            salasanoja.
-                            Esim.
-                            kirjautuessasi sisään, salasanasi lähetetään virallisen Wilman palvelimelle suojatun API:n
-                            kautta,
-                            jonka seurauksena saat henkilökohtaisen tokenisi, jota käytetään kaikkien tililläsi
-                            tapahtuvien
-                            toimien todentamiseen. Kyseinen tokeni on turvallisesti tallanettuna selaimessasi.
-                            Sinulla ei myöskään ole lainkaan pääsyä "HETA"-tiedoiksi katsottuihin henkilökohtaisiin
-                            tietoihin,
-                            kuten sosiaaliturvatunnuksiin tai yhteystietoihin API:n kautta.
-                        </h2>
-                        <h3>
-                            Due to the way OtaWilma is structured, we do not store any personal information such as
-                            passwords.
-                            For example, when you log in, your password is sent to the official Wilma server via a
-                            secure
-                            API,
-                            which results in your personal token that is used to authenticate all actions on your
-                            account.
-                            This
-                            token is securely stored in your browser.
-                            You will also not have any access to personal information considered "HETA" data, such as
-                            social
-                            security numbers or contact information, through the API.
-
-                        </h3>
-                        <h2>
-                            On kuitenkin aina loppukäyttäjän tehtävä suojata tilinsä. <strong>Emme ota mitään vastuuta
-                                tilistäsi</strong>, mikä
-                            tarkoittaa, että hyväksyt riskit käyttäessä palveluamme. Kehotamme sinua vaihtamaan
-                            salasanasi
-                            säännöllisesti ja varmistamaan, että käytät eri salasanaa jokaisella verkkosivustolla.
-                        </h2>
-                        <h3>
-                            However, it is always up to the end user to protect their account. We take no responsibility
-                            for
-                            your account, which means you are on your own and accept the risks when you use our service.
-                            We
-                            encourage you to change your password regularly and ensure that you use a different password
-                            for
-                            each website.
-                        </h3>
-                        <h1>Tietojen käsittely</h1>
-                        <h2>
-                            Hyväksymällä käyttöehdot suostut yhdistämään Wilma-käyttäjätunnuksesi OtaWilma-tiliisi.
-                            Ainoat
-                            tiliisi linkitetyt tiedot ovat aina omia muokkauksiasi ja määrityksiäsi, joita ei pidetä
-                            EU:n
-                            GDPR:n
-                            mukaisina henkilötietoina. Wilma-käyttäjätunnuksesi voidaan pyynnöstä irrottaa
-                            OtaWilma-tilistäsi ja
-                            poistaa palvelimiltamme.
-                        </h2>
-                        <h3>
-                            By accepting the Terms of Use, you agree to link your Wilma username to your OtaWilma
-                            account.
-                            The
-                            only data linked to your account will always be your own edits and configurations, which are
-                            not
-                            considered personal data under the EU GDPR. Your Wilma username may be removed from your
-                            OtaWilma
-                            account and deleted from our servers upon request.
-                        </h3>
-                        <h1>Tärkeää</h1>
-                        <h2>
-                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-                            INCLUDING
-                            BUT
-                            NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-                            NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-                            DAMAGES
-                            OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
-                            OF OR
-                            IN
-                            CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                        </h2>
-                        <button id="accept">Hyväksyn käyttöehdot</button>
-                        <ul>
-                            <a>Käyttöehdot</a>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <div class="login-loading-screen" id="login-loading-screen"></div>
         </div>
     </div>
 </body>

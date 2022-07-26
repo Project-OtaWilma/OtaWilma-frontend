@@ -36,6 +36,7 @@ const InitializeLayout = () => {
         await loadSchedule().catch(err => {
             return reject(err);
         })
+
         return resolve();
     });
 }
@@ -250,6 +251,7 @@ const setupSchedule = () => {
             .then(async (res) => {
                 const html = await res.text();
                 root.innerHTML = html;
+                state.frontpage.schedule = html;
 
                 clockUpdate();
 
@@ -309,6 +311,8 @@ const loadSchedule = (date) => {
     }
 
     return new Promise((resolve, reject) => {
+        const root = document.getElementById('schedule');
+
         const dateTime = date ? date : new Date(2022, 7, 11);
 
         const options = {
@@ -324,6 +328,9 @@ const loadSchedule = (date) => {
 
         fetchSchedule(dateTime)
             .then(schedule => {
+
+                root.innerHTML = state.frontpage.schedule;
+
                 Object.keys(schedule).filter(s => schedule[s].day.id <= 5 && schedule[s].day.id >= 1).forEach(d => {
                     const date = schedule[d];
 
@@ -335,10 +342,7 @@ const loadSchedule = (date) => {
                         if (invalid) document.getElementById('warning-label').style.display = 'flex';
 
                         const slot = document.getElementById(lesson.slot) ? document.getElementById(lesson.slot) : document.getElementById(`${lesson.slot.split('.')[0]}.warning`);
-                        const slotTimeField = document.createElement('h1');
-                        slotTimeField.textContent = lesson.slot.replace(`${lesson.slot.charAt(0)}.`, '').replace('-', ' - ')
 
-                        slot.replaceChildren(slotTimeField);
                         slot.style.opacity = 1;
 
                         lesson.groups.forEach((group, i) => {

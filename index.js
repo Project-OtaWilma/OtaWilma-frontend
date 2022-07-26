@@ -20,8 +20,8 @@ const Initialize = async () => {
 const InitializeTheme = () => {
     return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
-    
-        if(session) {
+
+        if (session) {
             await InitializeThemes().catch(err => {
                 return reject(err);
             })
@@ -37,41 +37,53 @@ const InitializeTheme = () => {
 }
 
 const InitializeLoginForm = async () => {
+    const sessionField = document.getElementById('session-field');
+    const requirements = [document.getElementById('agreement'), document.getElementById('terms-of-service')];
+    const loginButton = document.getElementById('login-button');
+
+    Array.from(document.getElementsByClassName('login-form')).forEach(e => e.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loginEvent();
+    }))
+
+    sessionField.value = getCookie('session') ? getCookie('session') : null;
+
+    if (sessionField.value.length > 0) requirements.forEach(r => { r.checked = true });
+
+    loginButton.addEventListener('click', async (e) => {
+        loginEvent();
+    })
+
+}
+
+const loginEvent = async () => {
+
+    setLoadingScreen(true);
+
     const usernameField = document.getElementById('username-field');
     const passwordField = document.getElementById('password-field');
     const sessionField = document.getElementById('session-field');
 
     const requirements = [document.getElementById('agreement'), document.getElementById('terms-of-service')];
-
-    const loginButton = document.getElementById('login-button');
     const loginError = document.getElementById('login-error');
+    loginError.textContent = '';
 
-    Array.from(document.getElementsByClassName('login-form')).forEach(e => e.addEventListener('submit', (e) => e.preventDefault()))
+    const credentials = {
+        username: usernameField.value,
+        password: passwordField.value
+    }
 
-    sessionField.value = getCookie('session') ? getCookie('session') : null;
-    
-    if(sessionField.value.length > 0) requirements.forEach(r => { r.checked = true } );
-    
-    loginButton.addEventListener('click', async (e) => {
-        loginError.textContent = ''
+    const accepted = requirements.map(r => r.checked)
 
-        const accepted = requirements.map(r => r.checked)
+    if (accepted.includes(false)) {
+        loginError.textContent = 'Sinun on hyväksyttävä molemmat ehdot'
+        return;
+    }
 
-        if(accepted.includes(false)) {
-            loginError.textContent = 'Sinun on hyväksyttävä molemmat ehdot'
-            return;
-        }
-
-        const credentials = {
-            username: usernameField.value,
-            password: passwordField.value
-        }
-
-        
-        if(sessionField.value.length > 0) {
-            await Account.validateOtaWilmaAccount(sessionField.value)
-                .then(() => {
-                    Account.Login(credentials)
+    if (sessionField.value.length > 0) {
+        await Account.validateOtaWilmaAccount(sessionField.value)
+            .then(() => {
+                Account.Login(credentials)
                     .then(() => {
                         document.cookie = `session=${sessionField.value}; SameSite=Lax; Secure; max-age=31536000; path=/`;
                         window.location = '/views/frontpage.html';
@@ -79,50 +91,49 @@ const InitializeLoginForm = async () => {
                     .catch(err => {
                         const error = err.err;
                         loginError.textContent = Object.keys(translations).includes(error) ? translations[error] : error;
+                        setLoadingScreen(false);
                         return;
                     })
-                })
-                .catch(err => {
-                    switch(err.status) {
-                        case 400:
-                            loginError.textContent = 'Virheellinen OtaWilma-tunnus. Jätä kenttä tyhjäksi jos haluat luoda uuden käyttäjän OtaWilmaan'
-                            return;
-                        default:
-                            throw err;
-                    }
-                })
-        }
-        else {
-            Account.Login(credentials)
+            })
+            .catch(err => {
+                switch (err.status) {
+                    case 400:
+                        loginError.textContent = 'Virheellinen OtaWilma-tunnus. Jätä kenttä tyhjäksi jos haluat luoda uuden käyttäjän OtaWilmaan';
+                        setLoadingScreen(false);
+                        return;
+                    default:
+                        throw err;
+                }
+            })
+    }
+    else {
+        Account.Login(credentials)
             .then(() => {
                 createAccout(credentials.username)
-                .then(() => {
-                    window.location = '/views/frontpage.html';
-                })
-                .catch(err => {
-                    displayError(err);
-                    throw err;
-                })
+                    .then(() => {
+                        window.location = '/views/frontpage.html';
+                    })
+                    .catch(err => {
+                        displayError(err);
+                        throw err;
+                    })
             })
             .catch(err => {
                 const error = err.err;
                 loginError.textContent = Object.keys(translations).includes(error) ? translations[error] : error;
+                setLoadingScreen(false);
                 return;
             })
 
-        }
-        
-
-    })
-    
+    }
 }
 
 const InitializeError = () => {
     const code = getParameterByName('error');
 
-    if(!code) return;
+    if (!code) return;
 
-    displayError({err: '', status: code, info: getCookie('session')})
+    displayError({ err: '', status: code, info: getCookie('session') })
 }
 
 const getParameterByName = (name, url = window.location.href) => {
@@ -136,4 +147,9 @@ const getParameterByName = (name, url = window.location.href) => {
     if (!results[2]) return '';
 
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+const setLoadingScreen = (value) => {
+    document.getElementById('login-loading-screen').style.display = value ? 'flex' : 'none';
+    document.getElementById('login-container').style.filter = value ? 'blur(2px)' : 'none'
 }

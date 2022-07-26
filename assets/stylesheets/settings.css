@@ -405,6 +405,11 @@
     padding: 50px;
 }
 
+.theme-actions.disabled {
+    opacity: 50%;
+    pointer-events: none;
+}
+
 .theme-actions h2 {
     margin: 10px;
     color: var(--error);
@@ -418,8 +423,8 @@
 
 .removal-popup {
     position: fixed;
-    width: 500px;
-    height: 400px;
+    width: 400px;
+    height: 300px;
 
     padding: 10px;
 
@@ -427,8 +432,10 @@
 
     box-shadow: 0 0 15px var(--shadow-main);
 
-    left: calc((100% - 300px) / 2);
-    top: calc((100% - 200px) / 2);
+    border-left: solid 5px var(--error);
+
+    left: calc((100% - 400px) / 2);
+    top: calc((100% - 300px) / 2);
 
     display: none;
     flex-direction: column;
@@ -451,7 +458,10 @@
 .removal-popup h1 {
     width: 85%;
     text-align: center;
-    margin: 5px;
+    margin: 10px;
+    padding: 10px;
+
+    font-size: 20px;
 
     color: var(--error);
 }
@@ -460,6 +470,8 @@
     width: 85%;
     text-align: center;
     margin: 5px;
+
+    color: var(--font-h2);
 }
 
 .removal-popup h3 strong {
@@ -469,16 +481,20 @@
 .removal-popup button {
     padding: 7px;
     margin: 5px;
+    background: none;
 
-    border-radius: 3px;
-    color: white;
-    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+    color: var(--error);
+    font-family: 'bold';
+
+    font-size: 20px;
+
+    cursor: pointer;
 
     transition: opacity .2s ease-in-out;
 }
 
 .removal-popup button:hover {
-    opacity: 75%;
+    opacity: 50%;
 }
 
 .advanced a,
