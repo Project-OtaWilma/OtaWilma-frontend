@@ -6,14 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
 const Initialize = async () => {
     InitializeNavBar();
 
-    await InitializeThemes();
+    await InitializeThemes().catch(err => {
+        displayError(err);
+        throw err;
+    });
 
     InitializeCategories();
 
     await loadMessageList('inbox').catch(err => {
         displayError(err);
         throw err;
-    })
+    });
 
     InitializeQuery();
 
@@ -44,7 +47,9 @@ const InitializeCategories = () => {
         const div = document.createElement('div');
         div.id = categories[category];
         div.addEventListener('click', (e) => {
-            loadMessageList(div.id);
+            loadMessageList(div.id).catch(err => {
+                displayError(err);
+            });
         })
 
 

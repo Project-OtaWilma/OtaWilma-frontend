@@ -47,6 +47,9 @@ const loadMessages = async () => {
 
         const h1 = document.createElement('h1');
         h1.textContent = 'Viestit';
+        h1.addEventListener('click', () => {
+            redirect('/views/messages.html')
+        })
 
         const h2 = document.createElement('h2');
         h2.textContent = 'Vanhat';
@@ -102,6 +105,9 @@ const loadGrades = () => {
 
         const h1 = document.createElement('h1');
         h1.textContent = 'Opinnot';
+        h1.addEventListener('click', () => {
+            redirect('/views/grades.html')
+        })
 
         const overviewRoot = document.createElement('div');
         overviewRoot.className = 'overview';
@@ -191,6 +197,9 @@ const loadNews = () => {
 
         const title = document.createElement('h1');
         title.textContent = 'Tiedotteet';
+        title.addEventListener('click', () => {
+            redirect('/views/news.html')
+        })
 
 
         root.appendChild(title);

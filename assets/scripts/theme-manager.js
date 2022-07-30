@@ -18,6 +18,9 @@ const state = {
             current: 'inbox'
         }
     },
+    grades: {
+        current: 'LOPS2021'
+    },
     news: {
         categories: {
             current: 'current'

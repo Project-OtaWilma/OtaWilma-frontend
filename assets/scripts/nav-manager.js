@@ -3,26 +3,29 @@ const InitializeNavBar = () => {
     Array.from(root.getElementsByTagName('button')).forEach(button => {
 
         button.addEventListener('click', (e) => {
-            document.getElementById('loading').style.opacity = 1;
-            setTimeout(() => {
-                document.location = e.target.id;
-            }, 600);
+            redirect(e.target.id);
         })
     });
     const logoutElement = document.getElementById('logout');
 
-    if(logoutElement) {
+    if (logoutElement) {
         document.getElementById('logout').addEventListener('click', () => {
             logout()
-            .then(() => {
-                window.location = '/';
-            })
-            .catch(err => {
-                displayError(err);
-            })
+                .then(() => {
+                    window.location = '/';
+                })
+                .catch(err => {
+                    displayError(err);
+                })
         })
-    } 
-    
+    }
+}
+
+const redirect = (target) => {
+    document.getElementById('loading').style.opacity = 1;
+    setTimeout(() => {
+        document.location = target;
+    }, 600);
 }
 
 

@@ -82,6 +82,14 @@
     pointer-events: none;
 }
 
+.c-type25,
+.c-type26,
+.c-type27,
+.c-type29,
+.c-type66,
+.c-type110,
+.c-type112,
+.c-type119,
 .c-type136,
 .c-type136,
 .c-type137,
@@ -120,6 +128,14 @@
     align-items: center;
 }
 
+.c-type25 h4,
+.c-type26 h4,
+.c-type27 h4,
+.c-type29 h4,
+.c-type66 h4,
+.c-type112 h4,
+.c-type110 h4,
+.c-type119 h4,
 .c-type136 h4,
 .c-type136 h4,
 .c-type137 h4,
@@ -147,13 +163,16 @@
     color: white;
 }
 
+.c-type25,
 .c-type136 {
     background-color: var(--L2021-mandatory-main);
 }
 
+.c-type25-graded,
 .c-type136-graded {
     background-color: var(--L2021-mandatory-selected);
 }
+
 
 .c-type137 {
     background-color: var(--L2021-g-optional-main);
@@ -183,6 +202,26 @@
     background-color: var(--L2021-l-optional-selected);
 }
 
+.c-type112,
+.c-type66,
+.c-type26 {
+    background-color: var(--L2016-l-optional-main);
+}
+
+.c-type26-selected {
+    background-color: var(--L2016-l-optional-selected);
+}
+
+
+.c-type27 {
+    background-color: var(--L2016-g-optional-main);
+}
+
+.c-type27-selected {
+    background-color: var(--L2016-g-optional-selected);
+}
+
+
 .course-info {
     position: absolute;
     opacity: 0;
@@ -204,8 +243,9 @@
 .gradebook .course-info-container {
     position: absolute;
     width: 350px;
-    height: 100%;
+    height: calc(100% - 50px);
     right: 0;
+    top: 50px;
 
     overflow-y: scroll;
 
@@ -216,6 +256,48 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.lops-selector {
+    position: absolute;
+    width: 360px;
+    height: 50px;
+
+    right: -5px;
+
+    z-index: 2;
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    background-color: var(--accent-main);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    cursor: pointer;
+    user-select: none;
+
+    display: none;
+}
+
+.lops-selector h6 {
+    color: white;
+    opacity: 75%;
+    font-size: 20px;
+
+    pointer-events: none;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.lops-selector h6:hover {
+    opacity: 100% !important;
+}
+
+.selected {
+    opacity: 100% !important;
+    font-family: 'bold';
 }
 
 .overview-content {

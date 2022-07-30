@@ -82,6 +82,8 @@
     flex-direction: column;
 
     overflow-y: scroll;
+
+    z-index: 3;
 }
 
 #hidden {

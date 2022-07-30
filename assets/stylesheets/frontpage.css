@@ -128,7 +128,12 @@
     padding: 5px;
     margin: 5px;
 
-    border-bottom: solid 1px var(--border-main);
+    cursor: pointer;
+    user-select: none;
+}
+
+.messages h1:hover {
+    opacity: 50%;
 }
 
 .messages h2 {
@@ -196,8 +201,15 @@
     padding: 5px;
     margin: 5px;
 
-    border-bottom: solid 1px var(--border-main);
+
+    cursor: pointer;
+    user-select: none;
 }
+
+.news h1:hover {
+    opacity: 50%;
+}
+
 
 .news-object {
     margin: 5px;
@@ -242,8 +254,14 @@
 
     margin-left: 20px;
 
-    border-bottom: solid 1px var(--border-main);
+    cursor: pointer;
+    user-select: none;
 }
+
+.grades h1:hover {
+    opacity: 50%;
+}
+
 
 .grades .overview {
     padding: 10px;
@@ -531,7 +549,6 @@
     font-size: 20px;
     margin: 5px;
     padding: 5px;
-    border-bottom: solid 1px var(--border-main);
 }
 
 .links .link {
@@ -553,7 +570,7 @@
 
     cursor: pointer;
 
-    color: var(--accent-main);
+    color: var(--font-h2);
     text-decoration: underline;
 }
 

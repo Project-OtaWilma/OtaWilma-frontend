@@ -191,9 +191,9 @@ const fetchGradeBook = (filter) => {
     });
 }
 
-const fectchCourseList = () => {
+const fectchCourseList = (lops) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${wilmaAPI}lops/courses/list`;
+        const url = `${wilmaAPI}lops/${lops}/courses/list`;
 
         if (cacheAvailable) {
             const list = await loadCache('course-cache', url).catch(() => { })
@@ -233,9 +233,11 @@ const fectchCourseList = () => {
     })
 }
 
-const fetchCourse = (id) => {
+const fetchCourse = (lops, id) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${wilmaAPI}lops/courses/get/${id}`;
+        const url = `${wilmaAPI}lops/${lops}/courses/get/${id}`;
+
+        console.log(lops)
 
         if (cacheAvailable) {
             const course = await loadCache('course-cache', url).catch(() => { })
