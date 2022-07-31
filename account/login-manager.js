@@ -1,4 +1,3 @@
-
 const Login = (credentials = { username: String, password: String }) => {
     return new Promise(async (resolve, reject) => {
         fetch('https://wilma-api.tuukk.dev/api/login/', {
@@ -33,48 +32,48 @@ const Login = (credentials = { username: String, password: String }) => {
 const validateOtaWilmaAccount = (hash) => {
     return new Promise((resolve, reject) => {
         fetch(`https://otawilma-api.tuukk.dev/api/sessions/config/get/${hash}`)
-        .then(async (res) => {
-            const json = await res.json();
-    
-            switch(res.status) {
-                case 200:
-                    return resolve();
-                case 400:
-                    return reject({err: 'Invalid session identifier', status: 400})
-            }
-        })
-        .catch(err => {
-            return reject({ err: 'Failed to reach servers', status: 503 });
-        })
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve();
+                    case 400:
+                        return reject({ err: 'Invalid session identifier', status: 400 })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers', status: 503 });
+            })
     });
 }
 
 const createAccout = (username) => {
     return new Promise((resolve, reject) => {
         fetch('https://otawilma-api.tuukk.dev/api/sessions/config/create',
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({"username": username})
-        })
-        .then(async (res) => {
-            const json = await res.json();
-    
-            switch(res.status) {
-                case 200:
-                    console.log(json);
-                    const session = json['session']['hash'];
-                    console.log(session);
-                    document.cookie = `session=${session}; SameSite=Lax; Secure; max-age=31536000; path=/`;;
-                    return resolve();
-                default:
-                    return reject({err: 'Failed to create OtaWilma account', error: json, status: 500})
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            return reject({ err: 'Failed to reach servers', status: 503 });
-        })
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "username": username })
+            })
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        console.log(json);
+                        const session = json['session']['hash'];
+                        console.log(session);
+                        document.cookie = `session=${session}; SameSite=Lax; Secure; max-age=31536000; path=/`;;
+                        return resolve();
+                    default:
+                        return reject({ err: 'Failed to create OtaWilma account', error: json, status: 500 })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                return reject({ err: 'Failed to reach servers', status: 503 });
+            })
     })
 }
 

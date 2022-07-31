@@ -1,6 +1,50 @@
 const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
 // const wilmaAPI = 'http://localhost:3001/api/';
 
+const getVersion = () => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${wilmaAPI}version/get`;
+
+        const cached = await loadCache('version-cache', url).catch(() => { });
+        const version = cached ? cached.version : null;
+
+        fetch(url, {
+            method: 'GET',
+        })
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        if (version == json.version) return resolve({ version: json.version, updated: false })
+
+                        await clearCache('theme-cache');
+                        await clearCache('config-cache');
+                        await clearCache('course-cache');
+                        await clearCache('version-cache');
+
+                        appendCache('version-cache', url);;
+
+
+                        return resolve({ version: json.version, updated: true });
+
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+
+
+    });
+}
+
 const fetchMessages = (path, limit) => {
     return new Promise((resolve, reject) => {
         const Wilma2SID = getCookie('Wilma2SID');

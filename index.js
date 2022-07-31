@@ -11,10 +11,24 @@ const translations = {
 
 const Initialize = async () => {
     await InitializeTheme();
+    await InitializeVersion();
     InitializeLoginForm();
     InitializeError();
 
     document.getElementById('loading').style.opacity = 0;
+}
+
+const InitializeVersion = () => {
+    return new Promise((resolve, reject) => {
+        getVersion()
+            .then(version => {
+                document.getElementById('version-tag').textContent = `Version ${version.version} BETA`;
+                return resolve();
+            })
+            .catch(err => {
+                return reject(err);
+            })
+    });
 }
 
 const InitializeTheme = () => {
@@ -134,19 +148,6 @@ const InitializeError = () => {
     if (!code) return;
 
     displayError({ err: '', status: code, info: getCookie('session') })
-}
-
-const getParameterByName = (name, url = window.location.href) => {
-    name = name.replace(/[\[\]]/g, '\\$&');
-
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
-
-    if (!results) return null;
-
-    if (!results[2]) return '';
-
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
 const setLoadingScreen = (value) => {

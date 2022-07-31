@@ -535,6 +535,33 @@ const removeCache = (cache, path) => {
     });
 }
 
+
+0
+
+const getCachedUrls = async (cacheName) => {
+    const urls = (await (await caches.open(cacheName)).keys()).map(i => i.url)
+    return urls
+}
+
+const clearCache = (cache) => {
+    return new Promise((resolve, reject) => {
+        getCachedUrls(cache)
+            .then(async (urls) => {
+                for (let i = 0; i < urls.length; i++) {
+                    const url = urls[i];
+
+                    await removeCache(cache, url);
+                }
+                console.warn(`Cleared "${cache}"`);
+                return resolve();
+            })
+            .catch(err => {
+                return reject(err);
+            })
+    })
+}
+
+
 const hexToRgb = (hex, opacity) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
