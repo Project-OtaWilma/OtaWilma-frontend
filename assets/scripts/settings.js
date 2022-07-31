@@ -188,7 +188,7 @@ const createThemePreview = (theme) => {
     const count = state.themes.length - 2;
 
     themeCount.textContent = `${count} / 10`;
-    if (count >= 10) document.getElementById('new-theme').remove();
+    if (count >= 10 && document.getElementById('new-theme')) document.getElementById('new-theme').remove();
 }
 
 const loadThemePreview = (id, theme) => {
