@@ -87,6 +87,7 @@
 .c-type27,
 .c-type29,
 .c-type66,
+.c-type65,
 .c-type110,
 .c-type112,
 .c-type119,
@@ -133,6 +134,7 @@
 .c-type27 h4,
 .c-type29 h4,
 .c-type66 h4,
+.c-type65 h4,
 .c-type112 h4,
 .c-type110 h4,
 .c-type119 h4,
@@ -204,14 +206,17 @@
 
 .c-type112,
 .c-type66,
-.c-type26 {
+.c-type26,
+.c-type65 {
     background-color: var(--L2016-l-optional-main);
 }
 
-.c-type26-selected {
+.c-type26-selected,
+.c-type66-selected,
+.c-type26-selected,
+.c-type65-selected {
     background-color: var(--L2016-l-optional-selected);
 }
-
 
 .c-type27 {
     background-color: var(--L2016-g-optional-main);
@@ -219,6 +224,14 @@
 
 .c-type27-selected {
     background-color: var(--L2016-g-optional-selected);
+}
+
+.c-type119 {
+    background-color: var(--L2021-diploma-main);
+}
+
+.c-type119-selected {
+    background-color: var(--L2021-diploma-selected);
 }
 
 
@@ -277,16 +290,12 @@
 
     cursor: pointer;
     user-select: none;
-
-    display: none;
 }
 
 .lops-selector h6 {
     color: white;
     opacity: 75%;
     font-size: 20px;
-
-    pointer-events: none;
 
     transition: opacity .2s ease-in-out;
 }

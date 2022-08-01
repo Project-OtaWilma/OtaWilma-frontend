@@ -90,7 +90,8 @@ const loginEvent = async () => {
     const accepted = requirements.map(r => r.checked)
 
     if (accepted.includes(false)) {
-        loginError.textContent = 'Sinun on hyväksyttävä molemmat ehdot'
+        loginError.textContent = 'Sinun on hyväksyttävä molemmat ehdot';
+        setLoadingScreen(false);
         return;
     }
 

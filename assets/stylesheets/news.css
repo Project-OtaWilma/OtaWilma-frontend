@@ -108,9 +108,11 @@
 .news-object-current {
     margin: 5px;
     padding: 10px;
+
+    cursor: pointer;
 }
 
-.news-object-current h1:hover {
+.news-object-current:hover h1 {
     opacity: 50%;
 }
 
@@ -120,9 +122,9 @@
     text-align: left;
     margin: 2px;
 
-    cursor: pointer;
-
     transition: opacity .2s ease-in-out;
+
+    pointer-events: none;
 }
 
 .news-object-current h3 {
@@ -130,11 +132,13 @@
     margin: 5px;
 
     border-left: solid 1px var(--border-main);
+    pointer-events: none;
 }
 
 .news-object-current h4 {
     margin: 10px;
     color: var(--font-h2);
+    pointer-events: none;
 }
 
 

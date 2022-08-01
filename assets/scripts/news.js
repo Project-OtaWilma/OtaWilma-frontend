@@ -90,13 +90,13 @@ const loadNewsCurrent = () => {
                     news.forEach(n => {
                         const newsObject = document.createElement('div');
                         newsObject.className = 'news-object-current';
+                        newsObject.id = n.href;
+                        newsObject.addEventListener('click', (e) => {
+                            loadNewsContent(e.target.id);
+                        })
 
                         const titleObject = document.createElement('h1');
                         titleObject.textContent = n.title;
-                        titleObject.id = n.href;
-                        titleObject.addEventListener('click', (e) => {
-                            loadNewsContent(e.target.id);
-                        })
 
                         const dateObject = document.createElement('h4');
                         dateObject.textContent = date;

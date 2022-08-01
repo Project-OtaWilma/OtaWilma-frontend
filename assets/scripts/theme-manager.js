@@ -180,7 +180,6 @@ const InitializeThemesDefault = () => {
         fetchDefaultTheme('light')
             .then(theme => {
                 state.current.theme = theme;
-                loadTheme(theme);
                 return resolve();
             })
             .catch(err => {
@@ -198,7 +197,7 @@ const loadTheme = (theme) => {
     if (nameElement) nameElement.textContent = state.config['username'].split('.').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
 
     colors.forEach(key => {
-        root.style.setProperty(key, theme.colors[key].value);
+        root.style.setProperty(key.trim(), theme.colors[key].value);
     });
 
     background.style.background = `url(${theme.background.url.value})`;
