@@ -32,7 +32,6 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
     border-right: solid 1px var(--border-main);
@@ -50,21 +49,25 @@
     cursor: pointer;
 
     transition: opacity .2s ease-in-out;
+    font-size: 17px;
 }
 
 .side-bar h2 {
     width: 90%;
-    margin: 2px;
+    margin: 3px;
     padding-left: 3px;
     margin-left: 15px;
 
     transition: opacity .2s ease-in-out;
+    font-size: 15px;
 }
 
 .side-bar h3 {
     width: 90%;
     margin: 2px;
     margin-left: 25px;
+
+    font-size: 13px;
 }
 
 .side-bar h1:hover {
@@ -216,14 +219,73 @@
     -webkit-user-select: none;
 }
 
+.section-title {
+    display: flex;
+    flex-direction: row;
+
+    margin: 20px;
+    margin-left: 0;
+
+    cursor: pointer;
+}
+
+.section-title h1,
+.section-title button {
+    margin: 2px;
+
+    pointer-events: none;
+}
+
+.section-title button {
+    width: 15px;
+    height: 15px;
+
+    background: none;
+
+    color: var(--font-h1);
+
+    transition: transform .2s ease-in-out !important;
+}
+
+.section-title:hover button {
+    transform: rotate(90deg) scale(1.1);
+}
+
+.open {
+    transform: rotate(90deg);
+}
+
+.closed {
+    transform: rotate(0deg);
+}
+
+.section-title h1 {
+    font-size: 15px;
+    user-select: none;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    margin-left: 10px;
+
+    border-left: solid 3px var(--border-main);
+}
+
+.section.collapsed {
+    display: none;
+}
+
 .colors form {
     margin: 10px;
     padding: 10px;
 
+    margin-left: 0;
+
     display: flex;
     flex-direction: column;
-
-    border-left: solid 1px var(--border-main);
 }
 
 .colors form h2 {
@@ -274,18 +336,23 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    z-index: 4;
+
+    border-left: solid 5px var(--accent-main);
 }
 
 .preview img {
-    width: 105%;
-    height: 105%;
-
-    box-shadow: 0 0 15px var(--shadow-main);
+    min-width: 480px;
+    min-height: 330px;
 
     filter: var(--background-filter);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+
+    z-index: 1;
 }
 
 
@@ -400,6 +467,7 @@
 .settings-content .backgrounds,
 .settings-content .theme-actions,
 .settings-content .connections,
+.settings-content .account,
 .settings-content .advanced {
     width: calc(100% - 250px);
     height: auto;
@@ -497,6 +565,107 @@
 
 .removal-popup button:hover {
     opacity: 50%;
+}
+
+.account-window {
+    width: 50%;
+    border-left: solid 5px var(--accent-main);
+    padding-left: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    max-width: 400px;
+}
+
+.login-history {
+    border-left: solid 3px var(--accent-main);
+
+    height: auto;
+
+    overflow: hidden;
+}
+
+.login-object {
+    margin: 10px;
+    padding: 5px;
+}
+
+.login-object ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.account-window .title {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.account-window h1 {
+    padding-bottom: 5px;
+}
+
+.account-window .role {
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.account-window h2 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    color: var(--font-h1);
+}
+
+.account-window h3 {
+    width: 85%;
+    font-size: 13px;
+    padding: 10px;
+}
+
+.account-window h3 strong {
+    color: var(--font-h1);
+    font-family: 'regular';
+}
+
+.account-window form {
+    display: flex;
+    padding: 10px;
+}
+
+.copy-button {
+    opacity: 30%;
+    pointer-events: none;
+}
+
+.account-window h5 {
+    padding: 7px;
+    margin: 10px;
+
+    width: 200px;
+
+    font-size: 12px;
+
+    user-select: none;
+
+    color: white;
+
+    background: linear-gradient(to top, var(--login-main), var(--login-lighter));
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.account-window h5:hover {
+    opacity: 50%;
+}
+
+.account-window h4 {
+    color: var(--error);
+    font-size: 12px;
+    padding: 10px;
 }
 
 .advanced a,

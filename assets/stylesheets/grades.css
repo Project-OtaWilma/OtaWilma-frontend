@@ -37,7 +37,7 @@
     display: flex;
     flex-direction: column;
 
-    width: calc(100% - 350px);
+    width: calc(100% - 360px);
     height: 100%;
     left: 0;
 
@@ -226,11 +226,13 @@
     background-color: var(--L2016-g-optional-selected);
 }
 
-.c-type119 {
+.c-type119,
+.c-type29 {
     background-color: var(--L2021-diploma-main);
 }
 
-.c-type119-selected {
+.c-type119-selected,
+.c-type29-selected {
     background-color: var(--L2021-diploma-selected);
 }
 
@@ -273,8 +275,10 @@
 
 .lops-selector {
     position: absolute;
-    width: 360px;
-    height: 50px;
+    width: 370px;
+    height: 55px;
+
+    top: -5px;
 
     right: -5px;
 

@@ -99,9 +99,19 @@ const loginEvent = async () => {
         await Account.validateOtaWilmaAccount(sessionField.value)
             .then(() => {
                 Account.Login(credentials)
-                    .then(() => {
-                        document.cookie = `session=${sessionField.value}; SameSite=Lax; Secure; max-age=31536000; path=/`;
-                        window.location = '/views/frontpage.html';
+                    .then(async () => {
+                        Account.loginToSession(credentials.username)
+                        .then(() => {
+                            document.cookie = `session=${sessionField.value}; SameSite=Lax; Secure; max-age=31536000; path=/`;
+                            window.location = '/views/frontpage.html';
+                        })
+                        .catch(err => {
+                            const error = err.err;
+                            console.log(err);
+                            loginError.textContent = 'Kirjautuminen OtaWilmaan epäonnistui';
+                            setLoadingScreen(false);
+                            return;
+                        })
                     })
                     .catch(err => {
                         const error = err.err;
@@ -126,7 +136,17 @@ const loginEvent = async () => {
             .then(() => {
                 createAccout(credentials.username)
                     .then(() => {
-                        window.location = '/views/frontpage.html';
+                        Account.loginToSession(credentials.username)
+                        .then(() => {
+                            window.location = '/views/frontpage.html';
+                        })
+                        .catch(err => {
+                            const error = err.err;
+                            console.log(err);
+                            loginError.textContent = 'Kirjautuminen OtaWilmaan epäonnistui';
+                            setLoadingScreen(false);
+                            return;
+                        })
                     })
                     .catch(err => {
                         displayError(err);

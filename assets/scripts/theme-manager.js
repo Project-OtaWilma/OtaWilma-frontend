@@ -1,6 +1,7 @@
 const cacheAvailable = 'caches' in window;
 const defaults = ['light', 'dark'];
 const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api';
+// const otaWilmaAPi = 'http://localhost:8302/api';
 
 const state = {
     config: {},
@@ -75,6 +76,37 @@ const fetchConfig = () => {
             })
     });
 }
+
+const fetchLoginHistory = () => {
+    return new Promise(async (resolve, reject) => {
+        const session = getCookie('session');
+        const url = `${otaWilmaAPi}/sessions/config/login-history/get/${session}`;
+
+        if (!session) {
+            return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        }
+
+        fetch(url)
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: "Invalid request", error: json, status: 400 })
+                    case 401:
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
+                    default:
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
+                }
+            })
+            .catch(err => {
+                return reject({ err: "Failed to reach servers (OtaWilma-API)", status: 503 })
+            })
+    });
+}
+
 
 const fetchDefaultTheme = (id) => {
     return new Promise(async (resolve, reject) => {

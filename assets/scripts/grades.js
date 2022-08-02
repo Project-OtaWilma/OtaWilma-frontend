@@ -47,13 +47,14 @@ const setupLops = () => {
     list.forEach(key => {
         const element = document.getElementById(key);
 
-        element.addEventListener('click', () => {
+        element.addEventListener('click', async () => {
             if (state.grades.current != key) {
                 document.getElementById(state.grades.current).className = '';
                 element.className = 'selected';
                 state.grades.current = key;
 
-                setupBook(key);
+                await setupBook(key);
+                loadBook();
             }
         });
     })
@@ -197,7 +198,7 @@ const loadCourse = (e, course) => {
 }
 
 const loadBook = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const overViewRoot = document.getElementById('overview')
         const overview = [
             'Lu21 pakollinen moduuli',
@@ -207,55 +208,54 @@ const loadBook = () => {
             'Keskiarvo',
             'Lukuaineiden keskiarvo'
         ]
+        if(!state.grades['list']) {
+            state.grades['list'] = await fetchGradeBook('').catch(err => { return reject(err); });
+            console.warn('Loaded grade-list from cache');
+        }
 
-        fetchGradeBook('')
-            .then(list => {
-                overview.forEach(key => {
-                    const ulElement = document.createElement('ul');
-                    const keyElement = document.createElement('a');
-                    keyElement.textContent = `${key} `;
-                    const valueElement = document.createElement('a');
-                    valueElement.textContent = list[key];
+        const list = state.grades['list'];
 
-                    ulElement.appendChild(keyElement);
-                    ulElement.appendChild(valueElement);
-                    overViewRoot.appendChild(ulElement);
-                    delete list[key];
-                });
+        overview.forEach(key => {
+            const ulElement = document.createElement('ul');
+            const keyElement = document.createElement('a');
+            keyElement.textContent = `${key} `;
+            const valueElement = document.createElement('a');
+            valueElement.textContent = list[key];
 
+            ulElement.appendChild(keyElement);
+            ulElement.appendChild(valueElement);
+            overViewRoot.appendChild(ulElement);
+            delete list[key];
+        });
 
-                Object.keys(list).forEach(s => {
-                    const subject = list[s];
+        Object.keys(list).forEach(s => {
+            const subject = list[s];
+            // console.log(subject);
+            const gradeElement = document.getElementById(s);
+            if (gradeElement) {
+                gradeElement.textContent = subject.grade;
 
-                    const gradeElement = document.getElementById(s);
-                    if (gradeElement) {
-                        gradeElement.textContent = subject.grade;
+                Object.keys(subject.courses).forEach(c => {
+                    const course = subject.courses[c];
+                    const courseElement = document.getElementById(course.code);
 
-                        Object.keys(subject.courses).forEach(c => {
-                            const course = subject.courses[c];
-                            const courseElement = document.getElementById(course.code);
+                    if (courseElement) {
+                        courseElement.className = `${courseElement.className}-graded`
+                        courseElement.setAttribute('data-grade', `${course.grade} - ${grades[course.grade]}`);
+                        courseElement.setAttribute('data-points', course.points);
+                        courseElement.setAttribute('data-date', course.date);
+                        courseElement.setAttribute('data-teacher', course.teacher);
+                        courseElement.setAttribute('data-info', course.info);
 
-                            if (courseElement) {
-                                courseElement.className = `${courseElement.className}-graded`
-                                courseElement.setAttribute('data-grade', `${course.grade} - ${grades[course.grade]}`);
-                                courseElement.setAttribute('data-points', course.points);
-                                courseElement.setAttribute('data-date', course.date);
-                                courseElement.setAttribute('data-teacher', course.teacher);
-                                courseElement.setAttribute('data-info', course.info);
-
-                                const textElement = courseElement.getElementsByTagName('h4')[0];
-                                textElement.textContent = course.grade;
-                            }
-
-                        })
+                        const textElement = courseElement.getElementsByTagName('h4')[0];
+                        textElement.textContent = course.grade;
                     }
-                })
 
-                return resolve();
-            })
-            .catch(err => {
-                return reject(err);
-            })
+                })
+            }
+        })
+
+        return resolve();
     })
 }
 

@@ -214,24 +214,28 @@
 .news-object {
     margin: 5px;
     padding: 10px;
+
+    cursor: pointer;
 }
 
 .news-object h1 {
     font-size: 17px;
     text-align: left;
     margin: 2px;
-    cursor: pointer;
+
+    pointer-events: none;
 
     transition: opacity .2s ease-in-out;
 }
 
-.news-object h1:hover {
+.news-object:hover h1 {
     opacity: 50%;
 }
 
 .news-object h3 {
     padding: 5px;
     margin: 5px;
+    pointer-events: none;
 
     border-left: solid 1px var(--border-main);
 }
@@ -239,6 +243,12 @@
 .news-object h4 {
     margin-left: 5px;
     font-family: 'semi-bold';
+    pointer-events: none;
+}
+
+.news-object h2,
+.news-object h3 {
+    pointer-events: none;
 }
 
 .grades ul a:nth-child(2) {
@@ -498,6 +508,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.info h1 {
+    color: var(--font-h4);
+    font-size: 15px;
+    margin: 10px;
 }
 
 .info h2 {

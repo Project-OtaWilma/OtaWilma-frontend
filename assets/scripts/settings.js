@@ -24,8 +24,7 @@ const settings = {
     },
     'Työjärjestys': {
         '--schedule-main': 'Työjärjetyksen taustan väri',
-        '--schedule-h1': 'Työjärjetyksen ensisijaisen tekstin väri',
-        '--schedule-h2': 'Työjärjetyksen toissijaisen tekstin väri'
+        '--schedule-h1': 'Työjärjetyksen ensisijaisen tekstin väri'
     },
     'Kurssitarjotin': {
         '--L2021-mandatory-main': 'Pakollinen (LOPS 2021)',
@@ -37,7 +36,7 @@ const settings = {
         '--L2021-diploma-main': 'Lukiodiplomi (LOPS 2021)',
         '--L2021-diploma-selected': 'Valittu lukiodiplomi (LOPS 2021)',
         '--L2016-l-optional-main': 'Koulukohtainen soveltava kurssi (LOPS 2016)',
-        '--L2016-l-optional-selected': 'Valittu koulukohtainen soveltava kurssi (LOPS 2016)',
+        ' --L2016-l-optional-selected': 'Valittu koulukohtainen soveltava kurssi (LOPS 2016)',
         '--L2016-g-optional-main': 'Valtakunnalinen Soveltava kurssi (LOPS 2016)',
         '--L2016-g-optional-selected': 'Valittu valtakunnalinen soveltava kurssi (LOPS 2016)',
         '--course-tray-h1': 'Kurssien tekstin ensisijainen väri'
@@ -48,7 +47,7 @@ const settings = {
         '--error': 'Virheilmoitusten ensisijainen väri'
     }
 }
-const mimeTypes = ['png', 'svg', 'jpg', 'gif', 'webp']
+const mimeTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
 const nonTransparent = ['--accent-main', '--background-darker'];
 
 
@@ -63,6 +62,11 @@ const Initialize = async () => {
         throw err;
     });
     await InitializeEditor().catch(err => {
+        displayError(err);
+        throw err;
+    });
+
+    await loadUserInfo().catch(err => {
         displayError(err);
         throw err;
     });
@@ -287,19 +291,52 @@ const setupColorEditor = () => {
     const editor = document.getElementById('theme-editor');
     editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
 
-    Object.keys(state.current.theme.colors).forEach(key => {
-        const type = state.current.theme.colors[key].type;
+    Object.keys(settings).forEach(key => {
+        const section = document.createElement('div');
+        section.id = key;
+        section.className = 'section collapsed';
+        sections.push(section);
+    
+        const titleElement = document.createElement('div');
+        titleElement.className = 'section-title';
 
-        switch (type) {
-            case 'color':
-                createColorInput(key, editor);
-                break;
-            case 'number':
-                createNumberInput(key, editor);
-                break;
-        }
-    });
+        const h1 = document.createElement('h1');
+        h1.textContent = key;
 
+        const action = document.createElement('button');
+        action.textContent = '‣';
+        action.className = 'closed';
+
+        titleElement.addEventListener('click', (e) => {
+            const element = document.getElementById(key);
+            element.className = element.className.includes('collapsed') ? 'section' : 'section collapsed';
+
+            action.className = action.className == 'open' ? 'closed' : 'open';
+        });
+
+
+        titleElement.appendChild(action);
+        titleElement.appendChild(h1);
+
+        editor.appendChild(titleElement);
+        editor.appendChild(section);
+
+        const inputs = settings[key];
+        Object.keys(inputs).forEach(input => {
+            
+            const type = state.current.theme.colors[input].type;
+            
+            switch (type) {
+                case 'color':
+                    createColorInput(input, section);
+                    break;
+                case 'number':
+                    createNumberInput(input, section);
+                    break;
+            }
+            
+        })
+    })
 }
 
 const loadColorEditor = () => {
@@ -417,18 +454,9 @@ const createColorInput = (key, root) => {
     const labelElement = document.createElement('label');
     labelElement.textContent = key;
 
-    const section = Object.keys(settings).find(t => Object.keys(settings[t]).includes(key))
+    const section = Object.keys(settings).find(t => Object.keys(settings[t]).includes(key));
 
     if (section) {
-        if (!sections.includes(section)) {
-            sections.push(section);
-
-            const titleElement = document.createElement('h1');
-            titleElement.textContent = section;
-
-            root.appendChild(titleElement);
-        }
-
         labelElement.textContent = settings[section][key];
     }
 
@@ -531,6 +559,86 @@ const setupThemeActions = () => {
 const loadThemeActions = () => {
     const actions = document.getElementById('theme-actions');
     actions.className = defaults.includes(state.current.id) ? 'theme-actions disabled' : 'theme-actions';
+}
+
+const loadUserInfo = () => {
+    return new Promise((resolve, reject) => {
+
+        const usernameField = document.getElementById('username-field');
+        usernameField.textContent = state.config.username;
+
+        const copyCheckbox = document.getElementById('checkbox');
+
+        const copyButton = document.getElementById('copy-session');
+        copyButton.style.pointerEvents = copyCheckbox.checked ? 'all' : 'none';
+        copyButton.style.opacity = copyCheckbox.checked ? '100%' : '30%';
+        copyButton.textContent = 'Kopio OtaWilma-tunnus' 
+
+        copyButton.addEventListener('click', async (e) => {
+            await navigator.clipboard.writeText(getCookie('session'));
+            e.target.textContent = 'Kopioitu leikepöydälle';
+        })
+
+        copyCheckbox.addEventListener('change', (e) => {
+            copyButton.style.pointerEvents = e.target.checked ? 'all' : 'none';
+            copyButton.style.opacity = e.target.checked ? '100%' : '30%';
+            copyButton.textContent = 'Kopio OtaWilma-tunnus'
+        });
+
+        const syncButton = document.getElementById('sync');
+        syncButton.addEventListener('click', () => {
+            clearCache('config-cache');
+            clearCache('theme-cache');
+            location.reload();
+        });
+
+        const historyRoot = document.getElementById('login-history');
+        fetchLoginHistory()
+        .then(list => {
+            if(list) {
+                list['login-history'].forEach(event => {
+                    const date = new Date(event.timeStamp);
+                    const format = {
+                        year: 'numeric',
+                        month: 'numeric',
+                        date: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    }
+
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'login-object';
+
+                    const dateUl = document.createElement('ul');
+                    const dateKey = document.createElement('a');
+                    dateKey.textContent = 'Milloin: '
+                    const dateValue = document.createElement('a');
+                    dateValue.textContent = date.toLocaleDateString('FI-fi', format);
+
+                    dateUl.appendChild(dateKey);
+                    dateUl.appendChild(dateValue);
+                    eventElement.appendChild(dateUl);
+
+                    const userUl = document.createElement('ul');
+                    const userKey = document.createElement('a');
+                    userKey.textContent = 'Kuka: '
+                    const userValue = document.createElement('a');
+                    userValue.textContent = event.username;
+
+                    userUl.appendChild(userKey);
+                    userUl.appendChild(userValue);
+                    eventElement.appendChild(userUl);
+
+                    historyRoot.appendChild(eventElement);
+                })
+            }
+        })
+        .catch(err => {
+            return reject(err);
+        })
+
+        return resolve();
+    })
 }
 
 const setRemovalPopup = (bool) => {

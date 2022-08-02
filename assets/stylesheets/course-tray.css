@@ -113,7 +113,6 @@
 
 .hide-period:hover,
 .disable-period:hover {
-    opacity: 40%;
     transform: scale(1.1);
 }
 

@@ -29,6 +29,36 @@ const Login = (credentials = { username: String, password: String }) => {
     })
 }
 
+const loginToSession = (username) => {
+    return new Promise(async (resolve, reject) => {
+        const session = getCookie('session');
+        const url = `${otaWilmaAPi}/sessions/config/login`;
+
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hash: session, "username": username })
+        })
+            .then(async (res) => {
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: "Invalid request", error: json, status: 400 })
+                    case 401:
+                        return reject({ err: "Invalid session identifier", error: json, status: 401, redirect: true })
+                    default:
+                        return reject({ err: "Received an unexpected response from server", error: res.status, status: 500 })
+                }
+            })
+            .catch(err => {
+                return reject({ err: "Failed to reach servers (OtaWilma-API)", status: 503 })
+            })
+    });
+}
+
 const validateOtaWilmaAccount = (hash) => {
     return new Promise((resolve, reject) => {
         fetch(`https://otawilma-api.tuukk.dev/api/sessions/config/get/${hash}`)
@@ -81,6 +111,7 @@ const createAccout = (username) => {
 
 const Account = {
     Login,
+    loginToSession,
     validateOtaWilmaAccount,
     createAccout
 }
