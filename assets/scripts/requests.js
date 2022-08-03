@@ -630,7 +630,17 @@ const CourseTrayDeselect = (hash) => {
 }
 
 const fetchTeacherList = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${wilmaAPI}teachers/list`;
+
+        if (cacheAvailable) {
+            const config = await loadCache('teacher-cache', url).catch(() => { });
+
+            if (config) {
+                console.warn(`Loaded teacher-list from cache`);
+                return resolve(config);
+            }
+        }
 
         fetch(`${wilmaAPI}teachers/list`, {
             method: 'GET'
@@ -641,6 +651,7 @@ const fetchTeacherList = () => {
 
                 switch (res.status) {
                     case 200:
+                        appendCache('teacher-cache', url);
                         return resolve(json);
                     case 303:
                         return reject({ err: 'Failed to perform action', error: json, status: 303 });

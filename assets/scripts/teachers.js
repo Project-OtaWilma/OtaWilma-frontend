@@ -178,21 +178,26 @@ const loadTeacherInfo = (name) => {
 
             if(info.feedback.reviews > 1) {
                 Object.keys(keys).forEach(key => {
+                    document.getElementById(key).style.display = 'flex';
+                    
                     document.getElementById(`${key}-label`).style.display = 'none';
                     const value = `display: flex; background: conic-gradient(var(--accent-main) 0deg ${info.feedback[key] * 180}deg, transparent 0deg);`
-
+                    
                     if((info.feedback[key] * 180) <= 120) document.getElementById(`${key}-text`).textContent = keys[key].options[0];
                     if((info.feedback[key] * 180) > 120 && info.feedback[key] < 240) document.getElementById(`${key}-text`).textContent = keys[key].options[1];
                     if((info.feedback[key] * 180) >= 240) document.getElementById(`${key}-text`).textContent = keys[key].options[2];
-
+                    
                     document.getElementById(`${key}-value`).style = value;
                 });
+                document.getElementById('card-title').style.display = 'inline';
             }
             else {
                Object.keys(keys).forEach(key => {
+                    document.getElementById(key).style.display = 'none';
                     document.getElementById(`${key}-label`).style.display = 'flex';
                     document.getElementById(`${key}-value`).style.display = 'none';
                 })
+                document.getElementById('card-title').style.display = 'none';
             }
 
             
