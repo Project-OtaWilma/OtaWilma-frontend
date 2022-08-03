@@ -36,21 +36,25 @@
             <div class="right" id="login-container">
                 <h1>OtaWilma - Tervetuloa</h1>
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
+                <input type="text" style="display:none">
+                <input type="password" style="display:none">
                 <form class="login-form">
                     <h3>Käyttäjätunnus</h3>
                     <input id="username-field" type="text" placeholder="matti.heikkinen" autocomplete="on">
                 </form>
                 <form class="login-form">
                     <h3>Salasana</h3>
-                    <input id="password-field" type="password" placeholder="***************" autocomplete="on">
+                    <input id="password-field" type="password" placeholder="***************" autocomplete="off">
                 </form>
                 <form class="login-form">
-                    <h3>OtaWilma-tunnus <strong>(?)</strong></h3>
-                    <input id="session-field" type="password" autocomplete="off">
+                    <h3>OtaWilma-tunnus <strong id="help">(?)</strong></h3>
+                    <input id="session-field" type="password" autocomplete="new-password">
                     <div class="info">
                         <h2>Selaimesi käyttää OtaWilma-käyttäjää asetuksien tallentamiseen. Voit käyttää olemassa olevaa
                             käyttäjää jos olet ennen käyttänyt
                             OtaWilmaa toisella selaimella.</h2>
+                        <h2>OtaWilma-tunnus löytyy asetuksista <br><strong>Asetukset > OtaWilma-käyttäjää >
+                                Kopio OtaWilma-tunnus</strong></h2>
                     </div>
                 </form>
                 <form class="terms-of-service">

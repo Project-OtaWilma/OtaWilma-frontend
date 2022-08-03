@@ -406,6 +406,13 @@
     font-family: 'semi-bold';
 }
 
+.background-input h4 {
+    color: var(--error);
+    margin: 10px;
+    font-size: 12px;
+    display: none;
+}
+
 .background-input {
     margin: 5px;
 

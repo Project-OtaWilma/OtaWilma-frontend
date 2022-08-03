@@ -10,11 +10,19 @@ const translations = {
 }
 
 const Initialize = async () => {
-    await InitializeTheme();
-    await InitializeVersion();
+    await InitializeTheme().catch(err => {
+        displayError(err);
+        throw err;
+    })
+
+    await InitializeVersion().catch(err => {
+        displayError(err);
+        throw err;
+    })
+
     InitializeLoginForm();
     InitializeError();
-
+    
     document.getElementById('loading').style.opacity = 0;
 }
 
@@ -49,6 +57,7 @@ const InitializeTheme = () => {
         return resolve();
     })
 }
+
 
 const InitializeLoginForm = async () => {
     const sessionField = document.getElementById('session-field');

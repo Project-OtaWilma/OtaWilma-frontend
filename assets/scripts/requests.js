@@ -25,7 +25,6 @@ const getVersion = () => {
 
                         appendCache('version-cache', url);;
 
-
                         return resolve({ version: json.version, updated: true });
 
                     case 400:

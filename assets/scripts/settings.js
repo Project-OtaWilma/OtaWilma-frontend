@@ -47,7 +47,7 @@ const settings = {
         '--error': 'Virheilmoitusten ensisijainen väri'
     }
 }
-const mimeTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
+const imageTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
 const nonTransparent = ['--accent-main', '--background-darker'];
 
 
@@ -410,11 +410,14 @@ const loadBackgroundEditor = () => {
 
     const preview = document.getElementById('background-preview');
     preview.src = state.current.theme.background.url.value;
+    
+    const a = document.createElement('a');
+    a.href = state.current.theme.background.url.value;
+    const format = a.pathname.split('.').reverse()[0];
 
-    const format = state.current.theme.background.url.value.split('.').reverse()[0];
     const formatLabel = document.getElementById('format-label');
-    formatLabel.textContent = format;
-    formatLabel.style.color = mimeTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
+    formatLabel.textContent = state.current.theme.background.url.value ? imageTypes.includes(format) ? format : '?' : '';
+    formatLabel.style.color = imageTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
 
     Object.keys(state.current.theme.background).forEach(key => {
         const input = document.getElementById(key);
@@ -424,19 +427,33 @@ const loadBackgroundEditor = () => {
 
 const onBackgroundChanged = async (e) => {
     const preview = document.getElementById('background-preview');
+    const error = document.getElementById('background-error');
+    error.style.display = 'none';
+
     if (!e.target.value) { e.target.value = e.target.id == 'url' ? null : 0 }
 
     setLoadingScreen(true);
+
+    if(e.target.value.length >= 1024) {
+        setLoadingScreen(false);
+        e.target.value = '';
+        error.style.display = 'block';
+        error.innerHTML = 'linkin tulee olla alle <strong>1024</strong> merkin pituinen';
+        return;
+    }
 
     await editThemeBackground(state.current.id, e.target.id, e.target.value)
         .then(() => {
             state.current.theme.background[e.target.id].value = e.target.value;
             preview.src = state.current.theme.background.url.value;
 
-            const format = state.current.theme.background.url.value.split('.').reverse()[0];
+            const a = document.createElement('a');
+            a.href = state.current.theme.background.url.value;
+            const format = a.pathname.split('.').reverse()[0];
+
             const formatLabel = document.getElementById('format-label');
-            formatLabel.textContent = format;
-            formatLabel.style.color = mimeTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
+            formatLabel.textContent = state.current.theme.background.url.value ? imageTypes.includes(format) ? format : '?' : '';
+            formatLabel.style.color = imageTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
 
             loadTheme(state.current.theme);
             loadThemePreview(state.current.id, state.current.theme);

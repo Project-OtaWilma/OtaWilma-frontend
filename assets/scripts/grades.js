@@ -30,7 +30,7 @@ const Initialize = async () => {
         displayError(err);
         throw err;
     })
-    await loadBook().catch(err => {
+    await loadBook('LOPS2021').catch(err => {
         displayError(err);
         throw err;
     })
@@ -54,7 +54,7 @@ const setupLops = () => {
                 state.grades.current = key;
 
                 await setupBook(key);
-                loadBook();
+                loadBook(key);
             }
         });
     })
@@ -197,10 +197,10 @@ const loadCourse = (e, course) => {
     })
 }
 
-const loadBook = () => {
+const loadBook = (lops) => {
     return new Promise(async (resolve, reject) => {
         const overViewRoot = document.getElementById('overview')
-        const overview = [
+        const overviewLOPS2021 = [
             'Lu21 pakollinen moduuli',
             'Lu21 valtakunnallinen valinnainen moduuli',
             'Lu21 paikallinen opintojakso',
@@ -208,12 +208,23 @@ const loadBook = () => {
             'Keskiarvo',
             'Lukuaineiden keskiarvo'
         ]
+
+        const overviewLOPS2016 = [
+            'Suoritukset kurssityypeittäin',
+            'Yhteensä',
+            'Keskiarvo',
+            'Lukuaineiden keskiarvo'
+        ]
+
         if(!state.grades['list']) {
             state.grades['list'] = await fetchGradeBook('').catch(err => { return reject(err); });
             console.warn('Loaded grade-list from cache');
         }
 
         const list = state.grades['list'];
+        const overview = lops == 'LOPS2021' ? overviewLOPS2021 : overviewLOPS2016;
+
+        overViewRoot.replaceChildren([]);
 
         overview.forEach(key => {
             const ulElement = document.createElement('ul');
@@ -225,8 +236,9 @@ const loadBook = () => {
             ulElement.appendChild(keyElement);
             ulElement.appendChild(valueElement);
             overViewRoot.appendChild(ulElement);
-            delete list[key];
         });
+
+
 
         Object.keys(list).forEach(s => {
             const subject = list[s];
@@ -248,7 +260,7 @@ const loadBook = () => {
                         courseElement.setAttribute('data-info', course.info);
 
                         const textElement = courseElement.getElementsByTagName('h4')[0];
-                        textElement.textContent = course.grade;
+                        if(textElement) textElement.textContent = course.grade;
                     }
 
                 })

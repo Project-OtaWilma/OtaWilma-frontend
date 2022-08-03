@@ -155,10 +155,8 @@ input::placeholder {
     opacity: 100% !important;
 }
 
-.terms-of-service h2 strong {
+h2 strong {
     color: var(--font-h1);
-    font-family: 'regular';
-
     cursor: pointer;
 }
 
@@ -197,7 +195,9 @@ h6 {
     left: 10px;
     bottom: 10px;
 
-    opacity: 20%;
+    opacity: 50%;
+
+    color: rgb(57, 57, 57);
 }
 
 .login-loading-screen {

@@ -533,6 +533,26 @@
 .info form button {
     background: none;
     color: var(--font-h4);
+
+    transition: transform .2s ease-in-out;
+}
+
+.info form input:hover {
+    font-family: 'semi-bold';
+}
+
+.info form button {
+    font-size: 17px;
+    padding: 10px;
+}
+
+.info form button:nth-child(3) {
+    margin-left: -15px;
+}
+
+.info form button:hover {
+    transform: scale(1.1);
+    font-family: 'bold';
 }
 
 
