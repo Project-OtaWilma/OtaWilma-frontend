@@ -531,6 +531,45 @@ const fetchTrayCourseInfo = (hash) => {
     });
 }
 
+const fetchTrayCourseApplicants = (code) => {
+    return new Promise((resolve, reject) => {
+        const Wilma2SID = getCookie('Wilma2SID');
+
+        if (!Wilma2SID) {
+            return reject({ err: 'Missing Wilma2SID', error: 400, redirect: true });
+        }
+
+        fetch(`${wilmaAPI}course-tray/courses/applicants/${code}`, {
+            method: 'GET',
+            headers: {
+                Wilma2SID: Wilma2SID,
+            }
+        })
+            .then(async (res) => {
+
+                const json = await res.json();
+
+                switch (res.status) {
+                    case 200:
+                        return resolve(json);
+                    case 400:
+                        return reject({ err: 'Invalid request', error: json, status: 400 })
+                    case 401:
+                        return reject({ err: 'Invalid credentials', error: json, status: 401, redirect: true })
+                    case 500:
+                        return reject({ err: "Internal server error", status: 500 })
+                    case 501:
+                        return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
+                    default:
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to reach servers (Wilma-API)', status: 503 })
+            })
+    });
+}
+
 const CourseTraySelect = (hash) => {
     return new Promise((resolve, reject) => {
         const Wilma2SID = getCookie('Wilma2SID');

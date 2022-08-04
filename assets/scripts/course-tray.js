@@ -199,7 +199,7 @@ const loadCourseInfo = (code, name, selected, hash) => {
         root.replaceChildren([]);
 
         fetchTrayCourse(hash)
-            .then(course => {
+            .then(async (course) => {
                 const nameElement = document.createElement('h1');
                 nameElement.textContent = name;
 
@@ -208,6 +208,8 @@ const loadCourseInfo = (code, name, selected, hash) => {
 
                 root.appendChild(nameElement);
                 root.appendChild(codeElement);
+
+
 
                 const studentsUl = document.createElement('ul');
                 const studentsKey = document.createElement('a');
@@ -235,6 +237,7 @@ const loadCourseInfo = (code, name, selected, hash) => {
                     root.appendChild(cUl);
                 });
 
+                // actionButton.scrollIntoView({behavior: "smooth", block: "center"})
                 const actionButton = document.createElement('button');
                 actionButton.className = 'course-action';
                 actionButton.id = hash;
@@ -253,9 +256,38 @@ const loadCourseInfo = (code, name, selected, hash) => {
                     }
                 })
 
-                root.appendChild(actionButton);
-                // actionButton.scrollIntoView({behavior: "smooth", block: "center"})
+                const applyLabel = document.createElement('h1');
+                applyLabel.textContent = 'Onko kurssi täynnä mutta haluaisit silti liityä?'
 
+                const applyDescription = document.createElement('h3');
+                applyDescription.textContent = 'Auta opettajia parantamaan kurssivalikoimaa ilmoittamalla mille kursseille on liian vähän tarjontaa.'
+                
+                const applyButton = document.createElement('button');
+                applyButton.className = 'course-action-apply';
+                applyButton.id = code;
+                
+                const countElement = document.createElement('h3');
+                countElement.textContent = '...';
+
+                applyButton.appendChild(countElement);
+                
+                const textElement = document.createElement('h2');
+                textElement.textContent = '...';
+                
+                applyButton.appendChild(textElement);
+                
+                
+                fetchTrayCourseApplicants(code)
+                .then(status => {
+                    applyButton.className = status.applied ? 'course-action-apply applied' : selected ? 'course-action-apply applied' : 'course-action-apply';
+                    countElement.textContent = status.length;
+                    textElement.textContent = status.applied ? 'Olen jo kiinnostunut' : 'Olisin kiinnostunut';
+                })
+
+                root.appendChild(actionButton);
+                root.appendChild(applyLabel);
+                root.appendChild(applyDescription);
+                root.appendChild(applyButton);
 
                 fetchTrayCourseInfo(hash)
                     .then(info => {

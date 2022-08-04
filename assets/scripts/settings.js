@@ -9,6 +9,12 @@ const settings = {
         '--background-main': 'Taustan ensisijainen väri',
         '--background-darker': 'Taustan toissijainen väri',
     },
+    'Etusivu': {
+        '--info-background': 'Kellon tausta',
+        '--clock-background': 'Kellon väri',
+        '--clock-markings': 'Kellon merkinnät',
+        '--info-h1': 'Kellon teksi'
+    },
     'Teksti': {
         '--font-h1': 'Otsikot',
         '--font-h2': 'Ensisijainen sisältö',
@@ -48,7 +54,7 @@ const settings = {
     }
 }
 const imageTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
-const nonTransparent = ['--accent-main', '--background-darker'];
+const nonTransparent = ['--accent-main', '--background-darker', '--clock-background'];
 
 
 const Initialize = async () => {
@@ -340,28 +346,38 @@ const setupColorEditor = () => {
 }
 
 const loadColorEditor = () => {
+    const editor = document.getElementById('theme-editor');
+    editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
+    
+    Object.keys(settings).forEach(category => {
+        
+        
+        Object.keys(settings[category]).forEach(key => {
+            switch (state.current.theme.colors[key].type) {
+        
+                case 'color':
+                    const r = parseRgb(state.current.theme.colors[key].value);
+                    const hex = rgbToHex(r[0], r[1], r[2]);
+        
+                    const colorInput = document.getElementById(`${key}.color`);
+                    colorInput.value = hex;
+        
+                    const opacityInput = document.getElementById(`${key}.opacity`);
+                    opacityInput.value = r[3] * 100;
+                    break;
+                case 'number':
+                    const numberInput = document.getElementById(`${key}.number`);
+                    numberInput.value = state.current.theme.colors[key].value;
+                    break;
+            }
+            
+        })
+        
+    })
+    
     Object.keys(state.current.theme.colors).forEach(key => {
-        const editor = document.getElementById('theme-editor');
-        editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
-
-        switch (state.current.theme.colors[key].type) {
-
-            case 'color':
-                const r = parseRgb(state.current.theme.colors[key].value);
-                const hex = rgbToHex(r[0], r[1], r[2]);
-
-                const colorInput = document.getElementById(`${key}.color`);
-                colorInput.value = hex;
-
-                const opacityInput = document.getElementById(`${key}.opacity`);
-                opacityInput.value = r[3] * 100;
-                break;
-            case 'number':
-                const numberInput = document.getElementById(`${key}.number`);
-                numberInput.value = state.current.theme.colors[key].value;
-                break;
-        }
     });
+    
 }
 
 const onColorChanged = async (e) => {
