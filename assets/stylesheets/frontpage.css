@@ -511,13 +511,13 @@
 }
 
 .info h1 {
-    color: var(--font-h4);
+    color: var(--info-h1);
     font-size: 15px;
     margin: 10px;
 }
 
 .info h2 {
-    color: var(--font-h4);
+    color: var(--info-h1);
     font-size: 20px;
     margin: 10px;
 }
@@ -532,7 +532,7 @@
 .info form input,
 .info form button {
     background: none;
-    color: var(--font-h4);
+    color: var(--info-h1);
 
     transition: transform .2s ease-in-out;
 }
