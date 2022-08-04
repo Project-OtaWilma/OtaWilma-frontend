@@ -212,6 +212,7 @@ const InitializeThemesDefault = () => {
         fetchDefaultTheme('light')
             .then(theme => {
                 state.current.theme = theme;
+                loadTheme(theme);
                 return resolve();
             })
             .catch(err => {
