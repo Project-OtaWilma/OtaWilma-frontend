@@ -43,7 +43,6 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
     overflow-y: scroll;
@@ -74,8 +73,6 @@
     font-size: 30px;
     margin: 10px;
     padding: 10px;
-
-    margin-top: 150px;
 }
 
 .right h2 {
@@ -234,4 +231,24 @@ h6 {
 
     filter: brightness(0);
     display: none;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+
+        max-width: 800px;
+    }
+}
+
+
+@media screen and (max-height: 750px) {
+    .container {
+        justify-content: flex-end;
+    }
+
+    .content {
+        height: calc(100% - 50px - 5%);
+        bottom: 2.5%;
+    }
 }
