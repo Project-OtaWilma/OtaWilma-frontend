@@ -537,6 +537,12 @@
     transition: transform .2s ease-in-out;
 }
 
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
 .info form input:hover {
     font-family: 'semi-bold';
 }
@@ -732,11 +738,7 @@
     position: absolute;
 }
 
-@media screen and (max-width: 1200px) {
-    .content {
-        width: 98%;
-    }
-
+@media screen and (max-width: 1400px) {
     .top-container .left {
         position: absolute;
         width: calc(100% - 200px - 220px);
@@ -912,6 +914,12 @@
 
     .links a {
         font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .content {
+        width: 98%;
     }
 }
 
