@@ -698,3 +698,21 @@
 .source:hover {
     opacity: 100%;
 }
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+    }
+}
+
+
+@media screen and (max-height: 750px) {
+    .container {
+        justify-content: flex-end;
+    }
+
+    .content {
+        height: calc(100% - 50px - 5%);
+        bottom: 2.5%;
+    }
+}

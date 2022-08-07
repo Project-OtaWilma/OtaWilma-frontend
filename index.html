@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/assets/stylesheets/style.css">
     <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon.ico">
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
 </head>
 
 <body>
@@ -46,17 +46,21 @@
                     <h3>Salasana</h3>
                     <input id="password-field" type="password" placeholder="***************" autocomplete="off">
                 </form>
-                <form class="login-form">
-                    <h3>OtaWilma-tunnus <strong id="help">(?)</strong></h3>
-                    <input id="session-field" type="password" autocomplete="new-password">
-                    <div class="info">
-                        <h2>Selaimesi käyttää OtaWilma-käyttäjää asetuksien tallentamiseen. Voit käyttää olemassa olevaa
-                            käyttäjää jos olet ennen käyttänyt
-                            OtaWilmaa toisella selaimella.</h2>
-                        <h2>OtaWilma-tunnus löytyy asetuksista <br><strong>Asetukset > OtaWilma-käyttäjää >
-                                Kopio OtaWilma-tunnus</strong></h2>
-                    </div>
-                </form>
+                <div class="login-otawilma">
+                    <form class="login-form">
+                        <h3>OtaWilma-tunnus <strong id="help">(?)</strong></h3>
+                        <input id="session-field" type="password" autocomplete="new-password">
+                        <div class="info">
+                            <h2>Selaimesi käyttää OtaWilma-käyttäjää asetuksien tallentamiseen. Voit käyttää olemassa
+                                olevaa
+                                käyttäjää jos olet ennen käyttänyt
+                                OtaWilmaa toisella selaimella.</h2>
+                            <h2>OtaWilma-tunnus löytyy asetuksista <br><strong>Asetukset > OtaWilma-käyttäjää >
+                                    Kopio OtaWilma-tunnus</strong></h2>
+                        </div>
+                    </form>
+                </div>
+
                 <form class="terms-of-service">
                     <h2>Ymmärrän, että <strong>OtaWilma ei ole</strong> virallinen Wilman
                         ylläpitämä ohjelmisto</h2>

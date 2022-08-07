@@ -75,7 +75,7 @@
     margin: 10px;
     padding: 10px;
 
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 .right h2 {
@@ -111,6 +111,27 @@ form h3 {
     border-radius: 5px;
 
     background: none !important;
+}
+
+.account {
+    position: absolute;
+    text-align: left;
+    color: var(--font-h1);
+    font-size: 13px;
+
+    opacity: 75%;
+
+    left: 10px;
+    bottom: 10px;
+
+    cursor: pointer;
+}
+
+.login-otawilma {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-form .info {

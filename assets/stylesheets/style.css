@@ -258,7 +258,8 @@ body {
 
 .disclaimer {
     position: absolute;
-    width: 100%;
+    width: 90%;
+    left: 5%;
     height: 100%;
     color: white;
 
@@ -269,8 +270,68 @@ body {
     display: none;
 }
 
+@media screen and (max-width: 1100px) {
+    .top {
+        height: 35px;
+        padding-left: 400px;
+    }
 
-@media screen and (max-width: 1200px) {
+    .top .user-info {
+        position: absolute;
+        left: 200px;
+        width: 200px;
+        height: 110%;
+    }
+
+    .user-info h1 {
+        font-size: 15px;
+    }
+
+    .user-info h2 {
+        font-size: 13px;
+    }
+
+    .user-data .logout {
+        font-size: 10px;
+    }
+
+    .logout:hover {
+        opacity: 100%;
+    }
+
+    .top .logo-text {
+        color: var(--font-h4);
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .top button {
+        background: none;
+        padding: 15px;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .top h5 {
+        color: var(--font-h5);
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    .top h1 {
+        pointer-events: none;
+    }
+
+    .top button:hover {
+        background-color: rgba(255, 255, 255, 0.174) !important;
+    }
+}
+
+
+@media screen and (max-width: 900px) {
     .container {
         display: none;
     }
@@ -280,7 +341,7 @@ body {
     }
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 600px) {
     .container {
         display: none;
     }
