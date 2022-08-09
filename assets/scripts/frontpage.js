@@ -201,7 +201,6 @@ const loadNews = () => {
             redirect('/views/news.html')
         })
 
-
         root.appendChild(title);
 
         fetchNews('current', 10)
@@ -210,29 +209,43 @@ const loadNews = () => {
                     const news = list[date];
 
                     news.forEach(n => {
+                        const valid = n.href != null;
+
                         const newsObject = document.createElement('div');
                         newsObject.className = 'news-object';
                         newsObject.id = n.href;
-                        newsObject.addEventListener('click', (e) => {
-                            window.location = `/views/news.html?news=${e.target.id}`
-                        })
 
+                        if(valid) {
+                            newsObject.addEventListener('click', (e) => {
+                                window.location = `/views/news.html?news=${e.target.id}`
+                            })
+                        }
+                        
                         const titleObject = document.createElement('h1');
                         titleObject.textContent = n.title;
-
+                        
                         const dateObject = document.createElement('h2');
                         dateObject.textContent = date;
-
+                        
                         const senderObject = document.createElement('h2');
                         senderObject.textContent = n.sender.name;
-
+                        
                         const descriptionObject = document.createElement('h3');
                         descriptionObject.textContent = n.description;
-
+                        
                         newsObject.appendChild(titleObject);
                         newsObject.appendChild(dateObject);
                         newsObject.appendChild(senderObject);
                         newsObject.appendChild(descriptionObject);
+                        
+                        if(!valid) {
+                            const disclaimer = document.createElement('h5');
+                            disclaimer.textContent = 'Tiedotteella ei ole tämän enempää sisältöä.';
+                            newsObject.className += ' disabled';
+
+                            newsObject.appendChild(disclaimer);
+                        }
+
                         root.appendChild(newsObject);
                     });
 

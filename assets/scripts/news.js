@@ -88,12 +88,16 @@ const loadNewsCurrent = () => {
                     const news = list[date];
 
                     news.forEach(n => {
+                        const valid = n.href != null;
+
                         const newsObject = document.createElement('div');
                         newsObject.className = 'news-object-current';
                         newsObject.id = n.href;
-                        newsObject.addEventListener('click', (e) => {
-                            loadNewsContent(e.target.id);
-                        })
+                        if(valid) {
+                            newsObject.addEventListener('click', (e) => {
+                                loadNewsContent(e.target.id);
+                            })
+                        }
 
                         const titleObject = document.createElement('h1');
                         titleObject.textContent = n.title;
@@ -111,6 +115,15 @@ const loadNewsCurrent = () => {
                         newsObject.appendChild(dateObject);
                         newsObject.appendChild(senderObject);
                         newsObject.appendChild(descriptionObject);
+                        
+                        if(!valid) {
+                            const disclaimer = document.createElement('h5');
+                            disclaimer.textContent = 'Tiedotteella ei ole tämän enempää sisältöä.';
+                            newsObject.className += ' disabled';
+
+                            newsObject.appendChild(disclaimer);
+                        }
+
                         root.appendChild(newsObject);
                     });
 

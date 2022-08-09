@@ -15,7 +15,6 @@
     align-items: center;
     flex-direction: row;
 
-    border-right: solid 1px var(--border-darker);
     border-left: solid 10px var(--accent-main);
 
     background-color: var(--background-main);

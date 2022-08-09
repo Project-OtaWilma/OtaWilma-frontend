@@ -153,6 +153,24 @@
     border-radius: 7px;
 }
 
+
+.news-object-static.disabled,
+.news-object-current.disabled {
+    cursor: not-allowed;
+}
+
+.news-object-static.disabled h1,
+.news-object-current.disabled h1 {
+    opacity: 100% !important;
+}
+
+.news-object-static h5,
+.news-object-current h5 {
+    font-size: 12px;
+    color: var(--error);
+    margin-left: 5px;
+}
+
 .news-object-static:hover>h4 {
     opacity: 100%;
 }

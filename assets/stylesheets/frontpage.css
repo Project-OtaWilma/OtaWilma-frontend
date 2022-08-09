@@ -218,6 +218,14 @@
     cursor: pointer;
 }
 
+.news-object.disabled {
+    cursor: not-allowed;
+}
+
+.news-object.disabled h1 {
+    opacity: 100% !important;
+}
+
 .news-object h1 {
     font-size: 17px;
     text-align: left;
@@ -244,6 +252,12 @@
     margin-left: 5px;
     font-family: 'semi-bold';
     pointer-events: none;
+}
+
+.news-object h5 {
+    font-size: 12px;
+    color: var(--error);
+    margin-left: 5px;
 }
 
 .news-object h2,
@@ -722,6 +736,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .hand.hour {
+    min-height: 0;
     height: 35%;
     width: 4px;
 
