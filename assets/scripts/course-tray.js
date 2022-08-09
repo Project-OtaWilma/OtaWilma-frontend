@@ -68,8 +68,11 @@ const loadPeriod = (hash, title) => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('tray-main');
 
-        if (!state.periods.includes(hash)) {
-            state.periods.push(hash);
+        if (!Object.keys(state.periods).includes(hash)) {
+            state.periods[hash] = {
+                selected: [],
+                current: ''
+            };
         }
         else {
             return;
@@ -77,6 +80,7 @@ const loadPeriod = (hash, title) => {
 
         const periodElement = document.createElement('div');
         periodElement.className = 'period open';
+        periodElement.id = hash;
 
         const titleElement = document.createElement('h1');
         titleElement.textContent = title;
@@ -101,8 +105,8 @@ const loadPeriod = (hash, title) => {
         disableButton.addEventListener('click', () => {
             periodElement.remove();
             setupFilters();
-            state.periods.splice(state.periods.indexOf(hash), 1);
-        })
+            delete state.periods[hash];
+        });
 
         hideButton.appendChild(textElement);
 
@@ -119,12 +123,34 @@ const loadPeriod = (hash, title) => {
 
         fetchPeriod(hash)
             .then(period => {
-
                 loadingIcon.style.display = 'none';
                 period.forEach(bar => {
+                    const index = bar.title.charAt(0).replace('9', '8');
 
                     const barElement = document.createElement('div');
                     barElement.className = 'bar';
+                    
+                    // :hover
+                    barElement.addEventListener('mouseover', (e) => {
+                        if(state.periods[hash].current != index) {
+
+                            Array.from(document.getElementsByClassName(`hour ${state.periods[hash].current}`)).forEach(hour => {
+                                hour.style = 'box-shadow: none; border-left: none;';
+                            })
+
+                            Array.from(document.getElementsByClassName(`hour ${index}`)).forEach(hour => {
+                                hour.style = 'box-shadow: 0 0 15px var(--shadow-main);';
+                            })
+
+                            state.periods[hash].current = index;
+                        }
+
+                        if(state.periods.current != hash) {
+                            state.periods.current = hash;
+                            loadPeriodSchedule(hash);
+                            console.log(hash);
+                        }
+                    });
 
                     const barIndex = document.createElement('h2');
                     barIndex.textContent = bar.title;
@@ -136,16 +162,18 @@ const loadPeriod = (hash, title) => {
                     barElement.appendChild(courseList);
                     periodElement.appendChild(barElement);
 
-
                     bar.courses.forEach(course => {
+                        const selected = course.class.includes('on');
 
+                        if(selected) state.periods[hash].selected.push({bar: bar.title, code: course.code});
+                        
                         const courseElement = document.createElement('div');
                         courseElement.className = course.class;
                         courseElement.textContent = course.code;
                         courseElement.id = course.hash;
 
                         courseElement.setAttribute('data-code', course.code);
-                        courseElement.setAttribute('data-selected', course.class.includes('on'));
+                        courseElement.setAttribute('data-selected', selected);
                         courseElement.setAttribute('data-subject', course.subject);
                         courseElement.setAttribute('data-name', course.name);
                         courseElement.setAttribute('data-teacher', course.info.teacher);
@@ -163,6 +191,7 @@ const loadPeriod = (hash, title) => {
                         if (course.info.locked) statusElement.textContent = 'Kurssi on lukittu';
                         if (course.info.full) statusElement.textContent = 'Kurssi on jo täynnä';
 
+
                         courseElement.addEventListener('click', (e) => {
                             loadCourseInfo(
                                 e.target.getAttribute('data-code'),
@@ -170,7 +199,7 @@ const loadPeriod = (hash, title) => {
                                 e.target.getAttribute('data-selected'),
                                 e.target.id).catch(err => {
                                     displayError(err);
-                                })
+                                });
 
                             loadTeacherInfo(e.target.getAttribute('data-teacher')).catch(err => {
                                 displayError(err);
@@ -185,11 +214,41 @@ const loadPeriod = (hash, title) => {
                         courseList.appendChild(courseElement);
                     })
                 })
+                /*
+                setupPeriodSchedule(hash)
+                .then(() => {
+                    loadPeriodSchedule(hash);
+                })
+                */
             })
             .catch(err => {
                 return reject(err);
             })
 
+    });
+}
+
+const loadPeriodSchedule = (hash) => {
+    const root = document.getElementById('schedule');
+
+    Array.from(root.getElementsByClassName(`hour`)).forEach(hour => {
+        hour.replaceChildren([]);
+    });
+
+    state.periods[hash].selected.forEach(course => {
+        const bar = course.bar.charAt(0).replace('9', '8');
+        
+        Array.from(root.getElementsByClassName(`hour ${bar}`)).forEach(hour => {
+            
+            const data = hour.getElementsByClassName('data')[0] ? hour.getElementsByClassName('data')[0] : document.createElement('div');
+            data.className = 'data';
+
+            const codeElement = document.createElement('h5');
+            codeElement.textContent = course.code;
+            
+            data.appendChild(codeElement);
+            hour.appendChild(data);
+        });
     });
 }
 
@@ -208,8 +267,27 @@ const loadCourseInfo = (code, name, selected, hash) => {
 
                 root.appendChild(nameElement);
                 root.appendChild(codeElement);
+                
+                // actionButton.scrollIntoView({behavior: "smooth", block: "center"})
+                const actionButton = document.createElement('button');
+                actionButton.className = 'course-action';
+                actionButton.id = hash;
+                actionButton.textContent = selected == 'true' ? 'Poista valinta' : 'Valitse kurssi';
 
-
+                actionButton.addEventListener('click', (e) => {
+                    switch (selected) {
+                        case 'true':
+                            console.log('Poistit valinan: ' + code)
+                            deselectCourse(e, hash);
+                            break;
+                        case 'false':
+                            console.log('Valitsit kurssin: ' + code)
+                            selectCourse(e, hash);
+                            break;
+                    }
+                })
+                
+                root.appendChild(actionButton);
 
                 const studentsUl = document.createElement('ul');
                 const studentsKey = document.createElement('a');
@@ -237,57 +315,6 @@ const loadCourseInfo = (code, name, selected, hash) => {
                     root.appendChild(cUl);
                 });
 
-                // actionButton.scrollIntoView({behavior: "smooth", block: "center"})
-                const actionButton = document.createElement('button');
-                actionButton.className = 'course-action';
-                actionButton.id = hash;
-                actionButton.textContent = selected == 'true' ? 'Poista valinta' : 'Valitse kurssi';
-
-                actionButton.addEventListener('click', (e) => {
-                    switch (selected) {
-                        case 'true':
-                            console.log('Poistit valinan: ' + code)
-                            deselectCourse(e, hash);
-                            break;
-                        case 'false':
-                            console.log('Valitsit kurssin: ' + code)
-                            selectCourse(e, hash);
-                            break;
-                    }
-                })
-
-                const applyLabel = document.createElement('h1');
-                applyLabel.textContent = 'Onko kurssi täynnä mutta haluaisit silti liityä?'
-
-                const applyDescription = document.createElement('h3');
-                applyDescription.textContent = 'Auta opettajia parantamaan kurssivalikoimaa ilmoittamalla mille kursseille on liian vähän tarjontaa.'
-                
-                const applyButton = document.createElement('button');
-                applyButton.className = 'course-action-apply';
-                applyButton.id = code;
-                
-                const countElement = document.createElement('h3');
-                countElement.textContent = '...';
-
-                applyButton.appendChild(countElement);
-                
-                const textElement = document.createElement('h2');
-                textElement.textContent = '...';
-                
-                applyButton.appendChild(textElement);
-                
-                
-                fetchTrayCourseApplicants(code)
-                .then(status => {
-                    applyButton.className = status.applied ? 'course-action-apply applied' : selected ? 'course-action-apply applied' : 'course-action-apply';
-                    countElement.textContent = status.length;
-                    textElement.textContent = status.applied ? 'Olen jo kiinnostunut' : 'Olisin kiinnostunut';
-                })
-
-                root.appendChild(actionButton);
-                root.appendChild(applyLabel);
-                root.appendChild(applyDescription);
-                root.appendChild(applyButton);
 
                 fetchTrayCourseInfo(hash)
                     .then(info => {
@@ -588,8 +615,22 @@ const selectCourse = (e, hash) => {
 
     CourseTraySelect(hash)
         .then(status => {
-            console.log(status);
+
+            
             if (courseObject) {
+                const code = courseObject.getAttribute('data-code');
+                const periodHash = courseObject.parentElement.parentElement.parentElement.id;
+                const barId = courseObject.parentElement.parentElement.childNodes[0].textContent;
+                
+                
+                if(periodHash) {
+                    const list = state.periods[periodHash].selected;
+                    list.push({bar: barId, code: code});
+
+                    state.periods[periodHash].selected = list;
+                    loadPeriodSchedule(periodHash);
+                }
+                
                 courseObject.className = courseObject.className.replace('off', 'on');
                 courseObject.setAttribute('data-selected', 'true');
                 root.replaceChildren([]);
@@ -616,8 +657,20 @@ const deselectCourse = (e, hash) => {
 
     CourseTrayDeselect(hash)
         .then(status => {
-            console.log(status);
             if (courseObject) {
+                const code = courseObject.getAttribute('data-code');
+                const periodHash = courseObject.parentElement.parentElement.parentElement.id;
+
+                console.log(periodHash);
+
+                if(periodHash) {
+                    const list = state.periods[periodHash].selected;
+                    list.splice(list.indexOf(list.find(c => c.code == code)));
+
+                    state.periods[periodHash].selected = list;
+                    loadPeriodSchedule(periodHash);
+                }
+                
                 courseObject.className = courseObject.className.replace('on', 'off');
                 courseObject.setAttribute('data-selected', 'false');
                 root.replaceChildren([]);

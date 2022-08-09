@@ -31,9 +31,9 @@ const state = {
         subjects: [],
         teachers: []
     },
-    periods: [
-
-    ]
+    periods: {
+        current: ''
+    }
 }
 
 
