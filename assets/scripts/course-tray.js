@@ -135,11 +135,11 @@ const loadPeriod = (hash, title) => {
                         if(state.periods[hash].current != index) {
 
                             Array.from(document.getElementsByClassName(`hour ${state.periods[hash].current}`)).forEach(hour => {
-                                hour.style = 'box-shadow: none; border-left: none;';
+                                hour.id = '';
                             })
 
                             Array.from(document.getElementsByClassName(`hour ${index}`)).forEach(hour => {
-                                hour.style = 'box-shadow: 0 0 15px var(--shadow-main);';
+                                hour.id = 'selected';
                             })
 
                             state.periods[hash].current = index;
@@ -267,7 +267,7 @@ const loadCourseInfo = (code, name, selected, hash) => {
 
                 root.appendChild(nameElement);
                 root.appendChild(codeElement);
-                
+
                 // actionButton.scrollIntoView({behavior: "smooth", block: "center"})
                 const actionButton = document.createElement('button');
                 actionButton.className = 'course-action';

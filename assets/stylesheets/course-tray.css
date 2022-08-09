@@ -615,6 +615,11 @@
     align-items: center;
 }
 
+#selected .data {
+    border: solid 1px var(--font-h2);
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
 .hour .data {
     width: calc(100% - 3px);
     height: calc(100% - 3px);
