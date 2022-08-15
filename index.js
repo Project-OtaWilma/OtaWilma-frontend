@@ -109,7 +109,7 @@ const loginEvent = async () => {
             .then(() => {
                 Account.Login(credentials)
                     .then(async () => {
-                        Account.loginToSession(credentials.username)
+                        Account.loginToSession(credentials.username, sessionField.value)
                         .then(() => {
                             document.cookie = `session=${sessionField.value}; SameSite=Lax; Secure; max-age=31536000; path=/`;
                             window.location = '/views/frontpage.html';
@@ -144,8 +144,8 @@ const loginEvent = async () => {
         Account.Login(credentials)
             .then(() => {
                 createAccout(credentials.username)
-                    .then(() => {
-                        Account.loginToSession(credentials.username)
+                    .then((session) => {
+                        Account.loginToSession(credentials.username, session)
                         .then(() => {
                             window.location = '/views/frontpage.html';
                         })

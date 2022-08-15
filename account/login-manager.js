@@ -29,9 +29,8 @@ const Login = (credentials = { username: String, password: String }) => {
     })
 }
 
-const loginToSession = (username) => {
+const loginToSession = (username, session) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('session');
         const url = `${otaWilmaAPi}/sessions/config/login`;
 
         fetch(url, {
@@ -93,9 +92,8 @@ const createAccout = (username) => {
                     case 200:
                         console.log(json);
                         const session = json['session']['hash'];
-                        console.log(session);
                         document.cookie = `session=${session}; SameSite=Lax; Secure; max-age=31536000; path=/`;;
-                        return resolve();
+                        return resolve(session);
                     default:
                         return reject({ err: 'Failed to create OtaWilma account', error: json, status: 500 })
                 }
