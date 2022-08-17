@@ -215,30 +215,30 @@ const loadNews = () => {
                         newsObject.className = 'news-object';
                         newsObject.id = n.href;
 
-                        if(valid) {
+                        if (valid) {
                             newsObject.addEventListener('click', (e) => {
                                 window.location = `/views/news.html?news=${e.target.id}`
                             })
                         }
-                        
+
                         const titleObject = document.createElement('h1');
                         titleObject.textContent = n.title;
-                        
+
                         const dateObject = document.createElement('h2');
                         dateObject.textContent = date;
-                        
+
                         const senderObject = document.createElement('h2');
                         senderObject.textContent = n.sender.name;
-                        
+
                         const descriptionObject = document.createElement('h3');
                         descriptionObject.textContent = n.description;
-                        
+
                         newsObject.appendChild(titleObject);
                         newsObject.appendChild(dateObject);
                         newsObject.appendChild(senderObject);
                         newsObject.appendChild(descriptionObject);
-                        
-                        if(!valid) {
+
+                        if (!valid) {
                             const disclaimer = document.createElement('h5');
                             disclaimer.textContent = 'Tiedotteella ei ole tämän enempää sisältöä.';
                             newsObject.className += ' disabled';
@@ -335,7 +335,7 @@ const loadSchedule = (date) => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('schedule');
 
-        const dateTime = date ? date : new Date(2022, 7, 11);
+        const dateTime = date ? date : new Date();
 
         const options = {
             year: "numeric",
