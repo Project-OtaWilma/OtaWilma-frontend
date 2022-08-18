@@ -27,7 +27,6 @@ const InitializeTrayList = () => {
         fetchTrayList()
             .then(list => {
                 Object.keys(list.own).forEach(title => {
-                    console.log(title);
 
                     const trayObject = document.createElement('h1');
                     trayObject.className = 'tray';
@@ -38,7 +37,6 @@ const InitializeTrayList = () => {
                     const listObject = document.createElement('div');
                     listObject.className = 'period-list';
 
-
                     trayObject.appendChild(h1);
                     trayObject.appendChild(listObject);
                     root.appendChild(trayObject);
@@ -46,10 +44,17 @@ const InitializeTrayList = () => {
                     list.own[title].forEach(period => {
                         const periodElement = document.createElement('h2');
                         periodElement.textContent = period.name;
-                        periodElement.id = period.href;
+                        periodElement.id =`${period.href}-title`;
 
                         periodElement.addEventListener('click', (e) => {
-                            loadPeriod(e.target.id, e.target.textContent);
+
+                            if (!Object.keys(state.periods).includes(period.href)) {
+                                loadPeriod(period.href, e.target.textContent);
+                            }
+                            else {
+                                closePeriod(period.href)
+                            }
+                            
                         })
 
                         listObject.appendChild(periodElement);
@@ -67,11 +72,14 @@ const InitializeTrayList = () => {
 const loadPeriod = (hash, title) => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('tray-main');
-
+        const trayElement = document.getElementById(`${hash}-title`);
+        trayElement.className = 'selected';
+        
         if (!Object.keys(state.periods).includes(hash)) {
             state.periods[hash] = {
                 selected: [],
-                current: ''
+                current: '',
+                loaded: false
             };
         }
         else {
@@ -103,9 +111,7 @@ const loadPeriod = (hash, title) => {
         disableButton.className = 'disable-period';
 
         disableButton.addEventListener('click', () => {
-            periodElement.remove();
-            setupFilters();
-            delete state.periods[hash];
+            closePeriod(hash);
         });
 
         hideButton.appendChild(textElement);
@@ -123,6 +129,8 @@ const loadPeriod = (hash, title) => {
 
         fetchPeriod(hash)
             .then(period => {
+                state.periods[hash].loaded = true;
+
                 loadingIcon.style.display = 'none';
                 period.forEach(bar => {
                     const index = bar.title.charAt(0).replace('9', '8');
@@ -214,18 +222,24 @@ const loadPeriod = (hash, title) => {
                         courseList.appendChild(courseElement);
                     })
                 })
-                /*
-                setupPeriodSchedule(hash)
-                .then(() => {
-                    loadPeriodSchedule(hash);
-                })
-                */
             })
             .catch(err => {
                 return reject(err);
             })
 
     });
+}
+
+const closePeriod = (hash) => {
+    if (Object.keys(state.periods).includes(hash) && state.periods[hash].loaded) {
+        const periodElement = document.getElementById(hash);
+        const trayElement = document.getElementById(`${hash}-title`);
+        trayElement.className = '';
+    
+        periodElement.remove();
+        setupFilters();
+        delete state.periods[hash];
+    }
 }
 
 const loadPeriodSchedule = (hash) => {

@@ -45,12 +45,18 @@
     padding: 5px;
 
     cursor: pointer;
+    user-select: none;
     transition: opacity .2s ease-in-out;
+}
+
+.period-list h2.selected {
+    font-family: 'bold';
 }
 
 .period-list h2:hover {
     opacity: 50%;
 }
+
 
 .tray-main {
     position: absolute;

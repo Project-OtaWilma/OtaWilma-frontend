@@ -461,6 +461,12 @@
     pointer-events: none;
 }
 
+.loading-indicator.teacher {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;

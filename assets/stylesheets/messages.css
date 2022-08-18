@@ -143,6 +143,24 @@
     overflow-y: scroll;
 }
 
+#new h1,
+#new h2,
+#new h3 {
+    font-family: 'bold';
+}
+
+#new h7 {
+    color: var(--font-h4);
+
+    font-size: 12px;
+
+    background-color: var(--accent-main);
+    padding: 4px;
+    margin: 5px;
+
+    border-radius: 4px;
+}
+
 .message-content h1 {
     font-size: 27px;
     margin: 10px;

@@ -14,7 +14,22 @@ const Initialize = async () => {
         throw err;
     });
 
+    InitializeQuery();
+
     document.getElementById('loading').style.opacity = 0;
+}
+
+const InitializeQuery = () => {
+    const hash = getParameterByName('teacher');
+
+    if (!hash) return;
+
+    console.log(hash);
+
+    
+    loadTeacherInfoById(hash).catch(err => {
+        displayError(err);
+    });
 }
 
 const loadTeachers = () => {
@@ -52,7 +67,7 @@ const loadTeachers = () => {
                     nameElement.id = teacher.name;
 
                     nameElement.addEventListener('click', (e) => {
-                        loadTeacherInfo(e.target.id).catch(err => {
+                        loadTeacherInfoByName(e.target.id).catch(err => {
                             displayError(err);
                         })
                     })
@@ -74,137 +89,164 @@ const loadTeachers = () => {
     })
 }
 
-const loadTeacherInfo = (name) => {
+const loadTeacherInfoByName = (name) => {
     return new Promise((resolve, reject) => {
+        setLoadingScreen(true)
 
         fetchTeacherInfo(name)
         .then(info => {
-            //
-            const openButton = document.getElementById('open-button');
-            openButton.setAttribute('data-hash', info.hash);
+            loadTeacherInfo(info);
 
-            const main = document.getElementById('main');
-            main.style.display = 'flex';
-
-            const tasks = info.task.replaceAll(' ja ', '/').replaceAll(', ', '/').split('/');
-            
-            const nameField = document.getElementById('name-field');
-            nameField.textContent = info.name;
-            
-            const taskTitleElement = document.createElement('h2');
-            taskTitleElement.textContent = tasks.length > 1 ? 'Tehtävät' : 'Tehtävä';
-            
-            const taskList = document.getElementById('task-list');
-            taskList.replaceChildren(taskTitleElement);
-            
-            tasks.forEach(task => {
-                const taskElement = document.createElement('h3');
-                taskElement.textContent = task;
-                
-                taskList.appendChild(taskElement);
-            });
-
-            //
-            const contactTitleElement = document.createElement('h2');
-            contactTitleElement.textContent = 'Yhteystiedot'
-
-            const contactDetails = document.getElementById('contact-info');
-            contactDetails.replaceChildren(contactTitleElement);
-
-            const nameArray = info.name.split(' ');
-            const gmail = nameArray.length > 2 ? [[nameArray[0], nameArray[1]].join(''), nameArray[2]].join('.').toLowerCase()  + '@opetus.espoo.fi' : nameArray.join('.').toLowerCase() + '@opetus.espoo.fi'
-
-            const gmailElement = document.createElement('h3');
-            gmailElement.textContent = gmail;
-
-            contactDetails.appendChild(gmailElement);
-            
-            //
-            const commentTitleElement = document.createElement('h2');
-            commentTitleElement.textContent = 'Julkiset kommentit';
-
-            const commentList = document.getElementById('comments');
-            commentList.replaceChildren(commentTitleElement);
-            
-            
-            info.feedback.comments.forEach(comment => {
-                const commentElement = document.createElement('h3');
-                commentElement.textContent = comment;
-
-                commentList.appendChild(commentElement);
-            })
-
-            //
-
-            const adjectiveRoot = document.getElementById('adjective-list');
-            adjectiveRoot.replaceChildren([])
-
-            
-            const adjectiveTitleElement = document.createElement('h1');
-            adjectiveTitleElement.textContent = 'Opettajaa kuvaavat hyvin adjektiivit';
-            
-            const adjectiveLabel = document.createElement('h3');
-            adjectiveLabel.innerHTML = `<strong>${info.feedback.reviews}</strong> opiskelijaa ovat arvioineet opettajaa
-            <strong>${nameField.textContent}</strong> seuraavasti:`
-            
-            adjectiveRoot.appendChild(adjectiveTitleElement);
-            adjectiveRoot.appendChild(adjectiveLabel);
-
-
-            info.feedback['teacher-adjectives'].filter(a => a.percentage > 30).forEach(adjective => {
-                const adjectiveElement = document.createElement('div');
-                adjectiveElement.className = 'adjective';
-                adjectiveElement.style.width = `${adjective.percentage}%`;
-
-                const adjectiveField = document.createElement('h2');
-                adjectiveField.textContent = adjective.adjective;
-
-                const percentageField = document.createElement('h3');
-                percentageField.textContent = `(${adjective.percentage.toFixed(0)}%)`;
-
-                adjectiveElement.appendChild(adjectiveField);
-                adjectiveElement.appendChild(percentageField);
-                adjectiveRoot.appendChild(adjectiveElement);
-            })
-
-            //
-
-            const keys = {
-                'course-pace': {options: ['Hidas', 'Tavallinen', 'Nopea']},
-                'course-applicability': {options: ['Perusteet', 'Tavallinen', 'Soveltava']},
-                'course-difficulty': {options: ['Helppo', 'Tavallinen', 
-            'Haastava']}
-            }
-
-            if(info.feedback.reviews > 1) {
-                Object.keys(keys).forEach(key => {
-                    document.getElementById(key).style.display = 'flex';
-                    
-                    document.getElementById(`${key}-label`).style.display = 'none';
-                    const value = `display: flex; background: conic-gradient(var(--accent-main) 0deg ${info.feedback[key] * 180}deg, transparent 0deg);`
-                    
-                    if((info.feedback[key] * 180) <= 120) document.getElementById(`${key}-text`).textContent = keys[key].options[0];
-                    if((info.feedback[key] * 180) > 120 && info.feedback[key] < 240) document.getElementById(`${key}-text`).textContent = keys[key].options[1];
-                    if((info.feedback[key] * 180) >= 240) document.getElementById(`${key}-text`).textContent = keys[key].options[2];
-                    
-                    document.getElementById(`${key}-value`).style = value;
-                });
-                document.getElementById('card-title').style.display = 'inline';
-            }
-            else {
-               Object.keys(keys).forEach(key => {
-                    document.getElementById(key).style.display = 'none';
-                    document.getElementById(`${key}-label`).style.display = 'flex';
-                    document.getElementById(`${key}-value`).style.display = 'none';
-                })
-                document.getElementById('card-title').style.display = 'none';
-            }
-
-            
+            setLoadingScreen(false);
             return resolve();
         })
         .catch(err => {
             return reject(err);
         })
     })
+}
+
+const loadTeacherInfoById = (name) => {
+    return new Promise((resolve, reject) => {
+        setLoadingScreen(true);
+
+        fetchTeacherInfo(name, true)
+        .then(info => {
+            loadTeacherInfo(info);
+
+            setLoadingScreen(false);
+            return resolve();
+        })
+        .catch(err => {
+            return reject(err);
+        })
+    })
+}
+
+const loadTeacherInfo = (info) => {
+    //
+    const openButton = document.getElementById('open-button');
+    openButton.setAttribute('data-hash', info.hash);
+
+    const main = document.getElementById('main');
+    main.style.display = 'flex';
+
+    const tasks = info.task.replaceAll(' ja ', '/').replaceAll(', ', '/').split('/');
+    
+    const nameField = document.getElementById('name-field');
+    nameField.textContent = info.name;
+    
+    const taskTitleElement = document.createElement('h2');
+    taskTitleElement.textContent = tasks.length > 1 ? 'Tehtävät' : 'Tehtävä';
+    
+    const taskList = document.getElementById('task-list');
+    taskList.replaceChildren(taskTitleElement);
+    
+    tasks.forEach(task => {
+        const taskElement = document.createElement('h3');
+        taskElement.textContent = task;
+        
+        taskList.appendChild(taskElement);
+    });
+
+    //
+    const contactTitleElement = document.createElement('h2');
+    contactTitleElement.textContent = 'Yhteystiedot'
+
+    const contactDetails = document.getElementById('contact-info');
+    contactDetails.replaceChildren(contactTitleElement);
+
+    const nameArray = info.name.split(' ');
+    const gmail = nameArray.length > 2 ? [[nameArray[0], nameArray[1]].join(''), nameArray[2]].join('.').toLowerCase()  + '@opetus.espoo.fi' : nameArray.join('.').toLowerCase() + '@opetus.espoo.fi'
+
+    const gmailElement = document.createElement('h3');
+    gmailElement.textContent = gmail;
+
+    contactDetails.appendChild(gmailElement);
+    
+    //
+    const commentTitleElement = document.createElement('h2');
+    commentTitleElement.textContent = 'Julkiset kommentit';
+
+    const commentList = document.getElementById('comments');
+    commentList.replaceChildren(commentTitleElement);
+    
+    
+    info.feedback.comments.forEach(comment => {
+        const commentElement = document.createElement('h3');
+        commentElement.textContent = comment;
+
+        commentList.appendChild(commentElement);
+    })
+
+    //
+
+    const adjectiveRoot = document.getElementById('adjective-list');
+    adjectiveRoot.replaceChildren([])
+
+    
+    const adjectiveTitleElement = document.createElement('h1');
+    adjectiveTitleElement.textContent = 'Opettajaa kuvaavat hyvin adjektiivit';
+    
+    const adjectiveLabel = document.createElement('h3');
+    adjectiveLabel.innerHTML = `<strong>${info.feedback.reviews}</strong> opiskelijaa ovat arvioineet opettajaa
+    <strong>${nameField.textContent}</strong> seuraavasti:`
+    
+    adjectiveRoot.appendChild(adjectiveTitleElement);
+    adjectiveRoot.appendChild(adjectiveLabel);
+
+
+    info.feedback['teacher-adjectives'].filter(a => a.percentage > 30).forEach(adjective => {
+        const adjectiveElement = document.createElement('div');
+        adjectiveElement.className = 'adjective';
+        adjectiveElement.style.width = `${adjective.percentage}%`;
+
+        const adjectiveField = document.createElement('h2');
+        adjectiveField.textContent = adjective.adjective;
+
+        const percentageField = document.createElement('h3');
+        percentageField.textContent = `(${adjective.percentage.toFixed(0)}%)`;
+
+        adjectiveElement.appendChild(adjectiveField);
+        adjectiveElement.appendChild(percentageField);
+        adjectiveRoot.appendChild(adjectiveElement);
+    })
+
+    //
+
+    const keys = {
+        'course-pace': {options: ['Hidas', 'Tavallinen', 'Nopea']},
+        'course-applicability': {options: ['Perusteet', 'Tavallinen', 'Soveltava']},
+        'course-difficulty': {options: ['Helppo', 'Tavallinen', 
+    'Haastava']}
+    }
+
+    if(info.feedback.reviews > 1) {
+        Object.keys(keys).forEach(key => {
+            document.getElementById(key).style.display = 'flex';
+            
+            document.getElementById(`${key}-label`).style.display = 'none';
+            const value = `display: flex; background: conic-gradient(var(--accent-main) 0deg ${info.feedback[key] * 180}deg, transparent 0deg);`
+            
+            if((info.feedback[key] * 180) <= 120) document.getElementById(`${key}-text`).textContent = keys[key].options[0];
+            if((info.feedback[key] * 180) > 120 && info.feedback[key] < 240) document.getElementById(`${key}-text`).textContent = keys[key].options[1];
+            if((info.feedback[key] * 180) >= 240) document.getElementById(`${key}-text`).textContent = keys[key].options[2];
+            
+            document.getElementById(`${key}-value`).style = value;
+        });
+        document.getElementById('card-title').style.display = 'inline';
+    }
+    else {
+        Object.keys(keys).forEach(key => {
+            document.getElementById(key).style.display = 'none';
+            document.getElementById(`${key}-label`).style.display = 'flex';
+            document.getElementById(`${key}-value`).style.display = 'none';
+        })
+        document.getElementById('card-title').style.display = 'none';
+    }
+}
+
+const setLoadingScreen = (value) => {
+    document.getElementById('main').style.filter = value ? 'blur(3px)' : 'none';
+    document.getElementById('teacher-loading-screen').style.display = value ? 'flex' : 'none';
 }

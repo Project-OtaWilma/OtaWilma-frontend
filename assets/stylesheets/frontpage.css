@@ -121,7 +121,10 @@
     overflow-x: hidden;
 }
 
-.messages {
+.message-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -177,6 +180,19 @@
 
     cursor: pointer;
 }
+
+.message-object.new h7 {
+    color: var(--font-h4);
+
+    font-size: 12px;
+
+    background-color: var(--accent-main);
+    padding: 4px;
+    margin: 5px;
+
+    border-radius: 4px;
+}
+
 
 .message-object h1 {
     font-size: 17px;
@@ -388,6 +404,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    pointer-events: none;
 }
 
 .hour h1 {
@@ -408,11 +426,30 @@
     justify-content: center;
 }
 
+.data a,
 .data h2 {
     text-shadow: 0 0 7px var(--shadow-darker);
     color: var(--schedule-h1);
     font-size: 11px;
     padding: 5px;
+
+    text-decoration: none;
+
+    pointer-events: all;
+    opacity: 100%;
+
+    font-family: 'semi-bold';
+
+    transition: opacity .2s ease-in-out;
+}
+
+.data a {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.data a:hover {
+    opacity: 50%;
 }
 
 .data h2:nth-child(1) {

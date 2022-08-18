@@ -712,10 +712,11 @@ const fetchTeacherList = () => {
     });
 }
 
-const fetchTeacherInfo = (name) => {
+const fetchTeacherInfo = (name, id) => {
     return new Promise((resolve, reject) => {
+        const url = id ? `${wilmaAPI}teachers/id/${name}` : `${wilmaAPI}teachers/name/${name}`;
 
-        fetch(`${wilmaAPI}teachers/name/${name}`, {
+        fetch(url, {
             method: 'GET'
         })
             .then(async (res) => {

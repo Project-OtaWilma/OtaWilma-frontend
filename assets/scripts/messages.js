@@ -30,7 +30,7 @@ const InitializeQuery = () => {
 
     loadMessageContent(hash).catch(err => {
         displayError(err);
-    })
+    });
 }
 
 const InitializeCategories = () => {
@@ -80,6 +80,7 @@ const loadMessageList = (path) => {
 
                     const messageObject = document.createElement('div');
                     messageObject.className = message.isEvent ? `message-object ${message.status}` : 'message-object';
+                    messageObject.id = message.new ? 'new' : '';
 
                     const title = document.createElement('h1');
                     title.textContent = message.subject;
@@ -105,11 +106,19 @@ const loadMessageList = (path) => {
                     const replies = document.createElement('h3');
                     replies.textContent = `${message.replies ? `${message.replies} ${message.replies > 1 ? 'vastausta' : 'vastaus'}` : ''}`;
 
+                    
                     messageObject.appendChild(title);
                     messageObject.appendChild(timeStamp);
                     messageObject.appendChild(sender);
                     messageObject.appendChild(replies);
+                    if(message.new) {
+                        const newElement = document.createElement('h7');
+                        newElement.textContent = 'Uusi';
+
+                        messageObject.appendChild(newElement);
+                    }
                     messageObject.appendChild(icon);
+                    
 
                     root.appendChild(messageObject);
                 }

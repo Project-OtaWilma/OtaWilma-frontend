@@ -49,18 +49,32 @@ const loadMessages = async () => {
         a.textContent = 'Viestit';
         a.href = '/views/messages.html';
         
-        const h2 = document.createElement('h2');
-        h2.textContent = 'Vanhat';
+        const oldMessages = document.createElement('div');
+        oldMessages.className = 'message-list';
+
+        const oldTitle = document.createElement('h2');
+        oldTitle.textContent = 'Vanhat';
+
+        const newMessages = document.createElement('div');
+        newMessages.className = 'message-list';
+
+        const newTitle = document.createElement('h2');
+        newTitle.textContent = 'Uudet';
 
         root.appendChild(a);
-        root.appendChild(h2);
+        root.appendChild(newMessages);
+        newMessages.appendChild(newTitle);
+        root.appendChild(oldMessages);
+        oldMessages.appendChild(oldTitle);
 
         fetchMessages('inbox', 10)
             .then(list => {
 
                 list.forEach(message => {
+                    const messageRoot = message.new ? newMessages : oldMessages;
+
                     const messageObject = document.createElement('div');
-                    messageObject.className = 'message-object';
+                    messageObject.className = message.new ? 'message-object new' : 'message-object';
                     messageObject.id = message.id;
 
                     messageObject.addEventListener('click', () => {
@@ -84,8 +98,14 @@ const loadMessages = async () => {
                     messageObject.appendChild(sender);
                     messageObject.appendChild(replies);
 
-                    root.appendChild(messageObject);
+                    if(message.new) {
+                        const newElement = document.createElement('h7');
+                        newElement.textContent = 'Uusi';
 
+                        messageObject.appendChild(newElement);
+                    }
+
+                    messageRoot.appendChild(messageObject);
                 })
 
                 return resolve();
@@ -368,9 +388,10 @@ const loadSchedule = (date) => {
                             const name = document.createElement('h2');
                             name.textContent = group.code;
 
-                            const teacher = document.createElement('h2');
+                            const teacher = document.createElement('a');
                             if (group.teachers) {
                                 teacher.textContent = group.teachers[0].caption;
+                                teacher.href = `/views/teachers.html?teacher=${group.teachers[0].id}`;
                             }
 
                             const room = document.createElement('h2');
