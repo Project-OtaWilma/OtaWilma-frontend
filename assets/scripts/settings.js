@@ -13,7 +13,7 @@ const settings = {
         '--info-background': 'Kellon tausta',
         '--clock-background': 'Kellon väri',
         '--clock-markings': 'Kellon merkinnät',
-        '--info-h1': 'Kellon teksi'
+        '--info-h1': 'Kellon teksti'
     },
     'Teksti': {
         '--font-h1': 'Otsikot',
@@ -302,7 +302,7 @@ const setupColorEditor = () => {
         section.id = key;
         section.className = 'section collapsed';
         sections.push(section);
-    
+
         const titleElement = document.createElement('div');
         titleElement.className = 'section-title';
 
@@ -329,9 +329,9 @@ const setupColorEditor = () => {
 
         const inputs = settings[key];
         Object.keys(inputs).forEach(input => {
-            
+
             const type = state.current.theme.colors[input].type;
-            
+
             switch (type) {
                 case 'color':
                     createColorInput(input, section);
@@ -340,7 +340,7 @@ const setupColorEditor = () => {
                     createNumberInput(input, section);
                     break;
             }
-            
+
         })
     })
 }
@@ -348,20 +348,20 @@ const setupColorEditor = () => {
 const loadColorEditor = () => {
     const editor = document.getElementById('theme-editor');
     editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
-    
+
     Object.keys(settings).forEach(category => {
-        
-        
+
+
         Object.keys(settings[category]).forEach(key => {
             switch (state.current.theme.colors[key].type) {
-        
+
                 case 'color':
                     const r = parseRgb(state.current.theme.colors[key].value);
                     const hex = rgbToHex(r[0], r[1], r[2]);
-        
+
                     const colorInput = document.getElementById(`${key}.color`);
                     colorInput.value = hex;
-        
+
                     const opacityInput = document.getElementById(`${key}.opacity`);
                     opacityInput.value = r[3] * 100;
                     break;
@@ -370,14 +370,14 @@ const loadColorEditor = () => {
                     numberInput.value = state.current.theme.colors[key].value;
                     break;
             }
-            
+
         })
-        
+
     })
-    
+
     Object.keys(state.current.theme.colors).forEach(key => {
     });
-    
+
 }
 
 const onColorChanged = async (e) => {
@@ -426,7 +426,7 @@ const loadBackgroundEditor = () => {
 
     const preview = document.getElementById('background-preview');
     preview.src = state.current.theme.background.url.value;
-    
+
     const a = document.createElement('a');
     a.href = state.current.theme.background.url.value;
     const format = a.pathname.split('.').reverse()[0];
@@ -450,7 +450,7 @@ const onBackgroundChanged = async (e) => {
 
     setLoadingScreen(true);
 
-    if(e.target.value.length >= 1024) {
+    if (e.target.value.length >= 1024) {
         setLoadingScreen(false);
         e.target.value = '';
         error.style.display = 'block';
@@ -605,7 +605,7 @@ const loadUserInfo = () => {
         const copyButton = document.getElementById('copy-session');
         copyButton.style.pointerEvents = copyCheckbox.checked ? 'all' : 'none';
         copyButton.style.opacity = copyCheckbox.checked ? '100%' : '30%';
-        copyButton.textContent = 'Kopio OtaWilma-tunnus' 
+        copyButton.textContent = 'Kopio OtaWilma-tunnus'
 
         copyButton.addEventListener('click', async (e) => {
             await navigator.clipboard.writeText(getCookie('session'));
@@ -627,48 +627,48 @@ const loadUserInfo = () => {
 
         const historyRoot = document.getElementById('login-history');
         fetchLoginHistory()
-        .then(list => {
-            if(list) {
-                list['login-history'].forEach(event => {
-                    const date = new Date(event.timeStamp);
-                    const format = {
-                        year: 'numeric',
-                        month: 'numeric',
-                        date: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric'
-                    }
+            .then(list => {
+                if (list) {
+                    list['login-history'].forEach(event => {
+                        const date = new Date(event.timeStamp);
+                        const format = {
+                            year: 'numeric',
+                            month: 'numeric',
+                            date: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric'
+                        }
 
-                    const eventElement = document.createElement('div');
-                    eventElement.className = 'login-object';
+                        const eventElement = document.createElement('div');
+                        eventElement.className = 'login-object';
 
-                    const dateUl = document.createElement('ul');
-                    const dateKey = document.createElement('a');
-                    dateKey.textContent = 'Milloin: '
-                    const dateValue = document.createElement('a');
-                    dateValue.textContent = date.toLocaleDateString('FI-fi', format);
+                        const dateUl = document.createElement('ul');
+                        const dateKey = document.createElement('a');
+                        dateKey.textContent = 'Milloin: '
+                        const dateValue = document.createElement('a');
+                        dateValue.textContent = date.toLocaleDateString('FI-fi', format);
 
-                    dateUl.appendChild(dateKey);
-                    dateUl.appendChild(dateValue);
-                    eventElement.appendChild(dateUl);
+                        dateUl.appendChild(dateKey);
+                        dateUl.appendChild(dateValue);
+                        eventElement.appendChild(dateUl);
 
-                    const userUl = document.createElement('ul');
-                    const userKey = document.createElement('a');
-                    userKey.textContent = 'Kuka: '
-                    const userValue = document.createElement('a');
-                    userValue.textContent = event.username;
+                        const userUl = document.createElement('ul');
+                        const userKey = document.createElement('a');
+                        userKey.textContent = 'Kuka: '
+                        const userValue = document.createElement('a');
+                        userValue.textContent = event.username;
 
-                    userUl.appendChild(userKey);
-                    userUl.appendChild(userValue);
-                    eventElement.appendChild(userUl);
+                        userUl.appendChild(userKey);
+                        userUl.appendChild(userValue);
+                        eventElement.appendChild(userUl);
 
-                    historyRoot.appendChild(eventElement);
-                })
-            }
-        })
-        .catch(err => {
-            return reject(err);
-        })
+                        historyRoot.appendChild(eventElement);
+                    })
+                }
+            })
+            .catch(err => {
+                return reject(err);
+            })
 
         return resolve();
     })
