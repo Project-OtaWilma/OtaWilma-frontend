@@ -45,16 +45,14 @@ const loadMessages = async () => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('messages');
 
-        const h1 = document.createElement('h1');
-        h1.textContent = 'Viestit';
-        h1.addEventListener('click', () => {
-            redirect('/views/messages.html')
-        })
-
+        const a = document.createElement('a');
+        a.textContent = 'Viestit';
+        a.href = '/views/messages.html';
+        
         const h2 = document.createElement('h2');
         h2.textContent = 'Vanhat';
 
-        root.appendChild(h1);
+        root.appendChild(a);
         root.appendChild(h2);
 
         fetchMessages('inbox', 10)
@@ -102,17 +100,15 @@ const loadGrades = () => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('grades');
 
-
-        const h1 = document.createElement('h1');
-        h1.textContent = 'Opinnot';
-        h1.addEventListener('click', () => {
-            redirect('/views/grades.html')
-        })
+        const a = document.createElement('a');
+        a.textContent = 'Opinnot';
+        a.className = 'title';
+        a.href = '/views/grades.html';
 
         const overviewRoot = document.createElement('div');
         overviewRoot.className = 'overview';
 
-        root.appendChild(h1);
+        root.appendChild(a);
         root.appendChild(overviewRoot);
 
         const overview = [
@@ -195,13 +191,11 @@ const loadNews = () => {
     return new Promise((resolve, reject) => {
         const root = document.getElementById('news');
 
-        const title = document.createElement('h1');
-        title.textContent = 'Tiedotteet';
-        title.addEventListener('click', () => {
-            redirect('/views/news.html')
-        })
+        const a = document.createElement('a');
+        a.textContent = 'Tiedotteet';
+        a.href = '/views/news.html';
 
-        root.appendChild(title);
+        root.appendChild(a);
 
         fetchNews('current', 10)
             .then(list => {
@@ -350,7 +344,6 @@ const loadSchedule = (date) => {
 
         fetchSchedule(dateTime)
             .then(schedule => {
-
                 root.innerHTML = state.frontpage.schedule;
 
                 Object.keys(schedule).filter(s => schedule[s].day.id <= 5 && schedule[s].day.id >= 1).forEach(d => {

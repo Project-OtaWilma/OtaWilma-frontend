@@ -121,18 +121,26 @@
     overflow-x: hidden;
 }
 
-.messages h1 {
+.messages {
+    align-items: center;
+}
+
+.messages a {
     font-size: 25px;
-    width: 100%;
+    width: 90%;
     text-align: center;
     padding: 5px;
     margin: 5px;
 
     cursor: pointer;
     user-select: none;
+
+    color: var(--accent-main);
+    text-decoration: none;
+    font-family: 'semi-bold';
 }
 
-.messages h1:hover {
+.messages a:hover {
     opacity: 50%;
 }
 
@@ -161,6 +169,8 @@
 .message-object {
     margin: 5px;
     padding: 10px;
+
+    width: calc(100% - 40px);
 
     border: solid 1px var(--border-main);
     border-radius: 5px;
@@ -194,19 +204,22 @@
     color: var(--font-h2);
 }
 
-.news h1 {
+.news a {
     font-size: 25px;
-    width: auto;
+    width: 90%;
     text-align: center;
     padding: 5px;
     margin: 5px;
 
-
     cursor: pointer;
     user-select: none;
+
+    color: var(--accent-main);
+    text-decoration: none;
+    font-family: 'semi-bold';
 }
 
-.news h1:hover {
+.news a:hover {
     opacity: 50%;
 }
 
@@ -269,20 +282,22 @@
     font-family: 'semi-bold' !important;
 }
 
-.grades h1 {
+.grades .title {
     font-size: 25px;
-    width: auto;
+    width: 90%;
     text-align: center;
     padding: 5px;
-    margin: 15px;
-
-    margin-left: 20px;
+    margin: 5px;
 
     cursor: pointer;
     user-select: none;
+
+    color: var(--accent-main);
+    text-decoration: none;
+    font-family: 'semi-bold';
 }
 
-.grades h1:hover {
+.grades .title:hover {
     opacity: 50%;
 }
 
@@ -438,7 +453,7 @@
 .warning {
     position: absolute;
 
-    top: 100%;
+    top: 105%;
 
     width: 200px;
     height: 30px;
