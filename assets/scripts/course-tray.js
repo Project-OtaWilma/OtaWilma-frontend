@@ -2,6 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     Initialize();
 });
 
+const state = {
+    periods: {
+        current: ''
+    },
+    filters: {
+        subjects: [],
+        teachers: []
+    }
+}
+
 const Initialize = async () => {
     InitializeNavBar();
     await InitializeThemes().catch(err => {

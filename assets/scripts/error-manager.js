@@ -12,7 +12,7 @@ const errors = {
     500: {
         status: 'OtaWilma',
         name: 'Sisäinen palvelinvirhe',
-        description: 'OtaWilman palvelin epäonnistui pyyntösi käsittelyssä. Ilmoita ongelmasta kehittäjälle'
+        description: 'OtaWilman palvelin epäonnistui pyyntösi käsittelyssä. Ilmoita ongelmasta kehittäjälle avaamalla consolin näppäinyhdistelmällä <strong>"ctrl + shift + i"<strong>'
     },
     500.3: {
         status: 'OtaWilma',
@@ -22,7 +22,7 @@ const errors = {
     400: {
         status: 'Pyynnöt',
         name: 'Virheelliset parametrit pyynnössä',
-        description: 'Selaimen lähettämän pyynnön parametrit olivat virheelliset. Ongelman toistuessa ilmoita ongelmasta kehittjälle'
+        description: 'Selaimen lähettämän pyynnön parametrit olivat virheelliset. Ilmoita ongelmasta kehittäjälle avaamalla consolin näppäinyhdistelmällä <strong>"ctrl + shift + i"<strong>'
     },
     401: {
         status: 'Käyttöoikeudet',
@@ -37,13 +37,13 @@ const errors = {
 }
 
 const displayError = (err) => {
+    const status = err.status ? err.status : 500;
+    const raw = err.error ? err.error.err : 'Lisätietoja ongelmasta ei ole saatavilla';
 
     if (err.redirect) {
-        window.location = err.info ? `/index.html?error=${err.status}` : `/index.html`
+        window.location = err.info ? `/index.html?error=${status}` : `/index.html`
         return;
     }
-
-    console.log(err);
 
     const root = document.createElement('div');
     root.className = 'error-container';
@@ -55,25 +55,19 @@ const displayError = (err) => {
     errorImage.className = 'error-image';
 
     const title = document.createElement('h1');
-    title.textContent = `${err.status} - ${errors[err.status].name}`;
+    title.textContent = `${status} - ${errors[status].name}`;
 
     const titleRaw = document.createElement('h3');
-
-    if (err.error) {
-        titleRaw.textContent = err.error.err;
-        var raw = err.error.err;
-    }
+    titleRaw.textContent = raw;    
 
     const description = document.createElement('h2');
-    description.textContent = errors[err.status].description;
+    description.innerHTML = errors[status].description;
 
     const infoTitle = document.createElement('h4');
     const infoContent = document.createElement('h7');
 
-
-
     const statusElement = document.createElement('h5');
-    statusElement.textContent = `${err.status} - ${errors[err.status].status}`;
+    statusElement.textContent = `${status} - ${errors[status].status}`;
 
     error.appendChild(errorImage);
     error.appendChild(title);

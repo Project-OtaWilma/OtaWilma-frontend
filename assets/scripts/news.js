@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     Initialize();
 });
 
+const state = {
+    news: {
+        categories: {
+            current: 'current'
+        }
+    }
+}
+
 const Initialize = async () => {
     InitializeNavBar();
     InitializeCategories();

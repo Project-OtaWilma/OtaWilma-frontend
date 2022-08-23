@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     Initialize();
 });
 
+const state = {
+    grades: {
+        current: 'LOPS2021'
+    }
+}
+
 const grades = {
     'S': 'Suoritettu',
     'O': 'Osallistunut',

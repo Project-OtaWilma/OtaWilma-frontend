@@ -118,7 +118,7 @@ const InitializeEditor = () => {
                             return reject(err);
                         })
 
-                    state.themes.push(theme);
+                    configufation.themes.push(theme);
 
                     createThemePreview(theme);
                     loadThemePreview(id, theme);
@@ -195,7 +195,7 @@ const createThemePreview = (theme) => {
     const root = defaults.includes(theme.hash) ? defaultThemeContainer : customThemeContainer;
     root.appendChild(themeElement);
 
-    const count = state.themes.length - 2;
+    const count = configufation.themes.length - 2;
 
     themeCount.textContent = `${count} / 10`;
     if (count >= 10 && document.getElementById('new-theme')) document.getElementById('new-theme').remove();
@@ -204,21 +204,10 @@ const createThemePreview = (theme) => {
 const loadThemePreview = (id, theme) => {
     const themeElement = document.getElementById(id);
 
-    if (state.current.id == id) {
+    if (configufation.current.id == id) {
         themeElement.className = 'theme selected';
     }
 
-    const filter = `
-    blur(${theme.background.blur.value}px)
-     opacity(${theme.background.opacity.value}%)
-     brightness(${theme.background.brightness.value}%)
-     contrast(${theme.background.contrast.value}%)
-     saturate(${theme.background.saturate.value}%)
-     grayscale(${theme.background.grayscale.value}%)
-     sepia(${theme.background.sepia.value}%)
-     hue-rotate(${theme.background['hue-rotate'].value}deg)
-     invert(${theme.background.invert.value}%)
-    `;
 
     themeElement
         .style = `border-top: solid 10px ${theme.colors['--accent-main'].value};`;
@@ -226,7 +215,7 @@ const loadThemePreview = (id, theme) => {
     themeElement.getElementsByClassName('theme-background')[0]
         .style = `
         background: ${theme.background['url'].value ? `url(${theme.background['url'].value})` : theme.colors['--background-main'].value};
-        filter: ${filter}
+        filter: ${filter(theme)}
         `;
 
     themeElement.getElementsByClassName('theme-main')[0]
@@ -249,12 +238,12 @@ const onSetTheme = async (e) => {
     setLoadingScreen(true);
 
     await setTheme(e.target.id);
-    state.current.id = e.target.id;
+    configufation.current.id = e.target.id;
 
 
     fetchTheme(e.target.id)
         .then(theme => {
-            state.current.theme = theme;
+            configufation.current.theme = theme;
 
             loadTheme(theme);
             loadColorEditor();
@@ -278,7 +267,7 @@ const onCreateTheme = async (e) => {
 
             fetchTheme(hash)
                 .then(theme => {
-                    state.themes.push(theme);
+                    configufation.themes.push(theme);
                     createThemePreview(theme);
                     loadThemePreview(hash, theme);
 
@@ -295,7 +284,7 @@ const onCreateTheme = async (e) => {
 
 const setupColorEditor = () => {
     const editor = document.getElementById('theme-editor');
-    editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
+    editor.className = defaults.includes(configufation.current.id) ? 'editor-disabled' : 'editor';
 
     Object.keys(settings).forEach(key => {
         const section = document.createElement('div');
@@ -330,7 +319,7 @@ const setupColorEditor = () => {
         const inputs = settings[key];
         Object.keys(inputs).forEach(input => {
 
-            const type = state.current.theme.colors[input].type;
+            const type = configufation.current.theme.colors[input].type;
 
             switch (type) {
                 case 'color':
@@ -347,16 +336,16 @@ const setupColorEditor = () => {
 
 const loadColorEditor = () => {
     const editor = document.getElementById('theme-editor');
-    editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
+    editor.className = defaults.includes(configufation.current.id) ? 'editor-disabled' : 'editor';
 
     Object.keys(settings).forEach(category => {
 
 
         Object.keys(settings[category]).forEach(key => {
-            switch (state.current.theme.colors[key].type) {
+            switch (configufation.current.theme.colors[key].type) {
 
                 case 'color':
-                    const r = parseRgb(state.current.theme.colors[key].value);
+                    const r = parseRgb(configufation.current.theme.colors[key].value);
                     const hex = rgbToHex(r[0], r[1], r[2]);
 
                     const colorInput = document.getElementById(`${key}.color`);
@@ -367,7 +356,7 @@ const loadColorEditor = () => {
                     break;
                 case 'number':
                     const numberInput = document.getElementById(`${key}.number`);
-                    numberInput.value = state.current.theme.colors[key].value;
+                    numberInput.value = configufation.current.theme.colors[key].value;
                     break;
             }
 
@@ -375,7 +364,7 @@ const loadColorEditor = () => {
 
     })
 
-    Object.keys(state.current.theme.colors).forEach(key => {
+    Object.keys(configufation.current.theme.colors).forEach(key => {
     });
 
 }
@@ -388,12 +377,12 @@ const onColorChanged = async (e) => {
 
     setLoadingScreen(true);
 
-    await editThemeColors(state.current.id, key, value)
+    await editThemeColors(configufation.current.id, key, value)
         .then(() => {
-            state.current.theme.colors[key].value = value;
+            configufation.current.theme.colors[key].value = value;
 
-            loadThemePreview(state.current.id, state.current.theme);
-            loadTheme(state.current.theme);
+            loadThemePreview(configufation.current.id, configufation.current.theme);
+            loadTheme(configufation.current.theme);
 
             setLoadingScreen(false);
         })
@@ -403,7 +392,7 @@ const onColorChanged = async (e) => {
 }
 
 const setupBackgroundEditor = () => {
-    Object.keys(state.current.theme.background).forEach(key => {
+    Object.keys(configufation.current.theme.background).forEach(key => {
         const input = document.getElementById(key);
 
         input.addEventListener('change', async (e) => {
@@ -422,22 +411,22 @@ const setupBackgroundEditor = () => {
 
 const loadBackgroundEditor = () => {
     const editor = document.getElementById('background-editor');
-    editor.className = defaults.includes(state.current.id) ? 'editor-disabled' : 'editor';
+    editor.className = defaults.includes(configufation.current.id) ? 'editor-disabled' : 'editor';
 
     const preview = document.getElementById('background-preview');
-    preview.src = state.current.theme.background.url.value;
+    preview.src = configufation.current.theme.background.url.value;
 
     const a = document.createElement('a');
-    a.href = state.current.theme.background.url.value;
+    a.href = configufation.current.theme.background.url.value;
     const format = a.pathname.split('.').reverse()[0];
 
     const formatLabel = document.getElementById('format-label');
-    formatLabel.textContent = state.current.theme.background.url.value ? imageTypes.includes(format) ? format : '?' : '';
+    formatLabel.textContent = configufation.current.theme.background.url.value ? imageTypes.includes(format) ? format : '?' : '';
     formatLabel.style.color = imageTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
 
-    Object.keys(state.current.theme.background).forEach(key => {
+    Object.keys(configufation.current.theme.background).forEach(key => {
         const input = document.getElementById(key);
-        input.value = state.current.theme.background[key].value;
+        input.value = configufation.current.theme.background[key].value;
     });
 }
 
@@ -458,21 +447,21 @@ const onBackgroundChanged = async (e) => {
         return;
     }
 
-    await editThemeBackground(state.current.id, e.target.id, e.target.value)
+    await editThemeBackground(configufation.current.id, e.target.id, e.target.value)
         .then(() => {
-            state.current.theme.background[e.target.id].value = e.target.value;
-            preview.src = state.current.theme.background.url.value;
+            configufation.current.theme.background[e.target.id].value = e.target.value;
+            preview.src = configufation.current.theme.background.url.value;
 
             const a = document.createElement('a');
-            a.href = state.current.theme.background.url.value;
+            a.href = configufation.current.theme.background.url.value;
             const format = a.pathname.split('.').reverse()[0];
 
             const formatLabel = document.getElementById('format-label');
-            formatLabel.textContent = state.current.theme.background.url.value ? imageTypes.includes(format) ? format : '?' : '';
+            formatLabel.textContent = configufation.current.theme.background.url.value ? imageTypes.includes(format) ? format : '?' : '';
             formatLabel.style.color = imageTypes.includes(format) ? 'var(--login-lighter)' : 'var(--error)';
 
-            loadTheme(state.current.theme);
-            loadThemePreview(state.current.id, state.current.theme);
+            loadTheme(configufation.current.theme);
+            loadThemePreview(configufation.current.id, configufation.current.theme);
 
             setLoadingScreen(false);
         })
@@ -574,7 +563,7 @@ const setupThemeActions = () => {
 
     confirm.addEventListener('click', () => {
         setLoadingScreen(true);
-        deleteTheme(state.current.id)
+        deleteTheme(configufation.current.id)
             .then(status => {
                 console.log(status);
                 location.reload();
@@ -591,14 +580,14 @@ const setupThemeActions = () => {
 
 const loadThemeActions = () => {
     const actions = document.getElementById('theme-actions');
-    actions.className = defaults.includes(state.current.id) ? 'theme-actions disabled' : 'theme-actions';
+    actions.className = defaults.includes(configufation.current.id) ? 'theme-actions disabled' : 'theme-actions';
 }
 
 const loadUserInfo = () => {
     return new Promise((resolve, reject) => {
 
         const usernameField = document.getElementById('username-field');
-        usernameField.textContent = state.config.username;
+        usernameField.textContent = configufation.config.username;
 
         const copyCheckbox = document.getElementById('checkbox');
 
@@ -682,3 +671,17 @@ const setLoadingScreen = (bool) => {
     document.getElementById('content').style.filter = bool ? 'blur(3px)' : 'none';
     document.getElementById('editor-loading-screen').style.display = bool ? 'flex' : 'none';
 }
+
+const hexToRgb = (hex, opacity) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+        a: opacity
+    } : null;
+}
+
+const rgbToHex = (r, g, b) => '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
+const parseRgb = (input) => input.split("(")[1].split(")")[0].split(",").map(c => Number.parseFloat(c));

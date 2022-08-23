@@ -2,6 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     Initialize();
 });
 
+const state = {
+    messages: {
+        categories: {
+            current: 'inbox'
+        }
+    }
+}
 
 const Initialize = async () => {
     InitializeNavBar();

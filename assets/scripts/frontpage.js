@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     Initialize();
 });
 
+const state = {
+    frontpage: {
+        schedule: null
+    }
+}
+
 const Initialize = async () => {
     InitializeNavBar();
 
