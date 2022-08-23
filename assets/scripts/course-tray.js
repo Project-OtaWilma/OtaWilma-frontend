@@ -143,6 +143,7 @@ const loadPeriod = (hash, title) => {
 
                 loadingIcon.style.display = 'none';
                 period.forEach(bar => {
+
                     const index = bar.title.charAt(0).replace('9', '8');
 
                     const barElement = document.createElement('div');
