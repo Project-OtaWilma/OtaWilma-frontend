@@ -5,8 +5,8 @@
 */
 
 
-// const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-const wilmaAPI = 'http://localhost:3001/api/';
+const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
+// const wilmaAPI = 'http://localhost:3001/api/';
 
 const getVersion = () => {
     return new Promise(async (resolve, reject) => {
