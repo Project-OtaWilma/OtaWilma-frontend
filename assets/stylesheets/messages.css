@@ -255,6 +255,13 @@
     border-left: solid 3px var(--accent-main);
 }
 
+.message-reply-other {
+    margin: 5px;
+    padding: 5px;
+
+    border-right: solid 3px var(--accent-main);
+}
+
 .responses div * {
     color: var(--font-h2);
     font-family: 'arial';
