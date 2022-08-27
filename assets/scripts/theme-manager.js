@@ -17,13 +17,6 @@ const configufation = {
         element: null
     },
     themes: [],
-    /*
-    news: {
-        categories: {
-            current: 'current'
-        }
-    },
-    */
 }
 
 const fetchConfig = () => {
@@ -310,7 +303,9 @@ const editThemeBackground = (id, key, value) => {
     });
 }
 
-const username = (value) => value.split('.').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+const username = (raw) => {
+    return raw.split('.').length > 1 ? [raw.split('.')[0], raw.split('.')[raw.split('.').length - 1]].map(u => `${u.charAt(0).toUpperCase()}${u.slice(1)}`).join(' ') : raw;
+}
 
 const filter = (theme) => `blur(${theme.background.blur.value}px) opacity(${theme.background.opacity.value}%)
     brightness(${theme.background.brightness.value}%)

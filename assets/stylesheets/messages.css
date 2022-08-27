@@ -251,14 +251,13 @@
 .message-reply {
     margin: 5px;
     padding: 5px;
+}
 
+.message-reply.other {
     border-left: solid 3px var(--accent-main);
 }
 
-.message-reply-other {
-    margin: 5px;
-    padding: 5px;
-
+.message-reply.own {
     border-right: solid 3px var(--accent-main);
 }
 

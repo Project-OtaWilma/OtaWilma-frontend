@@ -153,6 +153,7 @@ const loadMessageContent = (id) => {
 
         fetchMessageContent(id)
             .then(list => {
+                console.log(list);
                 const message = list[0];
 
                 title.textContent = message.subject;
@@ -220,16 +221,10 @@ const loadMessageContent = (id) => {
                 // Replies
                 message.replies.forEach(reply => {
                     const responseObject = document.createElement('div');
-                    let currentUserArray = configufation.config['username'].split('.');
 
-                    //only gets the first and last name incase of users with a wilma username such as pena.p.perttilä
-                    let currentUser = currentUserArray[currentUserArray.length]+currentUserArray[0]
-                    if (reply.sender.split(',')[0].toLowerCase()  == currentUser.toLowerCase()){
-                        responseObject.className = 'message-reply';
-                    }
-                    else{
-                        responseObject.className = 'message-reply-other';
-                    }
+                    const currentUser = username(configufation.config['username']);
+                    const responseUser = reply.sender.split(',')[0].split(' ').reverse().join(' ');
+                    responseObject.className = responseUser.toLowerCase() == currentUser.toLowerCase() ? 'message-reply own' : 'message-reply other';
 
                     const sender = document.createElement('h4');
                     sender.textContent = `${reply.sender} ${reply.timeStamp}`;
@@ -238,7 +233,8 @@ const loadMessageContent = (id) => {
                     responseObject.appendChild(sender);
 
                     repliesRoot.appendChild(responseObject);
-                })
+                });
+
                 setMessageLoadingScreen(false);
                 return resolve();
             })
