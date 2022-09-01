@@ -58,7 +58,6 @@ const InitializeTheme = () => {
     })
 }
 
-
 const InitializeLoginForm = async () => {
     const sessionField = document.getElementById('session-field');
     const requirements = [document.getElementById('agreement'), document.getElementById('terms-of-service')];
@@ -168,7 +167,6 @@ const loginEvent = async () => {
                 setLoadingScreen(false);
                 return;
             })
-
     }
 }
 

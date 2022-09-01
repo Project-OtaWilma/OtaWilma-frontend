@@ -101,7 +101,7 @@ body {
     background-repeat: no-repeat;
     background-size: 85px 85px;
 
-    filter: brightness(0);
+    filter: brightness(0) opacity(50%);
 
     display: none;
 }

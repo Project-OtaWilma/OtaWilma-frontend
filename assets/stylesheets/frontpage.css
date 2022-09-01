@@ -567,6 +567,7 @@
 }
 
 .info {
+    width: 90%;
     position: absolute;
     top: calc(30px + 150px + 10px);
     height: calc(100% - 30px - 150px - 10px);

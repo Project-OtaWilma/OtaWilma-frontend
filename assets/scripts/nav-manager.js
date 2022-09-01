@@ -3,9 +3,15 @@ const InitializeNavBar = () => {
     Array.from(root.getElementsByTagName('button')).forEach(button => {
 
         button.addEventListener('click', (e) => {
-            redirect(e.target.id);
-        })
+            redirect(e.target.id, false);
+        });
+
+        button.addEventListener('contextmenu', (e) => {
+            redirect(e.target.id, true);
+            e.preventDefault();
+        });
     });
+
     const logoutElement = document.getElementById('logout');
 
     if (logoutElement) {
@@ -21,8 +27,11 @@ const InitializeNavBar = () => {
     }
 }
 
-const redirect = (target) => {
+const redirect = (target, createWindow) => {
+    if(createWindow) return window.open(target);
+    
     document.getElementById('loading').style.opacity = 1;
+    
     setTimeout(() => {
         document.location = target;
     }, 600);

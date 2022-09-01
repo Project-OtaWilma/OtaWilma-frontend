@@ -53,9 +53,9 @@ const settings = {
         '--error': 'Virheilmoitusten ensisijainen väri'
     }
 }
+
 const imageTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
 const nonTransparent = ['--accent-main', '--background-darker', '--clock-background'];
-
 
 const Initialize = async () => {
     InitializeNavBar();
@@ -197,8 +197,8 @@ const createThemePreview = (theme) => {
 
     const count = configufation.themes.length - 2;
 
-    themeCount.textContent = `${count} / 10`;
-    if (count >= 10 && document.getElementById('new-theme')) document.getElementById('new-theme').remove();
+    themeCount.textContent = `${count} / 25`;
+    if (count >= 25 && document.getElementById('new-theme')) document.getElementById('new-theme').remove();
 }
 
 const loadThemePreview = (id, theme) => {

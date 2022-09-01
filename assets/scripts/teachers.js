@@ -24,11 +24,14 @@ const InitializeQuery = () => {
 
     if (!hash) return;
 
-    console.log(hash);
-
-    
     loadTeacherInfoById(hash).catch(err => {
-        displayError(err);
+        switch(err.status) {
+            case 400:
+                console.error("Couldn't find teacher with the specificed id");
+                break;
+            default:
+                displayError(err);
+        }
     });
 }
 
@@ -101,6 +104,7 @@ const loadTeacherInfoByName = (name) => {
             return resolve();
         })
         .catch(err => {
+            setLoadingScreen(false);
             return reject(err);
         })
     })
@@ -118,6 +122,7 @@ const loadTeacherInfoById = (name) => {
             return resolve();
         })
         .catch(err => {
+            setLoadingScreen(false);
             return reject(err);
         })
     })
@@ -194,7 +199,6 @@ const loadTeacherInfo = (info) => {
     
     adjectiveRoot.appendChild(adjectiveTitleElement);
     adjectiveRoot.appendChild(adjectiveLabel);
-
 
     info.feedback['teacher-adjectives'].filter(a => a.percentage > 30).forEach(adjective => {
         const adjectiveElement = document.createElement('div');

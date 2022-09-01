@@ -432,17 +432,25 @@ const loadSchedule = (date) => {
 }
 
 const clockUpdate = () => {
+
     const clockSec = document.getElementById('clock-sec');
     const clockMin = document.getElementById('clock-min');
     const clockHour = document.getElementById('clock-hour');
 
     const currentTime = document.getElementById('current-time');
+    const currentDate = document.getElementById('current-date');
 
-    const d = new Date();
-    clockSec.style.transform = `rotate(${((d.getSeconds() / 60) * 360) + 180}deg)`;
-    clockMin.style.transform = `rotate(${((d.getMinutes() / 60) * 360) + ((d.getSeconds() / 60) * 6) + 180}deg)`;
-    clockHour.style.transform = `rotate(${((d.getHours() / 12) * 360) + ((d.getMinutes() / 60) * 30) + 180}deg)`;
-    currentTime.textContent = d.toLocaleTimeString();
+    const date = (new Date());
+    clockSec.style.transform = `rotate(${((date.getSeconds() / 60) * 360) + 180}deg)`;
+    clockMin.style.transform = `rotate(${((date.getMinutes() / 60) * 360) + ((date.getSeconds() / 60) * 6) + 180}deg)`;
+    clockHour.style.transform = `rotate(${((date.getHours() / 12) * 360) + ((date.getMinutes() / 60) * 30) + 180}deg)`;
+
+    currentTime.textContent = date.toLocaleTimeString();
+    currentDate.textContent = date.toLocaleDateString('fi-Fi', {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
 }
 
 const setScheduleLoadingScreen = (value) => {
