@@ -54,7 +54,7 @@ const loadMessages = async () => {
         const a = document.createElement('a');
         a.textContent = 'Viestit';
         a.href = '/views/messages.html';
-        
+
         const oldMessages = document.createElement('div');
         oldMessages.className = 'message-list';
 
@@ -104,7 +104,7 @@ const loadMessages = async () => {
                     messageObject.appendChild(sender);
                     messageObject.appendChild(replies);
 
-                    if(message.new) {
+                    if (message.new) {
                         const newElement = document.createElement('h7');
                         newElement.textContent = 'Uusi';
 

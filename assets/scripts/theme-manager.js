@@ -19,24 +19,25 @@ const configufation = {
     themes: [],
 }
 
+
 const fetchConfig = () => {
     return new Promise(async (resolve, reject) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
 
-        if(!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
 
 
         fetchJson(url, {
             method: 'GET',
             cache: 'config-cache'
         })
-        .then(config => {
-            return resolve(config);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(config => {
+                return resolve(config);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     })
 }
 
@@ -45,17 +46,17 @@ const fetchLoginHistory = () => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/sessions/config/login-history/get/${session}`;
 
-        if(!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
 
         fetchJson(url, {
             method: 'GET'
         })
-        .then(list => {
-            return resolve(list);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(list => {
+                return resolve(list);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     });
 }
 
@@ -68,12 +69,12 @@ const fetchDefaultTheme = (id) => {
             method: 'GET',
             cache: 'theme-cache'
         })
-        .then(theme => {
-            return resolve(theme);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(theme => {
+                return resolve(theme);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     })
 }
 
@@ -82,18 +83,18 @@ const fetchTheme = (id) => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
 
-        if(!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
 
         fetchJson(url, {
             method: 'GET',
             cache: 'theme-cache'
         })
-        .then(theme => {
-            return resolve(theme);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(theme => {
+                return resolve(theme);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     })
 }
 
@@ -102,18 +103,18 @@ const fetchThemeList = () => {
         const session = getCookie('session');
         const url = `${otaWilmaAPi}/themes/list/${session}`;
 
-        if(!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
 
         fetchJson(url, {
             method: 'GET',
             cache: 'theme-cache'
         })
-        .then(theme => {
-            return resolve(theme);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(theme => {
+                return resolve(theme);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     })
 }
 
@@ -178,7 +179,7 @@ const setTheme = (id) => {
 
         if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         if (cacheAvailable) removeCache('config-cache', configUrl);
-        
+
         fetchJson(themeUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -186,12 +187,12 @@ const setTheme = (id) => {
                 "theme": id
             })
         })
-        .then(res => {
-            return resolve(res);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     });
 }
 
@@ -210,12 +211,12 @@ const createTheme = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => {
-            return resolve(res);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     });
 }
 
@@ -236,12 +237,12 @@ const deleteTheme = (id) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         })
-        .then(res => {
-            return resolve(res);
-        })
-        .catch(err => {
-            return reject(err);
-        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            })
     });
 }
 
@@ -265,12 +266,12 @@ const editThemeColors = (id, key, value) => {
                 "value": value
             })
         })
-        .then(res => {
-            return resolve(res);
-        })
-        .catch(err => {
-            return reject(err);
-        });
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
     });
 }
 
@@ -294,12 +295,12 @@ const editThemeBackground = (id, key, value) => {
                 "value": value
             })
         })
-        .then(res => {
-            return resolve(res);
-        })
-        .catch(err => {
-            return reject(err);
-        });
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
     });
 }
 
@@ -307,7 +308,8 @@ const username = (raw) => {
     return raw.split('.').length > 1 ? [raw.split('.')[0], raw.split('.')[raw.split('.').length - 1]].map(u => `${u.charAt(0).toUpperCase()}${u.slice(1)}`).join(' ') : raw;
 }
 
-const filter = (theme) => `blur(${theme.background.blur.value}px) opacity(${theme.background.opacity.value}%)
+const filter = (theme) => `blur(${theme.background.blur.value}px)
+     opacity(${theme.background.opacity.value}%)
     brightness(${theme.background.brightness.value}%)
     contrast(${theme.background.contrast.value}%)
     saturate(${theme.background.saturate.value}%)

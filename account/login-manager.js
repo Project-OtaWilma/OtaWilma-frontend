@@ -1,30 +1,16 @@
 const Login = (credentials = { username: String, password: String }) => {
     return new Promise(async (resolve, reject) => {
-        fetch('https://wilma-api.tuukk.dev/api/login/', {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        })
-            .then(async (res) => {
-                const json = await res.json();
+        login(credentials)
+            .then(res => {
+                console.log(res);
+                const token = res['token'];
 
-                switch (res.status) {
-                    case 200:
-                        const Wilma2SID = json['Wilma2SID'];
-                        const StudentID = json['studentID'];
+                document.cookie = `token=${token}; SameSite=Lax; Secure;`;
 
-                        document.cookie = `Wilma2SID=${Wilma2SID}; SameSite=Lax; Secure;`;
-                        document.cookie = `StudentID=${StudentID}; SameSite=Lax; Secure;`;
-
-                        return resolve();
-                    case 401:
-                        return reject({ err: json.err })
-                    case 400:
-                        return reject({ err: json.err })
-                }
+                return resolve();
             })
             .catch(err => {
-                return reject({ err: 'failed to reach servers', status: 503 });
+                return reject(err);
             })
     })
 }

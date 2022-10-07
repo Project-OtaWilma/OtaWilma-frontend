@@ -138,7 +138,7 @@
     cursor: pointer;
     user-select: none;
 
-    color: var(--accent-main);
+    color: var(--font-h1);
     text-decoration: none;
     font-family: 'semi-bold';
 }
@@ -230,7 +230,7 @@
     cursor: pointer;
     user-select: none;
 
-    color: var(--accent-main);
+    color: var(--font-h1);
     text-decoration: none;
     font-family: 'semi-bold';
 }
@@ -308,7 +308,7 @@
     cursor: pointer;
     user-select: none;
 
-    color: var(--accent-main);
+    color: var(--font-h1);
     text-decoration: none;
     font-family: 'semi-bold';
 }

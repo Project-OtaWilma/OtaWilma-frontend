@@ -17,9 +17,9 @@ const fetchJson = (url, options = {
 }) => {
     return new Promise(async (resolve, reject) => {
 
-        if(cacheAvailable && options.cache) {
+        if (cacheAvailable && options.cache) {
             const list = await loadCache(options.cache, url).catch(() => { });
-            
+
             if (list) {
                 console.warn(`Loaded response from "${options.cache}"`);
                 return resolve(list);
@@ -36,7 +36,7 @@ const fetchJson = (url, options = {
 
                 switch (res.status) {
                     case 200:
-                        if(cacheAvailable && options.cache) {
+                        if (cacheAvailable && options.cache) {
                             console.warn(`Cached response to "${options.cache}"`);
                             appendCache(options.cache, url);
                         }

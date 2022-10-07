@@ -51,8 +51,6 @@
 
 .subject {
     padding-left: 10px;
-
-    border-left: solid 1px var(--border-darker);
 }
 
 .subject ul {
@@ -290,7 +288,7 @@
 
     background-color: var(--background-main);
 
-    border-left: solid 1px var(--border-darker);
+    border-left: solid 1px var(--border-main);
 
     display: flex;
     flex-direction: column;

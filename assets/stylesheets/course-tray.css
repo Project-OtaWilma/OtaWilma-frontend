@@ -94,7 +94,7 @@
     margin: 10px;
     padding: 10px;
 
-    border-bottom: solid 2px var(--border-darker);
+    border-bottom: solid 2px var(--border-main);
 }
 
 .period-actions {
