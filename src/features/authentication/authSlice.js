@@ -1,47 +1,64 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-    login
-} from '../../requests/authentication';
+import { getCookie } from '../../requests/utility';
 
-/*
-export const fetchTrending = createAsyncThunk(
-    'studies/fetchTrending',
+import {
+    login,
+} from '../../requests/wilma-api';
+
+
+export const loginToWilma = createAsyncThunk(
+    'auth/loginToWilma',
     async (data, thunkAPI) => {
-        const response = await fetchStudiesTrending()
+        const response = await login(data)
         return response
     }
 )
 
-export const studiesSlice = createSlice({
-    name: 'studies',
+const setToken = (token) => {
+    document.cookie = `token=${token}; SameSite=Lax; Secure;`;
+}
+
+const getToken = () => {
+    return getCookie('token') ? getCookie('token') : null;
+}
+
+
+export const authSlice = createSlice({
+    name: 'auth',
     initialState: {
-        studies: ['test'],
-        isLoading: false,
-        hasLoaded: false
+        token: getToken(),
+        loggedIn: !(!getToken()),
+        logginIn: false,
+        loginError: ''
     },
     reducers: {},
     extraReducers: {
-        [fetchTrending.fulfilled]: (state, action) => {
-            state.studies = action.payload;
-            state.isLoading = false;
-            state.hasLoaded = true;
+        [loginToWilma.fulfilled]: (state, action) => {
+            state.token = action.payload.token;
+            setToken(state.token);
+
+            state.loggedIn = true;
+            state.logginIn = false;
         },
-        [fetchTrending.rejected]: (state, action) => {
-            console.log(action);
+        [loginToWilma.rejected]: (state, action) => {
             console.log('api call rejected');
-            state.isLoading = false;
+            const e = JSON.parse(action.error.message);
+
+            state.loginError = e.error ? e.error.err : e.err;
+            state.logginIn = false;
         },
-        [fetchTrending.pending]: (state, action) => {
-            state.isLoading = true;
+        [loginToWilma.pending]: (state, action) => {
+            state.logginIn = false;
+            state.loginError = '';
         },
     },
 });
 
-export const selectStudies = (state) => ({
-    value: state.studies.studies,
-    isLoading: state.studies.isLoading,
-    hasLoaded: state.studies.hasLoaded
+export const useAuth = (state) => ({
+    token: state.auth.token,
+    loggedIn: state.auth.loggedIn,
+    logginIn: state.auth.logginIn,
+    loginError: state.auth.loginError,
 });
 
-export default studiesSlice.reducer;
-*/
+export default authSlice.reducer;
