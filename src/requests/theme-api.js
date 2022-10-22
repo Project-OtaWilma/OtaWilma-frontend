@@ -24,7 +24,7 @@ const fetchConfig = (auth) => {
                 return resolve(config);
             })
             .catch(err => {
-                return reject(err);
+                return reject(JSON.stringify(err));
             })
     })
 }

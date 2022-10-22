@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { useNavigate } from "react-router-dom";
 import { getCookie } from '../../requests/utility';
 
 import {
@@ -31,7 +32,11 @@ export const authSlice = createSlice({
         logginIn: false,
         loginError: ''
     },
-    reducers: {},
+    reducers: {
+        resetSession: (state) => {
+            
+        }
+    },
     extraReducers: {
         [loginToWilma.fulfilled]: (state, action) => {
             state.token = action.payload.token;

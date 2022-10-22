@@ -41,7 +41,6 @@ export default function ThemeProvider({ children }) {
 
     return (
         <>
-            <h1>provider layer</h1>
             {themes.isInitialized ? <></> : <h2>Loading...</h2>}
             {config.hasLoaded ? children : <></>}
         </>

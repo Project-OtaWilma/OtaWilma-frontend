@@ -33,8 +33,7 @@ export const messageSlice = createSlice({
                 isLoading: true,
                 content: []
             }
-        },
-        isLoading: false
+        }
     },
     reducers: {},
     extraReducers: {
@@ -55,8 +54,7 @@ export const messageSlice = createSlice({
 });
 
 export const useMessages = (state) => ({
-    messages: state.messages.messages,
-    isLoading: state.messages.isLoading,
+    messages: state.messages.messages
 });
 
 export default messageSlice.reducer;

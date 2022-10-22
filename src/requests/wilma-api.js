@@ -91,9 +91,8 @@ const fetchMessageContent = (hash) => {
     });
 }
 
-const fetchNews = (path, limit) => {
+const fetchNews = (auth, path, limit) => {
     return new Promise((resolve, reject) => {
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(`${wilmaAPI}/news/${path}?limit=${limit}`,
@@ -144,9 +143,8 @@ const fectchCourseList = (lops) => {
     })
 }
 
-const fetchGradeBook = (filter) => {
+const fetchGradeBook = (auth, filter) => {
     return new Promise((resolve, reject) => {
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(`${wilmaAPI}gradebook/?filter=${filter}`,
@@ -179,11 +177,10 @@ const fetchCourse = (lops, id) => {
     })
 }
 
-const fetchSchedule = (date = Date) => {
+const fetchSchedule = (auth, date = Date) => {
     return new Promise((resolve, reject) => {
         const url = `${wilmaAPI}schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
 
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(url, {
@@ -381,5 +378,9 @@ export {
     login,
     logout,
     fetchMessages,
-    fetchMessageContent
+    fetchMessageContent,
+    fetchGradeBook,
+    fetchNews,
+    fetchNewsContent,
+    fetchSchedule
 }

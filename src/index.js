@@ -8,7 +8,10 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <div className='container'>
+            <div className='background'></div>
+            <App />
+        </div>
     </Provider>,
     document.getElementById('root')
 );

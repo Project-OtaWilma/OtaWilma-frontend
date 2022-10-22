@@ -1,13 +1,278 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none !important;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+
+    font-family: 'regular';
+    scrollbar-width: thin;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+@font-face {
+    font-family: 'bold';
+    src: url(./assets/fonts/Inconsolata-ExtraBold.ttf);
+}
+
+@font-face {
+    font-family: 'semi-bold';
+    src: url(./assets/fonts/Inconsolata-Bold.ttf);
+}
+
+
+@font-face {
+    font-family: 'regular';
+    src: url(./assets/fonts/Inconsolata-Regular.ttf);
+}
+
+/* Custom Scrollbars */
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--background-darker);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--background-darker-hover);
+}
+
+h1 {
+    color: var(--font-h1);
+    font-family: 'semi-bold';
+}
+
+h2,
+label,
+input,
+a {
+    color: var(--font-h2);
+}
+
+h3 {
+    color: var(--font-h3);
+}
+
+h4 {
+    color: var(--font-h4);
+}
+
+h5 {
+    color: var(--font-h5);
+}
+
+strong {
+    font-family: 'semi-bold';
+}
+
+body {
+    background: black;
+    overflow: hidden;
+}
+
+.loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: white;
+    pointer-events: none;
+    z-index: 20;
+
+    /*background-image: url(/assets/img/loading-book.gif);*/
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transition: opacity .3s ease-in-out !important;
+}
+
+.loading-indicator {
+    /*background-image: url(/assets/img/loading-book.gif);*/
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 85px 85px;
+
+    filter: brightness(0) opacity(50%);
+
+    display: none;
+}
+
+.icon {
+    filter: brightness(0);
+}
+
+.icon-text {
+    filter: brightness(0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .loading-screen {
+        filter: invert();
+    }
+}
+
+@media (prefers-dark-interface) {
+    .loading-screen {
+        filter: invert();
+    }
+}
+
+.container {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--background-main);
+}
+
+.background {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+
+    filter: var(--background-filter);
+    pointer-events: none;
+}
+
+.disclaimer {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    height: 100%;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        display: none;
+    }
+
+    .disclaimer {
+        display: flex;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .container {
+        display: none;
+    }
+
+    .disclaimer {
+        display: flex;
+    }
+}
+
+/* error */
+
+.error {
+    color: red;
+}
+
+.error-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 30;
+    background-color: white;
+}
+
+.error-object {
+    width: 350px;
+
+    min-width: 128px;
+    min-height: 128px;
+
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border-radius: 4px;
+}
+
+.error-image {
+    width: 256px;
+    height: 256px;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(https://cdn.inschool.fi/2.33.34.2/nc3/img/error-pages/error-server-error.svg);
+}
+
+.error-object h1 {
+    margin: 15px;
+    color: black;
+}
+
+.error-object h2 {
+    margin: 15px;
+    color: rgb(30, 30, 30);
+    text-align: center;
+}
+
+.error-object h3 {
+    color: rgb(215, 215, 215);
+    text-align: center;
+}
+
+.error-object h4 {
+    padding: 10px;
+    color: var(--font-h2);
+}
+
+.error-object h7 {
+    padding: 10px;
+
+    border-radius: 7px;
+
+    background-color: rgb(47, 47, 47);
+    color: rgb(200, 60, 60);
+}
+
+.error-object h5 {
+    margin: 15px;
+    padding: 7px;
+
+    text-align: center;
+
+    border-radius: 100px;
+
+    font-family: 'semi-bold';
+    font-size: 17px;
+    color: white;
+
+    background-color: rgb(200, 60, 60);
 }
