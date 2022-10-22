@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import studiesSlice from '../features/studies/StudiesSlice';
 import authSlice from '../features/authentication/authSlice';
 import configSlice from '../features/themes/configSlice';
+import themeSlice from '../features/themes/themeSlice';
+import messageSlice from '../features/messages/messageSlice';
 
 export default configureStore({
   reducer: {
-    studies: studiesSlice,
     auth: authSlice,
-    config: configSlice
+    config: configSlice,
+    themes: themeSlice,
+    messages: messageSlice
   },
 });

@@ -56,9 +56,8 @@ const getVersion = () => {
     });
 }
 
-const fetchMessages = (path, limit) => {
+const fetchMessages = (auth, path, limit) => {
     return new Promise((resolve, reject) => {
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(`${wilmaAPI}messages/${path}/?limit=${limit}`,
@@ -380,5 +379,7 @@ const logout = () => {
 
 export {
     login,
-    logout
+    logout,
+    fetchMessages,
+    fetchMessageContent
 }

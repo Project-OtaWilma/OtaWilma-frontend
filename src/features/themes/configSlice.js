@@ -6,8 +6,9 @@ import {
 
 export const getConfig = createAsyncThunk(
     'config/getConfig',
-    async (data, thunkAPI) => {
-        const response = await fetchConfig()
+    async (options, thunkAPI) => {
+        const auth = options['auth'];
+        const response = await fetchConfig(auth)
         return response
     }
 )

@@ -6,21 +6,19 @@ import {
 } from './utility'
 
 
-const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api';
-// const otaWilmaAPi = 'http://localhost:8302/api';
+//const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api';
+const otaWilmaAPi = 'http://localhost:8302/api';
 
 
-const fetchConfig = () => {
+const fetchConfig = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const url = `${otaWilmaAPi}/sessions/config/get/${session}`;
-
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
-
+        const url = `${otaWilmaAPi}/config/`;
 
         fetchJson(url, {
             method: 'GET',
-            cache: 'config-cache'
+            headers: {
+                'token': auth
+            }
         })
             .then(config => {
                 return resolve(config);
@@ -33,13 +31,14 @@ const fetchConfig = () => {
 
 const fetchLoginHistory = () => {
     return new Promise((resolve, reject) => {
-        const session = getCookie('token');
-        const url = `${otaWilmaAPi}/sessions/config/login-history/get/${session}`;
-
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        const auth = getCookie('token');
+        const url = `${otaWilmaAPi}/config/login-history`;
 
         fetchJson(url, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'token': auth
+            }
         })
             .then(list => {
                 return resolve(list);
@@ -68,16 +67,15 @@ const fetchDefaultTheme = (id) => {
     })
 }
 
-const fetchTheme = (id) => {
+const fetchTheme = (auth, id) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const url = `${otaWilmaAPi}/themes/get/${session}/${id}`;
-
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        const url = `${otaWilmaAPi}/themes/get/${id}`;
 
         fetchJson(url, {
             method: 'GET',
-            cache: 'theme-cache'
+            headers: {
+                'token': auth
+            }
         })
             .then(theme => {
                 return resolve(theme);
@@ -90,14 +88,15 @@ const fetchTheme = (id) => {
 
 const fetchThemeList = () => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const url = `${otaWilmaAPi}/themes/list/${session}`;
-
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
+        const auth = getCookie('token');
+        const url = `${otaWilmaAPi}/themes/list`;
 
         fetchJson(url, {
             method: 'GET',
-            cache: 'theme-cache'
+            cache: 'theme-cache',
+            headers: {
+                'token': auth
+            }
         })
             .then(theme => {
                 return resolve(theme);
@@ -108,28 +107,20 @@ const fetchThemeList = () => {
     })
 }
 
-
-const loadTheme = (theme) => {
-    const root = document.documentElement;
-    const colors = Object.keys(theme.colors);
-
-    colors.forEach(key => root.style.setProperty(key.trim(), theme.colors[key].value));
-    root.style.setProperty('--background-filter', filter(theme));
-}
-
-
 const setTheme = (id) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const configUrl = `${otaWilmaAPi}/sessions/config/get/${session}`;
-        const themeUrl = `${otaWilmaAPi}/sessions/config/current-theme/set/${session}`;
+        const auth = getCookie('token');
+        const configUrl = `${otaWilmaAPi}/config/`;
+        const themeUrl = `${otaWilmaAPi}/config/set/current-theme`;
 
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         if (cacheAvailable) removeCache('config-cache', configUrl);
 
         fetchJson(themeUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
             body: JSON.stringify({
                 "theme": id
             })
@@ -145,18 +136,20 @@ const setTheme = (id) => {
 
 const createTheme = () => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const configUrl = `${otaWilmaAPi}/sessions/config/get/${session}`;
-        const createUrl = `${otaWilmaAPi}/themes/create/${session}`;
-        const listUrl = `${otaWilmaAPi}/themes/list/${session}`;
+        const auth = getCookie('token');
+        const configUrl = `${otaWilmaAPi}/config`;
+        const createUrl = `${otaWilmaAPi}/themes/create`;
+        const listUrl = `${otaWilmaAPi}/themes/list`;
 
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         if (cacheAvailable) removeCache('config-cache', configUrl);
         if (cacheAvailable) removeCache('theme-cache', listUrl);
 
         fetchJson(createUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
         })
             .then(res => {
                 return resolve(res);
@@ -169,20 +162,22 @@ const createTheme = () => {
 
 const deleteTheme = (id) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const themeUrl = `${otaWilmaAPi}/themes/get/${session}/${id}`;
-        const configUrl = `${otaWilmaAPi}/sessions/config/get/${session}`;
-        const listUrl = `${otaWilmaAPi}/themes/list/${session}`;
-        const removeUrl = `${otaWilmaAPi}/themes/remove/${session}/${id}`;
+        const auth = getCookie('token');
+        const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
+        const configUrl = `${otaWilmaAPi}/config`;
+        const listUrl = `${otaWilmaAPi}/themes/list`;
+        const removeUrl = `${otaWilmaAPi}/themes/${id}/remove`;
 
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         if (cacheAvailable) removeCache('theme-cache', themeUrl);
         if (cacheAvailable) removeCache('config-cache', configUrl);
         if (cacheAvailable) removeCache('theme-cache', listUrl);
 
         fetchJson(removeUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
         })
             .then(res => {
                 return resolve(res);
@@ -195,19 +190,20 @@ const deleteTheme = (id) => {
 
 const editThemeColors = (id, key, value) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const themeUrl = `${otaWilmaAPi}/themes/get/${session}/${id}`;
-        const themeList = `${otaWilmaAPi}/themes/list/${session}`;
-        const editUrl = `${otaWilmaAPi}/themes/edit/colors/${session}/${id}`;
+        const auth = getCookie('token');
+        const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
+        const themeList = `${otaWilmaAPi}/themes/list`;
+        const editUrl = `${otaWilmaAPi}/themes/${id}/edit/colors`;
 
-
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         if (cacheAvailable) removeCache('theme-cache', themeUrl);
         if (cacheAvailable) removeCache('theme-cache', themeList);
 
         fetchJson(editUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
             body: JSON.stringify({
                 "key": key,
                 "value": value
@@ -224,19 +220,21 @@ const editThemeColors = (id, key, value) => {
 
 const editThemeBackground = (id, key, value) => {
     return new Promise(async (resolve, reject) => {
-        const session = getCookie('token');
-        const themeUrl = `${otaWilmaAPi}/themes/get/${session}/${id}`;
-        const listUrl = `${otaWilmaAPi}/themes/list/${session}`;
-        const editUrl = `${otaWilmaAPi}/themes/edit/background/${session}/${id}`;
+        const auth = getCookie('token');
+        const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
+        const listUrl = `${otaWilmaAPi}/themes/list/`;
+        const editUrl = `${otaWilmaAPi}/themes/${id}/edit/background`;
 
-        if (!session) return reject({ err: "Couldn't locate session identifier", status: 400, redirect: true });
         if (cacheAvailable) removeCache('theme-cache', themeUrl);
         if (cacheAvailable) removeCache('theme-cache', listUrl);
 
 
         fetchJson(editUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
             body: JSON.stringify({
                 "key": key,
                 "value": value
@@ -250,20 +248,6 @@ const editThemeBackground = (id, key, value) => {
             });
     });
 }
-
-const username = (raw) => {
-    return raw.split('.').length > 1 ? [raw.split('.')[0], raw.split('.')[raw.split('.').length - 1]].map(u => `${u.charAt(0).toUpperCase()}${u.slice(1)}`).join(' ') : raw;
-}
-
-const filter = (theme) => `blur(${theme.background.blur.value}px)
-     opacity(${theme.background.opacity.value}%)
-    brightness(${theme.background.brightness.value}%)
-    contrast(${theme.background.contrast.value}%)
-    saturate(${theme.background.saturate.value}%)
-    grayscale(${theme.background.grayscale.value}%)
-    sepia(${theme.background.sepia.value}%)
-    hue-rotate(${theme.background['hue-rotate'].value}deg)
-    invert(${theme.background.invert.value}%)`
 
 
 export {
