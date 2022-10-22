@@ -7,6 +7,7 @@ import messageSlice from '../features/messages/messageSlice';
 import gradeSlice from '../features/grades/gradeSlice';
 import newsSlice from '../features/news/newsSlice';
 import scheduleSlice from '../features/schedule/scheduleSlice';
+import lopsSlice from '../features/grades/lopsSlice';
 
 export default configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
     messages: messageSlice,
     grades: gradeSlice,
     news: newsSlice,
-    schedule: scheduleSlice
+    schedule: scheduleSlice,
+    lops: lopsSlice
   },
 });

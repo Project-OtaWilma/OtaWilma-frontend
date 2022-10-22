@@ -38,6 +38,27 @@ export const loadTheme = createAsyncThunk(
     }
 )
 
+export const loadThemeDefault = createAsyncThunk(
+    'themes/loadThemeDefault',
+    async (options, thunkAPI) => {
+        return await new Promise((resolve, reject) => {
+            const themes = thunkAPI.getState().themes;
+            const id = options['id'];
+            
+            // cache loaded themes
+            if(Object.keys(themes['themes']).includes(id)) return resolve({changed: false, theme: themes['themes'][id]});
+
+            fetchDefaultTheme(id)
+            .then(theme => {
+                return resolve({changed: true, theme: theme});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+        });
+    }
+)
+
 
 export const themeSlice = createSlice({
     name: 'themes',
@@ -64,6 +85,17 @@ export const themeSlice = createSlice({
             state.isInitialized = true;
         },
         [loadTheme.rejected]: (state, action) => {
+            console.log(action);
+            console.log('api call rejected');
+        },
+        [loadThemeDefault.fulfilled]: (state, action) => {
+            const hash = action.payload['theme']['hash'];
+            if (action.payload.changed) state.themes[hash] = action.payload['theme'];
+
+            state.current = hash;
+            state.isInitialized = true;
+        },
+        [loadThemeDefault.rejected]: (state, action) => {
             console.log(action);
             console.log('api call rejected');
         },

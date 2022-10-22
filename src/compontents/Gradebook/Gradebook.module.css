@@ -1,0 +1,436 @@
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.main {
+    position: absolute;
+    width: 80%;
+    height: 90%;
+
+    margin-top: 85px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.gradebook {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.course-container {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    width: calc(100% - 360px);
+    height: 100%;
+    left: 0;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    background-color: var(--background-main);
+
+    border-left: solid 10px var(--accent-main);
+}
+
+.subject {
+    padding-left: 10px;
+}
+
+.subject ul {
+    margin: 5px;
+}
+
+.subject ul a {
+    font-size: 20px;
+}
+
+.subject ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.course-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    align-items: center;
+}
+
+.course-list div:hover>.course-info {
+    opacity: 1;
+}
+
+.course-list div h4 {
+    pointer-events: none;
+}
+
+.c-type25,
+.c-type26,
+.c-type27,
+.c-type29,
+.c-type66,
+.c-type65,
+.c-type110,
+.c-type112,
+.c-type119,
+.c-type136,
+.c-type137,
+.c-type138,
+.c-type141,
+.c-type146,
+.c-type151,
+.c-type25-graded,
+.c-type26-graded,
+.c-type27-graded,
+.c-type29-graded,
+.c-type66-graded,
+.c-type65-graded,
+.c-type110-graded,
+.c-type112-graded,
+.c-type119-graded,
+.c-type136-graded,
+.c-type136-graded,
+.c-type137-graded,
+.c-type138-graded,
+.c-type141-graded,
+.c-type146-graded,
+.c-type151-graded {
+    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    width: 45px;
+    text-align: left;
+    overflow: hidden;
+
+    margin: 1px;
+    margin-bottom: 2.5px;
+    margin-top: 2.5px;
+
+    cursor: pointer;
+
+    font-size: 19px;
+
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.765);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.c-type25 h4,
+.c-type26 h4,
+.c-type27 h4,
+.c-type29 h4,
+.c-type66 h4,
+.c-type65 h4,
+.c-type110 h4,
+.c-type112 h4,
+.c-type119 h4,
+.c-type136 h4,
+.c-type137 h4,
+.c-type138 h4,
+.c-type141 h4,
+.c-type146 h4,
+.c-type151 h4,
+.c-type25-graded h4,
+.c-type26-graded h4,
+.c-type27-graded h4,
+.c-type29-graded h4,
+.c-type66-graded h4,
+.c-type65-graded h4,
+.c-type110-graded h4,
+.c-type112-graded h4,
+.c-type119-graded h4,
+.c-type136-graded h4,
+.c-type136-graded h4,
+.c-type137-graded h4,
+.c-type138-graded h4,
+.c-type141-graded h4,
+.c-type146-graded h4,
+.c-type151-graded h4 {
+    color: var(--course-tray-h1);
+    font-size: 16px;
+}
+
+.c-type25-graded h4,
+.c-type26-graded h4,
+.c-type27-graded h4,
+.c-type110-graded h4,
+.c-type112-graded h4,
+.c-type119-graded h4,
+.c-type136-graded h4,
+.c-type136-graded h4,
+.c-type137-graded h4,
+.c-type138-graded h4,
+.c-type141-graded h4,
+.c-type146-graded h4,
+.c-type151-graded h4 {
+    color: white;
+}
+
+.c-type25,
+.c-type136 {
+    background-color: var(--L2021-mandatory-main);
+}
+
+.c-type25-graded,
+.c-type136-graded {
+    background-color: var(--L2021-mandatory-selected);
+}
+
+
+.c-type137 {
+    background-color: var(--L2021-g-optional-main);
+}
+
+.c-type137-graded {
+    background-color: var(--L2021-g-optional-selected);
+}
+
+.c-type138 {
+    background-color: var(--L2021-diploma-main);
+}
+
+.c-type138-graded {
+    background-color: var(--L2021-diploma-selected);
+}
+
+.c-type141,
+.c-type146,
+.c-type151 {
+    background-color: var(--L2021-l-optional-main);
+}
+
+.c-type141-graded,
+.c-type146-graded,
+.c-type151-graded {
+    background-color: var(--L2021-l-optional-selected);
+}
+
+.c-type112,
+.c-type66,
+.c-type26,
+.c-type65 {
+    background-color: var(--L2016-l-optional-main);
+}
+
+.c-type26-graded,
+.c-type66-graded,
+.c-type26-graded,
+.c-type65-graded {
+    background-color: var(--L2016-l-optional-selected);
+}
+
+.c-type27 {
+    background-color: var(--L2016-g-optional-main);
+}
+
+.c-type27-graded {
+    background-color: var(--L2016-g-optional-selected);
+}
+
+.c-type119,
+.c-type29 {
+    background-color: var(--L2021-diploma-main);
+}
+
+.c-type119-graded,
+.c-type29-graded {
+    background-color: var(--L2021-diploma-selected);
+}
+
+
+.course-info {
+    position: absolute;
+    opacity: 0;
+
+    margin-top: 65px;
+    padding: 5px;
+
+    background-color: black;
+
+    transition: opacity .2s ease-in-out;
+
+    pointer-events: none;
+}
+
+.course-info h2 {
+    color: white;
+}
+
+.course-info-container {
+    position: absolute;
+    width: 350px;
+    height: calc(100% - 50px);
+    right: 0;
+    top: 50px;
+
+    overflow-y: scroll;
+
+    background-color: var(--background-main);
+
+    border-left: solid 1px var(--border-main);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lops-selector {
+    position: absolute;
+    width: 370px;
+    height: 55px;
+
+    top: -5px;
+
+    right: -5px;
+
+    z-index: 2;
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    background-color: var(--accent-main);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.lops-selector h6 {
+    color: white;
+    opacity: 75%;
+    font-size: 20px;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.lops-selector h6:hover {
+    opacity: 100% !important;
+}
+
+.selected {
+    opacity: 100% !important;
+    font-family: 'bold';
+}
+
+.overview-content {
+    padding: 10px;
+
+    width: 80%;
+    height: auto;
+    margin: 10px;
+
+    border-bottom: solid 1px var(--border-main);
+
+}
+
+.course-lops {
+    padding: 10px;
+
+    width: 80%;
+    height: auto;
+    margin: 10px;
+
+    border-bottom: solid 1px var(--border-main);
+}
+
+.course-lops h1,
+.overview-content h1 {
+    margin: 5px;
+    padding: 5px;
+}
+
+
+.course-lops ul,
+.overview-content ul {
+    margin: 5px;
+    padding: 5px;
+}
+
+.course-lops ul a:nth-child(2),
+.overview-content ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.Sisältö,
+.Tavoitteet,
+.Kuvaus {
+    font-family: 'regular' !important;
+    font-style: italic;
+}
+
+.course-loading-screen {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    background-image: url(/assets/img/loading-book.gif);
+    background-size: 75px 75px;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    filter: brightness(0);
+
+    display: none;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+    }
+
+    .main {
+        margin-top: 40px;
+        width: 95%;
+        height: 95%;
+    }
+
+    .course-container {
+        width: 70%;
+    }
+
+    .course-info-container {
+        width: 30%;
+        top: 0;
+        height: 100%;
+    }
+
+    .lops-selector {
+        width: 104%;
+        right: -2%;
+        top: -40px;
+
+        height: 40px;
+    }
+
+    .container {
+        justify-content: flex-end;
+    }
+
+    .content {
+        height: calc(100% - 50px - 5%);
+        bottom: 2.5%;
+    }
+}

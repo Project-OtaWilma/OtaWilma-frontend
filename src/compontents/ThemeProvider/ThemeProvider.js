@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getConfig, useConfig } from '../../features/themes/configSlice';
-import { getTheme, loadTheme, useThemes } from '../../features/themes/themeSlice';
+import { getTheme, loadTheme, loadThemeDefault, useThemes } from '../../features/themes/themeSlice';
 import { useAuth } from '../../features/authentication/authSlice';
 
 export default function ThemeProvider({ children }) {
@@ -13,6 +13,8 @@ export default function ThemeProvider({ children }) {
     const themes = useSelector(useThemes);
 
     const initialize = () => {
+        if(!auth.token) return dispatch(loadThemeDefault({id: 'light'}));
+            
         dispatch(getConfig({auth: auth.token}));
     }
 
@@ -42,7 +44,7 @@ export default function ThemeProvider({ children }) {
     return (
         <>
             {themes.isInitialized ? <></> : <h2>Loading...</h2>}
-            {config.hasLoaded ? children : <></>}
+            {children}
         </>
     )
 }

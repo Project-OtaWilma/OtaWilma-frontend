@@ -14,6 +14,41 @@
     z-index: 5;
 }
 
+.top .logo-text {
+    margin-left: 350px;
+}
+
+.logo-text h1 {
+    color: var(--font-h4);
+    font-size: 30px;
+    padding: 5px;
+}
+
+.top a {
+    background: none;
+    padding: 15px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.top a h5 {
+    color: var(--font-h5);
+    font-size: 17px;
+    pointer-events: none;
+}
+
+.top a h1 {
+    pointer-events: none;
+}
+
+.top a:hover {
+    background-color: rgba(255, 255, 255, 0.174) !important;
+}
+
 .top .user-info {
     position: absolute;
     width: 300px;
@@ -66,41 +101,11 @@
     cursor: pointer;
 }
 
+.user-data .logout a {
+    margin: 0;
+    padding: 0;
+}
+
 .logout:hover {
     opacity: 100%;
-}
-
-.top .logo-text {
-    margin-left: 350px;
-}
-
-.logo-text h1 {
-    color: var(--font-h4);
-    font-size: 30px;
-    padding: 5px;
-}
-
-.top a {
-    background: none;
-    padding: 15px;
-    height: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-.top a h5 {
-    color: var(--font-h5);
-    font-size: 17px;
-    pointer-events: none;
-}
-
-.top a h1 {
-    pointer-events: none;
-}
-
-.top a:hover {
-    background-color: rgba(255, 255, 255, 0.174) !important;
 }

@@ -382,5 +382,6 @@ export {
     fetchGradeBook,
     fetchNews,
     fetchNewsContent,
-    fetchSchedule
+    fetchSchedule,
+    fectchCourseList
 }

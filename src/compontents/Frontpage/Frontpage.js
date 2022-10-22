@@ -38,7 +38,7 @@ export default function Frontpage() {
                     </div>
                 </div>
                 <div className={styles['middle']}>
-
+                    
                </div>
                 <div className={styles['right']}>
                     <div className={styles['news']}>
@@ -53,7 +53,71 @@ export default function Frontpage() {
                     </div>
                 </div>
                 <div className={styles['middle']}>
+                    <div className={styles["links"]}>
+                        <h1>Linkit</h1>
+                        <h3>Opiskelu</h3>
 
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://classroom.google.com/">Google Classroom</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://www.microsoft.com/fi-fi/microsoft-teams/log-in">Microsoft
+                                Teams</a>
+                        </div>
+
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://espoo.inschool.fi/">Wilma - espoo</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://digikirja.otava.fi/tietokantajulkaisut/maol-2020/">MAOL
+                                digitaulukot</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://www.sanomapro.fi/">Sanomapro - digikirjat</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://opiskelija.otava.fi/materiaalit/omat">Otava -
+                                digikirjat</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://app.studeo.fi/auth/login">Studeo -
+                                digikirjat</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://shop.edita.fi/digiedita/omat-tuotteet">Edita -
+                                digikirjat</a>
+                        </div>
+                        <h3>Hyödyllinen</h3>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://lomalaskuri.tk/OtaniemenLukio/Etusivu">Lomalaskuri</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank"
+                                href="https://www.espoo.fi/fi/otaniemen-lukio/kalenteri-otaniemen-lukio">Otaniemen lukio
+                                - Kalenteri</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank"
+                                href="https://www.espoo.fi/fi/otaniemen-lukio/opiskelijalle-otaniemen-lukio#section-33736">Otaniemen
+                                Lukio - opiskelijalle</a>
+                        </div>
+                        <h3>Ruokailu</h3>
+                        <div className={styles["link"]}>
+                            <a target="_blank"
+                                href="https://www.amica.fi/ravintolat/ravintolat-kaupungeittain/espoo/tietokyla/">Amica
+                                -
+                                Otaniemen lukio</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://www.lounaat.info/otaniemi">Lounaat - Otaniemi</a>
+                        </div>
+                        <h3>Ruokailuvuorot</h3>
+                        <div className={styles["link"]}>
+                            <a target="_blank"
+                                href="https://drive.google.com/file/d/1NrGciABX7vW9lq7q4mA7xfoNEmPrRr_z/view">Ruokailuvuorot
+                                - 1A periodi</a>
+                        </div>
+                    </div>
                 </div>
                 <div className={styles['right']}>
                     <div className={styles['messages']}>

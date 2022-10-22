@@ -7,29 +7,31 @@ import Frontpage from '../Frontpage/Frontpage';
 import Login from '../Login/Login';
 import Navbar from '../Navbar/Navbar';
 import ThemeProvider from '../ThemeProvider/ThemeProvider';
+import Gradebook from '../Gradebook/Gradebook';
 
 import {
     BrowserRouter,
     Routes,
     Route,
+    Router,
 } from "react-router-dom";
 
 function App() {
     const auth = useSelector(useAuth);
-
-    if (!auth.token) return <Login />
-
+    
     return (
         <BrowserRouter>
             <ThemeProvider>
-                <Navbar />
+                {auth.token ? <Navbar /> : <></>}
                 <Routes>
-                    <Route path='/' element={<Frontpage />} />
+                    <Route path='/' element={auth.token ? <Frontpage /> : <Login />} />
+                    <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
                     <Route path='/login' element={<Login />} />
                 </Routes>
             </ThemeProvider>
         </BrowserRouter>
     );
+    
 }
 
 export default App;

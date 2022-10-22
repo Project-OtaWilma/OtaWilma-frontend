@@ -1,0 +1,254 @@
+.top {
+    padding-left: 0 !important;
+}
+
+.top .logo-text {
+    color: var(--font-h4);
+    font-size: 30px;
+    padding: 5px;
+
+    margin-left: 20px;
+}
+
+.detail {
+    width: 100%;
+    height: 40px;
+
+    background-color: var(--accent-main);
+}
+
+.container {
+    flex-direction: row !important;
+}
+
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    max-width: 1300px;
+
+    display: flex;
+    flex-direction: row;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.left,
+.right {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.left {
+    left: 0;
+    background-color: var(--background-darker);
+
+    background-image: url(/assets/img/otakarhu.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    background-size: 50%;
+}
+
+.right {
+    left: 50%;
+    border-top: solid 50px var(--accent-main);
+
+    height: calc(100% - 50px);
+}
+
+.right h1 {
+    width: 75%;
+    text-align: center;
+
+    font-size: 30px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.right h2 {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 20px;
+
+    font-size: 17px;
+    padding: 10px;
+}
+
+.login-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form h3 {
+    width: 100%;
+    text-align: left;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 7px;
+    margin: 10px;
+
+    font-size: 17px;
+
+    border: solid 1px var(--border-main);
+    border-radius: 5px;
+
+    background: none !important;
+}
+
+.account {
+    position: absolute;
+    text-align: left;
+    color: var(--font-h1);
+    font-size: 13px;
+
+    opacity: 75%;
+
+    left: 10px;
+    bottom: 10px;
+
+    cursor: pointer;
+}
+
+.login-otawilma {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form .info {
+    width: 100%;
+}
+
+.login-form h3 strong {
+    cursor: pointer;
+}
+
+.info h2 {
+    width: 100%;
+    font-size: 13px;
+    opacity: 75%;
+    border-left: solid 1px var(--border-main);
+}
+
+input::placeholder {
+    color: rgba(35, 35, 35, 0.342);
+    font-style: italic;
+}
+
+.terms-of-service {
+    margin: 5px;
+    width: 75%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.terms-of-service h2 {
+    margin: 0;
+    font-size: 13px;
+    opacity: 75%;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.terms-of-service h2:hover {
+    opacity: 100% !important;
+}
+
+h2 strong {
+    color: var(--font-h1);
+    cursor: pointer;
+}
+
+.terms-of-service input {
+    margin-left: 5px;
+}
+
+.right button {
+    margin: 20px;
+    padding: 10px;
+    margin-bottom: 60px;
+    width: 200px;
+
+    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+
+    color: white;
+
+    align-self: center;
+
+    transition: opacity .2s ease-in-out;
+}
+
+.right button:hover {
+    opacity: 65%;
+}
+
+.login-error {
+    width: 80%;
+    font-size: 14px;
+    text-align: center;
+    color: var(--error);
+}
+
+.right h6 {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+
+    opacity: 50%;
+
+    color: rgb(57, 57, 57);
+}
+
+.login-loading-screen {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    height: 100%;
+
+    background-image: url(/assets/img/loading-book.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 85px 85px;
+
+    filter: brightness(0);
+    display: none;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+
+        max-width: 800px;
+    }
+}
+
+
+@media screen and (max-height: 750px) {
+    .container {
+        justify-content: flex-end;
+    }
+
+    .content {
+        height: calc(100% - 50px - 5%);
+        bottom: 2.5%;
+    }
+}

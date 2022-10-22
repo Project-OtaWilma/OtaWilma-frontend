@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className={styles['top']}>
             <div className={styles['user-info']}>
                 <div className={styles['user-data']}>
-                    <h1>{config.value['username'] ? username(config.value['username']) : '...'}</h1>
+                    <h1>{config.value ? username(config.value['username']) : '...'}</h1>
                     <h2>Opiskelija</h2>
                     <div className={styles['logout']} id="logout">
                     <Link to={'/login'}>Kirjaudu ulos</Link>
@@ -22,7 +22,7 @@ export default function Navbar() {
             </div>
             <Link className={styles['logo-text']} to={'/'}><h1>OtaWilma</h1></Link>
             <Link to={'/'}><h5>Viestit</h5></Link>
-            <Link to={'/'}><h5>Opinnot</h5></Link>
+            <Link to={'/grades'}><h5>Opinnot</h5></Link>
             <Link to={'/'}><h5>Kurssitarjotin</h5></Link>
             <Link to={'/'}><h5>Opettajat</h5></Link>
             <Link to={'/'}><h5>Asetukset</h5></Link>
