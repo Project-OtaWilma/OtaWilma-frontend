@@ -23,7 +23,7 @@ export default function Frontpage() {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
         dispatch(getGradebook({auth: auth.token}))
-        dispatch(getWeek({auth: auth.token, date: new Date('2022-10-26')}))
+        dispatch(getWeek({auth: auth.token, date: new Date('2022-10-24')}))
     }
 
     // componentDidMount
@@ -130,22 +130,24 @@ export default function Frontpage() {
 }
 
 const Schedule = ({schedule}) => {
-    if (schedule.isLoading) return (<h2>Loading...</h2>);
+    if (schedule.isLoading || !schedule.current) return (<h2>Loading...</h2>);
 
+    const week = schedule['schedule'][schedule.current];
     return (
         <>
             {
-                Object.keys(schedule['schedule']).slice(0, 5).map((date, i) => {
-                    const day = schedule['schedule'][date];
+                
+                Object.keys(week.days).slice(0, 5).map((date, i) => {
+                    const day = week.days[date];
                     return <DayObject key={i} date={date} day={day} />
                 })
+                
             }
         </>
     )
 }
 
 const DayObject = ({date, day}) => {
-
     return (
         <div className={styles['day']}>
             <div className={styles['date']}>
@@ -170,7 +172,7 @@ const LessonObject = ({lesson}) => {
         style={{
             height: `${height}px`,
             top: `${(start) + 30}px`,
-            filter: `brightness(${((Math.random() * 2.5) - 1) * 6 + 100}%)`
+            filter: `brightness(${((Math.random() * 2.7) - 1) * 8 + 100}%)`
         }}>
             <h1>{`${lesson['start']} - ${lesson['end']}`}</h1>
             {
@@ -203,6 +205,7 @@ const News = ({news}) => {
 
     return (
         <>
+            <Link to={'/'}>Tiedotteet</Link>
             {
                 Object.keys(news['current']).map((date, i) => {
                     const n = news['current'][date];
@@ -237,6 +240,7 @@ const Messages = ({messages}) => {
 
     return (
         <>
+            <Link to={'/'}>Viestit</Link>
             {
                 messages['inbox'].content.map((message, i) => {
                     return <MessageObject key={i} message={message}/>
@@ -262,6 +266,7 @@ const Grades = ({grades}) => {
 
     return (
         <>
+        <Link className={styles['title']} to={'/grades'}>Opinnot</Link>
             <div className={styles['overview']}>
                 {
                     Object.keys(grades['overview']).map((key, i) => {

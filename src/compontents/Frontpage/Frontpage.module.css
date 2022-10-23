@@ -402,6 +402,8 @@
 
     background-color: var(--schedule-main);
 
+    transition: all .4s ease-in-out;
+
     display: flex;
     flex-direction: column;
     justify-content: center;

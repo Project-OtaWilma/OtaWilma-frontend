@@ -7,10 +7,21 @@ import {
 export const getGradebook = createAsyncThunk(
     'grades/getGradebook',
     async (options, thunkAPI) => {
-        const auth = options['auth'];
-        
-        const response = await fetchGradeBook(auth);
-        return response
+        return new Promise((resolve, reject) => {
+            const grades = thunkAPI.getState().grades;
+            
+            if(grades.hasLoaded) return resolve({changed: false})
+            
+            const auth = options['auth'];
+            
+            fetchGradeBook(auth)
+            .then(grades => {
+                return resolve({changed: true, grades: grades});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+        });
     }
 )
 
@@ -20,15 +31,24 @@ export const gradeSlice = createSlice({
         grades: {},
         overview: {},
         isLoading: false,
+        hasLoaded: false,
     },
     reducers: {},
     extraReducers: {
         [getGradebook.fulfilled]: (state, action) => {
-            state.overview = action.payload['overview'];
-            delete action.payload['overview'];
+            if(!action.payload.changed) {
+                state.isLoading = false;
+                return;
+            };
 
-            state.grades = action.payload;
+            const grades = action.payload.grades;
+            
+            state.overview = grades['overview'];
+            delete grades['overview'];
+
+            state.grades = grades;
             state.isLoading = false;
+            state.hasLoaded = true;
         },
         [getGradebook.rejected]: (state, action) => {
             console.log(action);
@@ -45,6 +65,7 @@ export const useGrades = (state) => ({
     grades: state.grades.grades,
     overview: state.grades.overview,
     isLoading: state.grades.isLoading,
+    hasLoaded: state.grades.hasLoaded,
 });
 
 export default gradeSlice.reducer;
