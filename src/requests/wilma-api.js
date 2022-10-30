@@ -73,9 +73,8 @@ const fetchMessages = (auth, path, limit) => {
     });
 }
 
-const fetchMessageContent = (hash) => {
+const fetchMessageContent = (auth, hash) => {
     return new Promise((resolve, reject) => {
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(`${wilmaAPI}messages/${hash}`,
@@ -162,6 +161,8 @@ const fetchGradeBook = (auth, filter) => {
 
 const fetchCourse = (lops, id) => {
     return new Promise(async (resolve, reject) => {
+        // override to using stable api
+        // const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
         const url = `${wilmaAPI}lops/${lops}/courses/get/${id}`;
 
         fetchJson(url, {
@@ -383,5 +384,6 @@ export {
     fetchNews,
     fetchNewsContent,
     fetchSchedule,
-    fectchCourseList
+    fectchCourseList,
+    fetchCourse
 }

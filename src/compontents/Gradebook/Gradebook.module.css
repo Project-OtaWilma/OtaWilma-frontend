@@ -382,18 +382,8 @@
 }
 
 .course-loading-screen {
-    position: fixed;
-    height: 100%;
     width: 100%;
-
-    background-image: url(/assets/img/loading-book.gif);
-    background-size: 75px 75px;
-    background-position: center center;
-    background-repeat: no-repeat;
-
-    filter: brightness(0);
-
-    display: none;
+    height: 100%;
 }
 
 @media screen and (max-width: 1400px) {

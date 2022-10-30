@@ -21,7 +21,7 @@ export default function Navbar() {
                 </div>
             </div>
             <Link className={styles['logo-text']} to={'/'}><h1>OtaWilma</h1></Link>
-            <Link to={'/'}><h5>Viestit</h5></Link>
+            <Link to={'/messages'}><h5>Viestit</h5></Link>
             <Link to={'/grades'}><h5>Opinnot</h5></Link>
             <Link to={'/'}><h5>Kurssitarjotin</h5></Link>
             <Link to={'/'}><h5>Opettajat</h5></Link>

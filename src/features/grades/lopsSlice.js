@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-    fectchCourseList
+    fectchCourseList,
+    fetchCourse
 } from '../../requests/wilma-api';
 
 
@@ -16,6 +17,30 @@ export const getLops = createAsyncThunk(
             fectchCourseList(current)
             .then(list => {
                 return resolve({changed: true, lops: current, courses: list});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+        });
+    }
+)
+
+export const getCourse = createAsyncThunk(
+    'lopsSlice/getCourseLops',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const lops = thunkAPI.getState().lops;
+            const current = options['lops'];
+            const subject = options['subject'];
+            const code = options['code'];
+
+            const course = lops.lops[current]['content'][subject][code];
+
+            if(course.hasLoaded) return resolve({changed: false});
+            
+            fetchCourse(current, code)
+            .then(info => {
+                return resolve({changed: true, lops: current, course: {...course, ...info}});
             })
             .catch(err => {
                 return reject(err);
@@ -40,7 +65,14 @@ export const lopsSlice = createSlice({
             }
         }
     },
-    reducers: {},
+    reducers: {
+        getCourse: (state, action) => {
+            const code = action.payload['code'];
+            state.current = code;
+            console.log(state.current);
+            return state
+        }
+    },
     extraReducers: {
         [getLops.fulfilled]: (state, action) => {
             const lops = action.payload['lops'];
@@ -48,12 +80,30 @@ export const lopsSlice = createSlice({
                 state.lops[lops].isLoading = false;
                 return;
             };
-            
-            state.lops[lops].content = action.payload['courses'];
+
+            const courses = action.payload['courses'];
+            Object.keys(courses).map(subject => Object.keys(courses[subject]).map(code => courses[subject][code] = {...courses[subject][code], ...{hasLoaded: false}}));
+
+            state.lops[lops].content = courses;
             state.lops[lops].isLoading = false;
             state.lops[lops].hasLoaded = true;
         },
         [getLops.rejected]: (state, action) => {
+            console.log(action);
+            console.log('api call rejected');
+        },
+        [getCourse.fulfilled]: (state, action) => {
+            const lops = action.payload['lops'];
+            if(!action.payload.changed) {
+                return;
+            }
+            
+            const course = action.payload['course'];
+
+            course.hasLoaded = true;
+            state.lops[lops]['content'][course.subject][course.code] = course;
+        },
+        [getCourse.rejected]: (state, action) => {
             console.log(action);
             console.log('api call rejected');
         }

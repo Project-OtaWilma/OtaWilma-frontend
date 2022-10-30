@@ -9,11 +9,12 @@ import { useSchedule, getWeek } from '../../features/schedule/scheduleSlice';
 import styles from './Frontpage.module.css';
 import { Link } from 'react-router-dom';
 
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
+
 
 export default function Frontpage() {
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
-    const messages = useSelector(useMessages);
     const grades = useSelector(useGrades);
     const news = useSelector(useNews);
     const schedule = useSelector(useSchedule);
@@ -42,14 +43,14 @@ export default function Frontpage() {
                </div>
                 <div className={styles['right']}>
                     <div className={styles['news']}>
-                        <News news={news.news} />
+                        <NewsList news={news.news} />
                     </div>
                 </div>
             </div>
             <div className={styles['bottom-container']}>
                 <div className={styles['left']}>
                 <div className={styles['grades']}>
-                        <Grades grades={grades} />
+                        <GradeList grades={grades} />
                     </div>
                 </div>
                 <div className={styles['middle']}>
@@ -121,7 +122,7 @@ export default function Frontpage() {
                 </div>
                 <div className={styles['right']}>
                     <div className={styles['messages']}>
-                        <Messages messages={messages.messages} />
+                        <MessageList />
                     </div>
                 </div>
             </div>
@@ -130,7 +131,7 @@ export default function Frontpage() {
 }
 
 const Schedule = ({schedule}) => {
-    if (schedule.isLoading || !schedule.current) return (<h2>Loading...</h2>);
+    if (schedule.isLoading || !schedule.current) return <LoadingScreen className={styles['loading-screen']} />;
 
     const week = schedule['schedule'][schedule.current];
     return (
@@ -200,8 +201,8 @@ const GroupObject = ({group}) => {
     )
 }
 
-const News = ({news}) => {
-    if (news['current'].isLoading) return (<h2>Loading...</h2>);
+const NewsList = ({news}) => {
+    if (news['current'].isLoading) return <LoadingScreen className={styles['loading-screen']} />;
 
     return (
         <>
@@ -235,15 +236,18 @@ const NewsObject = ({date, news}) => {
     )
 }
 
-const Messages = ({messages}) => {
-    if (messages['inbox'].isLoading) return (<h2>Loading...</h2>);
+const MessageList = () => {
+    const messages = useSelector(useMessages);
+    const list = messages.list;
+    const map = messages.messages;
+    if (list['inbox'].isLoading) return <LoadingScreen className={styles['loading-screen']} />;
 
     return (
         <>
             <Link to={'/'}>Viestit</Link>
             {
-                messages['inbox'].content.map((message, i) => {
-                    return <MessageObject key={i} message={message}/>
+                list['inbox']['content'].map((id, i) => {
+                    return <MessageObject key={i} message={map[id]}/>
                 })
             }
         </>
@@ -261,21 +265,14 @@ const MessageObject = ({message}) => {
     )
 }
 
-const Grades = ({grades}) => {
-    if (grades.isLoading) return (<h2>Loading...</h2>);
+const GradeList = ({grades}) => {
+    if (grades.isLoading) return <LoadingScreen className={styles['loading-screen']} />;
 
     return (
         <>
         <Link className={styles['title']} to={'/grades'}>Opinnot</Link>
-            <div className={styles['overview']}>
-                {
-                    Object.keys(grades['overview']).map((key, i) => {
-                        const value = grades['overview'][key];
 
-                        return value ? <ul key={i}><a>{`${key}: `}</a><a>{value}</a></ul> : null;
-                    })
-                }
-            </div>
+            <OverviewObject overview={grades['overview']} />
             {
                 Object.keys(grades['grades']).map((subject, i) => {
                     const grade = grades['grades'][subject];
@@ -284,6 +281,20 @@ const Grades = ({grades}) => {
                 })
             }
         </>
+    )
+}
+
+const OverviewObject = ({overview}) => {
+    return(
+        <div className={styles['overview']}>
+        {
+            Object.keys(overview).map((key, i) => {
+                const value = overview[key];
+
+                return value ? <ul key={i}><a>{`${key}: `}</a><a>{value}</a></ul> : null;
+            })
+        }
+        </div>
     )
 }
 

@@ -8,6 +8,7 @@ import Login from '../Login/Login';
 import Navbar from '../Navbar/Navbar';
 import ThemeProvider from '../ThemeProvider/ThemeProvider';
 import Gradebook from '../Gradebook/Gradebook';
+import Messages from '../Messages/Messages';
 
 import {
     BrowserRouter,
@@ -26,6 +27,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={auth.token ? <Frontpage /> : <Login />} />
                     <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
+                    <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/login' element={<Login />} />
                 </Routes>
             </ThemeProvider>

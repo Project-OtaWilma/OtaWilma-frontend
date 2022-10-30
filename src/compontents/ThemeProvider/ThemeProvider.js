@@ -43,10 +43,14 @@ export default function ThemeProvider({ children }) {
 
     return (
         <>
-            {themes.isInitialized ? <></> : <h2>Loading...</h2>}
+            <LoadingScreen active={!themes.current}/>
             {children}
         </>
     )
+}
+
+const LoadingScreen = ({active}) => {
+    return <div style={{opacity: active ? 100 : 0}} className='loading-screen'></div>
 }
 
 const filter = (theme) => `blur(${theme.background.blur.value}px)
