@@ -1,0 +1,264 @@
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    border-left: solid 10px var(--accent-main);
+
+    background-color: var(--background-main);
+}
+
+.side-bar {
+    position: absolute;
+    left: 0;
+    width: 300px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.categories {
+    height: 50px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background-color: var(--accent-main);
+}
+
+.list {
+    position: absolute;
+    height: calc(100% - 50px - 2.5%);
+    width: 95%;
+    top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-right: solid 1px var(--border-main);
+
+    overflow-y: scroll;
+}
+
+.categories div {
+    color: var(--font-h4);
+    font-size: 20px;
+    opacity: 65%;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.categories div:hover {
+    opacity: 85%;
+}
+
+.categories .selected {
+    font-family: 'semi-bold';
+    opacity: 100%;
+
+    pointer-events: none;
+}
+
+#current,
+#static,
+#old {
+    height: auto;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    display: none;
+}
+
+#current {
+    display: flex;
+}
+
+
+#current h1,
+#static h1,
+#old h1 {
+    width: 90%;
+    font-size: 20px;
+    width: auto;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+
+    border-bottom: solid 1px var(--border-main);
+}
+
+.news-object-current {
+    margin: 5px;
+    padding: 10px;
+
+    cursor: pointer;
+}
+
+.news-object-current:hover h1 {
+    opacity: 50%;
+}
+
+
+.news-object-current h1 {
+    font-size: 17px;
+    text-align: left;
+    margin: 2px;
+
+    transition: opacity .2s ease-in-out;
+
+    pointer-events: none;
+}
+
+.news-object-current h3 {
+    padding: 5px;
+    margin: 5px;
+
+    border-left: solid 1px var(--border-main);
+    pointer-events: none;
+}
+
+.news-object-current h4 {
+    margin: 10px;
+    color: var(--font-h2);
+    pointer-events: none;
+}
+
+
+.news-object-static {
+    width: 80%;
+    margin: 5px;
+    padding: 10px;
+
+    cursor: pointer;
+
+    border: solid 1px var(--border-main);
+    border-radius: 7px;
+}
+
+
+.news-object-static.disabled,
+.news-object-current.disabled {
+    cursor: not-allowed;
+}
+
+.news-object-static.disabled h1,
+.news-object-current.disabled h1 {
+    opacity: 100% !important;
+}
+
+.news-object-static h5,
+.news-object-current h5 {
+    font-size: 12px;
+    color: var(--error);
+    margin-left: 5px;
+}
+
+.news-object-static:hover>h4 {
+    opacity: 100%;
+}
+
+.news-object-static h1 {
+    width: 90%;
+    font-size: 17px;
+    text-align: left;
+
+    margin: 2px;
+    padding: 10px;
+
+    pointer-events: none;
+}
+
+.news-object-static h4 {
+    padding: 10px;
+    opacity: 40%;
+
+    color: var(--font-h2);
+
+    transition: opacity .2s ease-in-out;
+    pointer-events: none;
+}
+
+.news-content {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    height: 95%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.news-content * {
+    width: 90%;
+    padding: 5px;
+    height: auto;
+
+    color: var(--font-h2);
+
+    line-height: 1.3;
+    font-family: 'arial';
+}
+
+.news-content h1 {
+    font-size: 20px;
+    margin: 20px;
+}
+
+.news-content strong,
+.news-content b {
+    font-weight: bold;
+}
+
+.news-content .printout-footer {
+    display: none;
+}
+
+.news-content .__cf_email__ {
+    pointer-events: none;
+    color: red;
+    opacity: 30%;
+}
+
+.list-loading-screen {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+    }
+}
+
+
+@media screen and (max-height: 750px) {
+    .container {
+        justify-content: flex-end;
+    }
+
+    .content {
+        height: calc(100% - 50px - 5%);
+        bottom: 2.5%;
+    }
+}

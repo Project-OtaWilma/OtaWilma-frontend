@@ -3,23 +3,34 @@ import {
     fetchNews
 } from '../../requests/wilma-api';
 
+// generate random (0 - 25 000) id for news without id
+export const newsHrefToHash = (raw) => raw ? Number.parseInt(raw.split('/').reverse()[0]) : Math.floor(Math.random() * 25000);
 
 export const getNews = createAsyncThunk(
     'news/getNews',
     async (options, thunkAPI) => {
-        const auth = options['auth'];
-        const path = options['path'];
-        const limit = options['limit'] ? options['limit'] : 1000;
-        
-        const response = await fetchNews(auth, path, limit);
-        response['path'] = path;
-        return response
+        return new Promise((resolve, reject) => {
+            const news = thunkAPI.getState().news;
+            const auth = options['auth'];
+            const path = options['path'];
+            const limit = options['limit'] ? options['limit'] : 1000;
+
+            if(!news.list[path].isLoading) return resolve({changed: false, path: path})
+            
+            fetchNews(auth, path, limit)
+            .then(list => {
+                return resolve({changed: true, path: path, news: list})
+            })
+            .catch(err => {
+                return reject(err);
+            })
+        });
     }
 )
 export const newsSlice = createSlice({
     name: 'news',
     initialState: {
-        news: {
+        list: {
             current: {
                 isLoading: true,
                 content: []
@@ -33,22 +44,29 @@ export const newsSlice = createSlice({
                 content: []
             }
         },
+        news: {}
     },
     reducers: {},
     extraReducers: {
         [getNews.fulfilled]: (state, action) => {
             const path = action.payload['path'];
-            delete action.payload['path'];
+            if(!action.payload.changed) {
+                return;
+            }
 
+            const news = action.payload['news'];
+            const p = newsHrefToHash; // shorten 'parser' to increase readibility
+            
             switch(path) {
                 case 'current':
-                    Object.keys(action.payload).forEach(date => {action.payload[date] = action.payload[date].map(n => { return {...n, ...{isLoading: false, content: null}}}) })
+                    state.list[path].content = Object.keys(news).map(date => news[date].map(n => {const id = p(n.href); state.news[id] = {...n, ...{date: date, id: id, isLoading: true, isInvalid: !n.href}}; return id}) ).flat()
                     break;
                 default:
-                    action.payload = action.payload.map(n => { return {...n, ...{isLoading: false, content: null}}})
+                    state.list[path].content = news.map(n => {const id = p(n.href); state.news[id] = {...n, ...{isLoading: true, isInvalid: !n.href}}; return id})
                     break;
             }
-            state.news[path] = action.payload;
+
+            state.list[path].isLoading = false;
         },
         [getNews.rejected]: (state, action) => {
             console.log(action);
@@ -59,6 +77,7 @@ export const newsSlice = createSlice({
 });
 
 export const useNews = (state) => ({
+    list: state.news.list,
     news: state.news.news
 });
 

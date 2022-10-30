@@ -16,7 +16,6 @@ export default function Frontpage() {
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const grades = useSelector(useGrades);
-    const news = useSelector(useNews);
     const schedule = useSelector(useSchedule);
 
     const initialize = () => {
@@ -43,7 +42,7 @@ export default function Frontpage() {
                </div>
                 <div className={styles['right']}>
                     <div className={styles['news']}>
-                        <NewsList news={news.news} />
+                        <NewsList />
                     </div>
                 </div>
             </div>
@@ -201,37 +200,35 @@ const GroupObject = ({group}) => {
     )
 }
 
-const NewsList = ({news}) => {
-    if (news['current'].isLoading) return <LoadingScreen className={styles['loading-screen']} />;
+const NewsList = () => {
+    const news = useSelector(useNews);
+    const list = news.list['current'];
+    const map = news.news;
+    if (list.isLoading) return <LoadingScreen className={styles['loading-screen']} />;
 
     return (
         <>
             <Link to={'/'}>Tiedotteet</Link>
             {
-                Object.keys(news['current']).map((date, i) => {
-                    const n = news['current'][date];
-                    return <NewsObject key={i} date={date} news={n}/>
+                list['content'].map((id, i) => {
+                    return <NewsObject key={i} news={map[id]}/>
                 })
             }
         </>
     )
 }
 
-const NewsObject = ({date, news}) => {
+const NewsObject = ({news: n}) => {
+    
     return (
         <>
-            {
-                news.map(n => {
-                    return (
-                        <div key={n.href} className={styles['news-object']}>
-                            <h1>{n.title}</h1>
-                            <h2>{date}</h2>
-                            <h2>{n.sender.name}</h2>
-                            <h3>{n.description}</h3>
-                        </div>
-                    )
-                })
-            }
+            <div key={n.href} className={n.isInvalid ? `${styles['news-object']} ${styles['disabled']}`: styles['news-object']}>
+                <h1>{n.title}</h1>
+                <h2>{n.date}</h2>
+                <h2>{n.sender ? n.sender.name : <></>}</h2>
+                <h3>{n.description}</h3>
+                {n.isInvalid ? <h5>Tiedotteella ei ole tämän enempää sisältöä.</h5> : <></>} 
+            </div>
         </>
     )
 }
@@ -246,7 +243,7 @@ const MessageList = () => {
         <>
             <Link to={'/'}>Viestit</Link>
             {
-                list['inbox']['content'].map((id, i) => {
+                list['inbox']['content'].slice(0, 10).map((id, i) => {
                     return <MessageObject key={i} message={map[id]}/>
                 })
             }

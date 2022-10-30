@@ -9,6 +9,7 @@ import Navbar from '../Navbar/Navbar';
 import ThemeProvider from '../ThemeProvider/ThemeProvider';
 import Gradebook from '../Gradebook/Gradebook';
 import Messages from '../Messages/Messages';
+import News from '../News/News';
 
 import {
     BrowserRouter,
@@ -26,8 +27,9 @@ function App() {
                 {auth.token ? <Navbar /> : <></>}
                 <Routes>
                     <Route path='/' element={auth.token ? <Frontpage /> : <Login />} />
-                    <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
                     <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
+                    <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
+                    <Route path='/news' element={auth.token ? <News /> : <Login />} />
                     <Route path='/login' element={<Login />} />
                 </Routes>
             </ThemeProvider>

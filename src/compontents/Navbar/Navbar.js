@@ -24,6 +24,7 @@ export default function Navbar() {
             <Link to={'/messages'}><h5>Viestit</h5></Link>
             <Link to={'/grades'}><h5>Opinnot</h5></Link>
             <Link to={'/'}><h5>Kurssitarjotin</h5></Link>
+            <Link to={'/news'}><h5>Tiedotteet</h5></Link>
             <Link to={'/'}><h5>Opettajat</h5></Link>
             <Link to={'/'}><h5>Asetukset</h5></Link>
         </div>
