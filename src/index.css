@@ -141,6 +141,10 @@ body {
     display: none;
 }
 
+.printout-footer {
+    display: none;
+}
+
 @media screen and (max-width: 900px) {
     .container {
         display: none;

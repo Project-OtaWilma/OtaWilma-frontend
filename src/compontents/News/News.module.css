@@ -206,6 +206,7 @@
     flex-direction: column;
     align-items: center;
 
+    overflow-x: hidden;
     overflow-y: scroll;
 }
 
@@ -230,10 +231,6 @@
     font-weight: bold;
 }
 
-.news-content .printout-footer {
-    display: none;
-}
-
 .news-content .__cf_email__ {
     pointer-events: none;
     color: red;
@@ -241,6 +238,11 @@
 }
 
 .list-loading-screen {
+    width: 100%;
+    height: 100%;
+}
+
+.news-loading-screen {
     width: 100%;
     height: 100%;
 }

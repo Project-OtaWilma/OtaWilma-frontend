@@ -30,6 +30,7 @@ function App() {
                     <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
                     <Route path='/news' element={auth.token ? <News /> : <Login />} />
+                    <Route path='/news/:id' element={auth.token ? <News /> : <Login />} />
                     <Route path='/login' element={<Login />} />
                 </Routes>
             </ThemeProvider>
