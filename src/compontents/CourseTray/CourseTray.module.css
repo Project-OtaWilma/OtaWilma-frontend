@@ -1,0 +1,712 @@
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    border-left: solid 10px var(--accent-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.tray-list {
+    position: absolute;
+    height: 100%;
+    width: 250px;
+
+    left: 0;
+
+    background-color: var(--background-main);
+
+    border-right: solid 1px var(--border-main);
+
+    overflow-y: scroll;
+}
+
+.tray-list .tray {
+    margin: 20px;
+}
+
+.tray h1 {
+    padding: 5px;
+}
+
+.tray .period-list {
+    padding: 5px;
+
+    border-left: solid 2px var(--border-main);
+}
+
+.period-list h2 {
+    padding: 5px;
+
+    cursor: pointer;
+    user-select: none;
+    transition: opacity .2s ease-in-out;
+}
+
+.period-list h2.selected {
+    font-family: 'bold';
+}
+
+.period-list h2:hover {
+    opacity: 50%;
+}
+
+.tray-loading-screen {
+    width: 100%;
+    height: 100%;
+}
+
+.tray-main {
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 250px - 350px);
+
+    left: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: var(--background-main);
+
+    overflow-y: scroll;
+}
+
+.tray-main .period {
+    width: 90%;
+    height: auto;
+
+    margin-top: 30px;
+
+    background-color: var(--background-main);
+
+    border-bottom: solid 1px var(--border-main);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.period h1 {
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+
+    border-bottom: solid 2px var(--border-main);
+}
+
+.period-actions {
+    width: 80%;
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hide-period {
+    width: 25px;
+    height: 25px;
+
+    background: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide-period:hover,
+.disable-period:hover {
+    transform: scale(1.1);
+}
+
+.hide-period h6 {
+    width: 80%;
+    height: 80%;
+    padding-left: 10px;
+
+    margin: 2px;
+
+    background-image: url(../../assets/img/up.svg);
+    background-position: center center;
+    background-size: contain;
+
+    transform: rotate(0);
+
+    transition: transform .3s ease-in-out;
+}
+
+.hide-period .open {
+    transform: rotate(180deg) !important;
+}
+
+
+.disable-period {
+    width: 25px;
+    height: 25px;
+
+    margin: 2px;
+
+    background: none;
+
+    background-image: url(../../assets/img/close.svg);
+    background-position: center center;
+    background-size: contain;
+
+    transition: transform .3s ease-in-out;
+}
+
+
+.period.open .bar {
+    width: 90%;
+
+    margin: 10px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.period.closed .bar {
+    display: none;
+}
+
+.bar h2 {
+    padding: 10px;
+}
+
+.bar .course-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.course-list div {
+    margin: 2.5px;
+    padding: 2.5px;
+
+    cursor: pointer;
+
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.279);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-list div:hover>.course-data {
+    opacity: 1;
+}
+
+.course-data {
+    opacity: 0;
+    margin-top: 100px !important;
+
+    position: absolute;
+
+    background-color: black;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: opacity .2s ease-in-out;
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+.course-data h2 {
+    padding: 2px;
+    margin: 0;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+}
+
+.course-list div {
+    color: var(--course-tray-h1);
+    padding: 4px;
+}
+
+.course-list div.disa {
+    text-decoration: line-through;
+}
+
+.course-list div.matched,
+.course-list div.disa.matched {
+    font-family: 'bold';
+    color: red;
+}
+
+.course-list div.filtered,
+.course-list div.disa.filtered {
+    display: none;
+}
+
+/*
+    course hashes
+
+    "why the hell would they use different hashes for different schools, the course types are the same..."
+
+    thereforte, will only work for periods in:
+    "Espoon kesälukio 2022"
+    "Otaniemen lukio 2021-2022"
+    "Otaniemen lukio 2022-2023"
+    "Otaniemen lukio 21-22, opiskelijat 18, 19 ja 20"
+*/
+
+.ksuor-off,
+.ksuor-on {
+    background-color: rgb(178, 178, 178);
+    opacity: 75%;
+
+    border: solid 1px gray;
+    box-shadow: none;
+    color: rgb(90, 90, 90) !important;
+
+    pointer-events: none;
+}
+
+.k70F27363_35245-off,
+.k70F27363_35780-off,
+.kAB14633F_1381-off,
+.kAB14633F_1388-off,
+.kB5DAF4F1_27576-off,
+.k5C1BC722_1174-off {
+    background-color: var(--L2021-mandatory-main);
+}
+
+.k70F27363_35249-off,
+.kB5DAF4F1_27580-off {
+    background-color: var(--L2021-g-optional-main);
+}
+
+.k70F27363_35253-off,
+.kAB14633F_1519-off,
+.kB5DAF4F1_29537-off,
+.kB5DAF4F1_31827-off,
+.kB5DAF4F1_31827-off {
+    background-color: var(--L2021-l-optional-main);
+}
+
+.k70F27363_35763-off,
+.k5C1BC722_1168-off {
+    background-color: var(--L2016-l-optional-main);
+}
+
+.k70F27363_35783-off,
+.k5C1BC722_1177-off,
+.k5C1BC722_1660-off {
+    background-color: var(--L2016-g-optional-main);
+}
+
+.k5C1BC722_1188-off,
+.k5C1BC722_1217-off,
+.k5C1BC722_1662-off,
+.k70F27363_35766-off {
+    background-color: var(--L2021-diploma-main);
+}
+
+/* k5C1BC722_1188-off */
+
+.k70F27363_35245-on,
+.k70F27363_35780-on,
+.kAB14633F_1381-on,
+.kAB14633F_1388-on,
+.kB5DAF4F1_27576-on,
+.k5C1BC722_1174-on {
+    background-color: var(--L2021-mandatory-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white !important;
+}
+
+.k70F27363_35249-on,
+.kB5DAF4F1_27580-on {
+    background-color: var(--L2021-g-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white !important;
+}
+
+.k70F27363_35253-on,
+.kAB14633F_1519-on {
+    background-color: var(--L2016-l-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white !important;
+}
+
+.k70F27363_35763-on,
+.k5C1BC722_1168-on {
+    background-color: var(--L2016-l-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white !important;
+}
+
+.k70F27363_35783-on,
+.k5C1BC722_1177-on,
+.k5C1BC722_1660-on {
+    background-color: var(--L2016-g-optional-selected);
+    border: solid 3px black;
+
+    box-shadow: none;
+    color: white !important;
+}
+
+.k5C1BC722_1188-on,
+.k5C1BC722_1217-on,
+.k5C1BC722_1662-on,
+.k70F27363_35766-on {
+    background-color: var(--L2021-diploma-selected);
+}
+
+.tray-info {
+    height: 100%;
+    width: 350px;
+
+    position: absolute;
+    right: 0;
+
+    border-left: solid 2px var(--border-main);
+
+    background-color: var(--background-main);
+
+    overflow-y: scroll;
+}
+
+.tray-info h1 {
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+
+    border-bottom: solid 2px var(--border-main);
+}
+
+.tray-info h3 {
+    margin: 5px;
+}
+
+.tray-info form {
+    margin: 20px;
+}
+
+.tray-info select {
+    padding: 5px;
+    margin: 5px;
+
+    background: none;
+    color: rgb(82, 82, 82);
+}
+
+.tray-info #filter-button {
+    margin: 20px;
+}
+
+.tray-info input {
+    padding: 10px;
+    margin: 5px;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    font-style: italic;
+    font-size: 15px;
+}
+
+.search-result {
+    padding-left: 10px;
+    margin-left: 10px !important;
+    opacity: 75%;
+
+    border-left: solid var(--font-h2);
+}
+
+.tray-info button {
+    padding: 7px;
+    margin: 10px;
+
+    border-radius: 3px;
+    color: white;
+    background: linear-gradient(to bottom, var(--login-lighter), var(--login-main));
+
+    transition: opacity .2s ease-in-out;
+}
+
+.course-action-apply h3 {
+    font-size: 16px;
+    padding: 0;
+    margin: 0px;
+    margin-right: 7px;
+
+    color: white;
+    opacity: 50%;
+
+    font-family: 'bold';
+}
+
+.course-action-apply h2 {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+
+    color: white;
+}
+
+.course-action-apply {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-action-apply.applied {
+    opacity: 50%;
+    pointer-events: none;
+}
+
+.tray-info button:hover {
+    opacity: 75%;
+}
+
+.tray-info .course-info,
+.tray-info .teacher-info {
+    margin: 20px;
+}
+
+.course-info h1,
+.teacher-info h1 {
+    font-size: 17px;
+    border: none;
+    margin: 5px;
+    padding: 0;
+}
+
+.error-text {
+    color: var(--error);
+}
+
+.tray-info ul {
+    margin: 10px;
+}
+
+.teacher-info ul {
+    margin: 0;
+    margin-left: 10px;
+
+    padding: 4px;
+    padding-left: 10px;
+
+    border-left: solid 1px var(--border-main);
+}
+
+.tray-info ul a:nth-child(2) {
+    font-family: 'semi-bold';
+}
+
+.tray-info ul a:nth-child(3) {
+    color: var(--font-h3);
+}
+
+.Tavoitteet,
+.Sisältö,
+.Kuvaus {
+    font-family: 'regular' !important;
+    font-style: italic;
+    line-height: 1.25;
+    opacity: 75%;
+}
+
+.error-popup {
+    opacity: 0;
+    position: absolute;
+    width: 300px;
+    height: auto;
+
+    padding: 5px;
+
+    left: 50px;
+    bottom: 50px;
+
+    background-color: var(--background-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    border-left: solid 5px var(--error);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity .3s ease-in-out;
+
+    pointer-events: none;
+}
+
+.error-popup .icon {
+    width: 75px;
+    height: 75px;
+    margin: 10px;
+
+    background-image: url(/assets/img/error.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.error-popup .error-details {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.error-popup .error-details h1 {
+    color: var(--error);
+    margin: 5px;
+}
+
+.error-popup .error-details h2 {
+    margin: 5px;
+    opacity: 75%;
+}
+
+.schedule {
+    width: 300px;
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+
+    margin: 10px;
+
+    border-left: solid 5px var(--accent-main);
+    padding-left: 1px;
+}
+
+.schedule .day {
+    width: 60px;
+}
+
+.day .hour {
+    width: 60px;
+    min-height: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#selected .data {
+    border: solid 1px var(--font-h2);
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.hour .data {
+    width: calc(100% - 3px);
+    height: calc(100% - 3px);
+
+    min-height: 27.5px;
+
+    border: solid 1px var(--border-main);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.data h5 {
+    color: var(--font-h2);
+    font-size: 11px;
+    margin: 1px;
+
+    opacity: 75%;
+}
+
+.day .hour:nth-child(6) {
+    position: absolute;
+
+    margin-bottom: 40px;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .tray-list {
+        width: 200px;
+    }
+
+    .tray-main {
+        width: calc(100% - 200px - 240px);
+        left: 200px;
+    }
+
+    .bar {
+        width: 90%;
+    }
+
+    .tray-info {
+        width: 240px;
+    }
+
+    .schedule {
+        width: 200px;
+    }
+
+    .schedule .day {
+        width: 40px;
+    }
+
+    .day .hour {
+        width: 40px;
+        min-height: 20px;
+    }
+
+    .hour .data {
+        min-height: 17.5px;
+    }
+
+    .data h5 {
+        font-size: 8px;
+    }
+
+    .tray-info h1 {
+        font-size: 16px;
+    }
+
+    .tray-info a {
+        font-size: 14px;
+    }
+}
+
+
+@media screen and (max-height: 750px) {
+    .container {
+        justify-content: flex-end;
+    }
+
+    .content {
+        height: calc(100% - 50px - 5%);
+        bottom: 2.5%;
+    }
+}

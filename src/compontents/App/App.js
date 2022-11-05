@@ -10,6 +10,7 @@ import ThemeProvider from '../ThemeProvider/ThemeProvider';
 import Gradebook from '../Gradebook/Gradebook';
 import Messages from '../Messages/Messages';
 import News from '../News/News';
+import CourseTray from '../CourseTray/CourseTray';
 
 import {
     BrowserRouter,
@@ -26,12 +27,14 @@ function App() {
             <ThemeProvider>
                 {auth.token ? <Navbar /> : <></>}
                 <Routes>
+                    <Route path='/login' element={<Login />} />
                     <Route path='/' element={auth.token ? <Frontpage /> : <Login />} />
                     <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
+                    <Route path='/messages/:id' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
                     <Route path='/news' element={auth.token ? <News /> : <Login />} />
                     <Route path='/news/:id' element={auth.token ? <News /> : <Login />} />
-                    <Route path='/login' element={<Login />} />
+                    <Route path='/tray' element={auth.token ? <CourseTray /> : <Login />} />
                 </Routes>
             </ThemeProvider>
         </BrowserRouter>
