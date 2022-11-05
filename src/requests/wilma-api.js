@@ -236,9 +236,8 @@ const fetchPeriod = (auth, hash) => {
     });
 }
 
-const fetchTrayCourse = (hash) => {
+const fetchTrayCourse = (auth, hash) => {
     return new Promise((resolve, reject) => {
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(`${wilmaAPI}course-tray/courses/${hash}`,
@@ -384,5 +383,7 @@ export {
     fectchCourseList,
     fetchCourse,
     fetchTrayList,
-    fetchPeriod
+    fetchPeriod,
+    fetchTrayCourse,
+    fetchTrayCourseInfo
 }

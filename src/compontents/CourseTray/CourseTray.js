@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTray, getTrayList, getPeriod } from '../../features/courses/traySlice';
+import { useTray, getTrayList, getPeriod, getTrayCourse } from '../../features/courses/traySlice';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 import styles from './CourseTray.module.css';
@@ -21,9 +21,9 @@ const subjects = {
     'KIB': 'B-Kiina',
     'KU': 'Kuvaamataito',
     'LI': 'Liikunta',
-    'MAA': 'Matematiikan pitkä oppimäärä',
-    'MAB': 'Matematiikan lyhyt oppimäärä',
-    'MAY': 'Matematiikan yhteinen oppimäärä',
+    'MAA': 'Matematiikan [Pitkä]',
+    'MAB': 'Matematiikan [Lyhyt]',
+    'MAY': 'Matematiikka [Yhteinen]',
     'ME': 'Mediaopinnot',
     'MU': 'Musiikki',
     'OPA': 'Opinto-ohjaus [A-luokka]',
@@ -76,7 +76,13 @@ const subjects = {
 
 export default function CourseTray() {
     const [open, setOpen] = useState([]);
-    const [filter, setFilter] = useState({});
+    const [filter, setFilter] = useState({
+        search: null,
+        subject: [],
+        teacher: [],
+        lops: []
+    });
+    const [course, setCourse] = useState(null);
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
 
@@ -93,9 +99,21 @@ export default function CourseTray() {
         setOpen([...open, hash]);
     }
 
-    const applyFilter = (filter) => {
-        setFilter(filter);
+    const loadCourse = (hash) => {
+        dispatch(getTrayCourse({auth: auth.token, hash: hash}))
+        setCourse(hash);
     }
+
+    const applyFilter = (f) => {
+        if (f.type == 'search') return setFilter({...filter, search: f.value});
+
+        if(filter[f.type].includes(f.value)) {
+            return setFilter({...filter, [f.type]: filter[f.type].filter(n => n != f.value)})
+        }
+
+        setFilter({...filter, [f.type]: [...filter[f.type], f.value]})
+    }
+    
 
     useEffect(() => { initialize() }, []);
 
@@ -106,10 +124,10 @@ export default function CourseTray() {
                     <TrayList open={open} onLoad={loadPeriod}/>
                 </div>
                 <div className={styles['tray-main']}>
-                    <PeriodContainer open={open} onClose={closePeriod}/>
+                    <PeriodContainer open={open} filter={filter} onLoad={loadCourse} onClose={closePeriod}/>
                 </div>
                 <div className={styles['tray-info']}>
-                    <TrayInfoContainer filter={filter}  setFilter={applyFilter}/>
+                    <TrayInfoContainer open={open} course={course} filter={filter} setFilter={applyFilter}/>
                 </div>
             </div>
         </>
@@ -161,7 +179,7 @@ const ListPeriodObject = ({open, period, onLoad}) => {
     )
 }
 
-const PeriodContainer = ({open, onClose}) => {
+const PeriodContainer = ({open, filter, onLoad, onClose}) => {
     const tray = useSelector(useTray);
     const periods = tray.periods;
 
@@ -172,14 +190,14 @@ const PeriodContainer = ({open, onClose}) => {
             {
                 open.map((hash, i) => {
                     const period = periods[hash];
-                    return <TrayPeriodObject key={i} hash={hash} period={period} onClose={onClose}/>
+                    return <TrayPeriodObject key={i} hash={hash} period={period} filter={filter} onLoad={onLoad} onClose={onClose}/>
                 })
             }
         </>
     )
 }
 
-const TrayPeriodObject = ({hash, period, onClose}) => {
+const TrayPeriodObject = ({hash, period, filter, onLoad, onClose}) => {
     const [hidden, setHidden] = useState(false);
 
     if(period.isLoading) return <div className={styles['period']}>
@@ -200,7 +218,7 @@ const TrayPeriodObject = ({hash, period, onClose}) => {
             <>
                 {
                     period.bars.map((bar, i) => {
-                        return <TrayBarObject key={i} bar={bar} />
+                        return <TrayBarObject key={i} bar={bar} filter={filter} onLoad={onLoad} />
                     })
                 }
             </>
@@ -208,7 +226,7 @@ const TrayPeriodObject = ({hash, period, onClose}) => {
     )
 }
 
-const TrayBarObject = ({bar}) => {
+const TrayBarObject = ({bar, filter, onLoad}) => {
     const tray = useSelector(useTray);
     const courses = tray.courses;
 
@@ -220,7 +238,7 @@ const TrayBarObject = ({bar}) => {
                     bar.courses.map((hash, i) => {
                         const course = courses[hash];
                         
-                        return <TrayCourseObject key={i} course={course}/>
+                        return <TrayCourseObject key={i} course={course} filter={filter} onLoad={onLoad} />
                     })
                 }
             </div>
@@ -228,11 +246,16 @@ const TrayBarObject = ({bar}) => {
     )
 }
 
-const TrayCourseObject = ({course}) => {
+const TrayCourseObject = ({course, filter, onLoad}) => {
+
+    if(filter.search) if(!course.name.toLowerCase().includes(filter.search)) return <></>
+    if(filter.subject.length > 0) if(filter.subject.filter(r => course.code.includes(r)).length == 0) return <></>
+    if(filter.teacher.length > 0) if(filter.teacher.filter(r => !(!course.info.teacher) && course.info.teacher.includes(r)).length == 0) return <></>
+    if(filter.lops.length > 0) if(filter.lops.filter(r => course.lops == r).length == 0) return <></>
     return (
         <div 
             className={course.class.split(' ').map(c => styles[c]).join(' ')}
-            onClick={() => console.log(course)}
+            onClick={() => onLoad(course.hash)}
         >
             {course.code}
             <div className={styles['course-data']}>
@@ -245,41 +268,37 @@ const TrayCourseObject = ({course}) => {
     )
 }
 
-const TrayInfoContainer = ({filter, setFilter}) => {
+const TrayInfoContainer = ({open, course, filter, setFilter}) => {
     return (
         <>
             <div className={styles['schedule']}>
 
             </div>
             <h1>Toiminnot</h1>
-            <SearchBarObject setFilter={setFilter} />
-            <FilterObject setFilter={setFilter}/>
+            {open.length > 0 ? <SearchBarObject setFilter={setFilter} /> : <></>}
+            {open.length > 0 ? <FilterObject filter={filter} setFilter={setFilter}/> : <></>}
+            <h1>Tietoa kurssista</h1>
+            {open.length > 0 ? <CourseInfoObject course={course}/> : <></>}
         </>
     )
 }
 
 const SearchBarObject = ({setFilter}) => {
-    const tray = useSelector(useTray);
-    const courses = tray.courses;
-
-    const selectedCourses = Object.keys(courses).filter(hash => courses[hash].isSelected).length;
-    
+    const [term, setTerm] = useState(null);
+    console.log(term);
     return (
         <>
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
                 <h2>Hae kurssia</h2>
-                <input type='text' placeholder='Esim. MAA15.1' />
-                <button>Hae</button>
+                <input type='text' placeholder='Esim. MAA15.1' onChange={(e) => setTerm(e.target.value ? e.target.value : null)}/>
+                <button onClick={() => setFilter({type: 'search', value: term})}>Hae</button>
             </form>
-            <h3 className={styles['search-result']}>
-                
-            </h3>
         </>
     )
 }
 
-const FilterObject = ({setFilter}) => {
-    const [current, setCurrent] = useState('all');
+const FilterObject = ({filter, setFilter}) => {
+    const [current, setCurrent] = useState('subject');
     const tray = useSelector(useTray);
     const courses = tray.courses;
 
@@ -301,37 +320,37 @@ const FilterObject = ({setFilter}) => {
         if(!list.includes(subject) && Object.keys(subjects).includes(subject)) return [...list, subject]
 
         return list
-    }, [])
+    }, []).sort()
 
     filters.teacher = Object.keys(courses).reduce((list, hash) => {
         const course = courses[hash];
-        const teacher = course.info.teacher;
+        const teacher = course.info.teacher ? course.info.teacher : '';
 
-        if(!list.includes(teacher)) return [...list, teacher]
+        if(teacher != '' && !list.includes(teacher) && !teacher.includes('/')) return [...list, teacher]
         
         return list
-    }, [])
+    }, []).sort()
 
     return (
         <div className={styles['filter-container']}>
             <h1>Suodata kursseja</h1>
             <div className={styles['filters']}>
-                <h4 onClick={() => setCurrent('all')} className={current == 'all' ? styles['selected-filter'] : null}>Kaikki</h4>
                 <h4 onClick={() => setCurrent('subject')} className={current == 'subject' ? styles['selected-filter'] : null}>Oppiaine</h4>
                 <h4 onClick={() => setCurrent('teacher')} className={current == 'teacher' ? styles['selected-filter'] : null}>Opettaja</h4>
                 <h4 onClick={() => setCurrent('lops')} className={current == 'lops' ? styles['selected-filter'] : null}>LOPS</h4>
             </div>
             <div className={styles['filter-list']}>
                 {
-                    filters[current].sort().map((subject, i) => {
+                    filters[current].map((subject, i) => {
                         const s = subject.split(' ');
 
                         const key = s.shift();
                         const value = s.join(' ');
 
+
                         return (
-                            <ul key={i}>
-                                <input type='checkbox' />
+                            <ul key={key}>
+                                <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: key})}}/>
                                 <a>{`${key} - `}</a>
                                 <a>{Object.keys(subjects).includes(key) ? subjects[key] : value}</a>
                             </ul>
@@ -339,6 +358,40 @@ const FilterObject = ({setFilter}) => {
                     })
                 }
             </div>
+        </div>
+    )
+}
+
+const CourseInfoObject = ({course: hash}) => {
+    const tray = useSelector(useTray);
+    const courses = tray.courses;
+
+    if(!courses[hash]) return <></>
+    if(courses[hash].isLoading) return <h2>Loading</h2>
+    const course = courses[hash];
+    
+    
+    return (
+        <div className={styles['course-info']}>
+            <h1>{course.name}</h1>
+            <h3>{course.code}</h3>
+            <button className={styles['course-action']}>
+                {!course.isSelected ? 'Valitse kurssi' : 'Poista valinta'}
+            </button>
+            {
+                Object.keys(course).filter(k => !['name', 'code', 'hash', 'isLoading', 'class', 'info', 'isSelected', 'subject'].includes(k)).map((key, i) => {
+                    const keyValue = `${key}: `;
+                    const value = course[key];
+                    return (
+                        <>
+                            <ul key={i}>
+                                <a>{keyValue}</a>
+                                <a dangerouslySetInnerHTML={{__html: value}}></a>
+                            </ul>
+                        </>
+                    )
+                })
+            }
         </div>
     )
 }

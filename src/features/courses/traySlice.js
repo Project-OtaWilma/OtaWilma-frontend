@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     fetchTrayList,
-    fetchPeriod
+    fetchPeriod,
+    fetchTrayCourse,
+    fetchTrayCourseInfo
 } from '../../requests/wilma-api';
 
 export const getTrayList = createAsyncThunk(
@@ -29,7 +31,6 @@ export const getPeriod = createAsyncThunk(
     'tray/getPeriod',
     async (options, thunkAPI) => {
         return new Promise((resolve, reject) => {
-            
             const tray = thunkAPI.getState().tray;
             const auth = options['auth'];
             const hash = options['hash'];
@@ -40,6 +41,26 @@ export const getPeriod = createAsyncThunk(
             fetchPeriod(auth, hash)
             .then(list => {
                 return resolve({changed: true, hash: hash, bars: list})
+            })
+            .catch(err => {
+                return reject(err);
+            })
+            
+        });
+    }
+)
+
+export const getTrayCourse = createAsyncThunk(
+    'tray/getTrayCourse',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const tray = thunkAPI.getState().tray;
+            const auth = options['auth'];
+            const hash = options['hash'];
+            
+            fetchTrayCourse(auth, hash)
+            .then(course => {
+                return resolve({changed: true, hash: hash, course: course})
             })
             .catch(err => {
                 return reject(err);
@@ -108,7 +129,7 @@ export const traySlice = createSlice({
 
                             if(isSelected && !state.selected.includes(course.hash)) state.selected.push(course.hash); 
 
-                            state.courses[course.hash] = {...course, isLoading: true, isSelected: isSelected}; 
+                            state.courses[course.hash] = {...course, isLoading: true, isSelected: isSelected, lops: course.code.startsWith('w') ? 'LOPS2016' : 'LOPS2021'}; 
                             return course.hash;
                         })
                     }],
@@ -117,6 +138,21 @@ export const traySlice = createSlice({
             })
         },
         [getPeriod.rejected]: (state, action) => {
+            console.log(action);
+            console.log('api call rejected');
+            state.isLoading = false;
+        },
+        [getTrayCourse.fulfilled]: (state, action) => {
+            const hash = action.payload['hash'];
+            if(!action.payload.changed) {
+                return;
+            }
+
+            const course = action.payload['course'];
+
+            state.courses[hash] = {... state.courses[hash], ...course, ...{isLoading: false}}
+        },
+        [getTrayCourse.rejected]: (state, action) => {
             console.log(action);
             console.log('api call rejected');
             state.isLoading = false;
