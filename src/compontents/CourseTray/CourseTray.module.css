@@ -398,6 +398,45 @@
     margin: 5px;
 }
 
+.tray-info .filters {
+    width: 100%;
+    height: 50px;
+
+    background-color: var(--accent-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.filters h4 {
+    color: var(--font-h5);
+    cursor: pointer;
+}
+
+.filters h4:hover {
+    font-family: 'bold';
+}
+
+.selected-filter {
+    font-family: 'bold';
+    pointer-events: none;
+}
+
+.filter-list {
+    width: 90%;
+    margin: 20px;
+    height: 300px;
+    padding-bottom: 5px;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    border-bottom: solid 1px var(--border-main);
+}
+
 .tray-info form {
     margin: 20px;
 }
