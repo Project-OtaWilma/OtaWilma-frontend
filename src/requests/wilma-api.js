@@ -23,7 +23,7 @@ const login = (credentials) => {
                 return resolve(res);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -51,7 +51,7 @@ const getVersion = () => {
                 return resolve({ version: res.version, updated: true });
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -68,7 +68,7 @@ const fetchMessages = (auth, path, limit) => {
                 return resolve(list);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -85,7 +85,7 @@ const fetchMessageContent = (auth, hash) => {
                 return resolve(content);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -102,7 +102,7 @@ const fetchNews = (auth, path, limit) => {
                 return resolve(list);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -119,7 +119,7 @@ const fetchNewsContent = (auth, hash) => {
                 return resolve(content);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -136,7 +136,7 @@ const fectchCourseList = (lops) => {
                 return resolve(list);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     })
 }
@@ -153,7 +153,7 @@ const fetchGradeBook = (auth, filter) => {
                 return resolve(grades);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -172,7 +172,26 @@ const fetchCourse = (lops, id) => {
                 return resolve(course);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
+            })
+    })
+}
+
+const fetchCourseType = (lops, id) => {
+    return new Promise(async (resolve, reject) => {
+        // override to using stable api
+        // const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
+        const url = `${wilmaAPI}lops/${lops}/courses/subject/${id}`;
+
+        fetchJson(url, {
+            method: 'GET',
+            cache: 'course-cache'
+        })
+            .then(course => {
+                return resolve(course);
+            })
+            .catch(err => {
+                return reject(err);
             })
     })
 }
@@ -193,7 +212,7 @@ const fetchSchedule = (auth, date = Date) => {
                 return resolve(schedule);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     })
 }
@@ -214,7 +233,7 @@ const fetchHomeworkGroups = (auth) => {
                 return resolve(groups);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     })
 }
@@ -231,7 +250,7 @@ const fetchTrayList = (auth) => {
                 return resolve(list);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -252,7 +271,7 @@ const fetchPeriod = (auth, hash) => {
                 return resolve(period);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -269,7 +288,7 @@ const fetchTrayCourse = (auth, hash) => {
                 return resolve(course);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -287,7 +306,7 @@ const fetchTrayCourseInfo = (hash) => {
                 return resolve(info);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             });
     });
 }
@@ -309,7 +328,7 @@ const CourseTraySelect = (hash) => {
                 return resolve(status);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -331,7 +350,7 @@ const CourseTrayDeselect = (hash) => {
                 return resolve(status);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -348,7 +367,7 @@ const fetchTeacherList = () => {
                 return resolve(list);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     })
 }
@@ -364,7 +383,7 @@ const fetchTeacherInfo = (value, isID) => {
                 return resolve(list);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
 
     });
@@ -387,7 +406,7 @@ const logout = () => {
                 return resolve(status);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     });
 }
@@ -403,9 +422,12 @@ export {
     fetchSchedule,
     fectchCourseList,
     fetchCourse,
+    fetchCourseType,
     fetchTrayList,
     fetchPeriod,
     fetchTrayCourse,
     fetchTrayCourseInfo,
-    fetchHomeworkGroups
+    fetchHomeworkGroups,
+    fetchTeacherList,
+    fetchTeacherInfo
 }

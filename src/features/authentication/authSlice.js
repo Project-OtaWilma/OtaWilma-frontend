@@ -4,6 +4,7 @@ import { getCookie } from '../../requests/utility';
 
 import {
     login,
+    logout
 } from '../../requests/wilma-api';
 
 
@@ -12,6 +13,23 @@ export const loginToWilma = createAsyncThunk(
     async (data, thunkAPI) => {
         const response = await login(data)
         return response
+    }
+)
+
+export const logoutFromWilma = createAsyncThunk(
+    'auth/logoutFromWilma',
+    async (data, thunkAPI) => {
+        const response = await logout();
+        return response
+    }
+)
+
+export const resetSession = createAsyncThunk(
+    'auth/resetSession',
+    async (data, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            return resolve();
+        })
     }
 )
 
@@ -29,14 +47,8 @@ export const authSlice = createSlice({
     initialState: {
         token: getToken(),
         loggedIn: !(!getToken()),
-        logginIn: false,
-        loginError: ''
     },
-    reducers: {
-        resetSession: (state) => {
-            
-        }
-    },
+    reducers: {},
     extraReducers: {
         [loginToWilma.fulfilled]: (state, action) => {
             state.token = action.payload.token;
@@ -55,6 +67,15 @@ export const authSlice = createSlice({
         [loginToWilma.pending]: (state, action) => {
             state.logginIn = false;
             state.loginError = '';
+        },
+        [logoutFromWilma.fulfilled]: (state, action) => {
+            setToken(null);
+            state.token = null;
+        },
+        [resetSession.fulfilled]: (state, action) => {
+            console.log('reseted');
+            setToken(null);
+            state.token = null;
         },
     },
 });

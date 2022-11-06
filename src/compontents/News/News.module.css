@@ -247,6 +247,11 @@
     height: 100%;
 }
 
+.news-placeholder {
+    width: 100%;
+    height: 100%;
+}
+
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;

@@ -10,6 +10,7 @@ import scheduleSlice from '../features/schedule/scheduleSlice';
 import lopsSlice from '../features/grades/lopsSlice';
 import courseSlice from '../features/courses/traySlice';
 import homeworkSlice from '../features/schedule/homeworkSlice';
+import teacherSlice from '../features/teachers/teacherSlice';
 
 export default configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export default configureStore({
     schedule: scheduleSlice,
     lops: lopsSlice,
     tray: courseSlice,
-    homework: homeworkSlice
+    homework: homeworkSlice,
+    teachers: teacherSlice
   },
 });

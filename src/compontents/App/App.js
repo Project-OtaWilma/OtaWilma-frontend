@@ -11,6 +11,7 @@ import Gradebook from '../Gradebook/Gradebook';
 import Messages from '../Messages/Messages';
 import News from '../News/News';
 import CourseTray from '../CourseTray/CourseTray';
+import Teachers from '../Teachers/Teachers';
 
 import {
     BrowserRouter,
@@ -35,6 +36,7 @@ function App() {
                     <Route path='/news' element={auth.token ? <News /> : <Login />} />
                     <Route path='/news/:id' element={auth.token ? <News /> : <Login />} />
                     <Route path='/tray' element={auth.token ? <CourseTray /> : <Login />} />
+                    <Route path='/teachers' element={auth.token ? <Teachers /> : <Login />} />
                 </Routes>
             </ThemeProvider>
         </BrowserRouter>

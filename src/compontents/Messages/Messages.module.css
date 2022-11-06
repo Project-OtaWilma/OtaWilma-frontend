@@ -287,6 +287,11 @@
     height: 100%;
 }
 
+.message-placeholder {
+    height: 100%;
+    width: 100%;
+}
+
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;

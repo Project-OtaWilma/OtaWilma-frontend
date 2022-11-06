@@ -6,6 +6,8 @@ import {
     fetchTrayCourseInfo
 } from '../../requests/wilma-api';
 
+import { handleError } from '../errors/errorSlice';
+
 export const getTrayList = createAsyncThunk(
     'tray/getTrayList',
     async (options, thunkAPI) => {
@@ -20,7 +22,8 @@ export const getTrayList = createAsyncThunk(
                 return resolve({changed: true, periods: list['own']})
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err));
+                return reject();
             })
             
         });
@@ -43,7 +46,8 @@ export const getPeriod = createAsyncThunk(
                 return resolve({changed: true, hash: hash, bars: list})
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err));
+                return reject();
             })
             
         });
@@ -63,7 +67,8 @@ export const getTrayCourse = createAsyncThunk(
                 return resolve({changed: true, hash: hash, course: course})
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err));
+                return reject();
             })
             
         });
@@ -109,8 +114,6 @@ export const traySlice = createSlice({
             state.tray.isLoading = false;
         },
         [getTrayList.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
             state.isLoading = false;
         },
         [getPeriod.fulfilled]: (state, action) => {
@@ -138,8 +141,6 @@ export const traySlice = createSlice({
             })
         },
         [getPeriod.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
             state.isLoading = false;
         },
         [getTrayCourse.fulfilled]: (state, action) => {
@@ -153,8 +154,6 @@ export const traySlice = createSlice({
             state.courses[hash] = {... state.courses[hash], ...course, ...{isLoading: false}}
         },
         [getTrayCourse.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
             state.isLoading = false;
         },
     },

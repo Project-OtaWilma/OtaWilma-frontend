@@ -13,12 +13,13 @@ export default function ThemeProvider({ children }) {
     const themes = useSelector(useThemes);
 
     const initialize = () => {
-        if(!auth.token) return dispatch(loadThemeDefault({id: 'light'}));
+        if(!auth.token ||auth.token == 'null') return dispatch(loadThemeDefault({id: 'light'}));
             
         dispatch(getConfig({auth: auth.token}));
     }
 
     const inititalizeThemes = () => {
+        console.log('initializing themes');
         dispatch(loadTheme({auth: auth.token, id: config.value['current-theme']}));
     }
 

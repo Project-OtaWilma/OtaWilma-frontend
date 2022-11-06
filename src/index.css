@@ -92,6 +92,15 @@ body {
     filter: brightness(0) opacity(100%);
 }
 
+.placeholder {
+    background-image: url(./assets/img/otakarhu.svg);
+    background-position: center center;
+    background-size: 256px 256px;
+    background-repeat: no-repeat;
+
+    opacity: 5%;
+}
+
 .icon {
     filter: brightness(0);
 }

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     fetchGradeBook
 } from '../../requests/wilma-api';
+import { handleError } from '../errors/errorSlice';
 
 
 export const getGradebook = createAsyncThunk(
@@ -19,7 +20,8 @@ export const getGradebook = createAsyncThunk(
                 return resolve({changed: true, grades: grades});
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err))
+                return reject();
             })
         });
     }
@@ -51,8 +53,7 @@ export const gradeSlice = createSlice({
             state.hasLoaded = true;
         },
         [getGradebook.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
+            
             state.isLoading = false;
         },
         [getGradebook.pending]: (state, action) => {

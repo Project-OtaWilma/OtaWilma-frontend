@@ -3,6 +3,7 @@ import {
     fectchCourseList,
     fetchCourse
 } from '../../requests/wilma-api';
+import { handleError } from '../errors/errorSlice';
 
 
 export const getLops = createAsyncThunk(
@@ -19,7 +20,8 @@ export const getLops = createAsyncThunk(
                 return resolve({changed: true, lops: current, courses: list});
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err))
+                return reject();
             })
         });
     }
@@ -43,7 +45,8 @@ export const getCourse = createAsyncThunk(
                 return resolve({changed: true, lops: current, course: {...course, ...info}});
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err))
+                return reject();
             })
         });
     }
@@ -89,8 +92,7 @@ export const lopsSlice = createSlice({
             state.lops[lops].hasLoaded = true;
         },
         [getLops.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
+
         },
         [getCourse.fulfilled]: (state, action) => {
             const lops = action.payload['lops'];
@@ -104,8 +106,7 @@ export const lopsSlice = createSlice({
             state.lops[lops]['content'][course.subject][course.code] = course;
         },
         [getCourse.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
+            
         }
     },
 });

@@ -4,6 +4,8 @@ import {
     fetchNewsContent
 } from '../../requests/wilma-api';
 
+import { handleError } from '../errors/errorSlice';
+
 // generate random (0 - 25 000) id for news without id
 export const newsHrefToHash = (raw) => raw ? Number.parseInt(raw.split('/').reverse()[0]) : Math.floor(Math.random() * 25000);
 
@@ -23,7 +25,8 @@ export const getNews = createAsyncThunk(
                 return resolve({changed: true, path: path, news: list})
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err))
+                return reject();
             })
         });
     }
@@ -37,14 +40,15 @@ export const getNewsContent = createAsyncThunk(
             const auth = options['auth'];
             const id = options['id'];
 
-            if(!news.news[id].isLoading) return resolve({changed: false, id: id})
+            if(news.news[id] && !news.news[id].isLoading) return resolve({changed: false, id: id})
             
             fetchNewsContent(auth, id)
             .then(news => {
                 return resolve({changed: true, id: id, news: news})
             })
             .catch(err => {
-                return reject(err);
+                thunkAPI.dispatch(handleError(err))
+                return reject();
             })
         });
     }
@@ -93,8 +97,6 @@ export const newsSlice = createSlice({
             state.list[path].isLoading = false;
         },
         [getNews.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
             state.isLoading = false;
         },
         [getNewsContent.fulfilled]: (state, action) => {

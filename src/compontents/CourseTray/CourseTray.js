@@ -2,77 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTray, getTrayList, getPeriod, getTrayCourse } from '../../features/courses/traySlice';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import styles from './CourseTray.module.css';
-
-const subjects = {
-    'BI': 'Biologia',
-    'EAB': 'B-Espanja',
-    'ENA': 'A-Englanti',
-    'ENAAE': 'Advanced English',
-    'ENATU': 'Englannin tukiopetus',
-    'ET': 'Elämänkatsomus',
-    'FI': 'Filosofia',
-    'FY': 'Fysiikka',
-    'GE': 'Maantieto',
-    'HI': 'Historia',
-    'KE': 'Kemia',
-    'KIB': 'B-Kiina',
-    'KU': 'Kuvaamataito',
-    'LI': 'Liikunta',
-    'MAA': 'Matematiikan [Pitkä]',
-    'MAB': 'Matematiikan [Lyhyt]',
-    'MAY': 'Matematiikka [Yhteinen]',
-    'ME': 'Mediaopinnot',
-    'MU': 'Musiikki',
-    'OPA': 'Opinto-ohjaus [A-luokka]',
-    'OPB': 'Opinto-ohjaus [B-luokka]',
-    'OPC': 'Opinto-ohjaus [C-luokka]',
-    'OPD': 'Opinto-ohjaus [D-luokka]',
-    'OPE': 'Opinto-ohjaus [E-luokka]',
-    'OPF': 'Opinto-ohjaus [F-luokka]',
-    'OPG': 'Opinto-ohjaus [G-luokka]',
-    'OPH': 'Opinto-ohjaus [H-luokka]',
-    'OPI': 'Opinto-ohjaus [I-luokka]',
-    'OPK': 'Opinto-ohjaus [K-luokka]',
-    'OPL': 'Opinto-ohjaus [L-luokka]',
-    'OPM': 'Opinto-ohjaus [M-luokka]',
-    'OPN': 'Opinto-ohjaus [N-luokka]',
-    'OPO': 'Opinto-ohjaus [O-luokka]',
-    'OPP': 'Opinto-ohjaus [P-luokka]',
-    'OTA': 'Ota-opinnot',
-    'PS': 'Psykologia',
-    'RAA': 'A-ranska',
-    'RAB': 'B-ranska',
-    'RUA': 'A-ruotsi',
-    'RUB': 'B-ruotsi',
-    'SAA': 'A-saksa',
-    'SAB': 'B-saksa',
-    'TE': 'Terveystieto',
-    'TEA': 'Teatteri',
-    'TEC': 'Teknologia',
-    'TO': 'Temaattiset opinnot [A-luokka]',
-    'TOA': 'Temaattiset opinnot',
-    'TOB': 'Temaattiset opinnot',
-    'TOC': 'Temaattiset opinnot',
-    'TOE': 'Temaattiset opinnot',
-    'TOF': 'Temaattiset opinnot',
-    'TOG': 'Temaattiset opinnot',
-    'TOH': 'Temaattiset opinnot',
-    'TOI': 'Temaattiset opinnot',
-    'TOK': 'Temaattiset opinnot',
-    'TOL': 'Temaattiset opinnot',
-    'TOM': 'Temaattiset opinnot',
-    'TON': 'Temaattiset opinnot',
-    'TOO': 'Temaattiset opinnot',
-    'TOP': 'Temaattiset opinnot',
-    'UE': 'Uskonto',
-    'YH': 'Yhteiskuntaoppi',
-    'ÄI': 'Äidinkieli',
-    'ÄITU': 'Äidinkielen tukiopetus'
-    
-}
+const { subjects } = require('./subjects.json');
 
 export default function CourseTray() {
     const [open, setOpen] = useState([]);
@@ -183,7 +116,7 @@ const PeriodContainer = ({open, filter, onLoad, onClose}) => {
     const tray = useSelector(useTray);
     const periods = tray.periods;
 
-    if(open.length == 0) return <></>
+    if(open.length == 0) return <PlaceHolder className={styles['tray-placeholder']} />
 
     return (
         <>
@@ -248,10 +181,11 @@ const TrayBarObject = ({bar, filter, onLoad}) => {
 
 const TrayCourseObject = ({course, filter, onLoad}) => {
 
-    if(filter.search) if(!course.name.toLowerCase().includes(filter.search)) return <></>
+    if(filter.search) if(!course.name.toLowerCase().includes(filter.search) && !course.code.toLowerCase().includes(filter.search)) return <></>
     if(filter.subject.length > 0) if(filter.subject.filter(r => course.code.includes(r)).length == 0) return <></>
     if(filter.teacher.length > 0) if(filter.teacher.filter(r => !(!course.info.teacher) && course.info.teacher.includes(r)).length == 0) return <></>
     if(filter.lops.length > 0) if(filter.lops.filter(r => course.lops == r).length == 0) return <></>
+
     return (
         <div 
             className={course.class.split(' ').map(c => styles[c]).join(' ')}

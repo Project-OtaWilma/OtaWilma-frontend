@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-    fetchHomeworkGroups
+    fetchHomeworkGroups,
+    fetchCourseType
 } from '../../requests/wilma-api';
 
 export const getGroups = createAsyncThunk(
@@ -11,8 +12,22 @@ export const getGroups = createAsyncThunk(
             const auth = options['auth'];
 
             fetchHomeworkGroups(auth)
-            .then(groups => {
-                return resolve({changed: true, groups: groups});
+            .then(async (groups) => {
+                const promises = groups.map(async (group) => {
+                    const lops = group.code.includes('w') ? 'LOPS2016' : 'LOPS2021';
+                    
+                    return new Promise(async (resolve, reject) => {
+                        return resolve(await fetchCourseType(lops, group.code).catch(err => {}));
+                    })
+                })
+
+                Promise.all(promises).then((list, i) => {
+                    list.map((g, i) => {
+                        groups[i] = {...groups[i], type: g ? g.type : 'unknown'}
+                    })
+
+                    return resolve({changed: true, groups: groups});
+                }) 
             })
             .catch(err => {
                 return reject(err);

@@ -3,11 +3,14 @@ import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useGrades, getGradebook } from '../../features/grades/gradeSlice';
 import { useMessages, getMessages, getMessage } from '../../features/messages/messageSlice';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
+import { useParams } from 'react-router-dom';
 
 import styles from './Messages.module.css';
 
 export default function Messages() {
+    const params = useParams();
+
     const [category, setCategory] = useState('inbox');
     const [current, setCurrent] = useState(null);
     const dispatch = useDispatch();
@@ -15,6 +18,8 @@ export default function Messages() {
 
     const initialize = () => {
         loadMessages('inbox');
+
+        if(params.id) loadMessage(params.id);
     }
 
     const loadMessages = (category) => {
@@ -77,7 +82,7 @@ const MessageObject = ({message, onLoad}) => {
         <div onClick={() => onLoad(message.id)} className={message.new ? `${styles['message-object']} ${styles['new']}` : `${styles['message-object']}`}>
                 <h1>{message.subject}</h1>
                 <h2>{message.timeStamp}</h2>
-                {message.senders.map((s, i) => <h2 key={i}>{s.name}</h2>)}
+                {message.senders ? message.senders.map((s, i) => <h2 key={i}>{s.name}</h2>) : null}
                 {message.new ? <h6>Uusi</h6> : null}
         </div>
     )
@@ -88,7 +93,8 @@ const MessageContentObject = ({current}) => {
     const messages = useSelector(useMessages);
     const map = messages.messages;
     
-    if(!current) return <></>
+    if(!current) return <PlaceHolder className={styles['message-placeholder']} />
+    if(!Object.keys(map).includes(`${current}`)) return <PlaceHolder className={styles['message-placeholder']} />
     if(map[current].isLoading) return <LoadingScreen className={styles['message-loading-screen']}/>
 
     const message = map[current];
@@ -96,7 +102,7 @@ const MessageContentObject = ({current}) => {
         <>
             <h1>{message.subject}</h1>
             <div className={styles['info']}>
-                <ul><a>Lähettäjä(t) </a>{message.senders.map((s, i) => <a key={i}>{s.name}</a>)}</ul>
+                <ul><a>Lähettäjä(t) </a>{message.senders ? message.senders.map((s, i) => <a key={i}>{s.name}</a>) : null}</ul>
                 <ul>Vastaanottaja(t) <a></a><a>{message.recipients ? message.recipients : 'Piilotettu'}</a></ul>
                 <ul>Lähetetty <a></a><a>{message.timeStamp}</a></ul>
             </div>

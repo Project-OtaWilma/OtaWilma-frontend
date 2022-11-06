@@ -34,6 +34,7 @@ export default function Login() {
         }
 
         dispatch(loginToWilma(credentials));
+        navigate('/');
     }
 
     return (

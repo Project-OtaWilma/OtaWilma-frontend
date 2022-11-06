@@ -3,7 +3,7 @@ import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import {useGrades, getGradebook} from '../../features/grades/gradeSlice';
 import {useLops, getCourse, getLops} from '../../features/grades/lopsSlice';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import styles from './Gradebook.module.css';
 

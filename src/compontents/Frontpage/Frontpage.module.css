@@ -575,6 +575,82 @@
     align-items: center;
 }
 
+/* lops hashset [L2021 & L2016] */
+.c-type25,
+.c-type136 {
+    border-left: solid 10px var(--L2021-mandatory-main) !important;
+}
+
+.c-type25-graded,
+.c-type136-graded {
+    border-left: solid 10px var(--L2021-mandatory-selected) !important;
+}
+
+
+.c-type137 {
+    border-left: solid 10px var(--L2021-g-optional-main) !important;
+}
+
+.c-type137-graded {
+    border-left: solid 10px var(--L2021-g-optional-selected) !important;
+}
+
+.c-type138 {
+    border-left: solid 10px var(--L2021-diploma-main) !important;
+}
+
+.c-type138-graded {
+    border-left: solid 10px var(--L2021-diploma-selected) !important;
+}
+
+.c-type141,
+.c-type146,
+.c-type151 {
+    border-left: solid 10px var(--L2021-l-optional-main) !important;
+}
+
+.c-type141-graded,
+.c-type146-graded,
+.c-type151-graded {
+    border-left: solid 10px var(--L2021-l-optional-selected) !important;
+}
+
+.unknown {
+    border-left: solid 10px gray !important;
+}
+
+.c-type112,
+.c-type66,
+.c-type26,
+.c-type65 {
+    border-left: solid 10px var(--L2016-l-optional-main) !important;
+}
+
+.c-type26-graded,
+.c-type66-graded,
+.c-type26-graded,
+.c-type65-graded {
+    border-left: solid 10px var(--L2016-l-optional-selected) !important;
+}
+
+.c-type27 {
+    border-left: solid 10px var(--L2016-g-optional-main) !important;
+}
+
+.c-type27-graded {
+    border-left: solid 10px var(--L2016-g-optional-selected) !important;
+}
+
+.c-type119,
+.c-type29 {
+    border-left: solid 10px var(--L2021-diploma-main) !important;
+}
+
+.c-type119-graded,
+.c-type29-graded {
+    border-left: solid 10px var(--L2021-diploma-selected) !important;
+}
+
 .course-list .group-object {
     width: 80%;
     padding: 10px;

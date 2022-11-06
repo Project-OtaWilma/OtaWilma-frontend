@@ -3,7 +3,7 @@ import {
     fetchMessages,
     fetchMessageContent
 } from '../../requests/wilma-api';
-
+import { handleError } from '../errors/errorSlice';
 
 export const getMessages = createAsyncThunk(
     'messages/getMessages',
@@ -21,7 +21,8 @@ export const getMessages = createAsyncThunk(
                 return resolve({changed: true, messages: list.slice(1, limit), path: path})
             })
             .catch(err => {
-                return rejected(err);
+                thunkAPI.dispatch(handleError(err))
+                return rejected();
             })
         });
     }
@@ -35,14 +36,15 @@ export const getMessage = createAsyncThunk(
             const auth = options['auth'];
             const id = options['id'];
             
-            if(!messages.messages[id].isLoading) return resolve({changed: false, id: id})
+            if(messages.messages[id] && !messages.messages[id].isLoading) return resolve({changed: false, id: id})
             
             fetchMessageContent(auth, id)
             .then(list => {
                 return resolve({changed: true, id: id, message: list[0]})
             })
             .catch(err => {
-                return rejected(err);
+                thunkAPI.dispatch(handleError(err))
+                return rejected();
             })
             
         });
@@ -77,12 +79,10 @@ export const messageSlice = createSlice({
                 return;
             }
 
-            state.list[path]['content'] = action.payload['messages'].map(m => {state.messages[m.id] = {...m, ...{isLoading: true}}; return m.id;});
+            state.list[path]['content'] = action.payload['messages'].map(m => {state.messages[m.id] = {...m, ...state.messages[m.id], ...{isLoading: state.messages[m.id] ? state.messages[m.id].isLoading : true}}; return m.id;});
             state.list[path].isLoading = false;
         },
         [getMessages.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
             state.isLoading = false;
         },
         [getMessage.fulfilled]: (state, action) => {
@@ -102,7 +102,6 @@ export const messageSlice = createSlice({
         },
         [getMessage.rejected]: (state, action) => {
             console.log(action);
-            console.log('api call rejected');
             state.isLoading = false;
         },
     },

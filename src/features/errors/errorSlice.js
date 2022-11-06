@@ -1,21 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { authSlice } from '../authentication/authSlice';
+import { resetSession} from '../authentication/authSlice';
 
-export const handleError = (options = {err: {}, resetAuth: false}) => {
-    const raw = options.err;
-    const err = JSON.parse(raw);
-
-    // TODO
-    switch(err.status) {
-        case 401:
-            console.log(err.error);
-            break;
-        default:
-            console.log(err.error);
-            break;
+export const handleError = createAsyncThunk(
+    'errors/handleError',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            console.log(options);
+            if(options.redirect) {
+                thunkAPI.dispatch(resetSession());
+                return resolve();
+            }
+                
+            
+        });
     }
-    
-}
+)
 
 export const errorSlice = createSlice({
     name: 'errors',
@@ -23,10 +22,12 @@ export const errorSlice = createSlice({
         error: {}
     },
     reducers: {
-        handleError
+
     },
     extraReducers: {
-
+        [handleError.fulfilled]: (state, action) => {
+            //
+        }
     },
 });
 

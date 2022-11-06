@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNews, getNews, getNewsContent } from '../../features/news/newsSlice';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 import { useParams } from 'react-router-dom';
 
 import styles from './News.module.css';
 
 export default function News() {
     const params = useParams();
-
-    console.log(params);
     const [category, setCategory] = useState('current');
     const [current, setCurent] = useState(null);
     const dispatch = useDispatch();
@@ -18,6 +16,7 @@ export default function News() {
 
     const initialize = () => {
         loadNews('current');
+        if(params.id) loadNewsContent(params.id)
     }
 
     const loadNews = (category) => {
@@ -99,7 +98,8 @@ const NewsContentObject = ({current}) => {
     const news = useSelector(useNews);
     const map = news.news;
 
-    if(!current) return <></>
+    if(!current) return <PlaceHolder className={styles['news-placeholder']} />
+    if(!Object.keys(map).includes(`${current}`)) return <PlaceHolder className={styles['news-placeholder']} />
     if(map[current].isLoading) return <LoadingScreen className={styles['news-loading-screen']} />
     
     const n = map[current];

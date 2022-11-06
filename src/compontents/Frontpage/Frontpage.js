@@ -10,8 +10,10 @@ import { useHomework, getGroups } from '../../features/schedule/homeworkSlice';
 import styles from './Frontpage.module.css';
 import { Link } from 'react-router-dom';
 
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 import { useRef } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Frontpage() {
@@ -22,12 +24,19 @@ export default function Frontpage() {
     const grades = useSelector(useGrades);
 
     const now = new Date();
+    
     const days = [
         new Date(now.getFullYear(), now.getMonth(), now.getDate()),
         new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
         new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14)
     ]
+    
 
+    /*
+    const days = [
+        new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    ]
+    */
     const initialize = () => {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
@@ -171,7 +180,15 @@ const Clock = () => {
         setTime(date.toLocaleTimeString())
     }
 
-    useEffect(() => { setInterval(update, 1000) }, []);
+    useEffect(() => {
+        update();
+
+        const clock = setInterval(() => {
+            update()
+        }, 1000);
+    
+        return () => clearInterval(clock);
+    }, []);
 
     return (
         <>
@@ -199,15 +216,14 @@ const Clock = () => {
 
 const Schedule = ({days}) => {
     const schedule = useSelector(useSchedule);
-
     const map = days.map(date => date.toLocaleString('Fi-fi', {day: '2-digit', month: '2-digit', year: 'numeric'}))
-
+    
     return (
         <>
             {
                 map.map((date, i) => {
                     const d = Object.keys(schedule.schedule).find(week => schedule.schedule[week].range.includes(date));
-  
+            
                     if (schedule.schedule.isLoading || !schedule.loaded.includes(d)) return <LoadingScreen key={i} className={styles['loading-screen']} />;
                 
                     const week = schedule['schedule'][d];
@@ -220,7 +236,7 @@ const Schedule = ({days}) => {
 
 const WeekObject = ({week}) => {
     return (
-        <div className={styles['week']}>
+        <div className={styles['week']} style={{minHeight: week.height}}>
             <div className={styles['week-caption']}>
                 <h1>{`Viikko ${week.week}`}</h1>
             </div>
@@ -228,7 +244,7 @@ const WeekObject = ({week}) => {
                 {
                     Object.keys(week.days).slice(0, 5).map((date, i) => {
                         const day = week.days[date];
-                        return <DayObject key={i} date={date} day={day} />
+                        return <DayObject key={i} day={day} />
                     })
                 }
             </div>
@@ -236,10 +252,9 @@ const WeekObject = ({week}) => {
     )
 }
 
-const DayObject = ({date, day}) => {
-    const ref = useRef(null)
-
-    let lessons = [...day.lessons];
+const DayObject = ({setHeight, day}) => {
+    const ref = useRef(null);
+    const lessons = day.lessons;
 
     return (
         <div className={styles['day']} ref={ref}>
@@ -248,33 +263,11 @@ const DayObject = ({date, day}) => {
             </div>
                 {
                     lessons.map((lesson, i) => {
-                        const groupOffset = lesson.groups.length == 1 ? 0 : lesson.groups.length * 20;
-
-                        lessons = lessons.map(l => {return {...l, startRaw: l.startRaw + groupOffset, endRaw: l.endRaw + groupOffset}});
-                        lessons[i] = {...lessons[i], durationRaw: lessons[i].durationRaw + groupOffset}
-                        
-                        
-
                         const start = lessons[i]['startRaw'] * 1;
                         const end = lessons[i]['endRaw'] * 1;
+                        const duration = lessons[i]['durationRaw'] * 1;
 
-                        /* unsafe - modify the parent-element's height manually */
-                        if(ref.current) {
-                            const h = ref.current.parentElement.style.minHeight;
-                            const rawH = h == '' ? 0 : Number.parseFloat(h.replace('px', ''))
-
-                            /* 
-                                overrides React's render()-method
-                                - causes overlapping on development server
-                                - refreshing the page will fix it
-                                - stable on production
-                            */
-                            if((end - 480) > rawH) ref.current.parentElement.style.minHeight = `${end - 480}px`;
-                        }
-
-                        const height = lessons[i]['durationRaw'] * 1;
-
-                        return <LessonObject key={i} start={start - 480} height={height} lesson={lesson} />
+                        return <LessonObject key={i} start={start - 480} height={duration} lesson={lesson} />
                     })
                 }
         </div>
@@ -326,9 +319,8 @@ const HomeworkContainer = ({}) => {
 
 const HomeworkGroupObject = ({group}) => {
     const [hidden, setHidden] = useState(true);
-
     return (
-        <div className={styles['group-object']}>
+        <div className={`${styles['group-object']} ${styles[group.type]}`}>
             <h2>{group.name}</h2>
             <h4 className={styles['group-code']}>{group.caption}</h4>
             <h4>{group.teachers.length > 0 ? group.teachers[0].name : null}</h4>
@@ -387,10 +379,15 @@ const NewsList = () => {
 }
 
 const NewsObject = ({news: n}) => {
-    
+    const navigate = useNavigate();
+
     return (
         <>
-            <div key={n.href} className={n.isInvalid ? `${styles['news-object']} ${styles['disabled']}`: styles['news-object']}>
+            <div 
+                onClick={() => navigate(`/news/${n.id}`)}
+                key={n.href} 
+                className={n.isInvalid ? `${styles['news-object']} ${styles['disabled']}`: styles['news-object']}
+            >
                 <h1>{n.title}</h1>
                 <h2>{n.date}</h2>
                 <h2>{n.sender ? n.sender.name : <></>}</h2>
@@ -420,8 +417,13 @@ const MessageList = () => {
 }
 
 const MessageObject = ({message}) => {
+    const navigate = useNavigate();
+
     return (
-        <div className={message.new ? `${styles['message-object']} ${styles['new']}` : `${styles['message-object']}`}>
+        <div
+            onClick={() => navigate(`/messages/${message.id}`)}
+            className={message.new ? `${styles['message-object']} ${styles['new']}` : `${styles['message-object']}`}
+        >
                 <h1>{message.subject}</h1>
                 <h4>{message.timeStamp}</h4>
                 {message.senders.map((s, i) => <h4 key={i}>{s.name}</h4>)}

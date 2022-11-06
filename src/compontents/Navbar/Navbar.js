@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useConfig } from '../../features/themes/configSlice';
+import { logoutFromWilma } from '../../features/authentication/authSlice';
 
 import styles from './Navbar.module.css'
 
 export default function Navbar() {
     const config = useSelector(useConfig);
-
+    const dispatch = useDispatch();
 
     return (
         <div className={styles['top']}>
@@ -16,7 +17,7 @@ export default function Navbar() {
                     <h1>{config.value ? username(config.value['username']) : '...'}</h1>
                     <h2>Opiskelija</h2>
                     <div className={styles['logout']} id="logout">
-                    <Link to={'/login'}>Kirjaudu ulos</Link>
+                    <a onClick={() => dispatch(logoutFromWilma())}>Kirjaudu ulos</a>
                     </div>
                 </div>
             </div>
@@ -25,7 +26,7 @@ export default function Navbar() {
             <Link to={'/grades'}><h5>Opinnot</h5></Link>
             <Link to={'/tray'}><h5>Kurssitarjotin</h5></Link>
             <Link to={'/news'}><h5>Tiedotteet</h5></Link>
-            <Link to={'/'}><h5>Opettajat</h5></Link>
+            <Link to={'/teachers'}><h5>Opettajat</h5></Link>
             <Link to={'/'}><h5>Asetukset</h5></Link>
         </div>
         
