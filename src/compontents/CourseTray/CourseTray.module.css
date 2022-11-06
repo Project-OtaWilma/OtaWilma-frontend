@@ -386,6 +386,12 @@
     overflow-y: scroll;
 }
 
+.tray-info-loading-screen {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+}
+
 .tray-info h1 {
     font-size: 20px;
     margin: 10px;
@@ -624,6 +630,7 @@
     opacity: 75%;
 }
 
+/*
 .schedule {
     width: 300px;
     height: auto;
@@ -683,7 +690,7 @@
 
     margin-bottom: 40px;
 }
-
+*/
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;

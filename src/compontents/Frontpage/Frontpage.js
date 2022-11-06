@@ -5,25 +5,47 @@ import { useMessages, getMessages } from '../../features/messages/messageSlice';
 import { useGrades, getGradebook } from '../../features/grades/gradeSlice';
 import { useNews, getNews } from '../../features/news/newsSlice';
 import { useSchedule, getWeek } from '../../features/schedule/scheduleSlice';
+import { useHomework, getGroups } from '../../features/schedule/homeworkSlice';
 
 import styles from './Frontpage.module.css';
 import { Link } from 'react-router-dom';
 
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { useRef } from 'react';
 
 
 export default function Frontpage() {
+    const [category, setCategory] = useState('schedule');
+
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const grades = useSelector(useGrades);
-    const schedule = useSelector(useSchedule);
+
+    const now = new Date();
+    const days = [
+        new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
+        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14)
+    ]
 
     const initialize = () => {
-        console.log('ready!');
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
         dispatch(getGradebook({auth: auth.token}))
-        dispatch(getWeek({auth: auth.token, date: new Date('2022-10-24')}))
+
+        loadSchedule();
+    }
+
+    const loadSchedule = () => {
+        setCategory('schedule');
+        days.forEach(date => {
+            dispatch(getWeek({auth: auth.token, date: date}))
+        })
+    }
+
+    const loadHomework = () => {
+        setCategory('homework');
+        dispatch(getGroups({auth: auth.token}));
     }
 
     // componentDidMount
@@ -33,12 +55,18 @@ export default function Frontpage() {
         <div className={styles['content']}>
             <div className={styles['top-container']}>
                 <div className={styles['left']}>
+                    <div className={styles['side-bar']}>
+                        <div className={styles['side-bar-content']}>
+                            <h5 onClick={() => loadSchedule()} className={category == 'schedule' ? styles['selected'] : null}>Työjärjestys</h5>
+                            <h5 onClick={() => loadHomework()}  className={category == 'homework' ? styles['selected'] : null}>Kotitehtävät</h5>
+                        </div>
+                    </div>  
                     <div className={styles['schedule']}>
-                        <Schedule schedule={schedule}/>
+                        {category == 'schedule' ? <Schedule days={days}/> : <HomeworkContainer />}
                     </div>
                 </div>
                 <div className={styles['middle']}>
-                    
+                    <Clock />
                </div>
                 <div className={styles['right']}>
                     <div className={styles['news']}>
@@ -129,49 +157,137 @@ export default function Frontpage() {
     )
 }
 
-const Schedule = ({schedule}) => {
-    if (schedule.isLoading || !schedule.current) return <LoadingScreen className={styles['loading-screen']} />;
+const Clock = () => {
+    const [sec, setSec] = useState('rotate(0deg)');
+    const [min, setMin] = useState('rotate(0deg)');
+    const [hour, setHour] = useState('rotate(0deg)');
+    const [time, setTime] = useState('00.00.00');
 
-    const week = schedule['schedule'][schedule.current];
+    const update = () => {
+        const date = (new Date());
+        setSec(`${((date.getSeconds() / 60) * 360) + 180}deg`);
+        setMin(`${((date.getMinutes() / 60) * 360) + ((date.getSeconds() / 60) * 6) + 180}deg`);
+        setHour(`${((date.getHours() / 12) * 360) + ((date.getMinutes() / 60) * 30) + 180}deg`);
+        setTime(date.toLocaleTimeString())
+    }
+
+    useEffect(() => { setInterval(update, 1000) }, []);
+
+    return (
+        <>
+            <div className={styles["clock"]}>
+                <div className={styles["clock-marking-x"]}></div>
+                <div className={styles["clock-marking-y"]}></div>
+                <div className={`${styles["clock-marking"]} ${styles["one"]}`}></div>
+                <div className={`${styles["clock-marking"]} ${styles["two"]}`}></div>
+                <div className={`${styles["clock-marking"]} ${styles["three"]}`}></div>
+                <div className={`${styles["clock-marking"]} ${styles["four"]}`}></div>
+                <div className={styles["inner-circle"]}>
+                    <div className={`${styles["hand"]} ${styles["sec"]}`} style={{rotate: sec}}></div>
+                    <div className={`${styles["hand"]} ${styles["min"]}`} style={{rotate: min}}></div>
+                    <div className={`${styles["hand"]} ${styles["hour"]}`} style={{rotate: hour}}></div>
+                    <div className={styles["center"]}></div>
+                </div>
+            </div>
+            <div className={styles['info']}>
+                <h1>{time}</h1>
+                <h2>{(new Date).toLocaleDateString('fi-Fi', {weekday: 'short', year: "numeric", month: "long", day: "numeric"})}</h2>
+            </div>
+        </>
+    )
+}
+
+const Schedule = ({days}) => {
+    const schedule = useSelector(useSchedule);
+
+    const map = days.map(date => date.toLocaleString('Fi-fi', {day: '2-digit', month: '2-digit', year: 'numeric'}))
+
     return (
         <>
             {
+                map.map((date, i) => {
+                    const d = Object.keys(schedule.schedule).find(week => schedule.schedule[week].range.includes(date));
+  
+                    if (schedule.schedule.isLoading || !schedule.loaded.includes(d)) return <LoadingScreen key={i} className={styles['loading-screen']} />;
                 
-                Object.keys(week.days).slice(0, 5).map((date, i) => {
-                    const day = week.days[date];
-                    return <DayObject key={i} date={date} day={day} />
+                    const week = schedule['schedule'][d];
+                    return <WeekObject key={i} week={week} />
                 })
-                
             }
         </>
     )
 }
 
-const DayObject = ({date, day}) => {
+const WeekObject = ({week}) => {
     return (
-        <div className={styles['day']}>
+        <div className={styles['week']}>
+            <div className={styles['week-caption']}>
+                <h1>{`Viikko ${week.week}`}</h1>
+            </div>
+            <div className={styles['days']}>
+                {
+                    Object.keys(week.days).slice(0, 5).map((date, i) => {
+                        const day = week.days[date];
+                        return <DayObject key={i} date={date} day={day} />
+                    })
+                }
+            </div>
+        </div>
+    )
+}
+
+const DayObject = ({date, day}) => {
+    const ref = useRef(null)
+
+    let lessons = [...day.lessons];
+
+    return (
+        <div className={styles['day']} ref={ref}>
             <div className={styles['date']}>
-                <h1>{date}</h1>
+                <h1>{day.day.caption}</h1>
             </div>
                 {
-                    day.lessons.map((lesson, i) => {
-                        return <LessonObject key={i} lesson={lesson} />
+                    lessons.map((lesson, i) => {
+                        const groupOffset = lesson.groups.length == 1 ? 0 : lesson.groups.length * 20;
+
+                        lessons = lessons.map(l => {return {...l, startRaw: l.startRaw + groupOffset, endRaw: l.endRaw + groupOffset}});
+                        lessons[i] = {...lessons[i], durationRaw: lessons[i].durationRaw + groupOffset}
+                        
+                        
+
+                        const start = lessons[i]['startRaw'] * 1;
+                        const end = lessons[i]['endRaw'] * 1;
+
+                        /* unsafe - modify the parent-element's height manually */
+                        if(ref.current) {
+                            const h = ref.current.parentElement.style.minHeight;
+                            const rawH = h == '' ? 0 : Number.parseFloat(h.replace('px', ''))
+
+                            /* 
+                                overrides React's render()-method
+                                - causes overlapping on development server
+                                - refreshing the page will fix it
+                                - stable on production
+                            */
+                            if((end - 480) > rawH) ref.current.parentElement.style.minHeight = `${end - 480}px`;
+                        }
+
+                        const height = lessons[i]['durationRaw'] * 1;
+
+                        return <LessonObject key={i} start={start - 480} height={height} lesson={lesson} />
                     })
                 }
         </div>
     )
 }
 
-const LessonObject = ({lesson}) => {
-    const start = (lesson['startRaw'] - 510) * 0.9;
-    const end = (lesson['endRaw'] - 510) * 0.9;
-    const height = end - start;
+const LessonObject = ({start, height, lesson}) => {
     return (
         <div
         className={styles['hour']}
         style={{
             height: `${height}px`,
-            top: `${(start) + 30}px`,
+            marginTop: `${(start)}px`,
             filter: `brightness(${((Math.random() * 2.7) - 1) * 8 + 100}%)`
         }}>
             <h1>{`${lesson['start']} - ${lesson['end']}`}</h1>
@@ -188,13 +304,65 @@ const LessonObject = ({lesson}) => {
     )
 }
 
+const HomeworkContainer = ({}) => {
+    const homework = useSelector(useHomework);
+    const groups = homework.groups;
+
+    if(homework.isLoading) return <LoadingScreen className={styles['homework-loading-screen']} />
+
+    return (
+        <div className={styles['homework']}>
+            <h1>Kurssit tässä jaksossa</h1>
+            <div className={styles['course-list']}>
+                {
+                    groups.map((group, i) => {
+                        return <HomeworkGroupObject key={i} group={group} />
+                    })
+                }
+            </div>
+        </div>
+    )
+}
+
+const HomeworkGroupObject = ({group}) => {
+    const [hidden, setHidden] = useState(true);
+
+    return (
+        <div className={styles['group-object']}>
+            <h2>{group.name}</h2>
+            <h4 className={styles['group-code']}>{group.caption}</h4>
+            <h4>{group.teachers.length > 0 ? group.teachers[0].name : null}</h4>
+            <h5>Kotitehtävät</h5>
+            <div className={styles['homework-list']}>
+                {
+                    (hidden ? (group.homework.length > 0 ? [group.homework[0]] : [null]) : group.homework).map((homework, i) => {
+                        if(!homework) return <h3 key={i}>Ei kotitehtäviä</h3>
+                        return <HomeworkObject key={i} homework={homework} />
+                    })
+                }
+            </div>
+            
+            {group.homework.length > 1 ? <h2 onClick={() => setHidden(!hidden)} className={styles['homework-action']}>{hidden ? 'Näytä kaikki' : 'Sulje'}</h2> : null}
+        </div>
+    )
+}
+
+const HomeworkObject = ({homework}) => {
+    return (
+        <div className={styles['homework-object']}>
+            <h2>{homework.date}</h2>
+            <h3>{homework.assignment}</h3>
+        </div>
+    )
+}
+
 const GroupObject = ({group}) => {
     return (
 
         <div className={styles['group']}>
             {group.teachers.map((teacher, i) => <Link key={i} to={'/'}>{teacher.caption}</Link>)}
             <h2 className={styles['code']}>{group.code}</h2>
-            {group.rooms.map((room, i) => <h2 key={i}>{room.caption}</h2>)}
+            {group.rooms ? group.rooms.map((room, i) => <h2 key={i}>{room.caption}</h2>) : null}
         </div>
 
     )

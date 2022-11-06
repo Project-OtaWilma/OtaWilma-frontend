@@ -198,6 +198,27 @@ const fetchSchedule = (auth, date = Date) => {
     })
 }
 
+const fetchHomeworkGroups = (auth) => {
+    return new Promise((resolve, reject) => {
+        const url = `${wilmaAPI}homework`;
+
+        if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'token': auth
+            }
+        })
+            .then(groups => {
+                return resolve(groups);
+            })
+            .catch(err => {
+                return reject(JSON.stringify(err));
+            })
+    })
+}
+
 const fetchTrayList = (auth) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
@@ -385,5 +406,6 @@ export {
     fetchTrayList,
     fetchPeriod,
     fetchTrayCourse,
-    fetchTrayCourseInfo
+    fetchTrayCourseInfo,
+    fetchHomeworkGroups
 }

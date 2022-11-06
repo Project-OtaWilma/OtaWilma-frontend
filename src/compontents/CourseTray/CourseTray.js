@@ -272,7 +272,7 @@ const TrayInfoContainer = ({open, course, filter, setFilter}) => {
     return (
         <>
             <div className={styles['schedule']}>
-
+                
             </div>
             <h1>Toiminnot</h1>
             {open.length > 0 ? <SearchBarObject setFilter={setFilter} /> : <></>}
@@ -285,7 +285,7 @@ const TrayInfoContainer = ({open, course, filter, setFilter}) => {
 
 const SearchBarObject = ({setFilter}) => {
     const [term, setTerm] = useState(null);
-    console.log(term);
+
     return (
         <>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -367,7 +367,7 @@ const CourseInfoObject = ({course: hash}) => {
     const courses = tray.courses;
 
     if(!courses[hash]) return <></>
-    if(courses[hash].isLoading) return <h2>Loading</h2>
+    if(courses[hash].isLoading) return <LoadingScreen className={styles['tray-info-loading-screen']} />
     const course = courses[hash];
     
     

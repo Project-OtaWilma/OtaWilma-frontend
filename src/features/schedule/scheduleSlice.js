@@ -39,7 +39,7 @@ export const scheduleSlice = createSlice({
     name: 'schedule',
     initialState: {
         schedule: {},
-        current: null,
+        loaded: [],
         isLoading: false,
     },
     reducers: {},
@@ -58,7 +58,7 @@ export const scheduleSlice = createSlice({
                 range: schedule.weekRange,
                 days: schedule.days
             }
-            state.current = action.payload.date;
+            state.loaded.push(action.payload.date);
             state.isLoading = false;
         },
         [getWeek.rejected]: (state, action) => {
@@ -76,7 +76,7 @@ export const scheduleSlice = createSlice({
 
 export const useSchedule = (state) => ({
     schedule: state.schedule.schedule,
-    current: state.schedule.current,
+    loaded: state.schedule.loaded,
     isLoading: state.schedule.isLoading,
 });
 
