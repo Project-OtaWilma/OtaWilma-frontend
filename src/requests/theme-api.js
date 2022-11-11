@@ -10,6 +10,25 @@ import {
 const otaWilmaAPi = 'http://localhost:8302/api';
 
 
+const login = (auth) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/login/`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'token': auth
+            }
+        })
+            .then(status => {
+                return resolve(status);
+            })
+            .catch(err => {
+                return reject(JSON.stringify(err));
+            })
+    })
+}
+
 const fetchConfig = (auth) => {
     return new Promise(async (resolve, reject) => {
         const url = `${otaWilmaAPi}/config/`;
@@ -86,14 +105,12 @@ const fetchTheme = (auth, id) => {
     })
 }
 
-const fetchThemeList = () => {
+const fetchThemeList = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const auth = getCookie('token');
         const url = `${otaWilmaAPi}/themes/list`;
 
         fetchJson(url, {
             method: 'GET',
-            cache: 'theme-cache',
             headers: {
                 'token': auth
             }
@@ -251,7 +268,9 @@ const editThemeBackground = (id, key, value) => {
 
 
 export {
+    login,
     fetchConfig,
     fetchDefaultTheme,
-    fetchTheme
+    fetchTheme,
+    fetchThemeList
 }

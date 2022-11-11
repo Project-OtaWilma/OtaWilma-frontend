@@ -2,17 +2,49 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     fetchTheme,
     fetchDefaultTheme,
+    fetchThemeList
 } from '../../requests/theme-api';
 
-
+/*
 export const getTheme = createAsyncThunk(
     'themes/getTheme',
     async (options, thunkAPI) => {
-        console.log(options);
-        const auth = options['auth'];
-        const id = options['id'];
-        const response = await fetchTheme(auth, id)
-        return response
+        return new Promise((resolve, reject) => {
+            const themes = thunkAPI.getState().themes;
+            const auth = options['auth'];
+            const id = options['id'];
+
+            if(themes[id]) return resolve({changed: false, theme: themes['themes'][id]});
+
+            fetchTheme(auth, id)
+            .then(theme => {
+                return resolve({changed: true, theme: theme});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+        })
+    }
+)
+*/
+
+export const getThemeList = createAsyncThunk(
+    'themes/getThemeList',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const themes = thunkAPI.getState().themes;
+            const auth = options['auth'];
+
+            //if(themes[id]) return resolve({changed: false, theme: themes['themes'][id]});
+
+            fetchThemeList(auth)
+            .then(list => {
+                return resolve({changed: true, list: list});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+        })
     }
 )
 
@@ -25,7 +57,7 @@ export const loadTheme = createAsyncThunk(
             const auth = options['auth'];
             
             // cache loaded themes
-            if(Object.keys(themes['themes']).includes(id)) return resolve({changed: false, theme: themes['themes'][id]});
+            if(themes[id] && !themes[id].isLoading) return resolve({changed: false, theme: themes['themes'][id]});
 
             fetchTheme(auth, id)
             .then(theme => {
@@ -46,7 +78,7 @@ export const loadThemeDefault = createAsyncThunk(
             const id = options['id'];
             
             // cache loaded themes
-            if(Object.keys(themes['themes']).includes(id)) return resolve({changed: false, theme: themes['themes'][id]});
+            if(themes[id] && !themes[id].isLoading) return resolve({changed: false, theme: themes['themes'][id]});
 
             fetchDefaultTheme(id)
             .then(theme => {
@@ -64,25 +96,46 @@ export const themeSlice = createSlice({
     name: 'themes',
     initialState: {
         current: null,
+        list: {
+            isLoading: true,
+            content: []
+        },
         themes: {},
         isInitialized: false,
     },
-    reducers: {},
+    reducers: {
+        setTheme: (state, action) => {
+            const hash = action.payload['id'];
+            state.current = hash;
+
+            return state;
+        }
+    },
     extraReducers: {
-        [getTheme.fulfilled]: (state, action) => {
-            const hash = action.payload['hash'];
-            state.themes[hash] = action.payload;
+        [getThemeList.fulfilled]: (state, action) => {
+            console.log(action.payload);
+            if(!action.payload.changed) {
+                return;
+            }
+
+            const list = action.payload['list'];
+
+            state.list['content'] = list.map(hash => {state.themes[hash] = state.themes[hash] ? state.themes[hash] : {isLoading: true, hash: hash}; return hash})
+            state.list.isLoading = false;
         },
-        [getTheme.rejected]: (state, action) => {
+        [getThemeList.rejected]: (state, action) => {
             console.log(action);
             console.log('api call rejected');
         },
         [loadTheme.fulfilled]: (state, action) => {
             const hash = action.payload['theme']['hash'];
-            if (action.payload.changed) state.themes[hash] = action.payload['theme'];
+            if(!action.payload.changed) {
+                return;
+            }
+            
+            const theme = action.payload['theme'];
 
-            state.current = hash;
-            state.isInitialized = true;
+            state.themes[hash] = {...theme, ...{isLoading: false}};
         },
         [loadTheme.rejected]: (state, action) => {
             console.log(action);
@@ -90,10 +143,13 @@ export const themeSlice = createSlice({
         },
         [loadThemeDefault.fulfilled]: (state, action) => {
             const hash = action.payload['theme']['hash'];
-            if (action.payload.changed) state.themes[hash] = action.payload['theme'];
+            if(!action.payload.changed) {
+                return;
+            }
 
-            state.current = hash;
-            state.isInitialized = true;
+            const theme = action.payload['theme'];
+
+            state.themes[hash] = {...theme, ...{isLoading: false}};
         },
         [loadThemeDefault.rejected]: (state, action) => {
             console.log(action);
@@ -102,10 +158,15 @@ export const themeSlice = createSlice({
     },
 });
 
+
+export const { setTheme } = themeSlice.actions;
+
 export const useThemes = (state) => ({
-    value: state.themes.themes,
+    themes: state.themes.themes,
     current: state.themes.current,
-    isInitialized: state.themes.isInitialized
+    theme: state.themes.themes[state.themes.current],
+    list: state.themes.list
 });
+
 
 export default themeSlice.reducer;

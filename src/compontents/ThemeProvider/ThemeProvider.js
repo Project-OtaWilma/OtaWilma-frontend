@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getConfig, useConfig } from '../../features/themes/configSlice';
-import { getTheme, loadTheme, loadThemeDefault, useThemes } from '../../features/themes/themeSlice';
+import { loadTheme, loadThemeDefault, setTheme, useThemes } from '../../features/themes/themeSlice';
 import { useAuth } from '../../features/authentication/authSlice';
 
 export default function ThemeProvider({ children }) {
@@ -19,18 +19,22 @@ export default function ThemeProvider({ children }) {
     }
 
     const inititalizeThemes = () => {
-        console.log('initializing themes');
-        dispatch(loadTheme({auth: auth.token, id: config.value['current-theme']}));
+        const current = config.value['current-theme'];
+
+        dispatch(loadTheme({auth: auth.token, id: current}));
+        dispatch(setTheme({id: current}))
     }
 
     const renderTheme = () => {
         const id = themes.current;
-        const theme = themes.value[id];
+        const theme = themes.themes[id];
 
+        
         const root = document.documentElement;
         const colors = Object.keys(theme.colors);
         colors.forEach(key => root.style.setProperty(key.trim(), theme.colors[key].value));
         root.style.setProperty('--background-filter', filter(theme));
+        
     }
 
     // componentDidMount
@@ -40,7 +44,7 @@ export default function ThemeProvider({ children }) {
     useEffect(() => { if (!config.hasLoaded) return; inititalizeThemes(); }, [config.hasLoaded]);
 
     // themeDidChange
-    useEffect(() => { if(!themes.current) return; renderTheme() }, [themes.current]);
+    useEffect(() => { if(themes.theme && !themes.theme.isLoading) return renderTheme() }, [themes.theme]);
 
     return (
         <>

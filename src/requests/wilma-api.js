@@ -6,9 +6,11 @@ import {
     appendCache
 } from './utility'
 
+import { login as loginToOtaWilma } from './theme-api'
 
-//const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-const wilmaAPI = 'http://localhost:3001/api/';
+
+    //const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
+    const wilmaAPI = 'http://localhost:3001/api/';
 
 const login = (credentials) => {
     return new Promise((resolve, reject) => {
@@ -20,7 +22,15 @@ const login = (credentials) => {
             body: JSON.stringify(credentials)
         })
             .then(res => {
-                return resolve(res);
+                const token = res.token;
+
+                loginToOtaWilma(token)
+                .then(() => {
+                    return resolve(res);
+                })
+                .catch(err => {
+                    return reject(err);
+                });
             })
             .catch(err => {
                 return reject(err);
