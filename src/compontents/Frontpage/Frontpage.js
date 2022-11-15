@@ -31,12 +31,6 @@ export default function Frontpage() {
         new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14)
     ]
     
-
-    /*
-    const days = [
-        new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    ]
-    */
     const initialize = () => {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
@@ -236,7 +230,7 @@ const Schedule = ({days}) => {
 
 const WeekObject = ({week}) => {
     return (
-        <div className={styles['week']} style={{minHeight: week.height}}>
+        <div className={styles['week']} style={{minHeight: week.height * 0.85}}>
             <div className={styles['week-caption']}>
                 <h1>{`Viikko ${week.week}`}</h1>
             </div>
@@ -263,9 +257,8 @@ const DayObject = ({setHeight, day}) => {
             </div>
                 {
                     lessons.map((lesson, i) => {
-                        const start = lessons[i]['startRaw'] * 1;
-                        const end = lessons[i]['endRaw'] * 1;
-                        const duration = lessons[i]['durationRaw'] * 1;
+                        const start = lessons[i]['startRaw'];
+                        const duration = lessons[i]['durationRaw'];
 
                         return <LessonObject key={i} start={start - 480} height={duration} lesson={lesson} />
                     })
@@ -277,12 +270,13 @@ const DayObject = ({setHeight, day}) => {
 const LessonObject = ({start, height, lesson}) => {
     return (
         <div
-        className={styles['hour']}
-        style={{
-            height: `${height}px`,
-            marginTop: `${(start)}px`,
-            filter: `brightness(${((Math.random() * 2.7) - 1) * 8 + 100}%)`
-        }}>
+            className={styles['hour']}
+            style={{
+                height: `${height * 0.85}px`,
+                marginTop: `${(start) * 0.85}px`,
+                filter: `brightness(${((Math.random() * 1.4) - 1) * 8 + 100}%)`
+
+            }}>
             <h1>{`${lesson['start']} - ${lesson['end']}`}</h1>
             {
                 lesson.groups.map((group, i) => {
@@ -350,9 +344,8 @@ const HomeworkObject = ({homework}) => {
 
 const GroupObject = ({group}) => {
     return (
-
         <div className={styles['group']}>
-            {group.teachers.map((teacher, i) => <Link key={i} to={'/'}>{teacher.caption}</Link>)}
+            {group.teachers.map((teacher, i) => <Link key={i} to={`/teachers/${teacher.id}`}>{teacher.caption}</Link>)}
             <h2 className={styles['code']}>{group.code}</h2>
             {group.rooms ? group.rooms.map((room, i) => <h2 key={i}>{room.caption}</h2>) : null}
         </div>

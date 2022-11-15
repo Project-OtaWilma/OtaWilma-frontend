@@ -38,6 +38,7 @@ function App() {
                     <Route path='/news/:id' element={auth.token ? <News /> : <Login />} />
                     <Route path='/tray' element={auth.token ? <CourseTray /> : <Login />} />
                     <Route path='/teachers' element={auth.token ? <Teachers /> : <Login />} />
+                    <Route path='/teachers/:id' element={auth.token ? <Teachers /> : <Login />} />
                     <Route path='/settings' element={auth.token ? <Settings /> : <Login />} />
                 </Routes>
             </ThemeProvider>

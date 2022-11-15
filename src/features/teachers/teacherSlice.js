@@ -30,10 +30,11 @@ export const getTeacher = createAsyncThunk(
         return new Promise((resolve, reject) => {
             const teachers = thunkAPI.getState().teachers;
             const name = options['name'];
+            const isId = options['isId'];
 
-            if(!teachers.teachers[name].isLoading) return resolve({changed: false})
+            if(teachers.teachers[name] && !teachers.teachers[name].isLoading) return resolve({changed: false})
 
-            fetchTeacherInfo(name, false)
+            fetchTeacherInfo(name, isId)
             .then(teacher => {
                 return resolve({changed: true, teacher: teacher});
             })
@@ -63,7 +64,7 @@ export const teacherSlice = createSlice({
 
             const teachers = action.payload['teachers'];
 
-            Object.keys(teachers).forEach(l => teachers[l].forEach(teacher => {state.teachers[teacher.name] = {...teacher, isLoading: true}}))
+            Object.keys(teachers).forEach(l => teachers[l].forEach(teacher => {state.teachers[teacher.hash] = state.teachers[teacher.hash] ? state.teachers[teacher.hash] : {...teacher, isLoading: true}}))
             
             state.list.content = teachers;
             state.list.isLoading = false;
@@ -79,7 +80,7 @@ export const teacherSlice = createSlice({
             }
             const teacher = action.payload['teacher'];
 
-            state.teachers[teacher.name] = {...state.teachers[teacher.name], ...teacher, ...{isLoading: false}}
+            state.teachers[teacher.hash] = {...state.teachers[teacher.hash], ...teacher, ...{isLoading: false}}
         },
         [getTeacher.rejected]: (state, action) => {
             console.log(action);

@@ -2,7 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
     fetchTheme,
     fetchDefaultTheme,
-    fetchThemeList
+    fetchThemeList,
+    createTheme as fCreateTheme,
+    deleteTheme,
+    editThemeBackground,
+    editThemeColors
 } from '../../requests/theme-api';
 
 /*
@@ -91,6 +95,25 @@ export const loadThemeDefault = createAsyncThunk(
     }
 )
 
+export const createTheme = createAsyncThunk(
+    'themes/createTheme',
+    async (options, thunkAPI) => {
+        return await new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            const preset = options['preset'];
+
+            
+            fCreateTheme(auth, preset)
+            .then(result => {
+                return resolve({changed: true, theme: result['session'], preset: preset});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+            
+        });
+    }
+)
 
 export const themeSlice = createSlice({
     name: 'themes',
@@ -152,6 +175,21 @@ export const themeSlice = createSlice({
             state.themes[hash] = {...theme, ...{isLoading: false}};
         },
         [loadThemeDefault.rejected]: (state, action) => {
+            console.log(action);
+            console.log('api call rejected');
+        },
+        [createTheme.fulfilled]: (state, action) => {
+            const hash = action.payload['theme']['hash'];
+            if(!action.payload.changed) {
+                return;
+            }
+
+            const preset = action.payload['preset'];
+
+            state.list['content'].push(hash);
+            state.themes[hash] = state.themes[preset];
+        },
+        [createTheme.rejected]: (state, action) => {
             console.log(action);
             console.log('api call rejected');
         },

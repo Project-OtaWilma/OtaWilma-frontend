@@ -7,7 +7,8 @@ import {
 
 
 //const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api';
-const otaWilmaAPi = 'http://localhost:8302/api';
+const otaWilmaAPi = 'https://beta.otawilma-api.tuukk.dev/api';
+//const otaWilmaAPi = 'http://localhost:8302/api';
 
 
 const login = (auth) => {
@@ -151,11 +152,10 @@ const setTheme = (id) => {
     });
 }
 
-const createTheme = () => {
+const createTheme = (auth, preset) => {
     return new Promise(async (resolve, reject) => {
-        const auth = getCookie('token');
         const configUrl = `${otaWilmaAPi}/config`;
-        const createUrl = `${otaWilmaAPi}/themes/create`;
+        const createUrl = `${otaWilmaAPi}/themes/create/${preset}`;
         const listUrl = `${otaWilmaAPi}/themes/list`;
 
         if (cacheAvailable) removeCache('config-cache', configUrl);
@@ -272,5 +272,9 @@ export {
     fetchConfig,
     fetchDefaultTheme,
     fetchTheme,
-    fetchThemeList
+    fetchThemeList,
+    createTheme,
+    deleteTheme,
+    editThemeBackground,
+    editThemeColors
 }

@@ -59,7 +59,7 @@ export const scheduleSlice = createSlice({
 
 
             Object.keys(schedule.days).forEach(day => {
-                let le = [...schedule.days[day].lessons];
+                let le = [...schedule.days[day].lessons]
 
                 le.map((lesson, i) => {
                     const groupOffset = lesson.groups.length == 1 ? 0 : lesson.groups.length * 17;
@@ -68,7 +68,7 @@ export const scheduleSlice = createSlice({
                         const l = le[j];
                         const h = l.endRaw + groupOffset;
 
-                        height = (h - 400) > height ? (h - 400) : height;
+                        height = ((h - 400) > height ? (h - 400) : height);
     
                         le[j] = {...l, startRaw: l.startRaw + groupOffset, endRaw: h}
                     }

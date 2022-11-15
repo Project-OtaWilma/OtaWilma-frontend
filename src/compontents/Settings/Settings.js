@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useConfig, getConfig } from '../../features/themes/configSlice';
-import { useThemes, loadTheme, getThemeList, setTheme } from '../../features/themes/themeSlice';
+import { useThemes, loadTheme, getThemeList, setTheme, createTheme } from '../../features/themes/themeSlice';
 import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import settings from './settings.json';
 
 import styles from './Settings.module.css';
 
+const imageTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
+
 export default function Settings() {
+    const [window, setWindow] = useState(false);
+
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const themes = useSelector(useThemes);
@@ -25,6 +29,12 @@ export default function Settings() {
             dispatch(loadTheme({auth: auth.token, id: hash}))
         });
     }
+
+    const create = (preset) => {
+        console.log(preset);
+        setWindow(false);
+        dispatch(createTheme({auth: auth.token, preset: preset}));
+    }
     
 
     // componentDidMount
@@ -34,36 +44,43 @@ export default function Settings() {
     useEffect(() => { if(!themes.list.isLoading) return loadThemes() }, [themes.list.isLoading]);
 
     return (
-        <div className={styles['content']}>
-            <div className={styles['side-bar']}>
-                <h1>Teemat</h1>
+        <>
+            {window ? <ThemeWindow onClose={() => setWindow(false)} onCreate={(preset) => create(preset)}/> : null}
+            <div className={styles['content']} style={{filter: window ? 'blur(3px)': 'none', pointerEvents: window ? 'none' : 'all'}}>
+                <div className={styles['side-bar']}>
+                    <h1>Teemat</h1>
 
-                <h1>Käyttäjä ja kaverit</h1>
+                    <h1>Käyttäjä ja kaverit</h1>
 
-                <h1>Kehittäjälle</h1>
+                    <h1>Kehittäjälle</h1>
 
-                <h1>Kiitokset</h1>
-            </div>
-            <div className={styles['settings-content']}>
-                <div className={styles['colors']}>
-                    <ThemeList />
-                    <ColorEditor />
+                    <h1>Kiitokset</h1>
+                </div>
+                <div className={styles['settings-content']}>
+                    <div className={styles['colors']}>
+                        <ThemeList onCreate={() => setWindow(true)}/>
+                        <ColorEditor />
+                    </div>
+                    <div className={styles['backgrounds']}>
+                        <BackgroundEditor />
+                    </div>
+                </div>
+                <div className={styles['settings-help']}>
+                <div className={styles['info']}>
+                        <h1>OtaWilma asetukset</h1>
+                        <h2>Teemat</h2>
+                        <h3>Voit valita oletusteemojen väliltä ja luoda halutessasi myös omia teemoja. Tehokkaalla
+                            editorilla voit mukauttaa Wilmasi värejä sekä taustakuvia.
+                        </h3>
+                    </div>
                 </div>
             </div>
-            <div className={styles['settings-help']}>
-            <div className={styles['info']}>
-                    <h1>OtaWilma asetukset</h1>
-                    <h2>Teemat</h2>
-                    <h3>Voit valita oletusteemojen väliltä ja luoda halutessasi myös omia teemoja. Tehokkaalla
-                        editorilla voit mukauttaa Wilmasi värejä sekä taustakuvia.
-                    </h3>
-                </div>
-            </div>
-        </div>
+        </>
     )
 }
 
-const ThemeList = () => {
+const ThemeList = ({onCreate}) => {
+    const dispatch = useDispatch();
     const themes = useSelector(useThemes);
     const list = themes.list;
     const map = themes.themes;
@@ -71,7 +88,6 @@ const ThemeList = () => {
     
     if(list.isLoading) return <>Loading...</>
     if(Object.keys(map).map(h => map[h].isLoading).filter(n => n).length != 0) return <>Loading...</>
-
     
     return (
         <>
@@ -80,7 +96,7 @@ const ThemeList = () => {
                 {
                     list['content'].filter(h => ['light', 'dark'].includes(h)).map((hash, i) => {
                         const theme = map[hash];
-                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current}/>
+                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => dispatch(setTheme({id: theme.hash}))}/>
                     })
                 }
             </div>
@@ -90,20 +106,27 @@ const ThemeList = () => {
                 {
                     list['content'].filter(h => !['light', 'dark'].includes(h)).map((hash, i) => {
                         const theme = map[hash];
-                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} />
+                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => dispatch(setTheme({id: theme.hash}))}/>
                     })
                 }
+                <div 
+                    onClick={() => onCreate()}
+                    className={styles['theme']}
+                >
+                    <div className={styles['theme-new']}>
+                        <h3>Luo teema</h3>
+                    </div>
+                </div>
             </div>
         </>
     )
 }
 
-const ThemePreviewObject = ({theme, selected}) => {
-    const dispatch = useDispatch();
+const ThemePreviewObject = ({theme, selected, onLoad}) => {
 
     return (
         <div
-        onClick={() => dispatch(setTheme({id: theme.hash}))}
+        onClick={() => onLoad()}
             className={selected ? `${styles['theme']} ${styles['selected']}` : styles['theme']}
             style={{
                 borderTop: `10px solid ${theme['colors']['--accent-main'].value}`
@@ -140,11 +163,33 @@ const ThemePreviewObject = ({theme, selected}) => {
     )
 }
 
+const ThemeWindow = ({onClose, onCreate}) => {
+    const themes = useSelector(useThemes);
+    const map = themes.themes;
+
+    if(!map['light'] || !map['dark']) return <>loading</>
+    if(map['light'].isLoading || map['dark'].isLoading) return <>loading</>
+
+    return (
+        <div className={styles['theme-window']}>
+            <h1 className={styles['title']}>Luo uusi teema</h1>
+            <PlaceHolder className={styles['window-background']}/>
+            <h3>Voit aloittaa oman teeman luomisen joko vaaleasta tai tummasta pohjasta.</h3>
+            <div className={styles['theme-list']}>
+                <ThemePreviewObject theme={map['light']} onLoad={() => onCreate('light')}/>
+                <ThemePreviewObject theme={map['dark']} onLoad={() => onCreate('dark')}/>
+            </div>
+            <button onClick={() => onClose()}>Peruuta</button>
+        </div>
+    )
+}
+
 const ColorEditor = () => {
     const themes = useSelector(useThemes);
     const theme = themes.theme;
 
     if(!theme) return <></>
+    if(['dark', 'light'].includes(theme.hash)) return <EditorDisclaimer />
     if(theme.isLoading) return <>Loading...</>
 
     return (
@@ -152,8 +197,8 @@ const ColorEditor = () => {
             <h1>Muokkaa teemaa</h1>
             <div className={styles['sections']}>
                 {
-                    Object.keys(settings).map((category, i) => {
-                        return <SettingsCategory key={i} category={category} />
+                    Object.keys(settings['colors']).map((category, i) => {
+                        return <SettingsCategory key={i} type={'colors'} category={category} o={i == 0}/>
                     })
                 }
             </div>
@@ -161,12 +206,96 @@ const ColorEditor = () => {
     )
 }
 
-const SettingsCategory = ({category}) => {
+const EditorDisclaimer = () => {
+    return (
+        <div className={styles['editor-disclaimer']}>
+            <PlaceHolder className={styles['disclaimer-background']} />
+            <h6>Valitse oma teema avataksesi kaikki editorin ominaisuudet.</h6>
+        </div>
+    )
+}
+
+const BackgroundEditor = () => {
     const themes = useSelector(useThemes);
     const theme = themes.theme;
 
-    const [open, setOpen] = useState(false);
-    const list = settings[category];
+    const [background, setBackground] = useState(theme && !theme.isLoading ? theme['background']['url'].value : '');
+    const [error, setError] = useState('');
+    const [format, setFormat] = useState('');
+
+    if(!theme) return <></>
+    if(['dark', 'light'].includes(theme.hash)) return null
+    if(theme.isLoading) return <>Loading...</>
+
+    const updateBackground = async (url) => {
+        if(url.length > 2023) return setError('linkin tulee olla alle <strong>1024</strong> merkin pituinen')
+        if(error) setError('');
+
+        checkFormat(url).catch(() => {setError("linkin tulee olla <strong>kuvatiedosto</strong>")})
+
+        setBackground(url);
+    }
+
+    const checkFormat = (url) => {
+        const urlPattern = new RegExp('^(https?:\\/\\/)?'+'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+ '(\\#[-a-z\\d_]*)?$','i');
+        
+        return new Promise((resolve, reject) => {
+            if(!url) return reject();
+            if(!urlPattern.test(url)) return reject();
+            const img = new Image();
+            img.src = url;
+            img.onload = (e) => {
+                const a = document.createElement('a');
+                a.href = url;
+                const format = a.pathname.split('.').reverse()[0];
+                setFormat(imageTypes.includes(format) ? format : '?');
+                a.remove();
+                img.remove();
+                return resolve();
+            };
+            img.onerror = (e) => {
+                setFormat('?')
+                img.remove();
+                return resolve();
+            }
+        })
+    }
+    
+    return (
+        <>
+            <h1>Taustakuva</h1>
+            <h1>Esikatselu</h1>
+            <div className={styles['preview']}>
+                <img src={background ? background : ''} />
+            </div>
+            <>
+                <h1>Valitse taustakuva</h1>
+                <form className={styles['background-input']}>  
+                    <label>Linkki</label>
+                    <input type='url' value={background} onChange={(e) => updateBackground(e.target.value)} placeholder='https://onlyfans.com/?img=minttu.png'/>
+                    <h4 dangerouslySetInnerHTML={{__html: error}}></h4>
+                </form>
+                <div className={styles['format-disclaimer']}>
+                    <h3 style={{color: format== '?' ? 'var(--error)' : 'var(--login-main)'}}>{format}</h3>
+                </div>
+                <h1>Muokkaa taustakuvaa</h1>
+                <div className={styles['sections']}>
+                {
+                    Object.keys(settings['background']).map((category, i) => {
+                        return <SettingsCategory key={i} type={'background'} category={category} o={i == 0}/>
+                    })
+                }
+            </div>
+            </>
+        </>
+    )
+}
+
+const SettingsCategory = ({type, category, o}) => {
+    const themes = useSelector(useThemes);
+    const theme = themes.theme;
+    const [open, setOpen] = useState((o ? true : false));
+    const list = settings[type][category];
 
     return (
         <>
@@ -181,12 +310,12 @@ const SettingsCategory = ({category}) => {
             }}>
                 {
                     Object.keys(list).map((key, i) => {
-                        const setting = theme['colors'][key];
+                        const setting = theme[type][key];
                         switch(setting['type']) {
                             case 'color':
                                 return <ColorInput key={i} field={list[key]} setting={setting} />
                             default:
-                                return <></>
+                                return <NumberInput key={i} field={list[key]} setting={setting} />
                         }
                     })
                 }
@@ -206,7 +335,9 @@ const ColorInput = ({field, setting}) => {
     }
 
     const updateColor = (c) => {
-
+        const {r, g, b, a} = hexToRgb(c, opacity / 100)
+        const raw = `rgba(${r}, ${g}, ${b}, ${a})`;
+        console.log(raw);
     }
 
     return (
@@ -218,6 +349,22 @@ const ColorInput = ({field, setting}) => {
                 <h3>Läpinäkyvyys</h3>
                 <input className={styles['opacity-input']} type='number' value={opacity} onChange={(e) => updateOpacity(e.target.value)}/>
             </div>
+        </form>
+    )
+}
+
+const NumberInput = ({field, setting}) => {
+    const [value, setValue] = useState(setting['value']);
+
+    const updateValue = (v) => {
+        const val = Math.min(Math.max(v, 0), 200);
+        setValue(val);
+    }
+
+    return (
+        <form>
+            <label>{field}</label>
+            <input className={styles['number-input']} type='number' onChange={(e) => updateValue(e.target.value)} value={value} />
         </form>
     )
 }

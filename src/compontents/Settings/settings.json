@@ -1,48 +1,67 @@
 {
-    "Yleinen": {
-        "--accent-main": "Ensisijainen väri",
-        "--background-main": "Taustan ensisijainen väri",
-        "--background-darker": "Taustan toissijainen väri"
+    "colors": {
+        "Yleinen": {
+            "--accent-main": "Ensisijainen väri",
+            "--background-main": "Taustan ensisijainen väri",
+            "--background-darker": "Taustan toissijainen väri"
+        },
+        "Etusivu": {
+            "--info-background": "Kellon tausta",
+            "--clock-background": "Kellon väri",
+            "--clock-markings": "Kellon merkinnät",
+            "--info-h1": "Kellon teksti",
+            "--schedule-main": "Työjärjetyksen taustan väri",
+            "--schedule-h1": "Työjärjetyksen ensisijaisen tekstin väri"
+        },
+        "Teksti": {
+            "--font-h1": "Otsikot",
+            "--font-h2": "Ensisijainen sisältö",
+            "--font-h3": "Toissijainen sisältö",
+            "--font-h4": "Valikon logotekstin väri",
+            "--font-h5": "Valikon osioiden väri"
+        },
+        "Ääriviivat ja varjostus": {
+            "--border-main": "Ääriviivojen ensisijainen väri",
+            "--border-darker": "Ääriviivojen toissijainen väri",
+            "--shadow-main": "Varjostuksen ensisijainen väri",
+            "--shadow-darker": "Varjostuksen toissijainen väri"
+        },
+        "Kurssitarjotin": {
+            "--L2021-mandatory-main": "Pakollinen (LOPS 2021)",
+            "--L2021-mandatory-selected": "Valittu Pakollinen (LOPS 2021)",
+            "--L2021-g-optional-main": "Valtakunallinen valinnainen (LOPS 2021)",
+            "--L2021-g-optional-selected": "Valittu valtakunallinen valinnainen (LOPS 2021)",
+            "--L2021-l-optional-main": "Koulukohtainen valinnainen (LOPS 2021)",
+            "--L2021-l-optional-selected": "Valittu koulukohtainen valinnainen (LOPS 2021)",
+            "--L2021-diploma-main": "Lukiodiplomi (LOPS 2021)",
+            "--L2021-diploma-selected": "Valittu lukiodiplomi (LOPS 2021)",
+            "--L2016-l-optional-main": "Koulukohtainen soveltava kurssi (LOPS 2016)",
+            " --L2016-l-optional-selected": "Valittu koulukohtainen soveltava kurssi (LOPS 2016)",
+            "--L2016-g-optional-main": "Valtakunnalinen Soveltava kurssi (LOPS 2016)",
+            "--L2016-g-optional-selected": "Valittu valtakunnalinen soveltava kurssi (LOPS 2016)",
+            "--course-tray-h1": "Kurssien tekstin ensisijainen väri"
+        },
+        "Muu": {
+            "--login-main": "Painikkeiden ensisijainen väri",
+            "--login-lighter": "Painikkeiden toissijainen väri",
+            "--error": "Virheilmoitusten ensisijainen väri"
+        }
     },
-    "Etusivu": {
-        "--info-background": "Kellon tausta",
-        "--clock-background": "Kellon väri",
-        "--clock-markings": "Kellon merkinnät",
-        "--info-h1": "Kellon teksti",
-        "--schedule-main": "Työjärjetyksen taustan väri",
-        "--schedule-h1": "Työjärjetyksen ensisijaisen tekstin väri"
-    },
-    "Teksti": {
-        "--font-h1": "Otsikot",
-        "--font-h2": "Ensisijainen sisältö",
-        "--font-h3": "Toissijainen sisältö",
-        "--font-h4": "Valikon logotekstin väri",
-        "--font-h5": "Valikon osioiden väri"
-    },
-    "Ääriviivat ja varjostus": {
-        "--border-main": "Ääriviivojen ensisijainen väri",
-        "--border-darker": "Ääriviivojen toissijainen väri",
-        "--shadow-main": "Varjostuksen ensisijainen väri",
-        "--shadow-darker": "Varjostuksen toissijainen väri"
-    },
-    "Kurssitarjotin": {
-        "--L2021-mandatory-main": "Pakollinen (LOPS 2021)",
-        "--L2021-mandatory-selected": "Valittu Pakollinen (LOPS 2021)",
-        "--L2021-g-optional-main": "Valtakunallinen valinnainen (LOPS 2021)",
-        "--L2021-g-optional-selected": "Valittu valtakunallinen valinnainen (LOPS 2021)",
-        "--L2021-l-optional-main": "Koulukohtainen valinnainen (LOPS 2021)",
-        "--L2021-l-optional-selected": "Valittu koulukohtainen valinnainen (LOPS 2021)",
-        "--L2021-diploma-main": "Lukiodiplomi (LOPS 2021)",
-        "--L2021-diploma-selected": "Valittu lukiodiplomi (LOPS 2021)",
-        "--L2016-l-optional-main": "Koulukohtainen soveltava kurssi (LOPS 2016)",
-        " --L2016-l-optional-selected": "Valittu koulukohtainen soveltava kurssi (LOPS 2016)",
-        "--L2016-g-optional-main": "Valtakunnalinen Soveltava kurssi (LOPS 2016)",
-        "--L2016-g-optional-selected": "Valittu valtakunnalinen soveltava kurssi (LOPS 2016)",
-        "--course-tray-h1": "Kurssien tekstin ensisijainen väri"
-    },
-    "Muu": {
-        "--login-main": "Painikkeiden ensisijainen väri",
-        "--login-lighter": "Painikkeiden toissijainen väri",
-        "--error": "Virheilmoitusten ensisijainen väri"
+    "background": {
+        "Tehosteet": {
+            "blur": "Sumennus [%]",
+            "brightness": "Kirkkaus [%]",
+            "opacity": "läpinäkymättömyys [%]"
+        },
+        "Väri": {
+            "contrast": "Kontrasti [%]",
+            "saturate": "Saturaatio [%]",
+            "grayscale": "Harmaasävyt [%]",
+            "sepia": "Seepia [%]"
+        },
+        "Lisäasetukset": {
+            "hue-rotate": "Värin taitto [deg]",
+            "invert": "käänteisväri [%]"
+        }
     }
 }

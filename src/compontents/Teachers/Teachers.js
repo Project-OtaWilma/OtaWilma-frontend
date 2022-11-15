@@ -15,11 +15,12 @@ export default function Teachers() {
 
     const initialize = () => {
         dispatch(getTeachers());
+        if(params.id) loadteacherById(params.id);
     }
 
-    const loadteacher = (name) => {
-        dispatch(getTeacher({name: name}));
-        setCurrent(name);
+    const loadteacherById = (id) => {
+        dispatch(getTeacher({name: id, isId: true}));
+        setCurrent(id);
     }
     
     useEffect(() => { initialize() }, []);
@@ -27,7 +28,7 @@ export default function Teachers() {
     return (
         <div className={styles['content']}>
             <div className={styles['side-bar']}>
-                <TeacherList onLoad={loadteacher}/>
+                <TeacherList onLoad={loadteacherById}/>
             </div>
             <div className={styles['main']}>
                 <TeacherInfoContainer current={current} />
@@ -68,24 +69,26 @@ const TeacherObject = ({teacher, onLoad}) => {
 
     return (
         <div className={styles['teacher']}>
-            <h2 onClick={() => onLoad(teacher.name)}>{teacher.name}</h2>
+            <h2 onClick={() => onLoad(teacher.hash)}>{teacher.name}</h2>
             <h3>{teacher.task}</h3>
         </div>
     )
 }
-
 const TeacherInfoContainer = ({current}) => {
     const teachers = useSelector(useTeachers);
     const map = teachers.teachers;
 
+    
+
     if(!current) return <PlaceHolder className={styles['teacher-placeholder']}/>
+    if(!map[current]) return <LoadingScreen className={styles['teacher-loading-screen']} />
     if(map[current].isLoading) return <LoadingScreen className={styles['teacher-loading-screen']} />
 
     const teacher = map[current];
     const tasks = teacher.task.replaceAll(' ja ', '/').replaceAll(', ', '/').split('/');
     const nameArray = teacher.name.split(' ');
     const gmail = nameArray.length > 2 ? [[nameArray[0], nameArray[1]].join(''), nameArray[2]].join('.').toLowerCase()  + '@opetus.espoo.fi' : nameArray.join('.').toLowerCase() + '@opetus.espoo.fi'
-    console.log(teacher);
+    
     return (
         <>
             <div className={styles['left']}>
