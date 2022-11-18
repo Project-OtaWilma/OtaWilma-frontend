@@ -9,9 +9,18 @@ import {
 export const getConfig = createAsyncThunk(
     'config/getConfig',
     async (options, thunkAPI) => {
-        const auth = options['auth'];
-        const response = await fetchConfig(auth);
-        return response
+        return new Promise((resolve, reject) => {
+            
+            const auth = options['auth'];
+            fetchConfig(auth)
+            .then(config => {
+                return resolve({config: config});
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject(err);
+            })
+        })
     }
 )
 
@@ -20,24 +29,18 @@ export const configSlice = createSlice({
     name: 'config',
     initialState: {
         config: null,
-        isLoading: false,
-        hasLoaded: false
+        isLoading: true,
     },
     reducers: {},
     extraReducers: {
         [getConfig.fulfilled]: (state, action) => {
-            state.config = action.payload;
+            console.log(action.payload);
+            state.config = action.payload['config'];
             state.isLoading = false;
-            state.hasLoaded = true;
         },
         [getConfig.rejected]: (state, action) => {
             console.log('api call rejected');
             state.isLoading = false;
-
-            handleError({err: action.error.message, resetAuth: true});
-        },
-        [getConfig.pending]: (state, action) => {
-            state.isLoading = true;
         },
     },
 });
@@ -45,7 +48,6 @@ export const configSlice = createSlice({
 export const useConfig = (state) => ({
     value: state.config.config,
     isLoading: state.config.isLoading,
-    hasLoaded: state.config.hasLoaded
 });
 
 export default configSlice.reducer;

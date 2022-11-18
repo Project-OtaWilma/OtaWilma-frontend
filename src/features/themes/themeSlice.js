@@ -187,7 +187,7 @@ export const themeSlice = createSlice({
             const preset = action.payload['preset'];
 
             state.list['content'].push(hash);
-            state.themes[hash] = state.themes[preset];
+            state.themes[hash] = {...state.themes[preset], ...{hash: hash}};
         },
         [createTheme.rejected]: (state, action) => {
             console.log(action);

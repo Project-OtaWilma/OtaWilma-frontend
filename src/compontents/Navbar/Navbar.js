@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useConfig } from '../../features/themes/configSlice';
+import { getConfig, useConfig } from '../../features/themes/configSlice';
 import { logoutFromWilma } from '../../features/authentication/authSlice';
 
 import styles from './Navbar.module.css'

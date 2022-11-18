@@ -55,18 +55,12 @@ export const authSlice = createSlice({
             setToken(state.token);
 
             state.loggedIn = true;
-            state.logginIn = false;
         },
         [loginToWilma.rejected]: (state, action) => {
             console.log('api call rejected');
             const e = JSON.parse(action.error.message);
 
             state.loginError = e.error ? e.error.err : e.err;
-            state.logginIn = false;
-        },
-        [loginToWilma.pending]: (state, action) => {
-            state.logginIn = false;
-            state.loginError = '';
         },
         [logoutFromWilma.fulfilled]: (state, action) => {
             setToken(null);
@@ -83,7 +77,6 @@ export const authSlice = createSlice({
 export const useAuth = (state) => ({
     token: state.auth.token,
     loggedIn: state.auth.loggedIn,
-    logginIn: state.auth.logginIn,
     loginError: state.auth.loginError,
 });
 

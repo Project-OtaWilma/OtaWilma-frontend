@@ -566,7 +566,7 @@
 }
 
 .homework .course-list {
-    width: 95%;
+    width: 100%;
     height: auto;
 
     display: flex;
@@ -578,115 +578,121 @@
 /* lops hashset [L2021 & L2016] */
 .c-type25,
 .c-type136 {
-    border-left: solid 10px var(--L2021-mandatory-main) !important;
+    background-color: var(--L2021-mandatory-main) !important;
 }
 
 .c-type25-graded,
 .c-type136-graded {
-    border-left: solid 10px var(--L2021-mandatory-selected) !important;
+    background-color: var(--L2021-mandatory-selected) !important;
 }
 
 
 .c-type137 {
-    border-left: solid 10px var(--L2021-g-optional-main) !important;
+    background-color: var(--L2021-g-optional-main) !important;
 }
 
 .c-type137-graded {
-    border-left: solid 10px var(--L2021-g-optional-selected) !important;
+    background-color: var(--L2021-g-optional-selected) !important;
 }
 
 .c-type138 {
-    border-left: solid 10px var(--L2021-diploma-main) !important;
+    background-color: var(--L2021-diploma-main) !important;
 }
 
 .c-type138-graded {
-    border-left: solid 10px var(--L2021-diploma-selected) !important;
+    background-color: var(--L2021-diploma-selected) !important;
 }
 
 .c-type141,
 .c-type146,
 .c-type151 {
-    border-left: solid 10px var(--L2021-l-optional-main) !important;
+    background-color: var(--L2021-l-optional-main) !important;
 }
 
 .c-type141-graded,
 .c-type146-graded,
 .c-type151-graded {
-    border-left: solid 10px var(--L2021-l-optional-selected) !important;
+    background-color: var(--L2021-l-optional-selected) !important;
 }
 
 .unknown {
-    border-left: solid 10px gray !important;
+    background-color: gray !important;
 }
 
 .c-type112,
 .c-type66,
 .c-type26,
 .c-type65 {
-    border-left: solid 10px var(--L2016-l-optional-main) !important;
+    background-color: var(--L2016-l-optional-main) !important;
 }
 
 .c-type26-graded,
 .c-type66-graded,
 .c-type26-graded,
 .c-type65-graded {
-    border-left: solid 10px var(--L2016-l-optional-selected) !important;
+    background-color: var(--L2016-l-optional-selected) !important;
 }
 
 .c-type27 {
-    border-left: solid 10px var(--L2016-g-optional-main) !important;
+    background-color: var(--L2016-g-optional-main) !important;
 }
 
 .c-type27-graded {
-    border-left: solid 10px var(--L2016-g-optional-selected) !important;
+    background-color: var(--L2016-g-optional-selected) !important;
 }
 
 .c-type119,
 .c-type29 {
-    border-left: solid 10px var(--L2021-diploma-main) !important;
+    background-color: var(--L2021-diploma-main) !important;
 }
 
 .c-type119-graded,
 .c-type29-graded {
-    border-left: solid 10px var(--L2021-diploma-selected) !important;
+    background-color: var(--L2021-diploma-selected) !important;
 }
 
-.course-list .group-object {
-    width: 80%;
-    padding: 10px;
+.group-object {
+    width: 100%;
     margin: 5px;
-    border: solid 1px var(--border-main);
-    border-radius: 7px;
-}
 
-.group-object h2 {
-    font-size: 20px;
-    color: var(--font-h1);
-    font-family: 'semi-bold';
-    padding: 5px;
-}
-
-
-.group-object h4 {
-    font-size: 17px;
-    color: var(--font-h2);
-    padding: 2px;
-    padding-left: 10px;
-    margin-left: 10px;
-
-    border-left: solid 1px var(--border-main);
+    display: flex;
+    flex-direction: row;
 }
 
 .group-code {
-    font-family: 'semi-bold';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 150px;
+    max-width: 150px;
+    padding: 10px;
+}
+
+.group-code h2 {
+    font-size: 20px;
+    color: var(--schedule-h1);
+    font-family: 'bold';
+    padding: 2px;
+}
+
+.group-code h4 {
+    color: var(--schedule-h1);
+    text-align: center;
+}
+
+.group-code h3 {
+    color: var(--schedule-h1);
+    opacity: 75%;
+    padding: 2px;
 }
 
 .group-object h5 {
-    font-size: 17px;
-    color: var(--font-h1);
+    font-family: 'bold';
     padding: 5px;
-    padding-left: 5px;
-    font-family: 'semi-bold';
+    color: var(--font-h1);
+    font-size: 20px;
 }
 
 .group-object .homework-list {
@@ -701,9 +707,10 @@
     font-size: 15px;
     font-family: 'regular';
     color: var(--font-h2);
+    position: absolute;
+    text-align: right;
 
-    margin-top: 10px;
-    margin-left: 5px;
+    right: 10px;
 
     opacity: 50%;
 
@@ -717,8 +724,13 @@
     opacity: 100%;
 }
 
+.homework-object {
+    margin-bottom: 10px;
+}
+
 .homework-object h2 {
-    color: var(--font-h2);
+    color: var(--font-h1);
+    font-family: 'semi-bold';
     font-size: 16px;
     padding: 5px;
 }
@@ -726,6 +738,7 @@
 .homework-object h3 {
     color: var(--font-h3);
     font-family: 'arial';
+    font-style: italic;
 
     font-size: 15px;
     padding: 2px;

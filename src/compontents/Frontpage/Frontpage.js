@@ -314,12 +314,14 @@ const HomeworkContainer = ({}) => {
 const HomeworkGroupObject = ({group}) => {
     const [hidden, setHidden] = useState(true);
     return (
-        <div className={`${styles['group-object']} ${styles[group.type]}`}>
-            <h2>{group.name}</h2>
-            <h4 className={styles['group-code']}>{group.caption}</h4>
-            <h4>{group.teachers.length > 0 ? group.teachers[0].name : null}</h4>
-            <h5>Kotitehtävät</h5>
+        <div className={styles['group-object']}>
+            <div className={`${styles['group-code']} ${styles[group.type]}`}>
+                <h2>{group.caption}</h2>
+                <h4>{group.name}</h4>
+                <h3>{group.teachers.length > 0 ? group.teachers[0].name : null}</h3>
+            </div>
             <div className={styles['homework-list']}>
+                <h5>Kotitehtävät</h5>
                 {
                     (hidden ? (group.homework.length > 0 ? [group.homework[0]] : [null]) : group.homework).map((homework, i) => {
                         if(!homework) return <h3 key={i}>Ei kotitehtäviä</h3>

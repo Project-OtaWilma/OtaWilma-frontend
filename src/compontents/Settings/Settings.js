@@ -333,21 +333,26 @@ const ColorInput = ({field, setting}) => {
         const o = Math.min(Math.max(a, 0), 100);
         setOpacity(o);
     }
-
+    
+    
     const updateColor = (c) => {
-        const {r, g, b, a} = hexToRgb(c, opacity / 100)
+        setColor(c)
+    }
+
+    const applyColor = () => {
+        const {r, g, b, a} = hexToRgb(color, opacity / 100)
         const raw = `rgba(${r}, ${g}, ${b}, ${a})`;
         console.log(raw);
     }
 
     return (
-        <form>
+        <form onSubmit={(e) => {e.preventDefault(); applyColor()}}>
             <label>{field}</label>
             <h3>{'Väri'}</h3>
-            <input className={styles['color-input']} type='color' style={{opacity: opacity / 100}} value={color} onChange={(e) => updateColor(e.target.value)}/>
+            <input className={styles['color-input']} type='color' style={{opacity: opacity / 100}} onBlur={() => applyColor()} value={color} onChange={(e) => updateColor(e.target.value)}/>
             <div className={styles['opacity']}>
                 <h3>Läpinäkyvyys</h3>
-                <input className={styles['opacity-input']} type='number' value={opacity} onChange={(e) => updateOpacity(e.target.value)}/>
+                <input className={styles['opacity-input']} type='number' value={opacity} onBlur={() => applyColor()} onChange={(e) => updateOpacity(e.target.value)}/>
             </div>
         </form>
     )

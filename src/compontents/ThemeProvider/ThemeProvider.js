@@ -44,8 +44,11 @@ export default function ThemeProvider({ children }) {
     // componentDidMount
     useEffect(() => { initialize() }, []);
 
+    //authDidLoad
+    useEffect(() => {if(auth.token && config.isLoading) return initialize() }, [auth.token])
+
     // configDidLoad
-    useEffect(() => { if (!config.hasLoaded) return; inititalizeThemes(); }, [config.hasLoaded]);
+    useEffect(() => { if (!config.isLoading && config.value) return inititalizeThemes() }, [config.isLoading]);
 
     // themeDidChange
     useEffect(() => { if(themes.theme && !themes.theme.isLoading) return renderTheme() }, [themes.theme]);

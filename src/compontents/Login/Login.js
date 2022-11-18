@@ -4,6 +4,7 @@ import {
     useAuth,
     loginToWilma
 } from '../../features/authentication/authSlice';
+import { getConfig, useConfig } from '../../features/themes/configSlice';
 
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
