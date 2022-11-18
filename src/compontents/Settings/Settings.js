@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useConfig, getConfig } from '../../features/themes/configSlice';
-import { useThemes, loadTheme, getThemeList, setTheme, createTheme } from '../../features/themes/themeSlice';
+import { useThemes, loadTheme, getThemeList, setTheme, createTheme, selectTheme, editTheme} from '../../features/themes/themeSlice';
 import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import settings from './settings.json';
@@ -31,7 +31,6 @@ export default function Settings() {
     }
 
     const create = (preset) => {
-        console.log(preset);
         setWindow(false);
         dispatch(createTheme({auth: auth.token, preset: preset}));
     }
@@ -81,6 +80,7 @@ export default function Settings() {
 
 const ThemeList = ({onCreate}) => {
     const dispatch = useDispatch();
+    const auth = useSelector(useAuth)
     const themes = useSelector(useThemes);
     const list = themes.list;
     const map = themes.themes;
@@ -88,6 +88,10 @@ const ThemeList = ({onCreate}) => {
     
     if(list.isLoading) return <>Loading...</>
     if(Object.keys(map).map(h => map[h].isLoading).filter(n => n).length != 0) return <>Loading...</>
+
+    const select = (id) => {
+        dispatch(selectTheme({auth: auth.token, id: id}))
+    }
     
     return (
         <>
@@ -96,7 +100,7 @@ const ThemeList = ({onCreate}) => {
                 {
                     list['content'].filter(h => ['light', 'dark'].includes(h)).map((hash, i) => {
                         const theme = map[hash];
-                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => dispatch(setTheme({id: theme.hash}))}/>
+                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => select(hash)}/>
                     })
                 }
             </div>
@@ -106,7 +110,7 @@ const ThemeList = ({onCreate}) => {
                 {
                     list['content'].filter(h => !['light', 'dark'].includes(h)).map((hash, i) => {
                         const theme = map[hash];
-                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => dispatch(setTheme({id: theme.hash}))}/>
+                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => select(hash)}/>
                     })
                 }
                 <div 
@@ -313,9 +317,9 @@ const SettingsCategory = ({type, category, o}) => {
                         const setting = theme[type][key];
                         switch(setting['type']) {
                             case 'color':
-                                return <ColorInput key={i} field={list[key]} setting={setting} />
+                                return <ColorInput key={i} field={list[key]} k={key} setting={setting} />
                             default:
-                                return <NumberInput key={i} field={list[key]} setting={setting} />
+                                return <NumberInput key={i} field={list[key]} k={key} setting={setting} />
                         }
                     })
                 }
@@ -324,7 +328,10 @@ const SettingsCategory = ({type, category, o}) => {
     )
 }
 
-const ColorInput = ({field, setting}) => {
+const ColorInput = ({field, setting, k: key}) => {
+    const dispatch = useDispatch();
+    const auth = useSelector(useAuth);
+    const themes = useSelector(useThemes)
     const [r, g, b, a] = parseRgb(setting.value);
     const [color, setColor] = useState(rgbToHex(r, g, b))
     const [opacity, setOpacity] = useState(a * 100);
@@ -342,7 +349,16 @@ const ColorInput = ({field, setting}) => {
     const applyColor = () => {
         const {r, g, b, a} = hexToRgb(color, opacity / 100)
         const raw = `rgba(${r}, ${g}, ${b}, ${a})`;
-        console.log(raw);
+
+        
+        dispatch(editTheme({
+            auth: auth.token,
+            id: themes.current,
+            root: 'colors',
+            key: key,
+            value: raw
+        }));
+        
     }
 
     return (

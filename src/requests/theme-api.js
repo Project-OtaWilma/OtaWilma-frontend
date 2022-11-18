@@ -125,9 +125,8 @@ const fetchThemeList = (auth) => {
     })
 }
 
-const setTheme = (id) => {
+const setTheme = (auth, id) => {
     return new Promise(async (resolve, reject) => {
-        const auth = getCookie('token');
         const configUrl = `${otaWilmaAPi}/config/`;
         const themeUrl = `${otaWilmaAPi}/config/set/current-theme`;
 
@@ -205,46 +204,14 @@ const deleteTheme = (id) => {
     });
 }
 
-const editThemeColors = (id, key, value) => {
+const editTheme = (auth, id, root, key, value) => {
     return new Promise(async (resolve, reject) => {
-        const auth = getCookie('token');
         const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
         const themeList = `${otaWilmaAPi}/themes/list`;
-        const editUrl = `${otaWilmaAPi}/themes/${id}/edit/colors`;
+        const editUrl = `${otaWilmaAPi}/themes/${id}/edit/${root}`;
 
         if (cacheAvailable) removeCache('theme-cache', themeUrl);
         if (cacheAvailable) removeCache('theme-cache', themeList);
-
-        fetchJson(editUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'token': auth
-            },
-            body: JSON.stringify({
-                "key": key,
-                "value": value
-            })
-        })
-            .then(res => {
-                return resolve(res);
-            })
-            .catch(err => {
-                return reject(err);
-            });
-    });
-}
-
-const editThemeBackground = (id, key, value) => {
-    return new Promise(async (resolve, reject) => {
-        const auth = getCookie('token');
-        const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
-        const listUrl = `${otaWilmaAPi}/themes/list/`;
-        const editUrl = `${otaWilmaAPi}/themes/${id}/edit/background`;
-
-        if (cacheAvailable) removeCache('theme-cache', themeUrl);
-        if (cacheAvailable) removeCache('theme-cache', listUrl);
-
 
         fetchJson(editUrl, {
             method: 'POST',
@@ -275,6 +242,6 @@ export {
     fetchThemeList,
     createTheme,
     deleteTheme,
-    editThemeBackground,
-    editThemeColors
+    editTheme,
+    setTheme
 }

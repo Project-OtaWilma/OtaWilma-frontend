@@ -4,33 +4,11 @@ import {
     fetchDefaultTheme,
     fetchThemeList,
     createTheme as fCreateTheme,
+    setTheme as fSetTheme,
     deleteTheme,
-    editThemeBackground,
-    editThemeColors
+    editTheme as fEditTheme
 } from '../../requests/theme-api';
 
-/*
-export const getTheme = createAsyncThunk(
-    'themes/getTheme',
-    async (options, thunkAPI) => {
-        return new Promise((resolve, reject) => {
-            const themes = thunkAPI.getState().themes;
-            const auth = options['auth'];
-            const id = options['id'];
-
-            if(themes[id]) return resolve({changed: false, theme: themes['themes'][id]});
-
-            fetchTheme(auth, id)
-            .then(theme => {
-                return resolve({changed: true, theme: theme});
-            })
-            .catch(err => {
-                return reject(err);
-            })
-        })
-    }
-)
-*/
 
 export const getThemeList = createAsyncThunk(
     'themes/getThemeList',
@@ -115,6 +93,47 @@ export const createTheme = createAsyncThunk(
     }
 )
 
+export const selectTheme = createAsyncThunk(
+    'themes/selectTheme',
+    async (options, thunkAPI) => {
+        return await new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            const id = options['id'];
+
+            fSetTheme(auth, id)
+            .then(() => {
+                return resolve({changed: true, id: id});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+            
+        });
+    }
+)
+
+export const editTheme = createAsyncThunk(
+    'themes/editTheme',
+    async (options, thunkAPI) => {
+        return await new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            const id = options['id'];
+            const root = options['root'];
+            const key = options['key'];
+            const value = options['value'];
+
+            fEditTheme(auth, id, root, key, value)
+            .then(() => {
+                return resolve({changed: true, id: id, root: root, key: key, value: value});
+            })
+            .catch(err => {
+                return reject(err);
+            })
+            
+        });
+    }
+)
+
 export const themeSlice = createSlice({
     name: 'themes',
     initialState: {
@@ -190,6 +209,40 @@ export const themeSlice = createSlice({
             state.themes[hash] = {...state.themes[preset], ...{hash: hash}};
         },
         [createTheme.rejected]: (state, action) => {
+            console.log(action);
+            console.log('api call rejected');
+        },
+        [selectTheme.fulfilled]: (state, action) => {
+            const id = action.payload['id'];
+
+            if(!action.payload.changed) {
+                return;
+            }
+
+            state.current = id;
+        },
+        [selectTheme.rejected]: (state, action) => {
+            console.log(action);
+            console.log('api call rejected');
+        },
+        [editTheme.fulfilled]: (state, action) => {
+            const id = action.payload['id'];
+
+            if(!action.payload.changed) {
+                return;
+            }
+            const root = action.payload['root'];
+            const key = action.payload['key'];
+            const value = action.payload['value'];
+
+            state.themes[id][root] = {...state.themes[id][root], ...{
+                [key]: {
+                    ...state.themes[id][root][key],
+                    ...{value: value}
+                }
+            }};
+        },
+        [editTheme.rejected]: (state, action) => {
             console.log(action);
             console.log('api call rejected');
         },
