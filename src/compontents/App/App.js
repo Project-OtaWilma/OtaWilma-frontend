@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useAuth } from '../../features/authentication/authSlice';
+import { useErrors } from '../../features/errors/errorSlice';
 
 import Frontpage from '../Frontpage/Frontpage';
 import Login from '../Login/Login';
@@ -13,6 +14,7 @@ import News from '../News/News';
 import CourseTray from '../CourseTray/CourseTray';
 import Teachers from '../Teachers/Teachers';
 import Settings from '../Settings/Settings';
+import Error from '../Error/Error';
 
 import {
     BrowserRouter,
@@ -23,6 +25,9 @@ import {
 
 function App() {
     const auth = useSelector(useAuth);
+    const errors = useSelector(useErrors);
+
+    if(errors.fatal) return <Error />
     
     return (
         <BrowserRouter>

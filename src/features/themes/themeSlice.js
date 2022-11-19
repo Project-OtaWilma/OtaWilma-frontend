@@ -9,6 +9,8 @@ import {
     editTheme as fEditTheme
 } from '../../requests/theme-api';
 
+import { handleError } from '../errors/errorSlice';
+
 
 export const getThemeList = createAsyncThunk(
     'themes/getThemeList',
@@ -17,13 +19,12 @@ export const getThemeList = createAsyncThunk(
             const themes = thunkAPI.getState().themes;
             const auth = options['auth'];
 
-            //if(themes[id]) return resolve({changed: false, theme: themes['themes'][id]});
-
             fetchThemeList(auth)
             .then(list => {
                 return resolve({changed: true, list: list});
             })
             .catch(err => {
+                thunkAPI.dispatch(handleError(err))
                 return reject(err);
             })
         })
@@ -46,6 +47,7 @@ export const loadTheme = createAsyncThunk(
                 return resolve({changed: true, theme: theme});
             })
             .catch(err => {
+                thunkAPI.dispatch(handleError(err))
                 return reject(err);
             })
         });
@@ -67,6 +69,7 @@ export const loadThemeDefault = createAsyncThunk(
                 return resolve({changed: true, theme: theme});
             })
             .catch(err => {
+                thunkAPI.dispatch(handleError(err))
                 return reject(err);
             })
         });
@@ -86,6 +89,7 @@ export const createTheme = createAsyncThunk(
                 return resolve({changed: true, theme: result['session'], preset: preset});
             })
             .catch(err => {
+                thunkAPI.dispatch(handleError(err))
                 return reject(err);
             })
             
@@ -105,6 +109,7 @@ export const selectTheme = createAsyncThunk(
                 return resolve({changed: true, id: id});
             })
             .catch(err => {
+                thunkAPI.dispatch(handleError(err))
                 return reject(err);
             })
             
@@ -127,9 +132,9 @@ export const editTheme = createAsyncThunk(
                 return resolve({changed: true, id: id, root: root, key: key, value: value});
             })
             .catch(err => {
+                thunkAPI.dispatch(handleError(err))
                 return reject(err);
             })
-            
         });
     }
 )

@@ -296,7 +296,7 @@
 }
 
 .settings-content h1 {
-    font-size: 20px;
+    font-size: 17px;
 }
 
 .sections {
@@ -317,6 +317,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
 
     margin: 20px;
     padding-bottom: 0px;
@@ -337,12 +338,12 @@
     opacity: 0;
 }
 
-.section-title:hover h1 {
+.section-title h1:hover {
     font-family: 'bold';
     opacity: 100%;
 }
 
-.section-title:hover .icon {
+.section-title h1:hover~.icon {
     opacity: 85%;
 }
 
@@ -446,7 +447,7 @@
 
 .backgrounds h2 {
     margin: 10px;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .format-disclaimer {
@@ -564,7 +565,6 @@
 .settings-content .colors,
 .settings-content .backgrounds,
 .settings-content .theme-actions,
-.settings-content .connections,
 .settings-content .account,
 .settings-content .advanced {
     width: calc(100% - 250px - 200px);
@@ -575,47 +575,339 @@
     border-bottom: solid 1px var(--border-main);
 }
 
-.theme-actions.disabled {
-    opacity: 50%;
-    pointer-events: none;
+.account {
+    width: calc(100% - 250px - 100px) !important;
 }
 
-.theme-actions h2 {
-    margin: 10px;
-    color: var(--error);
-    opacity: 75%;
+.account .title {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.user-profile {}
+
+.sharing-menu {
+    width: 100%;
+    height: 40px;
+    background-color: var(--accent-main);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.sharing-menu h5 {
     cursor: pointer;
 }
 
-.theme-actions h2:hover {
-    opacity: 100%;
+.sharing-menu h5:hover {
+    font-family: 'bold';
 }
 
+.c-selected {
+    font-family: 'bold';
+}
 
+.sharing {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-.advanced a,
-.advanced h2 {
+    border-left: solid 3px var(--accent-main);
+}
+
+.sharing-background {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+}
+
+.shared h1,
+.sharing h1 {
+    font-size: 20px;
     margin: 10px;
+    padding: 10px;
 }
 
-.advanced h3 {
+.shared h3,
+.sharing h3 {
+    width: 80%;
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.sharing form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 80%;
+    margin: 5px;
+}
+
+.sharing form h2 {
+    width: 90%;
+    text-align: left;
+    margin-left: 10px;
+    font-size: 13px;
+
+}
+
+.sharing h3 strong {
+    color: var(--font-h1);
+}
+
+.code-actions {
+    width: 100%;
+    height: 400px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.share,
+.apply {
     width: 50%;
-    margin: 10px;
-    padding-left: 10px;
+    height: 90%;
 
-    border-left: solid 1px var(--border-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.advanced .source {
-    color: var(--accent-main);
+.share {
+    border-right: solid 1px var(--border-main);
+}
 
+.apply h2,
+.share h2 {
+    text-align: center;
+    margin: 15px;
     opacity: 75%;
+
+    font-size: 13px;
+
+    width: 300px;
+}
+
+.generate {
+    width: 50%;
+
+    border-right: solid 1px var(--border-main);
+
+    width: 270px;
+
+    background: linear-gradient(to top, var(--login-main), var(--login-lighter));
+    transition: opacity .2s ease-in-out;
+
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.generate button {
+    padding: 10px;
+    background-color: transparent;
+    color: var(--font-h5);
     cursor: pointer;
 }
 
-.source:hover {
+.generate input {
+    padding: 10px;
+    background-color: transparent;
+    color: var(--font-h5);
+    width: 200px;
+}
+
+.generate button:hover {
+    opacity: 75%;
+}
+
+.generate h3 {
+    margin-top: -60px;
+    position: absolute;
+}
+
+.generate h4 {
+    position: absolute;
+    margin-top: 75px;
+    color: var(--font-h2);
+    opacity: 75%;
+
+    cursor: pointer;
+}
+
+.generate h4:hover {
     opacity: 100%;
+}
+
+.copy {
+    width: 20px;
+    height: 20px;
+
+    background-image: url(../../assets/img/external-link.svg);
+    background-position: center center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+
+    filter: brightness(0) invert();
+}
+
+.apply input {
+    font-size: 17px;
+    width: 210px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--background-darker);
+    z-index: 4;
+}
+
+.apply button {
+    background: linear-gradient(to top, var(--login-main), var(--login-lighter));
+    transition: opacity .2s ease-in-out;
+    color: var(--font-h5);
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.apply button h5 {
+    transition: opacity .2s ease-in-out;
+}
+
+.apply button:hover h5 {
+    opacity: 75%;
+}
+
+.apply h4 {
+    font-size: 14px;
+    color: var(--error);
+}
+
+.shared {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-left: solid 3px var(--accent-main);
+}
+
+.shared .sharing-background {
+    left: 120px;
+}
+
+.token-list {
+    width: 330px;
+
+    height: 415px;
+
+    overflow-y: scroll;
+    margin-left: 50%;
+}
+
+.token-object {
+    margin: 10px;
+    padding: 10px;
+    border-bottom: solid 1px var(--border-main);
+}
+
+.token-object h6 {
+    background-color: var(--accent-main);
+    width: 70px;
+    text-align: center;
+    padding: 3px;
+    color: var(--font-h5);
+    font-size: 12px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.token-object .user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user h2:nth-child(1) {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 25%;
+
+    color: var(--font-h5);
+    font-family: 'bold';
+    background-color: var(--L2021-mandatory-main);
+}
+
+.user h2:nth-child(2) {
+
+    font-family: 'bold';
+    color: var(--L2021-mandatory-main);
+}
+
+.token-object button {
+    position: absolute;
+    margin-top: -7px;
+    margin-left: 248px;
+
+    background-color: transparent;
+    font-size: 15px;
+
+    color: var(--error);
+    opacity: 50%;
+}
+
+.token-object .copyable {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--background-darker);
+    width: 250px;
+    margin-top: 5px;
+}
+
+.copyable .copy {
+    position: unset;
+    filter: brightness(0) invert(0) !important;
+    margin: 0;
+    padding: 0;
+
+    cursor: pointer;
+}
+
+.copyable .copy:hover {
+    opacity: 75%;
+}
+
+.copyable h3 {
+    position: absolute;
+    width: 250px;
+    margin-top: -60px;
+}
+
+.copyable input {
+    background-color: transparent;
+    width: 210px;
+    font-size: 17px;
+    padding: 10px;
+    padding-right: 0;
 }
 
 @media screen and (max-width: 1400px) {

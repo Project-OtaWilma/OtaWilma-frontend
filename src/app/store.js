@@ -16,7 +16,7 @@ export default configureStore({
   reducer: {
     auth: authSlice,
     config: configSlice,
-    error: errorSlice,
+    errors: errorSlice,
     themes: themeSlice,
     messages: messageSlice,
     grades: gradeSlice,

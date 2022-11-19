@@ -1,0 +1,32 @@
+{
+    "503": {
+        "status": "Palvelin",
+        "name": "Palvelimeen ei saatu yhteyttä",
+        "description": "Palvelimeen ei syystä tai toisesta saatu yhteyttä."
+    },
+    "501": {
+        "status": "Wilma",
+        "name": "Wilman palvelimien odottamaton toiminta",
+        "description": "Wilman palvelimet vastasivat odottamattomalla tavalla. Todennäköisimmin Wilman palvelimet ovat alhaalla, mutta ongelma saattaa myös johtua uudistuksista Wilman puolella. Ongelman toistuessa ota yhteyttä kehittäjään"
+    },
+    "500": {
+        "status": "OtaWilma",
+        "name": "Sisäinen palvelinvirhe",
+        "description": "OtaWilman palvelin epäonnistui pyyntösi käsittelyssä. Ilmoita ongelmasta kehittäjälle avaamalla consolin näppäinyhdistelmällä <strong>ctrl + shift + i<strong>"
+    },
+    "400": {
+        "status": "Pyynnöt",
+        "name": "Virheelliset parametrit pyynnössä",
+        "description": "Selaimen lähettämän pyynnön parametrit olivat virheelliset. Ilmoita ongelmasta kehittäjälle avaamalla consolin näppäinyhdistelmällä <strong>ctrl + shift + i<strong>"
+    },
+    "401": {
+        "status": "Käyttöoikeudet",
+        "name": "Puuttuvat oikeudet",
+        "description": "Sinulla ei ole oikeutta pyytämääsi resurssiin. Yritä uudelleen kirjautumista jos uskot tämän olevan virhe"
+    },
+    "429": {
+        "status": "Pyynnöt",
+        "name": "Odotas hetkinen",
+        "description": "Selaimesi lähettää tavallista enemmän pyyntöjä palvelimelle. Sinulla tuskin on kuitenkaan tarvetta luoda ja poistaa teemoja jatkuvasti. Jos epäilet että kyseessä on virhe, tarkista että selaimesi välimuisti on käytössä. Ota ongelmatilanteessa yhteyttä kehittäjään."
+    }
+}

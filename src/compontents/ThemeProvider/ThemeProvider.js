@@ -7,6 +7,7 @@ import { loadTheme, loadThemeDefault, setTheme, useThemes } from '../../features
 import { useAuth } from '../../features/authentication/authSlice';
 
 export default function ThemeProvider({ children }) {
+    const [background, setBackground] = useState('');
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const config = useSelector(useConfig);
@@ -38,7 +39,7 @@ export default function ThemeProvider({ children }) {
         const colors = Object.keys(theme.colors);
         colors.forEach(key => root.style.setProperty(key.trim(), theme.colors[key].value));
         root.style.setProperty('--background-filter', filter(theme));
-        
+        setBackground(theme['background']['url'].value)
     }
 
     // componentDidMount
@@ -56,6 +57,7 @@ export default function ThemeProvider({ children }) {
     return (
         <>
             <LoadingScreen active={!themes.current}/>
+            <div className='background' style={{background: `url(${background})`}}/>
             {children}
         </>
     )
