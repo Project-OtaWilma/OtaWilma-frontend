@@ -12,6 +12,7 @@ export default function ThemeProvider({ children }) {
     const auth = useSelector(useAuth);
     const config = useSelector(useConfig);
     const themes = useSelector(useThemes);
+    const theme = themes.theme;
 
     const initialize = () => {
         if(!auth.token ||auth.token == 'null') {
@@ -34,7 +35,6 @@ export default function ThemeProvider({ children }) {
         const id = themes.current;
         const theme = themes.themes[id];
 
-        
         const root = document.documentElement;
         const colors = Object.keys(theme.colors);
         colors.forEach(key => root.style.setProperty(key.trim(), theme.colors[key].value));
@@ -56,7 +56,7 @@ export default function ThemeProvider({ children }) {
 
     return (
         <>
-            <LoadingScreen active={!themes.current}/>
+            <LoadingScreen active={!theme || theme.isLoading}/>
             <div className='background' style={{background: `url(${background})`}}/>
             {children}
         </>

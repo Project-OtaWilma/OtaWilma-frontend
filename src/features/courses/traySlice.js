@@ -3,8 +3,15 @@ import {
     fetchTrayList,
     fetchPeriod,
     fetchTrayCourse,
-    fetchTrayCourseInfo
+    fetchTrayCourseInfo,
+    CourseTraySelect,
+    CourseTrayDeselect
 } from '../../requests/wilma-api';
+
+import {
+    fetchFriendSelections,
+    fetchSelections
+} from '../../requests/theme-api';
 
 import { handleError } from '../errors/errorSlice';
 
@@ -37,9 +44,9 @@ export const getPeriod = createAsyncThunk(
             const tray = thunkAPI.getState().tray;
             const auth = options['auth'];
             const hash = options['hash'];
-            /*
-            if(!tray.tray.isLoading) return resolve({changed: false});
-            */
+            
+            if(tray.periods && !tray.periods[hash].isLoading) return resolve({changed: false});
+            
 
             fetchPeriod(auth, hash)
             .then(list => {
@@ -75,6 +82,84 @@ export const getTrayCourse = createAsyncThunk(
     }
 )
 
+export const selectCourse = createAsyncThunk(
+    'tray/selectCourse',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            const hash = options['hash'];
+            
+            CourseTraySelect(auth, hash)
+            .then(() => {
+                return resolve({changed: true, hash: hash})
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
+export const deselectCourse = createAsyncThunk(
+    'tray/deselectCourse',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            const hash = options['hash'];
+            
+            CourseTrayDeselect(auth, hash)
+            .then(() => {
+                return resolve({changed: true, hash: hash})
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
+export const updateSelections = createAsyncThunk(
+    'tray/updateSelections',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            
+            fetchSelections(auth)
+            .then(res => {
+                return resolve({changed: true, list: res['data']})
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
+export const getFriendSelections = createAsyncThunk(
+    'tray/getFriendSelections',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const auth = options['auth'];
+            
+            fetchFriendSelections(auth)
+            .then(res => {
+                return resolve({changed: true, map: res})
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
 
 export const traySlice = createSlice({
     name: 'tray',
@@ -85,7 +170,12 @@ export const traySlice = createSlice({
         },
         periods: {},
         courses: {},
-        selected: []
+        selected: [],
+        overview: {
+
+        },
+        friends: {},
+        isSelecting: false
     },
     reducers: {},
     extraReducers: {
@@ -156,6 +246,47 @@ export const traySlice = createSlice({
         [getTrayCourse.rejected]: (state, action) => {
             state.isLoading = false;
         },
+        [updateSelections.fulfilled]: (state, action) => {
+            if(!action.payload.changed) {
+                return;
+            }
+            const list = action.payload['list'];
+
+            list.forEach(course => {state.overview[course.period] = state.overview[course.period] ?[...state.overview[course.period], course]: [course];})
+        },
+        [getFriendSelections.fulfilled]: (state, action) => {
+            if(!action.payload.changed) {
+                return;
+            }
+            const map = action.payload['map'];
+            const m = state.friends;
+            
+            Object.keys(map).map(username => {
+                map[username].forEach(c => {m[c.trim()] = m[c.trim()] ? (m[c.trim()].includes(username) ? m[c.trim()] : [...m[c.trim()], username]) : [username]})
+            })
+        },
+        [selectCourse.fulfilled]: (state, action) => {
+            const hash = action.payload['hash'];
+            
+            state.courses[hash].isSelected = true;
+            state.courses[hash].class = state.courses[hash].class.replace('off', 'on');
+            state.selected = [...state.selected, hash];
+            state.isSelecting = false;
+        },
+        [selectCourse.pending]: (state, action) => {
+            state.isSelecting = true;
+        },
+        [deselectCourse.fulfilled]: (state, action) => {
+            const hash = action.payload['hash'];
+            
+            state.courses[hash].isSelected = false;
+            state.courses[hash].class = state.courses[hash].class.replace('on', 'off');
+            state.selected = state.selected.filter(h => h != hash);
+            state.isSelecting = false;
+        },
+        [deselectCourse.pending]: (state, action) => {
+            state.isSelecting = true;
+        },
     },
 });
 
@@ -164,6 +295,8 @@ export const useTray = (state) => ({
     periods: state.tray.periods,
     courses: state.tray.courses,
     selected: state.tray.selected,
+    friends: state.tray.friends,
+    isSelecting: state.tray.isSelecting
 });
 
 export default traySlice.reducer;

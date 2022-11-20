@@ -322,11 +322,10 @@ const fetchTrayCourseInfo = (hash) => {
     });
 }
 
-const CourseTraySelect = (hash) => {
+const CourseTraySelect = (auth, hash) => {
     return new Promise((resolve, reject) => {
         const url = `${wilmaAPI}course-tray/select/${hash}`;
 
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(url, {
@@ -344,11 +343,10 @@ const CourseTraySelect = (hash) => {
     });
 }
 
-const CourseTrayDeselect = (hash) => {
+const CourseTrayDeselect = (auth, hash) => {
     return new Promise((resolve, reject) => {
         const url = `${wilmaAPI}course-tray/deselect/${hash}`;
 
-        const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
         fetchJson(url, {
@@ -440,5 +438,7 @@ export {
     fetchTrayCourseInfo,
     fetchHomeworkGroups,
     fetchTeacherList,
-    fetchTeacherInfo
+    fetchTeacherInfo,
+    CourseTraySelect,
+    CourseTrayDeselect
 }

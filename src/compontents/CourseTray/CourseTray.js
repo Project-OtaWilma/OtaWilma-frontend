@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTray, getTrayList, getPeriod, getTrayCourse } from '../../features/courses/traySlice';
-import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
+import { useTray, getTrayList, getPeriod, getTrayCourse, updateSelections, getFriendSelections, selectCourse, deselectCourse } from '../../features/courses/traySlice';
+import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import styles from './CourseTray.module.css';
 const { subjects } = require('./subjects.json');
@@ -18,9 +18,12 @@ export default function CourseTray() {
     const [course, setCourse] = useState(null);
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
+    const tray = useSelector(useTray);
 
     const initialize = () => {
         dispatch(getTrayList({auth: auth.token}))
+        dispatch(updateSelections({auth: auth.token}))
+        dispatch(getFriendSelections({auth: auth.token}))
     }
 
     const closePeriod = (hash) => setOpen(open.filter(h => h != hash))
@@ -52,7 +55,7 @@ export default function CourseTray() {
 
     return (
         <>
-            <div className={styles['content']}>
+            <BlurLayer className={styles['content']} isLoading={tray.isSelecting}>
                 <div className={styles['tray-list']}>
                     <TrayList open={open} onLoad={loadPeriod}/>
                 </div>
@@ -62,7 +65,7 @@ export default function CourseTray() {
                 <div className={styles['tray-info']}>
                     <TrayInfoContainer open={open} course={course} filter={filter} setFilter={applyFilter}/>
                 </div>
-            </div>
+            </BlurLayer>
         </>
     )
 }
@@ -162,6 +165,7 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose}) => {
 const TrayBarObject = ({bar, filter, onLoad}) => {
     const tray = useSelector(useTray);
     const courses = tray.courses;
+    const friends = tray.friends;
 
     return (
         <div className={styles['bar']}>
@@ -170,8 +174,9 @@ const TrayBarObject = ({bar, filter, onLoad}) => {
                 {
                     bar.courses.map((hash, i) => {
                         const course = courses[hash];
+                        const list = friends[course.code];
                         
-                        return <TrayCourseObject key={i} course={course} filter={filter} onLoad={onLoad} />
+                        return <TrayCourseObject key={i} friends={list ? list : []} course={course} filter={filter} onLoad={onLoad} />
                     })
                 }
             </div>
@@ -179,12 +184,13 @@ const TrayBarObject = ({bar, filter, onLoad}) => {
     )
 }
 
-const TrayCourseObject = ({course, filter, onLoad}) => {
-
+const TrayCourseObject = ({friends, course, filter, onLoad}) => {
+    
     if(filter.search) if(!course.name.toLowerCase().includes(filter.search) && !course.code.toLowerCase().includes(filter.search)) return <></>
     if(filter.subject.length > 0) if(filter.subject.filter(r => course.code.includes(r)).length == 0) return <></>
     if(filter.teacher.length > 0) if(filter.teacher.filter(r => !(!course.info.teacher) && course.info.teacher.includes(r)).length == 0) return <></>
     if(filter.lops.length > 0) if(filter.lops.filter(r => course.lops == r).length == 0) return <></>
+
 
     return (
         <div 
@@ -192,11 +198,27 @@ const TrayCourseObject = ({course, filter, onLoad}) => {
             onClick={() => onLoad(course.hash)}
         >
             {course.code}
+            <div className={styles['friend-list']}>
+                {
+                    friends.length > 0 && !course.class.includes('ksuor') ? 
+                    <>
+                        <h6 style={{backgroundColor: `var(${randomColor(friends[0])})`}} >{`${shorten(friends[0])}`}</h6>
+                        
+                    </> : <></>
+                }
+            </div>
+            
             <div className={styles['course-data']}>
                 <h2>{course.name}</h2>
                 <h2>{course.info.teacher}</h2>
                 {course.info.locked ? <h2>Kurssi on lukittu</h2> : null}
                 {course.info.full ? <h2>Kurssi on jo täynnä</h2> : null}
+                {friends.length > 0 ? <h2>Kavereita kurssilla:</h2> : null}
+                {
+                    friends.map((name, i) => {
+                        return <h3 key={i}>{username(name)}</h3>
+                    })
+                }
             </div>
         </div>
     )
@@ -297,19 +319,28 @@ const FilterObject = ({filter, setFilter}) => {
 }
 
 const CourseInfoObject = ({course: hash}) => {
+    const dispatch = useDispatch();
+    const auth = useSelector(useAuth);
     const tray = useSelector(useTray);
     const courses = tray.courses;
 
     if(!courses[hash]) return <></>
     if(courses[hash].isLoading) return <LoadingScreen className={styles['tray-info-loading-screen']} />
     const course = courses[hash];
-    
+
+    const select = (hash) => {
+        dispatch(selectCourse({auth: auth.token, hash: hash}))
+    }
+
+    const deselect = (hash) => {
+        dispatch(deselectCourse({auth: auth.token, hash: hash}))
+    }
     
     return (
         <div className={styles['course-info']}>
             <h1>{course.name}</h1>
             <h3>{course.code}</h3>
-            <button className={styles['course-action']}>
+            <button onClick={() => {if(course.isSelected) {deselect(course.hash)} else {select(course.hash)}}} className={styles['course-action']}>
                 {!course.isSelected ? 'Valitse kurssi' : 'Poista valinta'}
             </button>
             {
@@ -328,5 +359,33 @@ const CourseInfoObject = ({course: hash}) => {
             }
         </div>
     )
+}
+
+const randomColor = (raw) => {
+    const u = shorten(raw)
+    const [f, l] = (new TextEncoder()).encode(u);
+    let seed = Math.abs(f + l);
+    const x = Math.sin(seed++) * 10000;
+    const rnd = x - Math.floor(x);
+
+    return [
+        '--L2021-mandatory-main',
+        '--L2021-mandatory-selected',
+        '--L2021-g-optional-main',
+        '--L2021-g-optional-selected',
+        '--L2021-l-optional-main',
+        '--L2021-l-optional-selected',
+        '--L2021-diploma-main',
+        '--L2021-diploma-selected',
+        '--L2016-l-optional-main',
+        '--L2016-g-optional-main',
+    ][Math.floor(rnd * 10)];
+}
+
+const shorten = (raw) => {
+    return username(raw).split(' ').map(s => s[0]).join('');
+}
+const username = (raw) => {
+    return raw.split('.').length > 1 ? [raw.split('.')[0], raw.split('.')[raw.split('.').length - 1]].map(u => `${u.charAt(0).toUpperCase()}${u.slice(1)}`).join(' ') : raw;
 }
 

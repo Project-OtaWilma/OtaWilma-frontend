@@ -83,13 +83,14 @@ const MessageObject = ({message, onLoad}) => {
                 <h1>{message.subject}</h1>
                 <h2>{message.timeStamp}</h2>
                 {message.senders ? message.senders.map((s, i) => <h2 key={i}>{s.name}</h2>) : null}
+                {message.replies ? <h3>{`${message.replies} ${message.replies > 1 ? 'vastausta' : ' vastaus'}`}</h3> : null}
                 {message.new ? <h6>Uusi</h6> : null}
         </div>
     )
 }
 
 const MessageContentObject = ({current}) => {
-    
+
     const messages = useSelector(useMessages);
     const map = messages.messages;
     
@@ -98,6 +99,7 @@ const MessageContentObject = ({current}) => {
     if(map[current].isLoading) return <LoadingScreen className={styles['message-loading-screen']}/>
 
     const message = map[current];
+
     return (
         <>
             <h1>{message.subject}</h1>
@@ -110,7 +112,23 @@ const MessageContentObject = ({current}) => {
                 <div dangerouslySetInnerHTML={{__html: message.content}}></div>
                 <WilmaLink message={message} />
             </div>
+            <div className={styles['responses']}>
+                {
+                    message.replyList.map((reply, i) => {
+                        return <MessageReply key={i} reply={reply} />
+                    })
+                }
+            </div>
         </>
+    )
+}
+
+const MessageReply = ({reply}) => {
+    return (
+        <div className={`${styles['message-reply']} ${styles['other']}`}>
+            <div dangerouslySetInnerHTML={{__html: reply.content}} />
+            <h4>{`${reply.sender} ${reply.timeStamp}`}</h4>
+        </div>
     )
 }
 

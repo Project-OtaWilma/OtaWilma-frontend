@@ -17,9 +17,10 @@ export const ThemeList = ({onCreate}) => {
     const list = themes.list;
     const map = themes.themes;
     const current = themes.current;
+
     
-    if(list.isLoading) return <>Loading...</>
-    if(Object.keys(map).map(h => map[h].isLoading).filter(n => n).length != 0) return <>Loading...</>
+    if(list.isLoading) return <LoadingScreen className={styles['color-loading-screen']} />
+    if(Object.keys(map).map(h => map[h].isLoading).filter(n => n).length != 0) return <LoadingScreen className={styles['color-loading-screen']} />
 
     const select = (id) => {
         dispatch(selectTheme({auth: auth.token, id: id}))
@@ -45,6 +46,8 @@ export const ThemeList = ({onCreate}) => {
                         return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => select(hash)}/>
                     })
                 }
+                {
+                    (list['content'].length - 2) <= 24 ?
                 <div 
                     onClick={() => onCreate()}
                     className={styles['theme']}
@@ -53,6 +56,9 @@ export const ThemeList = ({onCreate}) => {
                         <h3>Luo teema</h3>
                     </div>
                 </div>
+                :
+                <></>
+                }
             </div>
         </>
     )
@@ -103,8 +109,8 @@ export const ThemeWindow = ({onClose, onCreate}) => {
     const themes = useSelector(useThemes);
     const map = themes.themes;
 
-    if(!map['light'] || !map['dark']) return <>loading</>
-    if(map['light'].isLoading || map['dark'].isLoading) return <>loading</>
+    if(!map['light'] || !map['dark']) return <></>
+    if(map['light'].isLoading || map['dark'].isLoading) return <></>
 
     return (
         <div className={styles['theme-window']}>
@@ -124,10 +130,9 @@ export const ColorEditor = () => {
     const themes = useSelector(useThemes);
     const theme = themes.theme;
 
-
     if(!theme) return <></>
     if(['dark', 'light'].includes(theme.hash)) return <EditorDisclaimer />
-    if(theme.isLoading) return <>Loading...</>
+    if(theme.isLoading) return <LoadingScreen className={styles['color-loading-screen']} />
 
     return (
         <>
@@ -165,9 +170,10 @@ export const BackgroundEditor = () => {
     // unsafe [https://fb.me/react-controlled-components] - forcefully update the theme's url after a asyncronous load
     useEffect(() => {if(theme && !theme.isLoading) setBackground(theme['background']['url'].value)}, [theme]);
 
+
     if(!theme) return <></>
     if(['dark', 'light'].includes(theme.hash)) return null
-    if(theme.isLoading) return <>Loading...</>
+    if(theme.isLoading) return <LoadingScreen className={styles['color-loading-screen']} />
     
 
     const updateBackground = async (url) => {

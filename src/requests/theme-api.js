@@ -49,27 +49,6 @@ const fetchConfig = (auth) => {
     })
 }
 
-const fetchLoginHistory = () => {
-    return new Promise((resolve, reject) => {
-        const auth = getCookie('token');
-        const url = `${otaWilmaAPi}/config/login-history`;
-
-        fetchJson(url, {
-            method: 'GET',
-            headers: {
-                'token': auth
-            }
-        })
-            .then(list => {
-                return resolve(list);
-            })
-            .catch(err => {
-                return reject(err);
-            })
-    });
-}
-
-
 const fetchDefaultTheme = (id) => {
     return new Promise(async (resolve, reject) => {
         const url = `${otaWilmaAPi}/themes/defaults/get/${id}`;
@@ -233,6 +212,175 @@ const editTheme = (auth, id, root, key, value) => {
     });
 }
 
+const publish = (auth) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/publish`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+/*
+    NOTE API DOCUMENTATION
+    calling this endpoint will only ever save user's selections if the 'updated' flag returns 'true'.
+    user's selections will not be updated without consent. config flag 'public' must be
+    true in order for the data to get stored on servers.
+    [https://github.com/Project-OtaWilma/OtaWilma-API/blob/beta/database/public-api.js#L90]
+*/
+
+const fetchSelections = (auth) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/update-selections`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const generateToken = (auth) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/tokens/generate`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+
+const invalidateToken = (auth, hash) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/tokens/invalidate/${hash}`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const useToken = (auth, hash) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/tokens/use/${hash}`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const listTokens = (auth) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/tokens/list`;
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const fetchFriendSelections = (auth, hash) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/friends`;
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const fetchApi = (auth, hash) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaAPi}/public-api/get/${hash}`;
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
 
 export {
     login,
@@ -243,5 +391,13 @@ export {
     createTheme,
     deleteTheme,
     editTheme,
-    setTheme
+    setTheme,
+    publish,
+    fetchSelections,
+    generateToken,
+    invalidateToken,
+    listTokens,
+    fetchApi,
+    useToken,
+    fetchFriendSelections
 }

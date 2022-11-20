@@ -18,7 +18,8 @@ export const getMessages = createAsyncThunk(
             
             fetchMessages(auth, path, limit)
             .then(list => {
-                return resolve({changed: true, messages: list.slice(1, limit), path: path})
+                console.log(list);
+                return resolve({changed: true, messages: list.slice(0, limit), path: path})
             })
             .catch(err => {
                 thunkAPI.dispatch(handleError(err))
@@ -97,7 +98,8 @@ export const messageSlice = createSlice({
                 content: message.content,
                 replyList: message.replies,
                 fromWilma: message.fromWilma,
-                isLoading: false
+                isLoading: false,
+                new: false
             }}
         },
         [getMessage.rejected]: (state, action) => {

@@ -377,6 +377,11 @@
     flex-direction: column;
 }
 
+.color-loading-screen {
+    width: 100%;
+    height: 256px;
+}
+
 .colors form h2 {
     padding: 2px;
 }
@@ -577,6 +582,7 @@
 
 .account {
     width: calc(100% - 250px - 100px) !important;
+    max-width: 700px;
 }
 
 .account .title {
@@ -663,6 +669,11 @@
 
 }
 
+.agreed {
+    opacity: 50%;
+    pointer-events: none;
+}
+
 .sharing h3 strong {
     color: var(--font-h1);
 }
@@ -688,6 +699,25 @@
 
 .share {
     border-right: solid 1px var(--border-main);
+}
+
+.apply {
+    border-left: solid 1px var(--border-main);
+}
+
+.share-loading-screen {
+    width: 50%;
+    height: 90%;
+}
+
+.shared-loading-screen {
+    width: 330px;
+
+    height: 415px;
+
+    margin-left: 50%;
+
+    border-left: solid 1px var(--border-main);
 }
 
 .apply h2,
@@ -716,6 +746,11 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+#disabled {
+    pointer-events: none;
+    opacity: 60%;
 }
 
 .generate button {
@@ -785,6 +820,7 @@
 }
 
 .apply button h5 {
+    color: var(--font-h5);
     transition: opacity .2s ease-in-out;
 }
 
@@ -795,6 +831,13 @@
 .apply h4 {
     font-size: 14px;
     color: var(--error);
+    text-align: center;
+}
+
+.apply h5 {
+    font-size: 14px;
+    color: var(--login-lighter);
+    text-align: center;
 }
 
 .shared {
@@ -821,6 +864,8 @@
 
     overflow-y: scroll;
     margin-left: 50%;
+
+    border-left: solid 1px var(--border-main);
 }
 
 .token-object {
@@ -829,8 +874,18 @@
     border-bottom: solid 1px var(--border-main);
 }
 
+.token-object h3 {
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    margin-left: 5px;
+
+    opacity: 75%;
+}
+
 .token-object h6 {
-    background-color: var(--accent-main);
+    background-color: var(--login-lighter);
     width: 70px;
     text-align: center;
     padding: 3px;
@@ -863,7 +918,6 @@
 }
 
 .token-object button {
-    position: absolute;
     margin-top: -7px;
     margin-left: 248px;
 
@@ -872,6 +926,13 @@
 
     color: var(--error);
     opacity: 50%;
+
+    cursor: pointer;
+    transition: opacity .2s ease-in-out;
+}
+
+.token-object button:hover {
+    opacity: 100%;
 }
 
 .token-object .copyable {
@@ -892,14 +953,13 @@
     cursor: pointer;
 }
 
-.copyable .copy:hover {
-    opacity: 75%;
+.copytext {
+    text-align: center !important;
+    font-size: 14px !important;
 }
 
-.copyable h3 {
-    position: absolute;
-    width: 250px;
-    margin-top: -60px;
+.copyable .copy:hover {
+    opacity: 75%;
 }
 
 .copyable input {

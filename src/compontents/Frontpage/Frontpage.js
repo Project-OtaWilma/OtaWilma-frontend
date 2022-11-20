@@ -236,7 +236,7 @@ const WeekObject = ({week}) => {
             </div>
             <div className={styles['days']}>
                 {
-                    Object.keys(week.days).slice(0, 5).map((date, i) => {
+                    Object.keys(week.days).filter(date => !['La', 'Su'].includes(week.days[date].day.caption.split(' ')[0])).map((date, i) => {
                         const day = week.days[date];
                         return <DayObject key={i} day={day} />
                     })

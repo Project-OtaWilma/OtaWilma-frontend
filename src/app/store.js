@@ -11,6 +11,7 @@ import lopsSlice from '../features/grades/lopsSlice';
 import courseSlice from '../features/courses/traySlice';
 import homeworkSlice from '../features/schedule/homeworkSlice';
 import teacherSlice from '../features/teachers/teacherSlice';
+import apiSlice from '../features/api/apiSlice';
 
 export default configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export default configureStore({
     lops: lopsSlice,
     tray: courseSlice,
     homework: homeworkSlice,
-    teachers: teacherSlice
+    teachers: teacherSlice,
+    api: apiSlice
   },
 });

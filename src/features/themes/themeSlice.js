@@ -149,6 +149,8 @@ export const themeSlice = createSlice({
         },
         themes: {},
         isInitialized: false,
+        isSelecting: false,
+        isEditing: false
     },
     reducers: {
         setTheme: (state, action) => {
@@ -225,10 +227,10 @@ export const themeSlice = createSlice({
             }
 
             state.current = id;
+            state.isSelecting = false;
         },
-        [selectTheme.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
+        [selectTheme.pending]: (state, action) => {
+            state.isSelecting = true;
         },
         [editTheme.fulfilled]: (state, action) => {
             const id = action.payload['id'];
@@ -246,10 +248,10 @@ export const themeSlice = createSlice({
                     ...{value: value}
                 }
             }};
+            state.isEditing = false;
         },
-        [editTheme.rejected]: (state, action) => {
-            console.log(action);
-            console.log('api call rejected');
+        [editTheme.pending]: (state, action) => {
+            state.isEditing = true;
         },
     },
 });
@@ -261,7 +263,9 @@ export const useThemes = (state) => ({
     themes: state.themes.themes,
     current: state.themes.current,
     theme: state.themes.themes[state.themes.current],
-    list: state.themes.list
+    list: state.themes.list,
+    isSelecting: state.themes.isSelecting,
+    isEditing: state.themes.isEditing
 });
 
 

@@ -6,21 +6,44 @@ import {
     login,
     logout
 } from '../../requests/wilma-api';
+import { handleError } from '../errors/errorSlice';
 
 
 export const loginToWilma = createAsyncThunk(
     'auth/loginToWilma',
     async (data, thunkAPI) => {
-        const response = await login(data)
-        return response
+        return new Promise((resolve, reject) => {
+
+            login(data)
+                .then(res => {
+                    return resolve({error: false, token: res['token']})
+                })
+                .catch(err => {
+                    switch(err.status) {
+                        case 401:
+                            return resolve({error: true, err: err});
+                        default:
+                            thunkAPI.dispatch(handleError(err))
+                            return reject(err);
+                    }
+                })
+        });
     }
 )
 
 export const logoutFromWilma = createAsyncThunk(
     'auth/logoutFromWilma',
     async (data, thunkAPI) => {
-        const response = await logout();
-        return response
+        return new Promise((resolve, reject) => {
+
+            logout(data)
+                .then(() => {
+                    return resolve()
+                })
+                .catch(() => {
+                    return resolve();
+                }) 
+        });
     }
 )
 
@@ -47,20 +70,34 @@ export const authSlice = createSlice({
     initialState: {
         token: getToken(),
         loggedIn: !(!getToken()),
+        loginError: null
     },
     reducers: {},
     extraReducers: {
         [loginToWilma.fulfilled]: (state, action) => {
-            state.token = action.payload.token;
+            const errors = {
+                'Invalid credentials': 'Käyttäjätunnusta ei löydy tai salasana on väärä',
+                'Failed to parse Cookie': 'Käyttäjätunnusta ei löydy tai salasana on väärä'
+            }
+
+            if(action.payload.error) {
+                const error = action.payload['err'];
+                const raw = error.error ? error.error.err : error.err;
+                state.loginError = Object.keys(errors).includes(raw) ? errors[raw] : raw;
+                return;
+            }
+            const token = action.payload['token'];
+            state.token = token;
+
             setToken(state.token);
 
             state.loggedIn = true;
         },
+        [loginToWilma.pending]: (state, action) => {
+            state.loginError = null;
+        },
         [loginToWilma.rejected]: (state, action) => {
-            console.log('api call rejected');
-            const e = JSON.parse(action.error.message);
-
-            state.loginError = e.error ? e.error.err : e.err;
+            state.loginError = 'Tuntemaon virhe - kirjautuminen epäonnistui';
         },
         [logoutFromWilma.fulfilled]: (state, action) => {
             setToken(null);

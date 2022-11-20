@@ -31,7 +31,12 @@ export const configSlice = createSlice({
         config: null,
         isLoading: true,
     },
-    reducers: {},
+    reducers: {
+        setPublicFlag: (state, action) => {
+            state.config['public'] = true;
+            return state;
+        }
+    },
     extraReducers: {
         [getConfig.fulfilled]: (state, action) => {
             console.log(action.payload);
@@ -49,5 +54,7 @@ export const useConfig = (state) => ({
     value: state.config.config,
     isLoading: state.config.isLoading,
 });
+
+export const { setPublicFlag } = configSlice.actions;
 
 export default configSlice.reducer;

@@ -3,7 +3,7 @@ import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useConfig, getConfig } from '../../features/themes/configSlice';
 import { useThemes, loadTheme, getThemeList, setTheme, createTheme, selectTheme, editTheme} from '../../features/themes/themeSlice';
-import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
+import { LoadingScreen, PlaceHolder, BlurLayer } from '../LoadingScreen/LoadingScreen';
 
 
 import {ThemeList, ThemeWindow, ColorEditor, BackgroundEditor} from './ThemeEditor';
@@ -48,7 +48,7 @@ export default function Settings() {
     return (
         <>
             {window ? <ThemeWindow onClose={() => setWindow(false)} onCreate={(preset) => create(preset)}/> : null}
-            <div className={styles['content']} style={{filter: window ? 'blur(3px)': 'none', pointerEvents: window ? 'none' : 'all'}}>
+            <BlurLayer isLoading={window || themes.isEditing || themes.isSelecting} className={styles['content']}>
                 <div className={styles['side-bar']}>
                     <h1>Teemat</h1>
 
@@ -79,7 +79,7 @@ export default function Settings() {
                         </h3>
                     </div>
                 </div>
-            </div>
+            </BlurLayer>
         </>
     )
 }

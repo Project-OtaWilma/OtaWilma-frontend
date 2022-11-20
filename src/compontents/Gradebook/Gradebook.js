@@ -99,9 +99,10 @@ const SubjectObject = ({subject, courses, grade, onLoad}) => {
 }
 
 const CourseObject = ({course, grade, onLoad}) => {
+    console.log([course.code, grade ? grade : null]);
     return (
         <div className={grade ? styles[`${course.type}-graded`] : styles[course.type]} onClick={() => onLoad(course.subject, course.code)}>
-            <h4>{grade ? grade['grade'] : course.code}</h4>
+            <h4>{grade ? (grade['grade'] ? grade['grade'] : '?')  : course.code}</h4>
             <div className={styles['course-info']}>
                 <h2>{course.name}</h2>
             </div>
