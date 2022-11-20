@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getConfig, useConfig } from '../../features/themes/configSlice';
@@ -15,7 +14,7 @@ export default function ThemeProvider({ children }) {
     const theme = themes.theme;
 
     const initialize = () => {
-        if(!auth.token ||auth.token == 'null') {
+        if(!auth.token ||auth.token === 'null') {
             dispatch(loadThemeDefault({id: 'light'}));
             dispatch(setTheme({id: 'light'}))
             return;
@@ -46,13 +45,13 @@ export default function ThemeProvider({ children }) {
     useEffect(() => { initialize() }, []);
 
     //authDidLoad
-    useEffect(() => {if(auth.token && config.isLoading) return initialize() }, [auth.token])
+    useEffect(() => {if(auth.token && config.isLoading) initialize() }, [auth.token])
 
     // configDidLoad
-    useEffect(() => { if (!config.isLoading && config.value) return inititalizeThemes() }, [config.isLoading]);
+    useEffect(() => { if (!config.isLoading && config.value) inititalizeThemes() }, [config.isLoading]);
 
     // themeDidChange
-    useEffect(() => { if(themes.theme && !themes.theme.isLoading) return renderTheme() }, [themes.theme]);
+    useEffect(() => {if(themes.theme && !themes.theme.isLoading) renderTheme()}, [themes.theme]);
 
     return (
         <>

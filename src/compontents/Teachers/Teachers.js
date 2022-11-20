@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTeachers, getTeachers, getTeacher } from '../../features/teachers/teacherSlice';
 import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
@@ -11,7 +10,6 @@ export default function Teachers() {
     const params = useParams();
     const [current, setCurrent] = useState(null);
     const dispatch = useDispatch();
-    const auth = useSelector(useAuth);
 
     const initialize = () => {
         dispatch(getTeachers());
@@ -107,7 +105,7 @@ const TeacherInfoContainer = ({current}) => {
                     <h2>Tehtävät</h2>
                     {
                         tasks.map((task, i) => {
-                            if(task) return <h3 key={i}>{task}</h3>
+                           return task ? <h3 key={i}>{task}</h3> : null
                         })
                     }
                 </div>

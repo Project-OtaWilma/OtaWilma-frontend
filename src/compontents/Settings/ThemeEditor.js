@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { useConfig, getConfig } from '../../features/themes/configSlice';
-import { useThemes, loadTheme, getThemeList, setTheme, createTheme, selectTheme, editTheme} from '../../features/themes/themeSlice';
+import { useThemes, selectTheme, editTheme} from '../../features/themes/themeSlice';
 import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import settings from './settings.json';
@@ -20,7 +19,7 @@ export const ThemeList = ({onCreate}) => {
 
     
     if(list.isLoading) return <LoadingScreen className={styles['color-loading-screen']} />
-    if(Object.keys(map).map(h => map[h].isLoading).filter(n => n).length != 0) return <LoadingScreen className={styles['color-loading-screen']} />
+    if(Object.keys(map).map(h => map[h].isLoading).filter(n => n).length !== 0) return <LoadingScreen className={styles['color-loading-screen']} />
 
     const select = (id) => {
         dispatch(selectTheme({auth: auth.token, id: id}))
@@ -33,7 +32,7 @@ export const ThemeList = ({onCreate}) => {
                 {
                     list['content'].filter(h => ['light', 'dark'].includes(h)).map((hash, i) => {
                         const theme = map[hash];
-                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => select(hash)}/>
+                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash === current} onLoad={() => select(hash)}/>
                     })
                 }
             </div>
@@ -43,7 +42,7 @@ export const ThemeList = ({onCreate}) => {
                 {
                     list['content'].filter(h => !['light', 'dark'].includes(h)).map((hash, i) => {
                         const theme = map[hash];
-                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash == current} onLoad={() => select(hash)}/>
+                        return <ThemePreviewObject key={i} theme={theme} selected={theme.hash === current} onLoad={() => select(hash)}/>
                     })
                 }
                 {
@@ -140,7 +139,7 @@ export const ColorEditor = () => {
             <div className={styles['sections']}>
                 {
                     Object.keys(settings['colors']).map((category, i) => {
-                        return <SettingsCategory key={i} type={'colors'} category={category} o={i == 0}/>
+                        return <SettingsCategory key={i} type={'colors'} category={category} o={i === 0}/>
                     })
                 }
             </div>
@@ -237,13 +236,13 @@ export const BackgroundEditor = () => {
                     <h4 dangerouslySetInnerHTML={{__html: error}}></h4>
                 </form>
                 <div className={styles['format-disclaimer']}>
-                    <h3 style={{color: format== '?' ? 'var(--error)' : 'var(--login-main)'}}>{format}</h3>
+                    <h3 style={{color: format === '?' ? 'var(--error)' : 'var(--login-main)'}}>{format}</h3>
                 </div>
                 <h1>Muokkaa taustakuvaa</h1>
                 <div className={styles['sections']}>
                 {
                     Object.keys(settings['background']).map((category, i) => {
-                        return <SettingsCategory key={i} type={'background'} category={category} o={i == 0}/>
+                        return <SettingsCategory key={i} type={'background'} category={category} o={i === 0}/>
                     })
                 }
             </div>
@@ -388,7 +387,7 @@ const hexToRgb = (hex, opacity) => {
     } : null;
 }
 
-const rgbToHex = (r, g, b) => '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
+const rgbToHex = (r, g, b) => '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 const parseRgb = (input) => input.split("(")[1].split(")")[0].split(",").map(c => Number.parseFloat(c));
 
 const filter = (theme) => `blur(${theme.background.blur.value}px)

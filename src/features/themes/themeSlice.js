@@ -5,7 +5,6 @@ import {
     fetchThemeList,
     createTheme as fCreateTheme,
     setTheme as fSetTheme,
-    deleteTheme,
     editTheme as fEditTheme
 } from '../../requests/theme-api';
 
@@ -16,7 +15,6 @@ export const getThemeList = createAsyncThunk(
     'themes/getThemeList',
     async (options, thunkAPI) => {
         return new Promise((resolve, reject) => {
-            const themes = thunkAPI.getState().themes;
             const auth = options['auth'];
 
             fetchThemeList(auth)

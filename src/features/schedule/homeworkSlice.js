@@ -22,9 +22,10 @@ export const getGroups = createAsyncThunk(
                 })
 
                 Promise.all(promises).then((list, i) => {
-                    list.map((g, i) => {
+                    list.forEach((g, i) => {
                         groups[i] = {...groups[i], type: g ? g.type : 'unknown'}
                     })
+
 
                     return resolve({changed: true, groups: groups});
                 }) 

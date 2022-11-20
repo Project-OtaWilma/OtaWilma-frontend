@@ -4,8 +4,7 @@ import {
     generateToken,
     listTokens,
     invalidateToken,
-    useToken,
-    fetchFriendSelections
+    useToken
 } from '../../requests/theme-api';
 
 import { handleError } from '../errors/errorSlice';
@@ -175,7 +174,7 @@ export const apiSlice = createSlice({
         [removeCode.fulfilled]: (state, action) => {
             const hash = action.payload['hash'];
 
-            state.tokens['content'] = state.tokens['content'].filter(t => t['hash'] != hash);
+            state.tokens['content'] = state.tokens['content'].filter(t => t['hash'] !== hash);
             state.tokens.isLoading = false;
         },
         [removeCode.pending]: (state, action) => {

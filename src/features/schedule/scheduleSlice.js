@@ -5,11 +5,6 @@ import {
 
 import { handleError } from '../errors/errorSlice';
 
-const options = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-};
 
 export const getWeek = createAsyncThunk(
     'schdule/getWeek',
@@ -61,8 +56,8 @@ export const scheduleSlice = createSlice({
             Object.keys(schedule.days).forEach(day => {
                 let le = [...schedule.days[day].lessons]
 
-                le.map((lesson, i) => {
-                    const groupOffset = lesson.groups.length == 1 ? 0 : lesson.groups.length * 17;
+                le.forEach((lesson, i) => {
+                    const groupOffset = lesson.groups.length === 1 ? 0 : lesson.groups.length * 17;
     
                     for (let j = i; j < le.length; j++) {
                         const l = le[j];

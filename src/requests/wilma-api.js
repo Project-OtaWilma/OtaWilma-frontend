@@ -50,7 +50,7 @@ const getVersion = () => {
                 method: 'GET'
             })
             .then(async (res) => {
-                if (version == res.version) return resolve({ version: res.version, updated: false })
+                if (version === res.version) return resolve({ version: res.version, updated: false })
 
                 await clearCache('theme-cache');
                 await clearCache('config-cache');
@@ -423,6 +423,7 @@ const logout = () => {
 export {
     login,
     logout,
+    getVersion,
     fetchMessages,
     fetchMessageContent,
     fetchGradeBook,

@@ -146,7 +146,7 @@
     height: 15px;
     margin: 5px;
 
-    background-image: url(/assets/img/external-link.svg);
+    background-image: url(../../assets/img/external-link.svg);
     background-size: contain;
     background-repeat: no-repeat;
 

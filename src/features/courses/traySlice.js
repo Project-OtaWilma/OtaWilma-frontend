@@ -3,7 +3,6 @@ import {
     fetchTrayList,
     fetchPeriod,
     fetchTrayCourse,
-    fetchTrayCourseInfo,
     CourseTraySelect,
     CourseTrayDeselect
 } from '../../requests/wilma-api';
@@ -65,7 +64,6 @@ export const getTrayCourse = createAsyncThunk(
     'tray/getTrayCourse',
     async (options, thunkAPI) => {
         return new Promise((resolve, reject) => {
-            const tray = thunkAPI.getState().tray;
             const auth = options['auth'];
             const hash = options['hash'];
             
@@ -241,7 +239,7 @@ export const traySlice = createSlice({
 
             const course = action.payload['course'];
 
-            state.courses[hash] = {... state.courses[hash], ...course, ...{isLoading: false}}
+            state.courses[hash] = {...state.courses[hash], ...course, ...{isLoading: false}}
         },
         [getTrayCourse.rejected]: (state, action) => {
             state.isLoading = false;
@@ -261,7 +259,7 @@ export const traySlice = createSlice({
             const map = action.payload['map'];
             const m = state.friends;
             
-            Object.keys(map).map(username => {
+            Object.keys(map).forEach(username => {
                 map[username].forEach(c => {m[c.trim()] = m[c.trim()] ? (m[c.trim()].includes(username) ? m[c.trim()] : [...m[c.trim()], username]) : [username]})
             })
         },
@@ -281,7 +279,7 @@ export const traySlice = createSlice({
             
             state.courses[hash].isSelected = false;
             state.courses[hash].class = state.courses[hash].class.replace('on', 'off');
-            state.selected = state.selected.filter(h => h != hash);
+            state.selected = state.selected.filter(h => h !== hash);
             state.isSelecting = false;
         },
         [deselectCourse.pending]: (state, action) => {

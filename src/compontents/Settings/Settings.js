@@ -1,19 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { useConfig, getConfig } from '../../features/themes/configSlice';
-import { useThemes, loadTheme, getThemeList, setTheme, createTheme, selectTheme, editTheme} from '../../features/themes/themeSlice';
-import { LoadingScreen, PlaceHolder, BlurLayer } from '../LoadingScreen/LoadingScreen';
+import { useThemes, loadTheme, getThemeList, createTheme} from '../../features/themes/themeSlice';
+import { BlurLayer } from '../LoadingScreen/LoadingScreen';
 
 
 import {ThemeList, ThemeWindow, ColorEditor, BackgroundEditor} from './ThemeEditor';
 import {AccountInfo} from './AccountSettings';
-
-import settings from './settings.json';
-
 import styles from './Settings.module.css';
-
-const imageTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
 
 export default function Settings() {
     const [window, setWindow] = useState(false);

@@ -279,11 +279,11 @@
 }
 
 .theme-options button:nth-child(1) {
-    background-image: url(/assets/img/edit.svg);
+    background-image: url(../../assets/img/edit.svg);
 }
 
 .theme-options button:nth-child(2) {
-    background-image: url(/assets/img/delete.svg);
+    background-image: url(../../assets/img/delete.svg);
 }
 
 .theme-options button:hover {
@@ -398,6 +398,7 @@
     border-radius: 0 !important;
 
     background: white;
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: textfield;
 }
@@ -413,6 +414,7 @@
     border-radius: 0 !important;
 
     background: black;
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: textfield;
 
@@ -589,8 +591,6 @@
     font-size: 17px;
     margin-bottom: 20px;
 }
-
-.user-profile {}
 
 .sharing-menu {
     width: 100%;
