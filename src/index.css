@@ -4,10 +4,9 @@
     border: none;
     outline: none !important;
     font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
 
-    font-family: 'regular';
+    font-family: 'regular' !important;
     scrollbar-width: thin;
 }
 
