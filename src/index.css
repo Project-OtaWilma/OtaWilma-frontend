@@ -5,9 +5,12 @@
     outline: none !important;
     font-size: 100%;
     vertical-align: baseline;
-
-    font-family: 'regular' !important;
+    font: inherit;
     scrollbar-width: thin;
+}
+
+:root {
+    font-family: 'regular';
 }
 
 
