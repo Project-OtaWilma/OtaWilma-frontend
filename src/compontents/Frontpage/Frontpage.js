@@ -347,7 +347,7 @@ const HomeworkObject = ({homework}) => {
 const GroupObject = ({group}) => {
     return (
         <div className={styles['group']}>
-            {group.teachers.map((teacher, i) => <Link key={i} to={`/teachers/${teacher.id}`}>{teacher.caption}</Link>)}
+            {group.teachers ? group.teachers.map((teacher, i) => <Link key={i} to={`/teachers/${teacher.id}`}>{teacher.caption}</Link>) : null}
             <h2 className={styles['code']}>{group.code}</h2>
             {group.rooms ? group.rooms.map((room, i) => <h2 key={i}>{room.caption}</h2>) : null}
         </div>
