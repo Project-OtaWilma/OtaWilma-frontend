@@ -21,6 +21,8 @@ export const loginToWilma = createAsyncThunk(
                     switch(err.status) {
                         case 401:
                             return resolve({error: true, err: err});
+                        case 400:
+                            return resolve({error: true, err: err});
                         default:
                             thunkAPI.dispatch(handleError(err))
                             return reject(err);

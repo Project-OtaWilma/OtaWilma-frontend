@@ -39,7 +39,6 @@ export const configSlice = createSlice({
     },
     extraReducers: {
         [getConfig.fulfilled]: (state, action) => {
-            console.log(action.payload);
             state.config = action.payload['config'];
             state.isLoading = false;
         },

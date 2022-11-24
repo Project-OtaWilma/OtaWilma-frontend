@@ -21,8 +21,7 @@ export default function Login() {
 
     const [loginError, setLoginError] = useState('');
 
-    const login = (e) => {
-        e.preventDefault();
+    const login = () => {
         setLoginError('');
 
         if (!termsOfService || !agreement) return setLoginError('You must agree to both')
@@ -45,13 +44,13 @@ export default function Login() {
             <div className={styles['right']}>
                 <h1>OtaWilma - Tervetuloa</h1>
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
-                <form className={styles['login-form']}>
+                <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Käyttäjätunnus</h3>
-                    <input type='text' onInput={e => setUsername(e.target.value)} />
+                    <input type='text' placeholder='matti.heikkinen' onInput={e => setUsername(e.target.value)} />
                 </form>
-                <form className={styles['login-form']}>
+                <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Salasana</h3>
-                    <input type='password' onInput={e => setPassword(e.target.value)} />
+                    <input type='password' placeholder='*************' onInput={e => setPassword(e.target.value)} />
                 </form>
                 <form className={styles['terms-of-service']}>
                     <h2>Ymmärrän, että <strong>OtaWilma ei ole</strong> virallinen Wilman

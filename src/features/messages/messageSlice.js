@@ -18,7 +18,6 @@ export const getMessages = createAsyncThunk(
             
             fetchMessages(auth, path, limit)
             .then(list => {
-                console.log(list);
                 return resolve({changed: true, messages: list.slice(0, limit), path: path})
             })
             .catch(err => {
