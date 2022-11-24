@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSchedule, getWeek } from '../../features/schedule/scheduleSlice'
 import { useTray, getTrayList, getPeriod, getTrayCourse, updateSelections, getFriendSelections, selectCourse, deselectCourse } from '../../features/courses/traySlice';
 import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import styles from './CourseTray.module.css';
+import { Link } from 'react-router-dom';
 const { subjects } = require('./subjects.json');
+
+const periods = {
+    '70F27363_36379': new Date('2022-08-15'), //1A.
+    '70F27363_36380': new Date('2022-09-12'), //1B.
+    '70F27363_36411': new Date('2022-10-10'), //2A.
+    '70F27363_36412': new Date('2022-11-07'), //2B.
+    '70F27363_36413': new Date('2022-12-12'), //3A.
+    '70F27363_36414': new Date('2023-01-16'), //3B.
+    '70F27363_36415': new Date('2023-02-13'), //4A.
+    '70F27363_36416': new Date('2023-03-13'), //4B.
+    '70F27363_36417': new Date('2023-04-17'), //5A.
+    '70F27363_36418': new Date('2023-05-08') //5B.
+}
 
 export default function CourseTray() {
     const [open, setOpen] = useState([]);
@@ -16,6 +31,8 @@ export default function CourseTray() {
         lops: []
     });
     const [course, setCourse] = useState(null);
+    const [current, setCurrent] = useState(null);
+
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const tray = useSelector(useTray);
@@ -31,7 +48,10 @@ export default function CourseTray() {
     const loadPeriod = (hash) => {
         if(open.includes(hash)) return closePeriod(hash);
 
-        dispatch(getPeriod({auth: auth.token, hash: hash}))
+        dispatch(getPeriod({auth: auth.token, hash: hash}));
+
+        // load the calculated period
+        if(Object.keys(periods).includes(hash)) dispatch(getWeek({auth: auth.token, date: periods[hash]}));
         setOpen([...open, hash]);
     }
 
@@ -60,10 +80,10 @@ export default function CourseTray() {
                     <TrayList open={open} onLoad={loadPeriod}/>
                 </div>
                 <div className={styles['tray-main']}>
-                    <PeriodContainer open={open} filter={filter} onLoad={loadCourse} onClose={closePeriod}/>
+                    <PeriodContainer open={open} filter={filter} onLoad={loadCourse} onClose={closePeriod} onHover={e => setCurrent(e)}/>
                 </div>
                 <div className={styles['tray-info']}>
-                    <TrayInfoContainer open={open} course={course} filter={filter} setFilter={applyFilter}/>
+                    <TrayInfoContainer open={open} course={course} filter={filter} setFilter={applyFilter} current={current}/>
                 </div>
             </BlurLayer>
         </>
@@ -74,7 +94,6 @@ const TrayList = ({open, onLoad}) => {
     const tray = useSelector(useTray);
 
     if(tray.tray.isLoading) return <LoadingScreen className={styles['tray-loading-screen']} />
-    
     
     return (
         <>
@@ -89,14 +108,14 @@ const TrayList = ({open, onLoad}) => {
     )
 }
 
-const ListTrayObject = ({open, name, periods, onLoad}) => {
+const ListTrayObject = ({open, name, periods, onLoad, onHover}) => {
     return (
         <div className={styles['tray']}>
             <h1>{name}</h1>
             <div className={styles['period-list']}>
                 {
                     periods.map((period, i) => {
-                        return <ListPeriodObject open={open} key={i} period={period} onLoad={onLoad}/>
+                        return <ListPeriodObject open={open} key={i} period={period} onLoad={onLoad} onHover={onHover}/>
                     })
                 }
             </div>
@@ -115,7 +134,7 @@ const ListPeriodObject = ({open, period, onLoad}) => {
     )
 }
 
-const PeriodContainer = ({open, filter, onLoad, onClose}) => {
+const PeriodContainer = ({open, filter, onLoad, onClose, onHover}) => {
     const tray = useSelector(useTray);
     const periods = tray.periods;
 
@@ -126,14 +145,14 @@ const PeriodContainer = ({open, filter, onLoad, onClose}) => {
             {
                 open.map((hash, i) => {
                     const period = periods[hash];
-                    return <TrayPeriodObject key={i} hash={hash} period={period} filter={filter} onLoad={onLoad} onClose={onClose}/>
+                    return <TrayPeriodObject key={i} hash={hash} period={period} filter={filter} onLoad={onLoad} onClose={onClose} onHover={onHover}/>
                 })
             }
         </>
     )
 }
 
-const TrayPeriodObject = ({hash, period, filter, onLoad, onClose}) => {
+const TrayPeriodObject = ({hash, period, filter, onLoad, onClose, onHover}) => {
     const [hidden, setHidden] = useState(false);
 
     if(period.isLoading) return <div className={styles['period']}>
@@ -154,7 +173,7 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose}) => {
             <>
                 {
                     period.bars.map((bar, i) => {
-                        return <TrayBarObject key={i} bar={bar} filter={filter} onLoad={onLoad} />
+                        return <TrayBarObject key={i} bar={bar} filter={filter} onLoad={onLoad} onHover={onHover} />
                     })
                 }
             </>
@@ -162,13 +181,13 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose}) => {
     )
 }
 
-const TrayBarObject = ({bar, filter, onLoad}) => {
+const TrayBarObject = ({bar, filter, onLoad, onHover}) => {
     const tray = useSelector(useTray);
     const courses = tray.courses;
     const friends = tray.friends;
 
     return (
-        <div className={styles['bar']}>
+        <div onMouseEnter={() => onHover({period: bar.hash, bar: bar.name})} className={styles['bar']}>
             <h2>{bar.name}</h2>
             <div className={styles['course-list']}>
                 {
@@ -224,18 +243,85 @@ const TrayCourseObject = ({friends, course, filter, onLoad}) => {
     )
 }
 
-const TrayInfoContainer = ({open, course, filter, setFilter}) => {
+const TrayInfoContainer = ({open, course, current, filter, setFilter}) => {
     return (
         <>
-            <div className={styles['schedule']}>
-                
-            </div>
+
+            <TraySchedule current={current}/>
             <h1>Toiminnot</h1>
             {open.length > 0 ? <SearchBarObject setFilter={setFilter} /> : <></>}
             {open.length > 0 ? <FilterObject filter={filter} setFilter={setFilter}/> : <></>}
             <h1>Tietoa kurssista</h1>
             {open.length > 0 ? <CourseInfoObject course={course}/> : <></>}
         </>
+    )
+}
+
+const TraySchedule = ({current}) => {
+    const schedule = useSelector(useSchedule);
+    if(!current) return <></>
+
+    const date = periods[current.period].toLocaleDateString('fi-FI');
+    const week = schedule.schedule[date];
+    
+    if(!week) return <>Loading...</>
+
+    return (
+        <div style={{height: week.height / 3}} className={styles['schedule']}>
+            {
+                Object.keys(week.days).filter(date => !['La', 'Su'].includes(week.days[date].day.caption.split(' ')[0])).map((date, i) => {
+                    const day = week.days[date];
+                    return <TrayDayObject key={i} day={day} />
+                })
+            }
+        </div>
+    )
+}
+
+const TrayDayObject = ({day}) => {
+    const lessons = day.lessons;
+    
+    return (
+        <div className={styles['day']}>
+            {
+                lessons.map((lesson, i) => {                    
+                    const start = lessons[i]['startRaw'];
+                    const duration = lessons[i]['durationRaw'];
+                    
+                    return <LessonObject key={i} start={start - 510} height={duration} lesson={lesson} />
+                })
+            }
+    </div>
+    )
+}
+
+const LessonObject = ({start, height, lesson}) => {
+    return (
+        <div
+            className={styles['hour']}
+            style={{
+                height: `${height / 3}px`,
+                marginTop: `${(start) / 3}px`,
+            }}>
+            {
+                lesson.groups.map((group, i) => {
+                    return (
+                        <div key={i} className={styles['data']}>
+                            <GroupObject group={group} />
+                        </div>
+                    )
+                })
+            }
+        </div>
+    )
+}
+
+const GroupObject = ({group}) => {
+    return (
+        <div className={styles['group']}>
+            <h2 className={styles['code']}>{group.code}</h2>
+        </div>
+
     )
 }
 

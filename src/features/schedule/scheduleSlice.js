@@ -80,6 +80,7 @@ export const scheduleSlice = createSlice({
                 range: schedule.weekRange,
                 days: schedule.days
             }
+
             state.loaded.push(action.payload.date);
             state.isLoading = false;
         },

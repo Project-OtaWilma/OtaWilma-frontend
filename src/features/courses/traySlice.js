@@ -215,6 +215,7 @@ export const traySlice = createSlice({
                 state.periods[hash] = {...state.periods[hash], ...{
                     bars: [...state.periods[hash].bars, {
                         name: bar.title,
+                        hash: hash,
                         courses: bar.courses.map(course => {
                             const isSelected = course.class.includes('on');
 

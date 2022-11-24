@@ -161,10 +161,11 @@ export default function Frontpage() {
 }
 
 const Clock = () => {
-    const [sec, setSec] = useState('rotate(0deg)');
-    const [min, setMin] = useState('rotate(0deg)');
-    const [hour, setHour] = useState('rotate(0deg)');
-    const [time, setTime] = useState('00.00.00');
+    const date = (new Date());
+    const [sec, setSec] = useState(`${((date.getSeconds() / 60) * 360) + 180}deg`);
+    const [min, setMin] = useState(`${((date.getMinutes() / 60) * 360) + ((date.getSeconds() / 60) * 6) + 180}deg`);
+    const [hour, setHour] = useState(`${((date.getHours() / 12) * 360) + ((date.getMinutes() / 60) * 30) + 180}deg`);
+    const [time, setTime] = useState(date.toLocaleTimeString());
 
     const update = () => {
         const date = (new Date());
@@ -175,8 +176,6 @@ const Clock = () => {
     }
 
     useEffect(() => {
-        update();
-
         const clock = setInterval(() => {
             update()
         }, 1000);
