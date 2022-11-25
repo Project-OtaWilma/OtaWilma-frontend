@@ -153,7 +153,7 @@ const InfoObject = ({info}) => {
                     const keyValue = `${Object.keys(translations).includes(key) ? translations[key] : key}: `;
                     
                     return (
-                        <ul key={i}><a>{keyValue}</a><a className={styles[value]}>{value}</a></ul>
+                        <ul key={i}><a>{keyValue}</a><a className={styles[value]} dangerouslySetInnerHTML={{__html: value}}></a></ul>
                     )
                 })
             }
