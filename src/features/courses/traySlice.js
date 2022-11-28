@@ -221,7 +221,7 @@ export const traySlice = createSlice({
 
                             if(isSelected && !state.selected.includes(course.hash)) state.selected.push(course.hash); 
 
-                            state.courses[course.hash] = {...course, isLoading: true, isSelected: isSelected, lops: course.code.startsWith('w') ? 'LOPS2016' : 'LOPS2021'}; 
+                            state.courses[course.hash] = {...course, isLoading: true, isSelected: isSelected, period: hash, bar: state.periods[hash].bars.length, lops: course.code.startsWith('w') ? 'LOPS2016' : 'LOPS2021'}; 
                             return course.hash;
                         })
                     }],

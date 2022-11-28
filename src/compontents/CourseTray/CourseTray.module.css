@@ -703,55 +703,11 @@
     transition: opacity .2s ease-in-out;
 }
 
-/*
-
-.schedule .day {
-    width: 60px;
+button:disabled {
+    opacity: 75% !important;
+    pointer-events: none;
 }
 
-.day .hour {
-    width: 60px;
-    min-height: 30px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#selected .data {
-    border: solid 1px var(--font-h2);
-    box-shadow: 0 0 15px var(--shadow-main);
-}
-
-.hour .data {
-    width: calc(100% - 3px);
-    height: calc(100% - 3px);
-
-    min-height: 27.5px;
-
-    border: solid 1px var(--border-main);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.data h5 {
-    color: var(--font-h2);
-    font-size: 11px;
-    margin: 1px;
-
-    opacity: 75%;
-}
-
-.day .hour:nth-child(6) {
-    position: absolute;
-
-    margin-bottom: 40px;
-}
-*/
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;

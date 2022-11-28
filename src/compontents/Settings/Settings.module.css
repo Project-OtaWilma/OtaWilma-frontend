@@ -970,14 +970,14 @@
     padding-right: 0;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1600px) {
     .content {
         width: 98%;
     }
 }
 
 
-@media screen and (max-height: 750px) {
+@media screen and (max-height: 950px) {
     .container {
         justify-content: flex-end;
     }
@@ -985,5 +985,11 @@
     .content {
         height: calc(100% - 50px - 5%);
         bottom: 2.5%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .content {
+        display: none !important;
     }
 }

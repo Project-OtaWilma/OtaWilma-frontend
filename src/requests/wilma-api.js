@@ -10,8 +10,8 @@ import { login as loginToOtaWilma } from './theme-api'
 
 
     //const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-    const wilmaAPI = 'https://beta.wilma-api.tuukk.dev/api/';
-    //const wilmaAPI = 'http://localhost:3001/api/';
+    // const wilmaAPI = 'https://beta.wilma-api.tuukk.dev/api/';
+    const wilmaAPI = 'http://localhost:3001/api/';
 
 const login = (credentials) => {
     return new Promise((resolve, reject) => {

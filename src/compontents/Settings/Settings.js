@@ -8,6 +8,7 @@ import { BlurLayer } from '../LoadingScreen/LoadingScreen';
 import {ThemeList, ThemeWindow, ColorEditor, BackgroundEditor} from './ThemeEditor';
 import {AccountInfo} from './AccountSettings';
 import styles from './Settings.module.css';
+import Credits from './Credits';
 
 export default function Settings() {
     const [window, setWindow] = useState(false);
@@ -62,6 +63,9 @@ export default function Settings() {
                     </div>
                     <div className={styles['account']}>
                         <AccountInfo />
+                    </div>
+                    <div className={styles['advanced']}>
+                        <Credits />
                     </div>
                 </div>
                 <div className={styles['settings-help']}>

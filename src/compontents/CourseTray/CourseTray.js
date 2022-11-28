@@ -160,7 +160,7 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose, onHover}) => {
     </div>
 
     return (
-        <div style={{order: period.index}} className={`${styles['period']} ${hidden ? styles['closed'] : styles['open']}`}>
+        <div onMouseEnter={() => onHover({period: hash})} style={{order: period.index}} className={`${styles['period']} ${hidden ? styles['closed'] : styles['open']}`}>
             <h1>{period.name}</h1>
             <div className={styles['period-actions']}>
                 <button onClick={() => setHidden(!hidden)} className={styles['hide-period']}>
@@ -187,7 +187,7 @@ const TrayBarObject = ({bar, filter, onLoad, onHover}) => {
     const friends = tray.friends;
 
     return (
-        <div onMouseEnter={() => onHover({period: bar.hash, bar: bar.name})} className={styles['bar']}>
+        <div className={styles['bar']}>
             <h2>{bar.name}</h2>
             <div className={styles['course-list']}>
                 {
@@ -409,10 +409,13 @@ const CourseInfoObject = ({course: hash}) => {
     const auth = useSelector(useAuth);
     const tray = useSelector(useTray);
     const courses = tray.courses;
+    const periods = tray.periods;
 
     if(!courses[hash]) return <></>
     if(courses[hash].isLoading) return <LoadingScreen className={styles['tray-info-loading-screen']} />
     const course = courses[hash];
+    const overlapping = periods[course.period].bars[course.bar].courses.map(hash => courses[hash]).filter(c => c.isSelected).map(c => c.code);
+    
 
     const select = (hash) => {
         dispatch(selectCourse({auth: auth.token, hash: hash}))
@@ -421,16 +424,23 @@ const CourseInfoObject = ({course: hash}) => {
     const deselect = (hash) => {
         dispatch(deselectCourse({auth: auth.token, hash: hash}))
     }
-    
+
+    const disabled = (course['info'].full || course['info'].locked) ? true : false;
+    const statusText = 
+        course.isSelected ? 'Poista valinta' :
+        disabled ? (course['info'].full ? 'Kurssi on täynnä' : 'Kurssi on lukittu') :
+        (overlapping.length > 0) ? `Päällekkäisyyksiä: ${overlapping.join(', ')}` :
+        'Valitse kurssi'
+
     return (
         <div className={styles['course-info']}>
             <h1>{course.name}</h1>
             <h3>{course.code}</h3>
-            <button onClick={() => {if(course.isSelected) {deselect(course.hash)} else {select(course.hash)}}} className={styles['course-action']}>
-                {!course.isSelected ? 'Valitse kurssi' : 'Poista valinta'}
+            <button disabled={disabled || (!course.isSelected && overlapping.length > 0)} onClick={() => {if(course.isSelected) {deselect(course.hash)} else {select(course.hash)}}} className={styles['course-action']}>
+                {statusText}
             </button>
             {
-                Object.keys(course).filter(k => !['name', 'code', 'hash', 'isLoading', 'class', 'info', 'isSelected', 'subject'].includes(k)).map((key, i) => {
+                ['Ilmoittautuneita', 'Maksimikoko', 'Opettaja', ...Object.keys(course).filter(k => !['Ilmoittautuneita', 'Maksimikoko', 'Opettaja'].includes(k))].filter(k => !['lops', 'period', 'bar', 'name', 'code', 'hash', 'isLoading', 'class', 'info', 'isSelected', 'subject'].includes(k)).map((key, i) => {
                     const keyValue = `${key}: `;
                     const value = course[key];
                     return (
