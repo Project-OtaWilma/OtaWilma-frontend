@@ -210,19 +210,22 @@ const TrayCourseObject = ({friends, course, filter, onLoad}) => {
     if(filter.teacher.length > 0) if(filter.teacher.filter(r => !(!course.info.teacher) && course.info.teacher.includes(r)).length == 0) return <></>
     if(filter.lops.length > 0) if(filter.lops.filter(r => course.lops == r).length == 0) return <></>
 
+    const color = friends.length > 0 ? randomColor(friends[0]) : null;
 
     return (
         <div 
             className={course.class.split(' ').map(c => styles[c]).join(' ')}
             onClick={() => onLoad(course.hash)}
+            style={{
+                borderLeft: color ? `solid 3px var(${color})` : null
+            }}
         >
             {course.code}
             <div className={styles['friend-list']}>
                 {
-                    friends.length > 0 && !course.class.includes('ksuor') ? 
+                    friends.length > 0 ? 
                     <>
                         <h6 style={{backgroundColor: `var(${randomColor(friends[0])})`}} >{`${shorten(friends[0])}`}</h6>
-                        
                     </> : <></>
                 }
             </div>
@@ -467,15 +470,13 @@ const randomColor = (raw) => {
     return [
         '--L2021-mandatory-main',
         '--L2021-mandatory-selected',
-        '--L2021-g-optional-main',
         '--L2021-g-optional-selected',
         '--L2021-l-optional-main',
         '--L2021-l-optional-selected',
-        '--L2021-diploma-main',
         '--L2021-diploma-selected',
         '--L2016-l-optional-main',
         '--L2016-g-optional-main',
-    ][Math.floor(rnd * 10)];
+    ][Math.floor(rnd * 8)];
 }
 
 const shorten = (raw) => {
