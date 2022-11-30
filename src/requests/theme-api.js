@@ -25,7 +25,7 @@ const login = (auth) => {
                 return resolve(status);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     })
 }
@@ -44,7 +44,7 @@ const fetchConfig = (auth) => {
                 return resolve(config);
             })
             .catch(err => {
-                return reject(JSON.stringify(err));
+                return reject(err);
             })
     })
 }

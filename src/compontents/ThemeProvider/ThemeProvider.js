@@ -14,12 +14,12 @@ export default function ThemeProvider({ children }) {
     const theme = themes.theme;
 
     const initialize = () => {
-        if(!auth.token ||auth.token === 'null') {
+        if(!auth.token || auth.token === 'null') {
             dispatch(loadThemeDefault({id: 'light'}));
             dispatch(setTheme({id: 'light'}))
             return;
         }
-            
+        
         dispatch(getConfig({auth: auth.token}));
     }
 
@@ -48,7 +48,7 @@ export default function ThemeProvider({ children }) {
     useEffect(() => {if(auth.token && config.isLoading) initialize() }, [auth.token])
 
     // configDidLoad
-    useEffect(() => { if (!config.isLoading && config.value) inititalizeThemes() }, [config.isLoading]);
+    useEffect(() => { if (!config.isLoading && !config.error) inititalizeThemes() }, [config.isLoading]);
 
     // themeDidChange
     useEffect(() => {if(themes.theme && !themes.theme.isLoading) renderTheme()}, [themes.theme]);

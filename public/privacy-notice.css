@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    background: none;
+    font-family: 'regular';
+}
+
+@font-face {
+    font-family: 'bold';
+
+    src: url(https://fonts.gstatic.com/s/inconsolata/v31/QldgNThLqRwH-OJ1UHjlKENVzkWGVkL3GZQmAwLYxYWI2qfdm7Lppyw7WR32lw.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'semi-bold';
+    src: url(https://fonts.gstatic.com/s/inconsolata/v31/QldgNThLqRwH-OJ1UHjlKENVzkWGVkL3GZQmAwLYxYWI2qfdm7Lpp1s7WR32lw.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+@font-face {
+    font-family: 'regular';
+    src: url(https://fonts.gstatic.com/s/inconsolata/v31/QldgNThLqRwH-OJ1UHjlKENVzkWGVkL3GZQmAwLYxYWI2qfdm7Lpp4U8WR32lw.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --accent-main: rgba(0, 51, 102, 1);
+    --background-main: rgba(255, 255, 255, 1);
+    --background-darker: rgba(239, 240, 243, 1);
+    --font-h1: rgba(0, 51, 102, 1);
+    --font-h2: rgba(23, 23, 23, 1);
+    --font-h3: rgba(0, 0, 0, 0.637);
+    --border-main: rgba(239, 240, 243, 1);
+    --shadow-main: rgba(0, 0, 0, 0.16);
+}
+
+.container {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    width: 85%;
+
+    max-width: 1000px;
+    height: auto;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-left: solid 10px var(--accent-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    scroll-behavior: smooth;
+}
+
+.content h1 {
+    margin: 10px;
+    padding: 20px;
+
+    font-family: 'semi-bold';
+    color: var(--font-h1);
+
+    border-bottom: solid 1px var(--border-main);
+}
+
+.content h2 {
+    padding: 5px;
+    margin: 10px;
+
+    color: var(--font-h2);
+}
+
+.content ul {
+    margin: 10px;
+    padding: 10px;
+    border-left: solid 3px var(--border-main);
+}
+
+.content ul li,
+.content ul a {
+    margin: 3px;
+    padding: 2px;
+    margin-left: 20px;
+}
+
+li,
+h3,
+h4 {
+    font-family: arial;
+    font-weight: lighter;
+    padding: 5px;
+    margin: 5px;
+    font-size: 17px;
+
+    color: var(--font-h3) !important; 
+    line-height: 1.4;
+    font-style: italic;
+}
+
+strong {
+    font-family: 'bold' !important;
+}

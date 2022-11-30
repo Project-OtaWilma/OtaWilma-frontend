@@ -13,13 +13,13 @@ export const getConfig = createAsyncThunk(
             
             const auth = options['auth'];
             fetchConfig(auth)
-            .then(config => {
-                return resolve({config: config});
-            })
-            .catch(err => {
-                thunkAPI.dispatch(handleError(err));
-                return reject(err);
-            })
+                .then(config => {
+                    return resolve({config: config});
+                })
+                .catch(err => {
+                    thunkAPI.dispatch(handleError(err));
+                    return reject(err);
+                })
         })
     }
 )
@@ -30,6 +30,7 @@ export const configSlice = createSlice({
     initialState: {
         config: null,
         isLoading: true,
+        error: false
     },
     reducers: {
         setPublicFlag: (state, action) => {
@@ -40,10 +41,12 @@ export const configSlice = createSlice({
     extraReducers: {
         [getConfig.fulfilled]: (state, action) => {
             state.config = action.payload['config'];
+            state.error = false;
             state.isLoading = false;
         },
         [getConfig.rejected]: (state, action) => {
             console.log('api call rejected');
+            state.error = true;
             state.isLoading = false;
         },
     },

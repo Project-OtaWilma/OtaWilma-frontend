@@ -497,6 +497,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .data a,
@@ -505,12 +506,16 @@
     color: var(--schedule-h1);
     font-size: 11px;
     padding: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
 
     text-decoration: none;
 
     pointer-events: all;
     font-family: 'semi-bold';
     transition: opacity .2s ease-in-out;
+
+    min-width: 15px;
 
     opacity: 50%;
 }

@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Frontpage() {
     const [category, setCategory] = useState('schedule');
-
+    
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const grades = useSelector(useGrades);

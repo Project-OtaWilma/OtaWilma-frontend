@@ -62,7 +62,17 @@ const setToken = (token) => {
 }
 
 const getToken = () => {
-    return getCookie('token') ? getCookie('token') : null;
+    return getCookie('token') ? (getCookie('token') === 'null' ? null : getCookie('token')) : null;
+}
+
+export const getAgreement = () => {
+    const agreement = window.localStorage.getItem('agreement');
+    if(!agreement) window.localStorage.setItem('agreement', false);
+    return agreement ? (agreement === 'true') : false;
+}
+
+export const setAgreement = () => {
+    return window.localStorage.setItem('agreement', true);
 }
 
 
@@ -71,7 +81,8 @@ export const authSlice = createSlice({
     initialState: {
         token: getToken(),
         loggedIn: !(!getToken()),
-        loginError: null
+        loginError: null,
+        isLoading: false,
     },
     reducers: {},
     extraReducers: {
@@ -85,6 +96,7 @@ export const authSlice = createSlice({
                 const error = action.payload['err'];
                 const raw = error.error ? error.error.err : error.err;
                 state.loginError = Object.keys(errors).includes(raw) ? errors[raw] : raw;
+                state.isLoading = false;
                 return;
             }
             const token = action.payload['token'];
@@ -93,19 +105,21 @@ export const authSlice = createSlice({
             setToken(state.token);
 
             state.loggedIn = true;
+            state.isLoading = false;
         },
         [loginToWilma.pending]: (state, action) => {
             state.loginError = null;
+            state.isLoading = true;
         },
         [loginToWilma.rejected]: (state, action) => {
             state.loginError = 'Tuntemaon virhe - kirjautuminen epäonnistui';
+            state.isLoading = false;
         },
         [logoutFromWilma.fulfilled]: (state, action) => {
             setToken(null);
             state.token = null;
         },
         [resetSession.fulfilled]: (state, action) => {
-            console.log('reseted');
             setToken(null);
             state.token = null;
         },
@@ -116,6 +130,7 @@ export const useAuth = (state) => ({
     token: state.auth.token,
     loggedIn: state.auth.loggedIn,
     loginError: state.auth.loginError,
+    isLoading: state.auth.isLoading
 });
 
 export default authSlice.reducer;

@@ -5,9 +5,8 @@ export const handleError = createAsyncThunk(
     'errors/handleError',
     async (options, thunkAPI) => {
         return new Promise((resolve, reject) => {
-            console.log(options);
-
             if(options.redirect) {
+                console.warn('Invalid credentials - session JWT dropped successfully');
                 thunkAPI.dispatch(resetSession());
                 return resolve({handled: true});
             }
