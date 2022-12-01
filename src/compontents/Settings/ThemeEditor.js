@@ -8,6 +8,11 @@ import settings from './settings.json';
 import styles from './Settings.module.css';
 
 const imageTypes = ['png', 'svg', 'jpg', 'gif', 'webp'];
+const forceOpacity = [
+    '--clock-background',
+    '--background-darker',
+    '--accent-main'
+]
 
 export const ThemeList = ({onCreate}) => {
     const dispatch = useDispatch();
@@ -331,10 +336,10 @@ const ColorInput = ({field, k: key}) => {
             <label>{field}</label>
             <h3>{'Väri'}</h3>
             <input className={styles['color-input']} type='color' style={{opacity: opacity / 100}} onBlur={() => applyColor()} value={color} onChange={(e) => updateColor(e.target.value)}/>
-            <div className={styles['opacity']}>
+            {!forceOpacity.includes(key) ? <div className={styles['opacity']}>
                 <h3>Läpinäkyvyys</h3>
                 <input className={styles['opacity-input']} type='number' value={opacity} onBlur={() => applyColor()} onChange={(e) => updateOpacity(e.target.value)}/>
-            </div>
+            </div> : <></>}
         </form>
     )
 }

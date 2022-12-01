@@ -92,11 +92,11 @@ const TeacherInfoContainer = ({current}) => {
             <div className={styles['left']}>
                 <h1>{teacher.name}</h1>
                 <div className={styles['actions']}>
-                    <div className={styles['open']}>
+                    <div className={styles['open']} onClick={() => window.open(`https://espoo.inschool.fi/profiles/teachers/${teacher['hash']}`)}>
                         <div className={styles['icon']}></div>
                         <h2>Avaa Wilmassa</h2>
                     </div>
-                    <div className={styles['review']}>
+                    <div className={styles['review']} onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLScd6E3O5LMH7eamvabjuQKHD_i8FmW-Ggb9ElqzHvdM0KQ-3Q/viewform?usp=sf_link')}>
                         <div className={styles['icon']}></div>
                         <h2>Arvioi opettajaa</h2>
                     </div>
