@@ -46,11 +46,15 @@ export default function Settings() {
             <BlurLayer isLoading={window || themes.isEditing || themes.isSelecting} className={styles['content']}>
                 <div className={styles['side-bar']}>
                     <h1>Teemat</h1>
-
+                        <h2>Valitse teema</h2>
+                            <h3>Vaalea teema</h3>
+                            <h3>Tumma teema</h3>
+                        <h2>Omat teemat</h2>
+                            <h3>valitse oma teema</h3>
+                            <h3>Luo oma teema</h3>
                     <h1>Käyttäjä ja kaverit</h1>
-
-                    <h1>Kehittäjälle</h1>
-
+                        <h2>Luo kertakäyttöinen kaverikoodi</h2>
+                        <h2>Hallitse jaettuja kurssivalintoja</h2> 
                     <h1>Kiitokset</h1>
                 </div>
                 <div className={styles['settings-content']}>

@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <Provider store={store}>
+        <div className='disclaimer'><div className='icon' /><h1>Otawilman selainversio on saatavilla vain laitteille, joiden näytön resoluutio on yli 900px kertaa 600px. Jos olet koulun koneella, kokeile zoomata ulos pari kertaa näppäinyhdistelmää <strong>"[ctrl] ja [-]"</strong></h1></div>
         <div className='container'>
             <div className='background'></div>
             <App />

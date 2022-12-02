@@ -146,14 +146,35 @@ body {
     position: absolute;
     width: 90%;
     left: 5%;
-    height: 100%;
+    top: 5%;
+    height: 90%;
     color: white;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     display: none;
+}
+
+.disclaimer .icon {
+    width: 256px;
+    height: 256px;
+
+    background-image: url(/src/assets/img/otakarhu.svg);
+    filter: brightness(100%);
+
+    margin: 10px;
+}
+
+.disclaimer h1 {
+    color: white;
+    opacity: 75%;
+}
+
+.disclaimer strong {
+    font-family: 'bold' !important;
 }
 
 .printout-footer {
