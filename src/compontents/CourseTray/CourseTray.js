@@ -64,20 +64,20 @@ export default function CourseTray() {
 
     const applyFilter = (f) => {
         if (f.type === 'search') return setFilter({...filter, search: f.value});
-        if(f.value === 'reset') {
+        if(f.reset) {
             setFilter({...filter, [f.type]: []})
             saveFilter(f.type, []);
             return;
         }
 
-        if(filter[f.type].includes(f.value)) {
-            setFilter({...filter, [f.type]: filter[f.type].filter(n => n != f.value)})
-            saveFilter(f.type, filter[f.type].filter(n => n != f.value))
+        if(filter[f.type].filter(n => f.value.includes(n)).length > 0 && !f.all) {
+            setFilter({...filter, [f.type]: filter[f.type].filter(n => !f.value.includes(n))})
+            saveFilter(f.type, filter[f.type].filter(n => !f.value.includes(n)))
             return;
         }
         
-        setFilter({...filter, [f.type]: [...filter[f.type], f.value]})
-        saveFilter(f.type, [...filter[f.type], f.value]);
+        setFilter({...filter, [f.type]: [...filter[f.type], ...f.value]})
+        saveFilter(f.type, [...filter[f.type], ...f.value]);
     }
 
     useEffect(() => { initialize() }, []);
@@ -371,8 +371,8 @@ const FilterObject = ({filter, setFilter}) => {
 
     filters.subject = Object.keys(courses).reduce((list, hash) => {
         const course = courses[hash];
-
-        const subject = (course.subject.endsWith('D') ? course.subject.substring(0, course.length - 1) : course.subject).replaceAll('w', '');
+        let subject = (course.subject.endsWith('D') ? course.subject.substring(0, course.length - 1) : course.subject).replaceAll('w', '');
+        if(subject == 'S') subject = 'S2';
 
         if(!list.includes(subject) && Object.keys(subjects).includes(subject)) return [...list, subject]
 
@@ -405,7 +405,8 @@ const FilterObject = ({filter, setFilter}) => {
             </div>
             <div className={styles['filter-list']}>
                 <div className={styles['filter-info']}>
-                    <h2 onClick={() => {setFilter({type: current, value: 'reset'})}}>Poista valinnat</h2>
+                    <h2 onClick={() => {setFilter({type: current, value: current == 'teacher' || current == 'lops' ? filters[current].map(n => n.split(' ')[0]) : filters[current], all: true})}}>Valitse kaikki</h2>
+                    <h2 onClick={() => {setFilter({type: current, value: ['reset'], reset: true})}}>Poista valinnat</h2>
                 </div>
                 {
                     filters[current].map((subject, i) => {
@@ -419,7 +420,7 @@ const FilterObject = ({filter, setFilter}) => {
                                 const color = randomColor(key);
                                 return (
                                     <ul key={key}>
-                                        <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: key})}}/>
+                                        <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: [key]})}}/>
                                         <a className={styles['friend-icon']} style={{backgroundColor: `var(${color})`}}>{shorten(key)}</a>
                                         <a style={{color: `var(${color})`}}>{username(key)}</a>
                                     </ul>
@@ -427,7 +428,7 @@ const FilterObject = ({filter, setFilter}) => {
                             default:
                                 return (
                                     <ul key={key}>
-                                        <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: key})}}/>
+                                        <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: [key]})}}/>
                                         <a>{`${key} - `}</a>
                                         <a>{Object.keys(subjects).includes(key) ? subjects[key] : value}</a>
                                     </ul>
