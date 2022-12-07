@@ -32,7 +32,7 @@ export const ThemeList = ({onCreate}) => {
     
     return (
         <>
-            <h1>Teemat</h1>
+            <h1 id='themes'>Teemat</h1>
             <div className={styles['theme-list']}>
                 {
                     list['content'].filter(h => ['light', 'dark'].includes(h)).map((hash, i) => {

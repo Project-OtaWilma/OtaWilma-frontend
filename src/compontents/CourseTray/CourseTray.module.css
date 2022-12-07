@@ -313,7 +313,7 @@
 .ksuor-off,
 .ksuor-on {
     background-color: rgb(178, 178, 178);
-    opacity: 75%;
+    opacity: 75% !important;
 
     border: solid 1px gray;
     box-shadow: none;
@@ -492,6 +492,41 @@
     border-bottom: solid 1px var(--border-main);
 }
 
+.filter-info {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+
+    border-bottom: solid 1px var(--border-main);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-info h3 {
+    text-align: center;
+    font-style: italic;
+}
+
+.filter-info h2 {
+    opacity: 50%;
+
+    font-size: 12px;
+
+    width: 100%;
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: opacity .2s ease-in-out, color .2s ease-in-out;
+}
+
+.filter-info h2:hover {
+    color: var(--error);
+    opacity: 100%;
+}
+
 .tray-info form {
     margin: 20px;
 }
@@ -506,6 +541,17 @@
 
 .tray-info #filter-button {
     margin: 20px;
+}
+
+.friend-icon {
+    margin: 5px;
+    padding: 3px;
+
+    border-radius: 5px;
+    color: white;
+
+    font-size: 13px;
+    text-align: center;
 }
 
 .tray-info input {

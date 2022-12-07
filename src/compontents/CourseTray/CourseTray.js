@@ -28,6 +28,7 @@ export default function CourseTray() {
         search: null,
         subject: [],
         teacher: [],
+        friends: [],
         lops: []
     });
     const [course, setCourse] = useState(null);
@@ -61,7 +62,8 @@ export default function CourseTray() {
     }
 
     const applyFilter = (f) => {
-        if (f.type == 'search') return setFilter({...filter, search: f.value});
+        if (f.type === 'search') return setFilter({...filter, search: f.value});
+        if(f.value === 'reset') return setFilter({...filter, [f.type]: []})
 
         if(filter[f.type].includes(f.value)) {
             return setFilter({...filter, [f.type]: filter[f.type].filter(n => n != f.value)})
@@ -210,22 +212,24 @@ const TrayCourseObject = ({friends, course, filter, onLoad}) => {
     if(filter.teacher.length > 0) if(filter.teacher.filter(r => !(!course.info.teacher) && course.info.teacher.includes(r)).length == 0) return <></>
     if(filter.lops.length > 0) if(filter.lops.filter(r => course.lops == r).length == 0) return <></>
 
-    const color = friends.length > 0 ? randomColor(friends[0]) : null;
+    const friend = friends.length > 0 ? [...friends].sort()[0] : null;
+    const color = friends.length > 0 ? randomColor(friend) : null;
+    const hasFriends = friends.length > 0 && (filter.friends.length > 0 ? (friends.filter(f => filter.friends.includes(f)).length > 0) : true);
 
     return (
         <div 
             className={course.class.split(' ').map(c => styles[c]).join(' ')}
             onClick={() => onLoad(course.hash)}
             style={{
-                borderLeft: color ? `solid 3px var(${color})` : null
+                borderLeft: color && hasFriends ? `solid 3px var(${color})` : null
             }}
         >
             {course.code}
             <div className={styles['friend-list']}>
                 {
-                    friends.length > 0 ? 
+                    hasFriends ? 
                     <>
-                        <h6 style={{backgroundColor: `var(${randomColor(friends[0])})`}} >{`${shorten(friends[0])}`}</h6>
+                        <h6 style={{backgroundColor: `var(${randomColor(friend)})`}} >{`${shorten(friend)}`}</h6>
                     </> : <></>
                 }
             </div>
@@ -351,12 +355,12 @@ const FilterObject = ({filter, setFilter}) => {
         all: [],
         subject: [],
         teacher: [],
+        friends: [],
         lops: [
             'LOPS2021 Nykyinen lukion opetussuunnitelma [2021]',
             'LOPS2016 Vanha lukion opetussuunnitelma [2016]',
         ]
     }
-
     filters.subject = Object.keys(courses).reduce((list, hash) => {
         const course = courses[hash];
 
@@ -376,15 +380,25 @@ const FilterObject = ({filter, setFilter}) => {
         return list
     }, []).sort()
 
+    filters.friends = Object.keys(tray.friends).reduce((list, subject) => {
+        const friends = tray.friends[subject];
+        
+        return [...list, ...friends.filter(friend => !list.includes(friend))];
+    }, []).sort()
+
     return (
         <div className={styles['filter-container']}>
             <h1>Suodata kursseja</h1>
             <div className={styles['filters']}>
                 <h4 onClick={() => setCurrent('subject')} className={current == 'subject' ? styles['selected-filter'] : null}>Oppiaine</h4>
                 <h4 onClick={() => setCurrent('teacher')} className={current == 'teacher' ? styles['selected-filter'] : null}>Opettaja</h4>
+                <h4 onClick={() => setCurrent('friends')} className={current == 'friends' ? styles['selected-filter'] : null}>Kaverit</h4>
                 <h4 onClick={() => setCurrent('lops')} className={current == 'lops' ? styles['selected-filter'] : null}>LOPS</h4>
             </div>
             <div className={styles['filter-list']}>
+                <div className={styles['filter-info']}>
+                    <h2 onClick={() => {setFilter({type: 'reset'})}}>Poista valinnat</h2>
+                </div>
                 {
                     filters[current].map((subject, i) => {
                         const s = subject.split(' ');
@@ -392,14 +406,26 @@ const FilterObject = ({filter, setFilter}) => {
                         const key = s.shift();
                         const value = s.join(' ');
 
+                        switch(current) {
+                            case 'friends':
+                                const color = randomColor(key);
+                                return (
+                                    <ul key={key}>
+                                        <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: key})}}/>
+                                        <a className={styles['friend-icon']} style={{backgroundColor: `var(${color})`}}>{shorten(key)}</a>
+                                        <a style={{color: `var(${color})`}}>{username(key)}</a>
+                                    </ul>
+                                )
+                            default:
+                                return (
+                                    <ul key={key}>
+                                        <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: key})}}/>
+                                        <a>{`${key} - `}</a>
+                                        <a>{Object.keys(subjects).includes(key) ? subjects[key] : value}</a>
+                                    </ul>
+                                )
+                        }
 
-                        return (
-                            <ul key={key}>
-                                <input type='checkbox' checked={filter[current].includes(key)} onChange={() => {setFilter({type: current, value: key})}}/>
-                                <a>{`${key} - `}</a>
-                                <a>{Object.keys(subjects).includes(key) ? subjects[key] : value}</a>
-                            </ul>
-                        )
                     })
                 }
             </div>

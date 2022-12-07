@@ -576,6 +576,7 @@
 .settings-content .advanced {
     width: calc(100% - 250px - 200px);
     height: auto;
+    max-width: 800px;
 
     margin: 50px;
     padding-bottom: 10px;

@@ -7,7 +7,7 @@ export default function Credits() {
     return (
         <>
             <div className={styles['credits-container']}>
-                <h1 className={styles['title']}>Kiitokset</h1>
+                <h1 className={styles['title']} id='credits'>Kiitokset</h1>
                 <div className={styles['credits']}>
                     <h1>Niklas Halonen</h1>
                     <h3>"OtaWilman frontend olisi varmaan vieläkin kirjoitettu ghetto-Reactilla(TM) ilman ”motivointiasi"</h3>
@@ -68,10 +68,6 @@ export default function Credits() {
                 <div className={styles['credits']}>
                     <h1>Täffä</h1>
                     <h3>"Opiskelijaravintola Otaniemessä"</h3>
-                </div>
-                <div className={styles['credits']}>
-                    <h1>Aalto yliopiston tietotekniikkatalon henkilöstökahvihuoneen äärimmäisen kallis expressokone</h1>
-                    <h3>{'"Projekti ei olisi onnistunut ilman sinua <3"'}</h3>
                 </div>
             </div>
             <div className={styles['tester-list']}>

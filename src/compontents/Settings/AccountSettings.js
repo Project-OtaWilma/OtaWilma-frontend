@@ -31,7 +31,7 @@ export const AccountInfo = ({onCreate}) => {
 
     return (
         <>
-            <h1 className={styles['title']}>Kaverit ja kurssivalintojen jakaminen</h1>
+            <h1 className={styles['title']} id='friends'>Kaverit ja kurssivalintojen jakaminen</h1>
             <div className={styles['sharing-menu']}>
                 <h5 onClick={() => setCategory('share')} className={category == 'share' ? styles['c-selected'] : null}>Jaa kaverille</h5>
                 <h5 onClick={() => setCategory('shared')} className={category == 'shared' ? styles['c-selected'] : null}>Jaetut kurssivalinnat</h5>
