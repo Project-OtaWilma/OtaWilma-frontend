@@ -12,7 +12,13 @@
 
 ## Theme editor
 #### Create your own themes and fully customize the look of your Wilma. With easy to use theme-editor, you are able to not able to customize **every color**, but are also able to use custom backgrounds to further boost your creative needs. With 25 theme-slots, you aren't running out of space either.
-![](/img/editor.png) Theme-editor with two custom themes created
+![](/img/2.png) Custom student made theme
+![](/img/1.png) Another student made theme
+
+## Easier course selections
+
+#### OtaWilma allows you to filter the courses you want to see in your tray. You can also set a list of teachers to make sure you are only shown courses that are taught by your favorite ones. There is also buildin selection-helper which makes sure you cannot make invalid selections (select overalapping courses, try to join on full courses etc.)
+![](/img/filter.jpg) Same tray as [in this example](#share-courses-with-your-friends), but only the subjects I might want to study on my sophomore year are shown.
 
 
 

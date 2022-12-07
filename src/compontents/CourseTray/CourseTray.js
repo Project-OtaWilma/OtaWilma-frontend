@@ -213,7 +213,9 @@ const TrayBarObject = ({bar, filter, onLoad}) => {
 }
 
 const TrayCourseObject = ({friends, course, filter, onLoad}) => {
-    
+
+    if((filter.subject.length > 0 || filter.lops.length > 0 || filter.search) && !(!course.info.grade)) return <></>
+
     if(filter.search) if(!course.name.toLowerCase().includes(filter.search) && !course.code.toLowerCase().includes(filter.search)) return <></>
     if(filter.subject.length > 0) if(filter.subject.filter(r => course.code.includes(r)).length == 0) return <></>
     if(filter.teacher.length > 0) if(filter.teacher.filter(r => !(!course.info.teacher) && course.info.teacher.includes(r)).length == 0) return <></>
