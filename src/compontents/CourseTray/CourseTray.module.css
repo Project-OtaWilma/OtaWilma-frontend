@@ -689,6 +689,21 @@
     overflow-y: scroll;
 }
 
+.schedule-loading-screen {
+    width: 300px;
+    height: 200px;
+
+    margin: 10px;
+
+    border-left: solid 5px var(--accent-main);
+    padding-left: 1px;
+
+    background-image: url(../../assets/img/loading-book.gif);
+    background-position: center center;
+    background-size: 64px 64px;
+    background-repeat: no-repeat;
+}
+
 .schedule .day {
     width: calc((100% / 5));
     display: flex;

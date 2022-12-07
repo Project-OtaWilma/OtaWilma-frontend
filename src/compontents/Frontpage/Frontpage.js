@@ -146,7 +146,17 @@ export default function Frontpage() {
                         <div className={styles["link"]}>
                             <a target="_blank"
                                 href="https://drive.google.com/file/d/1NrGciABX7vW9lq7q4mA7xfoNEmPrRr_z/view">Ruokailuvuorot
-                                - 1A periodi</a>
+                                - 1. periodi</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank"
+                                href="https://drive.google.com/file/d/1ql4Ko64915NAWrsDyyDqXynhrX1z3Duw/view?usp=sharing">Ruokailuvuorot
+                                - 2. periodi</a>
+                        </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank"
+                                href="https://drive.google.com/file/d/1jCpX8_HOmXCvfGjJ3t_VC4cjIXNsPbwd/view?usp=sharing">Ruokailuvuorot
+                                - 3. periodi</a>
                         </div>
                     </div>
                 </div>
@@ -154,7 +164,7 @@ export default function Frontpage() {
                     <div className={styles['messages']}>
                         <MessageList />
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     )

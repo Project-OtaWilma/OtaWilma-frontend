@@ -806,7 +806,7 @@
     padding: 10px;
     color: var(--font-h1);
     font-family: 'semi-bold';
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .links h1 {
@@ -831,7 +831,7 @@
 
 .link a {
     margin: 2px;
-
+    font-size: 15px;
     cursor: pointer;
 
     color: var(--font-h2);

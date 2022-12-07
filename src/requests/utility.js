@@ -51,8 +51,11 @@ const fetchJson = (url, options = {
                     case 501:
                         return reject({ err: "Failed to reach Wilma's servers", error: json, status: 501 })
                     default:
-                        return reject({ err: 'Received an unexpected response from servers', status: res.status })
+                        return reject({ err: 'Received an unexpected response from servers', status: res.status ? res.status : 'No statusCode was provided' })
                 }
+            })
+            .catch(err => {
+                return reject({ err: 'Failed to fetch the request', status: 500 });
             })
     });
 }

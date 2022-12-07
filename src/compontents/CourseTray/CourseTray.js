@@ -26,10 +26,10 @@ export default function CourseTray() {
     const [open, setOpen] = useState([]);
     const [filter, setFilter] = useState({
         search: null,
-        subject: [],
-        teacher: [],
-        friends: [],
-        lops: []
+        subject: getFilter('subject'),
+        teacher: getFilter('teacher'),
+        friends: getFilter('friends'),
+        lops: getFilter('lops')
     });
     const [course, setCourse] = useState(null);
     const [current, setCurrent] = useState(null);
@@ -54,6 +54,7 @@ export default function CourseTray() {
         // load the calculated period
         if(Object.keys(periods).includes(hash)) dispatch(getWeek({auth: auth.token, date: periods[hash]}));
         setOpen([...open, hash]);
+        setCurrent({period: hash});
     }
 
     const loadCourse = (hash) => {
@@ -63,15 +64,21 @@ export default function CourseTray() {
 
     const applyFilter = (f) => {
         if (f.type === 'search') return setFilter({...filter, search: f.value});
-        if(f.value === 'reset') return setFilter({...filter, [f.type]: []})
-
-        if(filter[f.type].includes(f.value)) {
-            return setFilter({...filter, [f.type]: filter[f.type].filter(n => n != f.value)})
+        if(f.value === 'reset') {
+            setFilter({...filter, [f.type]: []})
+            saveFilter(f.type, []);
+            return;
         }
 
+        if(filter[f.type].includes(f.value)) {
+            setFilter({...filter, [f.type]: filter[f.type].filter(n => n != f.value)})
+            saveFilter(f.type, filter[f.type].filter(n => n != f.value))
+            return;
+        }
+        
         setFilter({...filter, [f.type]: [...filter[f.type], f.value]})
+        saveFilter(f.type, [...filter[f.type], f.value]);
     }
-    
 
     useEffect(() => { initialize() }, []);
 
@@ -183,7 +190,7 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose, onHover}) => {
     )
 }
 
-const TrayBarObject = ({bar, filter, onLoad, onHover}) => {
+const TrayBarObject = ({bar, filter, onLoad}) => {
     const tray = useSelector(useTray);
     const courses = tray.courses;
     const friends = tray.friends;
@@ -270,8 +277,8 @@ const TraySchedule = ({current}) => {
 
     const date = periods[current.period].toLocaleDateString('fi-FI');
     const week = schedule.schedule[date];
-    
-    if(!week) return <>Loading...</>
+
+    if(!week) return <div className={styles['schedule-loading-screen']} />
 
     return (
         <div style={{height: week.height / 3}} className={styles['schedule']}>
@@ -361,6 +368,7 @@ const FilterObject = ({filter, setFilter}) => {
             'LOPS2016 Vanha lukion opetussuunnitelma [2016]',
         ]
     }
+
     filters.subject = Object.keys(courses).reduce((list, hash) => {
         const course = courses[hash];
 
@@ -484,6 +492,21 @@ const CourseInfoObject = ({course: hash}) => {
             }
         </div>
     )
+}
+
+const saveFilter = (type, value) => {
+    window.localStorage.setItem(type, JSON.stringify(value));
+}
+
+const getFilter = (type) => {
+    const v = window.localStorage.getItem(type);
+
+    if(!v) {
+        window.localStorage.setItem(type, JSON.stringify([]));
+        return []
+    }
+
+    try { return JSON.parse(v) ?? [] } catch(e) { return [] }
 }
 
 const randomColor = (raw) => {
