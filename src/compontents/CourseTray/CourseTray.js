@@ -397,7 +397,7 @@ const FilterObject = ({filter, setFilter}) => {
             </div>
             <div className={styles['filter-list']}>
                 <div className={styles['filter-info']}>
-                    <h2 onClick={() => {setFilter({type: 'reset'})}}>Poista valinnat</h2>
+                    <h2 onClick={() => {setFilter({type: current, value: 'reset'})}}>Poista valinnat</h2>
                 </div>
                 {
                     filters[current].map((subject, i) => {
