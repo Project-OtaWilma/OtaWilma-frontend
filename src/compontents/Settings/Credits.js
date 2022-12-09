@@ -10,7 +10,7 @@ export default function Credits() {
                 <h1 className={styles['title']} id='credits'>Kiitokset</h1>
                 <div className={styles['credits']}>
                     <h1>Niklas Halonen</h1>
-                    <h3>"OtaWilman frontend olisi varmaan vieläkin kirjoitettu ghetto-Reactilla(TM) ilman ”motivointiasi"</h3>
+                    <h3>"OtaWilman frontend olisi varmaan vieläkin kirjoitettu ghetto-Reactilla(TM) ilman 'motivointiasi'"</h3>
                 </div>
                 <div className={styles['credits']}>
                     <h1>Matias Swinger</h1>
@@ -26,7 +26,7 @@ export default function Credits() {
                 </div>
                 <div className={styles['credits']}>
                     <h1>Jere Hasu</h1>
-                    <h3>"Antamastasi ”rakentavasta haukkumisesta” oli todella paljon hyötyä. Olet myös syyllinen siitä, että OtaWilma on saatavilla myös vanhalla opintosuunnitelmalla opiskeleville abeille."</h3>
+                    <h3>"Antamastasi 'rakentavasta haukkumisesta' oli todella paljon hyötyä. Olet myös syyllinen siihen, että OtaWilma on saatavilla myös vanhalla opintosuunnitelmalla opiskeleville abeille."</h3>
                 </div>
                 <div className={styles['credits']}>
                     <h1>Ville Kujala</h1>
