@@ -16,13 +16,13 @@ export const getGradebook = createAsyncThunk(
             const auth = options['auth'];
             
             fetchGradeBook(auth)
-            .then(grades => {
-                return resolve({changed: true, grades: grades});
-            })
-            .catch(err => {
-                thunkAPI.dispatch(handleError(err))
-                return reject();
-            })
+                .then(grades => {
+                    return resolve({changed: true, grades: grades});
+                })
+                .catch(err => {
+                    thunkAPI.dispatch(handleError(err))
+                    return reject();
+                })
         });
     }
 )
@@ -30,6 +30,7 @@ export const getGradebook = createAsyncThunk(
 export const gradeSlice = createSlice({
     name: 'grades',
     initialState: {
+        subjects: {},
         grades: {},
         overview: {},
         isLoading: false,
@@ -48,7 +49,19 @@ export const gradeSlice = createSlice({
             state.overview = grades['overview'];
             delete grades['overview'];
 
-            state.grades = grades;
+            Object.keys(grades).forEach(subject => {
+                const {grade, points, courses} = grades[subject];
+                
+                state.subjects[subject] = {
+                    grade: grade,
+                    points: points
+                }
+
+                Object.keys(courses).forEach(code => {
+                    const course = courses[code];
+                    state.grades[code] = course;
+                })
+            })
             state.isLoading = false;
             state.hasLoaded = true;
         },
@@ -63,6 +76,7 @@ export const gradeSlice = createSlice({
 });
 
 export const useGrades = (state) => ({
+    subjects: state.grades.subjects,
     grades: state.grades.grades,
     overview: state.grades.overview,
     isLoading: state.grades.isLoading,

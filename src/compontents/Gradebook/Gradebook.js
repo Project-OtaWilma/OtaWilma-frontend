@@ -14,7 +14,6 @@ export default function Gradebook() {
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const lops = useSelector(useLops);
-    const grades = useSelector(useGrades);
 
     const initialize = () => {
         dispatch(getLops({lops: 'LOPS2021'}));
@@ -40,14 +39,14 @@ export default function Gradebook() {
         <div className={styles['content']}>
             <div className={styles['main']}>
                 <div className={styles['course-container']}>
-                    <CourseList currentLops={selected} grades={grades} onLoad={loadCourse}/>
+                    <CourseList currentLops={selected} onLoad={loadCourse}/>
                 </div>
                 <div className={styles['lops-selector']}>
                     <h6 onClick={() => loadLops('LOPS2021')} className={selected == 'LOPS2021' ? styles['selected'] : null}>LOPS2021</h6>
                     <h6 onClick={() => loadLops('LOPS2016')} className={selected == 'LOPS2016' ? styles['selected'] : null}>LOPS2016</h6>
                 </div>
                 <div className={styles['course-info-container']}>
-                    <OverviewObject grades={grades} />
+                    <OverviewObject />
                     <CourseInfoObject list={lops.lops[selected]} course={course} />
                 </div>
             </div>
@@ -56,41 +55,39 @@ export default function Gradebook() {
     )
 }
 
-const CourseList = ({currentLops, grades, onLoad}) => {
+const CourseList = ({currentLops, onLoad}) => {
     const lops = useSelector(useLops);
     const list = lops.lops[currentLops];
     
+    
     if(list.isLoading || !list.hasLoaded) return <LoadingScreen className={styles['course-loading-screen']} />
-    if(grades.isLoading || !grades.hasLoaded) return <LoadingScreen className={styles['course-loading-screen']} />
 
     return (
         <>
             {
                 Object.keys(list['content']).map((subject, i) => {
                     const courses = list['content'][subject];
-                    const grade = grades['grades'][subject];
 
-                    return <SubjectObject key={i} subject={subject} courses={courses} grade={grade ? grade : null} onLoad={onLoad} />
+                    return <SubjectObject key={i} subject={subject} courses={courses} onLoad={onLoad} />
                 })
             }
         </>
     )
 }
 
-const SubjectObject = ({subject, courses, grade, onLoad}) => {
-    const subjectGrade = grade ? grade['grade'] : null;
-
+const SubjectObject = ({subject, courses, onLoad}) => {
+    const grades = useSelector(useGrades);
+    const grade = (grades.subjects[Object.keys(grades.subjects).find(s => subject.includes(s))] ?? {})['grade'];
+    
     return (
         <div className={styles['subject']}>
-            <ul><a>{subject} </a><a>{subjectGrade}</a></ul>
+            <ul><a>{subject} </a><a>{grade}</a></ul>
             <div className={styles['course-list']}>
                 {
                     Object.keys(courses).map((code, i) => {
                         const course = courses[code];
-                        const courseGrade = (grade ? grade['courses'] : {})[`${course.code} ${course.name}`];
 
-
-                        return <CourseObject key={i} course={course} grade={courseGrade ? courseGrade : null} onLoad={onLoad} />
+                        return <CourseObject key={i} course={course} onLoad={onLoad} />
                     })
                 }
             </div>
@@ -98,7 +95,11 @@ const SubjectObject = ({subject, courses, grade, onLoad}) => {
     )
 }
 
-const CourseObject = ({course, grade, onLoad}) => {
+const CourseObject = ({course, onLoad}) => {
+    const grades = useSelector(useGrades);
+
+    const grade = grades.grades[course['code']] ? grades.grades[course['code']] : null;
+
     return (
         <div className={grade ? styles[`${course.type}-graded`] : styles[course.type]} onClick={() => onLoad(course.subject, course.code)}>
             <h4>{grade ? (grade['grade'] ? grade['grade'] : '?')  : course.code}</h4>
@@ -109,10 +110,13 @@ const CourseObject = ({course, grade, onLoad}) => {
     )
 }
 
-const OverviewObject = ({grades}) => {
+const OverviewObject = () => {
+    const grades = useSelector(useGrades);
+
     if(grades.isLoading || !grades.hasLoaded) return <LoadingScreen className={styles['course-loading-screen']} />
 
     const overview = grades['overview'];
+
     return(
         <div className={styles['overview-content']}>
         {
@@ -127,12 +131,16 @@ const OverviewObject = ({grades}) => {
 }
 
 const CourseInfoObject = ({list, course}) => {
+    const grades = useSelector(useGrades);
+    
     if(!course.subject ||!course.code) return <></>
+    if(grades.isLoading || !grades.hasLoaded) return <LoadingScreen className={styles['course-loading-screen']} />
     if(list.isLoading || !list.hasLoaded) return <LoadingScreen className={styles['course-loading-screen']} />
 
+    const gradeInfo = grades.grades[course['code']] ?? {};
     const info = list['content'][course.subject][course.code];
 
-    return <InfoObject info={info} />
+    return <InfoObject info={{...gradeInfo, ...info}}/>
 }
 
 const InfoObject = ({info}) => {
@@ -140,6 +148,10 @@ const InfoObject = ({info}) => {
         'subject': 'Oppiaine',
         'code': 'Tunnus',
         'name': 'Nimi',
+        'grade': 'Arvosana',
+        'points': 'Laajuus',
+        'date': 'Arvioitu',
+        'teacher': 'Opettaja'
     }
 
     if(!info.hasLoaded) return <div className={`loading-indicator ${styles['course-loading-screen']}`} />
@@ -148,7 +160,7 @@ const InfoObject = ({info}) => {
         <div className={styles['course-lops']}>
             <h1>{info['name']}</h1>
             {
-                Object.keys(info).filter(key => !['type', 'hasLoaded', 'name'].includes(key)).map((key, i) => {
+                Object.keys(info).filter(key => !['type', 'hasLoaded', 'name', 'hash'].includes(key)).filter(key => info[key]).map((key, i) => {
                     const value = info[key];
                     const keyValue = `${Object.keys(translations).includes(key) ? translations[key] : key}: `;
                     
