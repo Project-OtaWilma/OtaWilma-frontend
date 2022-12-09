@@ -12,6 +12,7 @@ import courseSlice from '../features/courses/traySlice';
 import homeworkSlice from '../features/schedule/homeworkSlice';
 import teacherSlice from '../features/teachers/teacherSlice';
 import apiSlice from '../features/api/apiSlice';
+import versionSlice from '../features/version/versionSlice';
 
 export default configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export default configureStore({
     tray: courseSlice,
     homework: homeworkSlice,
     teachers: teacherSlice,
-    api: apiSlice
+    api: apiSlice,
+    version: versionSlice
   },
 });

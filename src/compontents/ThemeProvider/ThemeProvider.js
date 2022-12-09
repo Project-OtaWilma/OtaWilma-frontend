@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getConfig, useConfig } from '../../features/themes/configSlice';
 import { loadTheme, loadThemeDefault, setTheme, useThemes } from '../../features/themes/themeSlice';
 import { useAuth } from '../../features/authentication/authSlice';
+import { getVersion } from '../../features/version/versionSlice';
 
 export default function ThemeProvider({ children }) {
     const [background, setBackground] = useState('');
@@ -14,6 +15,8 @@ export default function ThemeProvider({ children }) {
     const theme = themes.theme;
 
     const initialize = () => {
+        dispatch(getVersion());
+        
         if(!auth.token || auth.token === 'null') {
             dispatch(loadThemeDefault({id: 'light'}));
             dispatch(setTheme({id: 'light'}))

@@ -10,11 +10,14 @@ import {
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { BlurLayer, LoadingScreen } from '../LoadingScreen/LoadingScreen';
+import { useVersion } from '../../features/version/versionSlice';
 
 
 
 export default function Login() {
     const auth = useSelector(useAuth);
+    const version = useSelector(useVersion);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
@@ -43,9 +46,7 @@ export default function Login() {
 
     return (
         <BlurLayer className={styles['content']} isLoading={auth.isLoading}>
-            <div className={styles['left']}>
-
-            </div>
+            <div className={styles['left']} />
             <div className={styles['right']}>
                 <h1>OtaWilma - Tervetuloa</h1>
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
@@ -69,6 +70,7 @@ export default function Login() {
                 </form>
                 <h5 className={styles['login-error']}>{auth.loginError ? auth.loginError : loginError}</h5>
                 <button type='submit' value={'Kirjaudu sisään'} onClick={login}>Kirjaudu sisään</button>
+                <h6>{`[BETA] ${version.isLoading ? '...' : version.version}`}</h6>
             </div>
         </BlurLayer>
     )
