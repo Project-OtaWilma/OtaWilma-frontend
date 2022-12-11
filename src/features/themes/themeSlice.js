@@ -160,7 +160,6 @@ export const themeSlice = createSlice({
     },
     extraReducers: {
         [getThemeList.fulfilled]: (state, action) => {
-            console.log(action.payload);
             if(!action.payload.changed) {
                 return;
             }

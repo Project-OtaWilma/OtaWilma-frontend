@@ -398,6 +398,50 @@ const fetchTeacherInfo = (value, isID) => {
     });
 }
 
+const fetchRoomList= (auth) => {
+    return new Promise((resolve, reject) => {
+        const url = `${wilmaAPI}rooms/list`;
+
+        if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'token': auth
+            }
+        })
+            .then(list => {
+                return resolve(list);
+            })
+            .catch(err => {
+                return reject(err);
+            })
+
+    });
+}
+
+const fetchRoomSchedule= (auth, room, date = new Date()) => {
+    return new Promise((resolve, reject) => {
+        const url = `${wilmaAPI}rooms/${room}/schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
+
+        if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'token': auth
+            }
+        })
+            .then(room => {
+                return resolve(room);
+            })
+            .catch(err => {
+                return reject(err);
+            })
+
+    });
+}
+
 const logout = () => {
     return new Promise((resolve, reject) => {
         const url = `${wilmaAPI}logout`;
@@ -441,5 +485,7 @@ export {
     fetchTeacherList,
     fetchTeacherInfo,
     CourseTraySelect,
-    CourseTrayDeselect
+    CourseTrayDeselect,
+    fetchRoomList,
+    fetchRoomSchedule
 }

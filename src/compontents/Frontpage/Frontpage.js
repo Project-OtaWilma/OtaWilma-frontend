@@ -21,7 +21,6 @@ export default function Frontpage() {
     
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
-    const grades = useSelector(useGrades);
 
     const now = new Date();
     
@@ -80,7 +79,7 @@ export default function Frontpage() {
             <div className={styles['bottom-container']}>
                 <div className={styles['left']}>
                 <div className={styles['grades']}>
-                        <GradeList grades={grades} />
+                        <GradeList />
                     </div>
                 </div>
                 <div className={styles['middle']}>
@@ -239,7 +238,7 @@ const Schedule = ({days}) => {
 
 const WeekObject = ({week}) => {
     return (
-        <div className={styles['week']} style={{minHeight: week.height * 0.85}}>
+        <div className={styles['week']} style={{minHeight: Math.max(50, week.height * 0.85)}}>
             <div className={styles['week-caption']}>
                 <h1>{`Viikko ${week.week}`}</h1>
             </div>
@@ -255,7 +254,7 @@ const WeekObject = ({week}) => {
     )
 }
 
-const DayObject = ({setHeight, day}) => {
+const DayObject = ({day}) => {
     const ref = useRef(null);
     const lessons = day.lessons;
 
@@ -268,23 +267,29 @@ const DayObject = ({setHeight, day}) => {
                     lessons.map((lesson, i) => {
                         const start = lessons[i]['startRaw'];
                         const duration = lessons[i]['durationRaw'];
+                        const eRaw = new Date(lessons[i]['endTime']);
+                        const sRaw = new Date(lessons[i]['startTime']);
+                        
+                        const date = new Date();
+                        const active = date.getTime() <= eRaw.getTime() && date.getTime() >= sRaw.getTime();
+                        const passed = date.getTime() >= eRaw.getTime();
 
-                        return <LessonObject key={i} start={start - 480} height={duration} lesson={lesson} />
+                        return <LessonObject key={i} start={start - 480} height={duration} lesson={lesson} active={active} passed={passed} />
                     })
                 }
         </div>
     )
 }
 
-const LessonObject = ({start, height, lesson}) => {
+const LessonObject = ({start, height, lesson, active, passed}) => {
     return (
         <div
             className={styles['hour']}
             style={{
                 height: `${height * 0.85}px`,
                 marginTop: `${(start) * 0.85}px`,
-                filter: `brightness(${((Math.random() * 1.4) - 1) * 8 + 100}%)`
-
+                filter: `brightness(${((Math.random() * 1.4) - 1) * 8 + 100}%)`,
+                opacity: passed ? 0.5 : 1
             }}>
             <h1>{`${lesson['start']} - ${lesson['end']}`}</h1>
             {
@@ -436,17 +441,17 @@ const MessageObject = ({message}) => {
     )
 }
 
-const GradeList = ({grades}) => {
+const GradeList = () => {
+    const grades = useSelector(useGrades);
     if (grades.isLoading) return <LoadingScreen className={styles['loading-screen']} />;
 
     return (
         <>
-        <Link className={styles['title']} to={'/grades'}>Opinnot</Link>
-
+            <Link className={styles['title']} to={'/grades'}>Opinnot</Link>
             <OverviewObject overview={grades['overview']} />
             {
-                Object.keys(grades['grades']).map((subject, i) => {
-                    const grade = grades['grades'][subject];
+                Object.keys(grades['subjects']).map((subject, i) => {
+                    const grade = grades['subjects'][subject];
 
                     return <GradeObject key={i} subject={subject} grade={grade} />
                 })

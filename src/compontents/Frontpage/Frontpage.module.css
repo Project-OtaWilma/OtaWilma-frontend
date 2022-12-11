@@ -468,7 +468,7 @@
     align-items: center;
 }
 
-.hour:hover {
+.day .hour:hover {
     transform: scale(1.07);
 }
 

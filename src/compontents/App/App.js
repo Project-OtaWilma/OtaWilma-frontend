@@ -14,6 +14,7 @@ import News from '../News/News';
 import CourseTray from '../CourseTray/CourseTray';
 import Teachers from '../Teachers/Teachers';
 import Settings from '../Settings/Settings';
+import Maps from '../Maps/Maps';
 import Error from '../Error/Error';
 
 import {
@@ -44,6 +45,7 @@ function App() {
                     <Route path='/tray' element={auth.token ? <CourseTray /> : <Login />} />
                     <Route path='/teachers' element={auth.token ? <Teachers /> : <Login />} />
                     <Route path='/teachers/:id' element={auth.token ? <Teachers /> : <Login />} />
+                    <Route path='/maps' element={auth.token ? <Maps /> : <Login />} />
                     <Route path='/settings' element={auth.token ? <Settings /> : <Login />} />
                 </Routes>
             </ThemeProvider>
