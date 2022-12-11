@@ -5,15 +5,12 @@ import {
     cacheAvailable
 } from './utility'
 
-
-//const otaWilmaAPi = 'https://otawilma-api.tuukk.dev/api';
-const otaWilmaAPi = 'https://beta.otawilma-api.tuukk.dev/api';
-//const otaWilmaAPi = 'http://localhost:8302/api';
+const { otaWilmaApi } = require('../config.json');
 
 
 const login = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/login/`;
+        const url = `${otaWilmaApi}/login/`;
 
         fetchJson(url, {
             method: 'POST',
@@ -32,7 +29,7 @@ const login = (auth) => {
 
 const fetchConfig = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/config/`;
+        const url = `${otaWilmaApi}/config/`;
 
         fetchJson(url, {
             method: 'GET',
@@ -51,7 +48,7 @@ const fetchConfig = (auth) => {
 
 const fetchDefaultTheme = (id) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/themes/defaults/get/${id}`;
+        const url = `${otaWilmaApi}/themes/defaults/get/${id}`;
 
         fetchJson(url, {
             method: 'GET',
@@ -68,7 +65,7 @@ const fetchDefaultTheme = (id) => {
 
 const fetchTheme = (auth, id) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/themes/get/${id}`;
+        const url = `${otaWilmaApi}/themes/get/${id}`;
 
         fetchJson(url, {
             method: 'GET',
@@ -87,7 +84,7 @@ const fetchTheme = (auth, id) => {
 
 const fetchThemeList = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/themes/list`;
+        const url = `${otaWilmaApi}/themes/list`;
 
         fetchJson(url, {
             method: 'GET',
@@ -106,8 +103,8 @@ const fetchThemeList = (auth) => {
 
 const setTheme = (auth, id) => {
     return new Promise(async (resolve, reject) => {
-        const configUrl = `${otaWilmaAPi}/config/`;
-        const themeUrl = `${otaWilmaAPi}/config/set/current-theme`;
+        const configUrl = `${otaWilmaApi}/config/`;
+        const themeUrl = `${otaWilmaApi}/config/set/current-theme`;
 
         if (cacheAvailable) removeCache('config-cache', configUrl);
 
@@ -132,9 +129,9 @@ const setTheme = (auth, id) => {
 
 const createTheme = (auth, preset) => {
     return new Promise(async (resolve, reject) => {
-        const configUrl = `${otaWilmaAPi}/config`;
-        const createUrl = `${otaWilmaAPi}/themes/create/${preset}`;
-        const listUrl = `${otaWilmaAPi}/themes/list`;
+        const configUrl = `${otaWilmaApi}/config`;
+        const createUrl = `${otaWilmaApi}/themes/create/${preset}`;
+        const listUrl = `${otaWilmaApi}/themes/list`;
 
         if (cacheAvailable) removeCache('config-cache', configUrl);
         if (cacheAvailable) removeCache('theme-cache', listUrl);
@@ -158,10 +155,10 @@ const createTheme = (auth, preset) => {
 const deleteTheme = (id) => {
     return new Promise(async (resolve, reject) => {
         const auth = getCookie('token');
-        const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
-        const configUrl = `${otaWilmaAPi}/config`;
-        const listUrl = `${otaWilmaAPi}/themes/list`;
-        const removeUrl = `${otaWilmaAPi}/themes/${id}/remove`;
+        const themeUrl = `${otaWilmaApi}/themes/get/${id}`;
+        const configUrl = `${otaWilmaApi}/config`;
+        const listUrl = `${otaWilmaApi}/themes/list`;
+        const removeUrl = `${otaWilmaApi}/themes/${id}/remove`;
 
         if (cacheAvailable) removeCache('theme-cache', themeUrl);
         if (cacheAvailable) removeCache('config-cache', configUrl);
@@ -185,9 +182,9 @@ const deleteTheme = (id) => {
 
 const editTheme = (auth, id, root, key, value) => {
     return new Promise(async (resolve, reject) => {
-        const themeUrl = `${otaWilmaAPi}/themes/get/${id}`;
-        const themeList = `${otaWilmaAPi}/themes/list`;
-        const editUrl = `${otaWilmaAPi}/themes/${id}/edit/${root}`;
+        const themeUrl = `${otaWilmaApi}/themes/get/${id}`;
+        const themeList = `${otaWilmaApi}/themes/list`;
+        const editUrl = `${otaWilmaApi}/themes/${id}/edit/${root}`;
 
         if (cacheAvailable) removeCache('theme-cache', themeUrl);
         if (cacheAvailable) removeCache('theme-cache', themeList);
@@ -214,7 +211,7 @@ const editTheme = (auth, id, root, key, value) => {
 
 const publish = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/publish`;
+        const url = `${otaWilmaApi}/public-api/publish`;
 
         fetchJson(url, {
             method: 'POST',
@@ -242,7 +239,7 @@ const publish = (auth) => {
 
 const fetchSelections = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/update-selections`;
+        const url = `${otaWilmaApi}/public-api/update-selections`;
 
         fetchJson(url, {
             method: 'POST',
@@ -262,7 +259,7 @@ const fetchSelections = (auth) => {
 
 const generateToken = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/tokens/generate`;
+        const url = `${otaWilmaApi}/public-api/tokens/generate`;
 
         fetchJson(url, {
             method: 'POST',
@@ -283,7 +280,7 @@ const generateToken = (auth) => {
 
 const invalidateToken = (auth, hash) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/tokens/invalidate/${hash}`;
+        const url = `${otaWilmaApi}/public-api/tokens/invalidate/${hash}`;
 
         fetchJson(url, {
             method: 'POST',
@@ -303,7 +300,7 @@ const invalidateToken = (auth, hash) => {
 
 const useToken = (auth, hash) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/tokens/use/${hash}`;
+        const url = `${otaWilmaApi}/public-api/tokens/use/${hash}`;
 
         fetchJson(url, {
             method: 'POST',
@@ -323,7 +320,7 @@ const useToken = (auth, hash) => {
 
 const listTokens = (auth) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/tokens/list`;
+        const url = `${otaWilmaApi}/public-api/tokens/list`;
 
         fetchJson(url, {
             method: 'GET',
@@ -343,7 +340,7 @@ const listTokens = (auth) => {
 
 const fetchFriendSelections = (auth, hash) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/friends`;
+        const url = `${otaWilmaApi}/public-api/friends`;
 
         fetchJson(url, {
             method: 'GET',
@@ -363,7 +360,7 @@ const fetchFriendSelections = (auth, hash) => {
 
 const fetchApi = (auth, hash) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${otaWilmaAPi}/public-api/get/${hash}`;
+        const url = `${otaWilmaApi}/public-api/get/${hash}`;
 
         fetchJson(url, {
             method: 'GET',

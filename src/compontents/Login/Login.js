@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import { BlurLayer, LoadingScreen } from '../LoadingScreen/LoadingScreen';
 import { useVersion } from '../../features/version/versionSlice';
 
+const { versionLabel } = require('../../config.json');
+
 
 
 export default function Login() {
@@ -70,7 +72,7 @@ export default function Login() {
                 </form>
                 <h5 className={styles['login-error']}>{auth.loginError ? auth.loginError : loginError}</h5>
                 <button type='submit' value={'Kirjaudu sisään'} onClick={login}>Kirjaudu sisään</button>
-                <h6>{`[BETA] ${version.isLoading ? '...' : version.version}`}</h6>
+                <h6>{`${[versionLabel]} ${version.isLoading ? '...' : version.version}`}</h6>
             </div>
         </BlurLayer>
     )
