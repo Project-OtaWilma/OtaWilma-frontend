@@ -6,6 +6,8 @@ import Draggable from "react-draggable";
 
 import { MapCompontent as FloorOne } from './floor-1';
 import { MapCompontent as FloorTwo } from './floor-2';
+import { MapCompontent as FloorThree } from './floor-3';
+import { MapCompontent as FloorFour } from './floor-4';
 
 import styles from './Maps.module.css'
 import { getRoomList, getRoomScheduleWeek, useRooms } from '../../features/schedule/roomSlice';
@@ -47,7 +49,8 @@ export default function Maps() {
 				<div className={styles['floor-list']}>
 					<h5 onClick={() => setFloor(1)} className={floor === 1 ? styles['selected'] : null}>1</h5>
 					<h5 onClick={() => setFloor(2)} className={floor === 2 ? styles['selected'] : null}>2</h5>
-					<h5 className={floor === 3 ? styles['selected'] : null} style={{opacity: 0.5, pointerEvents: 'none'}}>3</h5>
+					<h5 onClick={() => setFloor(3)} className={floor === 3 ? styles['selected'] : null}>3</h5>
+					<h5 onClick={() => setFloor(4)} className={floor === 4 ? styles['selected'] : null}>4</h5>
 				</div>
 			</div>
 			<div 
@@ -64,6 +67,10 @@ export default function Maps() {
 							floor == 1 ? <FloorOne zoom={zoom} onLoad={handleLoad} />
 							:
 							floor == 2 ? <FloorTwo zoom={zoom} onLoad={handleLoad} />
+							:
+							floor == 3 ? <FloorThree zoom={zoom} onLoad={handleLoad} />
+							:
+							floor == 4 ? <FloorFour zoom={zoom} onLoad={handleLoad} />
 							:
 							<></>
 						}
@@ -91,7 +98,7 @@ const RoomInfoWindow = ({selected, onClose}) => {
 
 	return (
 		<div className={styles['room-info']}>
-			<div className={styles['image']} style={{backgroundImage: ''}} />
+			<div className={styles['image']} style={{background: `linear-gradient(to bottom, transparent, var(--map-background)), url(${room.img})`}} />
 			<div className={styles['title']}>
 				<h1>{room.name}</h1>
 				<h3>{room.roomNumber}</h3>
@@ -120,10 +127,12 @@ const RoomSchedule = ({selected}) => {
 
     if(!week) return <div className={styles['schedule-loading-screen']} />
 
+
     return (
         <div style={{height: week.height / 3}} className={styles['schedule']}>
             {
-                Object.keys(week).filter(date => !(!date) && !['La', 'Su'].includes(week[date].caption.split(' ')[0])).map((date, i) => {
+				
+                Object.keys(week).filter(date => !(!date) && !['La', 'Su'].includes(week[date].day.caption.split(' ')[0])).map((date, i) => {
                     const day = week[date];
                     return <DayObject key={i} day={day} />
                 })

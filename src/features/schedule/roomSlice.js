@@ -91,12 +91,15 @@ export const roomSlice = createSlice({
             const schedule = action.payload['schedule'];
             const roomNumber = schedule['roomNumber'];
 
+            
             state.rooms[roomNumber] = {...state.rooms[roomNumber], ...{
                 name: schedule.name,
                 isLoading: false,
                 week: schedule.week,
-                days: schedule.days
+                days: schedule.schedule,
+                img: schedule.img
             }}
+            
         },
         [getRoomScheduleWeek.rejected]: (state, action) => {
             console.log(action);
