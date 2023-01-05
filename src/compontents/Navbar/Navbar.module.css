@@ -116,3 +116,17 @@
 .logout:hover a {
     background-color: transparent;
 }
+
+@media screen and (max-width: 1250px) {
+    .top .user-info {
+        display: none;
+    }
+
+    .top .logo-text {
+        margin-left: 0;
+    }
+
+    .top {
+        justify-content: center;
+    }
+}

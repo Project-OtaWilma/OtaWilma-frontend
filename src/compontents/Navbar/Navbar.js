@@ -27,6 +27,7 @@ export default function Navbar() {
             <Link to={'/tray'}><h5>Kurssitarjotin</h5></Link>
             <Link to={'/news'}><h5>Tiedotteet</h5></Link>
             <Link to={'/teachers'}><h5>Opettajat</h5></Link>
+            <Link to={'/maps'}><h5>Kartat</h5></Link>
             <Link to={'/settings'}><h5>Asetukset</h5></Link>
         </div>
     )
