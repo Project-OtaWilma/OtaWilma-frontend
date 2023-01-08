@@ -52,6 +52,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
         <path
         onClick={() => onLoad('4270')}
           style={{
+            cursor: "pointer",
             fill: "var(--map-fill)",
             stroke: "var(--map-outline)",
             strokeWidth: "2.00px",
@@ -61,6 +62,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
         <path
         onClick={() => onLoad('4219')}
           style={{
+            cursor: "pointer",
             fill: "var(--map-fill)",
             stroke: "var(--map-outline)",
             strokeWidth: "2.00px",
@@ -70,6 +72,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
         <path
         onClick={() => onLoad('4223')}
           style={{
+            cursor: "pointer",
             fill: "var(--map-fill)",
             stroke: "var(--map-outline)",
             strokeWidth: "2.00px",
@@ -79,6 +82,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
         <path
         onClick={() => onLoad('4256')}
           style={{
+            cursor: "pointer",
             fill: "var(--map-fill)",
             stroke: "var(--map-outline)",
             strokeWidth: "2.00px",
@@ -88,6 +92,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
         <path
         onClick={() => onLoad('4265')}
           style={{
+            cursor: "pointer",
             fill: "var(--map-fill)",
             stroke: "var(--map-outline)",
             strokeWidth: "2.00px",

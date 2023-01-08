@@ -11,6 +11,7 @@ import { MapCompontent as FloorFour } from './floor-4';
 
 import styles from './Maps.module.css'
 import { getRoomList, getRoomScheduleWeek, useRooms } from '../../features/schedule/roomSlice';
+import { LoadingScreen } from '../LoadingScreen/LoadingScreen';
 
 export default function Maps() {
     const params = useParams()
@@ -23,6 +24,13 @@ export default function Maps() {
 	const [floor, setFloor] = useState(1);
 
     const initialize = () => {
+		if(params['room']) {
+			const room = params['room'];
+			const floor = Number.isNaN(+room.at(0)) ? 1 : +room.at(0);
+			
+			setFloor(floor);
+		}
+
 		dispatch(getRoomList({auth: auth.token}))
     }
 
@@ -88,13 +96,14 @@ export default function Maps() {
 }
 
 const RoomInfoWindow = ({selected, onClose}) => {
-    const rooms = useSelector(useRooms)
+    const rooms = useSelector(useRooms);
 
-	if(!selected) return <></>
-	if(rooms.list.isLoading) return <>Loading...</>
+	if(!selected) return <LoadingScreen className={styles['room-loading-screen']} />
+	if(rooms.list.isLoading) return <LoadingScreen className={styles['room-loading-screen']} />
 
 	const room = rooms.rooms[selected];
-	if(room.isLoading) return <>Loading...</>
+	if(!room) return <LoadingScreen className={styles['room-loading-screen']} />
+	if(room.isLoading) return <LoadingScreen className={styles['room-loading-screen']} />
 
 	return (
 		<div className={styles['room-info']}>
@@ -102,6 +111,7 @@ const RoomInfoWindow = ({selected, onClose}) => {
 			<div className={styles['title']}>
 				<h1>{room.name}</h1>
 				<h3>{room.roomNumber}</h3>
+				<h4>{room.info}</h4>
 			</div>
 			<div className={styles['info']}>
 				<h6>Vapaa</h6>
@@ -116,17 +126,17 @@ const RoomSchedule = ({selected}) => {
 	const rooms = useSelector(useRooms);
 
     if(!selected) return <></>
-	if(rooms.list.isLoading) return <>Loading...</>
+	if(rooms.list.isLoading) return <LoadingScreen className={styles['schedule-loading-screen']} />
 
 	const room = rooms.rooms[selected];
-	if(room.isLoading) return <>Loading...</>
-
+	if(room.isLoading) return <LoadingScreen className={styles['schedule-loading-screen']} />
 	const week = room.days;
 
-	console.log(week);
+    if(!week) return <LoadingScreen className={styles['schedule-loading-screen']} />
 
-    if(!week) return <div className={styles['schedule-loading-screen']} />
+	console.log(room);
 
+	if(!week.height) return <div className={styles['schedule']}><h2 className={styles['no-week']}>{`Ei työjärjestystä viikolle "${room.week}"`}</h2></div>
 
     return (
         <div style={{height: week.height / 3}} className={styles['schedule']}>

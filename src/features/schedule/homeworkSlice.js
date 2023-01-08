@@ -28,7 +28,7 @@ export const getGroups = createAsyncThunk(
 
 
                     return resolve({changed: true, groups: groups});
-                }) 
+                })
             })
             .catch(err => {
                 return reject(err);

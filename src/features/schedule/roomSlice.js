@@ -97,7 +97,8 @@ export const roomSlice = createSlice({
                 isLoading: false,
                 week: schedule.week,
                 days: schedule.schedule,
-                img: schedule.img
+                img: schedule.img,
+                info: schedule.info
             }}
             
         },

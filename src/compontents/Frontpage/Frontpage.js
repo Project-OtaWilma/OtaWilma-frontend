@@ -363,7 +363,7 @@ const GroupObject = ({group}) => {
         <div className={styles['group']}>
             {group.teachers ? group.teachers.map((teacher, i) => <Link key={i} to={`/teachers/${teacher.id}`}>{teacher.caption}</Link>) : null}
             <h2 className={styles['code']}>{group.code}</h2>
-            {group.rooms ? group.rooms.map((room, i) => <h2 key={i}>{room.caption}</h2>) : null}
+            {group.rooms ? group.rooms.map((room, i) => <Link key={i} to={`/maps/${room.caption}`}>{room.caption}</Link>) : null}
         </div>
 
     )

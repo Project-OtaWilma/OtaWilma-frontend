@@ -134,6 +134,7 @@ text {
 
     background-position: center center !important;
     background-size: cover !important;
+    background-repeat: no-repeat !important;
 
     filter: blur(3px);
 }
@@ -152,6 +153,15 @@ text {
 .title h3 {
     font-size: 20px;
     padding-left: 10px;
+}
+
+.title h4 {
+    color: var(--font-h3);
+    font-size: 15px;
+    padding: 5px;
+    padding-left: 10px;
+
+    opacity: 50%;
 }
 
 .room-info .info {
@@ -213,6 +223,7 @@ text {
     padding-left: 1px;
 
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .schedule .day {
@@ -315,4 +326,37 @@ text {
 
     color: var(--error);
     opacity: 75%;
+}
+
+.no-week {
+    position: absolute;
+    text-align: center;
+
+    align-self: center;
+    width: 100%;
+
+    font-size: 17px;
+    opacity: 50%;
+}
+
+.room-loading-screen {
+    position: absolute;
+    width: 600px;
+    height: 100%;
+    z-index: 4;
+
+    top: 0px;
+    right: 0;
+}
+
+.schedule-loading-screen {
+    position: absolute;
+    width: 550px;
+    height: 320px;
+
+    border-top: solid 1px var(--border-main);
+    padding-top: 15px;
+
+    top: 350px;
+    left: 25px;
 }

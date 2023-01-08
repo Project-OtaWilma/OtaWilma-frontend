@@ -46,6 +46,7 @@ function App() {
                     <Route path='/teachers' element={auth.token ? <Teachers /> : <Login />} />
                     <Route path='/teachers/:id' element={auth.token ? <Teachers /> : <Login />} />
                     <Route path='/maps' element={auth.token ? <Maps /> : <Login />} />
+                    <Route path='/maps/:room' element={auth.token ? <Maps /> : <Login />} />
                     <Route path='/settings' element={auth.token ? <Settings /> : <Login />} />
                 </Routes>
             </ThemeProvider>

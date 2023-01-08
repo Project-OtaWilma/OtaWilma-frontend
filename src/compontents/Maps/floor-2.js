@@ -177,6 +177,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
       onClick={() => onLoad('2225')}
       style={{
+        opacity: rooms.list['content'].includes('2225') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -187,6 +188,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
       onClick={() => onLoad('2223')}
       style={{
+        opacity: rooms.list['content'].includes('2223') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -198,6 +200,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2313')}
       style={{
+        opacity: rooms.list['content'].includes('2313') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -209,6 +212,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     onClick={() => onLoad('2409')}
       d="M1370 408h132v95h26v112h-158V408Z"
       style={{
+        opacity: rooms.list['content'].includes('2409') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -218,6 +222,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2406')}
       style={{
+        opacity: rooms.list['content'].includes('2406') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -228,6 +233,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2403')}
       style={{
+        opacity: rooms.list['content'].includes('2403') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -239,6 +245,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2402')}
       style={{
+        opacity: rooms.list['content'].includes('2402') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -250,6 +257,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2404')}
       style={{
+        opacity: rooms.list['content'].includes('2404') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -261,6 +269,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2405')}
       style={{
+        opacity: rooms.list['content'].includes('2405') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -272,6 +281,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2407')}
       style={{
+        opacity: rooms.list['content'].includes('2407') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -283,6 +293,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2410')}
       style={{
+        opacity: rooms.list['content'].includes('2410') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -293,6 +304,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2408')}
       style={{
+        opacity: rooms.list['content'].includes('2408') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -303,6 +315,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2129')}
       style={{
+        opacity: rooms.list['content'].includes('2129') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -313,6 +326,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
       onClick={() => onLoad('2148')}
       style={{
+        opacity: rooms.list['content'].includes('2148') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -323,6 +337,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2164')}
       style={{
+        opacity: rooms.list['content'].includes('2164') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -333,6 +348,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2146')}
       style={{
+        opacity: rooms.list['content'].includes('2146') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -343,6 +359,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
       onClick={() => onLoad('2159')}
       style={{
+        opacity: rooms.list['content'].includes('2159') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -353,6 +370,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2162')}
       style={{
+        opacity: rooms.list['content'].includes('2162') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -363,6 +381,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2167')}
       style={{
+        opacity: rooms.list['content'].includes('2167') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -373,6 +392,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2174')}
       style={{
+        opacity: rooms.list['content'].includes('2174') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -383,6 +403,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2177')}
       style={{
+        opacity: rooms.list['content'].includes('2177') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -393,6 +414,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2175')}
       style={{
+        opacity: rooms.list['content'].includes('2175') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -403,6 +425,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2168')}
       style={{
+        opacity: rooms.list['content'].includes('2168') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -413,6 +436,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2171')}
       style={{
+        opacity: rooms.list['content'].includes('2171') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -423,6 +447,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2173')}
       style={{
+        opacity: rooms.list['content'].includes('2173') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -432,6 +457,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     />
     <path
       style={{
+        opacity: 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -442,6 +468,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2321')}
       style={{
+        opacity: rooms.list['content'].includes('2321') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -452,6 +479,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2322')}
       style={{
+        opacity: rooms.list['content'].includes('2322') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -462,6 +490,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2240')}
       style={{
+        opacity: rooms.list['content'].includes('2240') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -472,6 +501,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2239')}
       style={{
+        opacity: rooms.list['content'].includes('2239') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -482,6 +512,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2227')}
       style={{
+        opacity: rooms.list['content'].includes('2227') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -492,6 +523,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
     <path
     onClick={() => onLoad('2226')}
       style={{
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
         fill: "var(--map-fill)",
         cursor: "pointer",
         stroke: "var(--map-outline)",
@@ -644,7 +676,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2129') ? 1 : 0.5,
       }}
       transform="translate(-122.549 -9.178) scale(1.16655)"
     >
@@ -656,7 +689,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2129') ? 1 : 0.5,
       }}
       transform="matrix(.86888 0 0 .82383 97.773 30.79)"
     >
@@ -672,7 +706,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2148') ? 1 : 0.5,
       }}
       transform="matrix(.68868 0 0 .68868 305.133 398.153)"
     >
@@ -684,7 +719,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2148') ? 1 : 0.5,
       }}
       transform="matrix(.51295 0 0 .48636 435.203 421.748)"
     >
@@ -697,7 +733,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2159') ? 1 : 0.5,
       }}
       transform="matrix(.68868 0 0 .68868 176.633 463.653)"
     >
@@ -709,7 +746,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2159') ? 1 : 0.5,
       }}
       transform="matrix(.51295 0 0 .48636 306.703 487.248)"
     >
@@ -722,7 +760,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 90.448 563.534)"
     >
@@ -734,7 +773,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.5972 0 0 .56624 241.88 591.004)"
     >
@@ -747,7 +787,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 90.011 656.708)"
     >
@@ -759,7 +800,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.5972 0 0 .56624 241.444 684.179)"
     >
@@ -772,7 +814,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 220.081 729.534)"
     >
@@ -784,7 +827,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.5972 0 0 .56624 371.514 757.004)"
     >
@@ -797,7 +841,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 220.081 789.534)"
     >
@@ -809,7 +854,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.5972 0 0 .56624 371.514 817.004)"
     >
@@ -821,7 +867,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.5972 0 0 .56624 371.303 878.857)"
     >
@@ -834,7 +881,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 220.336 668.309)"
     >
@@ -846,7 +894,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.5972 0 0 .56624 242.05 887.248)"
     >
@@ -859,7 +908,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 91.707 859.29)"
     >
@@ -871,7 +921,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.3941 0 0 .37367 399.477 981.293)"
     >
@@ -888,7 +939,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 91.707 943.29)"
     >
@@ -901,7 +953,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.8018 0 0 .8018 91.772 1013.31)"
     >
@@ -914,7 +967,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.68868 0 0 .68868 305.133 529.653)"
     >
@@ -926,7 +980,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.51295 0 0 .48636 435.203 553.248)"
     >
@@ -939,7 +994,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.68868 0 0 .68868 534.133 529.653)"
     >
@@ -951,7 +1007,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.51295 0 0 .48636 664.203 553.248)"
     >
@@ -964,7 +1021,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.52206 0 0 .52206 598.923 421.23)"
     >
@@ -977,7 +1035,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.52206 0 0 .52206 643.923 421.23)"
     >
@@ -990,7 +1049,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.52206 0 0 .52206 688.881 421.23)"
     >
@@ -1003,7 +1063,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.52206 0 0 .52206 733.764 421.23)"
     >
@@ -1016,7 +1077,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.52206 0 0 .52206 797.307 421.23)"
     >
@@ -1029,7 +1091,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(477.389 443.316) scale(1.08329)"
     >
@@ -1041,7 +1104,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 681.988 480.431)"
     >
@@ -1054,7 +1118,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(615.14 1215.52) scale(1.08329)"
     >
@@ -1066,7 +1131,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 819.738 1252.64)"
     >
@@ -1079,7 +1145,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(485.436 1215.52) scale(1.08329)"
     >
@@ -1091,7 +1158,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 690.035 1252.64)"
     >
@@ -1104,7 +1172,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(343.436 1215.52) scale(1.08329)"
     >
@@ -1116,7 +1185,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 548.035 1252.64)"
     >
@@ -1129,7 +1199,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(217.64 1260.72) scale(1.08329)"
     >
@@ -1141,7 +1212,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 422.238 1297.83)"
     >
@@ -1154,7 +1226,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(623.64 446.397) scale(1.08329)"
     >
@@ -1166,7 +1239,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 828.238 483.512)"
     >
@@ -1179,7 +1253,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(876.415 340.316) scale(1.08329)"
     >
@@ -1191,7 +1266,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.80687 0 0 .76503 1081.01 377.431)"
     >
@@ -1204,7 +1280,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(692.766 660.057) scale(1.27011)"
     >
@@ -1216,7 +1293,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.94602 0 0 .89697 932.649 703.573)"
     >
@@ -1229,7 +1307,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(692.766 793.557) scale(1.27011)"
     >
@@ -1241,7 +1320,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.94602 0 0 .89697 932.649 837.073)"
     >
@@ -1254,7 +1334,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(942.563 1268.84) scale(.95582)"
     >
@@ -1266,7 +1347,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.71193 0 0 .67501 1123.09 1301.59)"
     >
@@ -1279,7 +1361,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="translate(1106.56 1215.34) scale(.95582)"
     >
@@ -1291,7 +1374,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.71193 0 0 .67501 1287.09 1248.09)"
     >
@@ -1304,7 +1388,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.68868 0 0 .68868 629.133 532.766)"
     >
@@ -1316,7 +1401,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
       style={{
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.51295 0 0 .48636 759.203 556.361)"
     >
@@ -1329,7 +1415,8 @@ export const MapCompontent = ({zoom, onLoad}) => {
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
         fontSize: "22.337px",
-        fill: "var(--map-h1)"
+        fill: "var(--map-h1)",
+        opacity: rooms.list['content'].includes('2226') ? 1 : 0.5,
       }}
       transform="matrix(.68868 0 0 .68868 176.912 406.047)"
     >
