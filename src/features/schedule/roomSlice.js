@@ -13,17 +13,17 @@ export const getRoomList = createAsyncThunk(
             const rooms = thunkAPI.getState().rooms;
             const auth = options['auth'];
 
-            if(!rooms.list.isLoading) return resolve({ changed: false });
+            if (!rooms.list.isLoading) return resolve({ changed: false });
 
             fetchRoomList(auth)
-            .then(list => {
-                return resolve({changed: true, list: list});
-            })
-            .catch(err => {
-                thunkAPI.dispatch(handleError(err))
-                return reject();
-            })
-            
+                .then(list => {
+                    return resolve({ changed: true, list: list });
+                })
+                .catch(err => {
+                    thunkAPI.dispatch(handleError(err))
+                    return reject();
+                })
+
         });
     }
 )
@@ -39,6 +39,10 @@ export const getRoomScheduleWeek = createAsyncThunk(
             const date = options['date'] ? options['date'] : (new Date());
 
 
+            const cached = Object.keys(rooms).find(r => r.id == room);
+            if (cached) {
+                return resolve({ changed: false })
+            }
             /*
             const raw = date.toLocaleDateString('fi-FI', options);
 
@@ -47,14 +51,14 @@ export const getRoomScheduleWeek = createAsyncThunk(
             if(cached) return resolve({changed: false, date: cached});
             */
             fetchRoomSchedule(auth, room, date)
-            .then(schedule => {
-                return resolve({changed: true, schedule: schedule});
-            })
-            .catch(err => {
-                thunkAPI.dispatch(handleError(err))
-                return reject();
-            })
-            
+                .then(schedule => {
+                    return resolve({ changed: true, schedule: schedule });
+                })
+                .catch(err => {
+                    thunkAPI.dispatch(handleError(err))
+                    return reject();
+                })
+
         });
     }
 )
@@ -71,19 +75,19 @@ export const roomSlice = createSlice({
     reducers: {},
     extraReducers: {
         [getRoomList.fulfilled]: (state, action) => {
-            if(!action.payload.changed) {
+            if (!action.payload.changed) {
                 return;
             }
             const list = action.payload['list'];
 
-            state.list['content'] = list.map(room => {state.rooms[room['roomNumber']] = {...room, isLoading: true}; return room.roomNumber});
+            state.list['content'] = list.map(room => { state.rooms[room['roomNumber']] = { ...room, isLoading: true }; return room.roomNumber });
             state.list.isLoading = false;
         },
         [getRoomList.rejected]: (state, action) => {
             console.log(action);
         },
         [getRoomScheduleWeek.fulfilled]: (state, action) => {
-            if(!action.payload.changed) {
+            if (!action.payload.changed) {
                 state.current = action.payload.date;
                 return;
             }
@@ -91,16 +95,19 @@ export const roomSlice = createSlice({
             const schedule = action.payload['schedule'];
             const roomNumber = schedule['roomNumber'];
 
-            
-            state.rooms[roomNumber] = {...state.rooms[roomNumber], ...{
-                name: schedule.name,
-                isLoading: false,
-                week: schedule.week,
-                days: schedule.schedule,
-                img: schedule.img,
-                info: schedule.info
-            }}
-            
+
+            state.rooms[roomNumber] = {
+                ...state.rooms[roomNumber], ...{
+                    name: schedule.name,
+                    isLoading: false,
+                    week: schedule.week,
+                    days: schedule.schedule,
+                    img: schedule.img,
+                    info: schedule.info,
+                    days: schedule.schedule
+                }
+            }
+
         },
         [getRoomScheduleWeek.rejected]: (state, action) => {
             console.log(action);
