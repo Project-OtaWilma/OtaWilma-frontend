@@ -38,11 +38,6 @@ export const getRoomScheduleWeek = createAsyncThunk(
             const room = options['room'];
             const date = options['date'] ? options['date'] : (new Date());
 
-
-            const cached = Object.keys(rooms).find(r => r.id == room);
-            if (cached) {
-                return resolve({ changed: false })
-            }
             /*
             const raw = date.toLocaleDateString('fi-FI', options);
 
