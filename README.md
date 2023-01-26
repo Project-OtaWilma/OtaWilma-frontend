@@ -48,3 +48,15 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Requirements
+
+To compile this need the file `config.json` in the project directory. Its default contents are: 
+
+```
+{
+    "versionLabel": "LOCAL BUILD",
+    "wilmaApi": "https://beta.wilma-api.tuukk.dev/api",
+    "otaWilmaApi": "https://beta.otawilma-api.tuukk.dev/api"
+}
+```

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     useAuth,
@@ -29,15 +29,26 @@ export default function Login() {
 
     const [loginError, setLoginError] = useState('');
 
+    const usernameElement = useRef(null);
+    const passwordElement = useRef(null);
+
+
     const login = () => {
+
+        // FUCK YOU REACT, FUCK YOU
+        var usrnameScuffed = username
+        var paswdScuffed = password
+        if (usrnameScuffed == "") usrnameScuffed = usernameElement.current.value;
+        if (paswdScuffed == "") paswdScuffed = passwordElement.current.value;
+        
         setLoginError('');
 
         if (!termsOfService || !agreement) return setLoginError('You must agree to both')
 
         const credentials =
         {
-            username: username,
-            password: password
+            username: usrnameScuffed,
+            password: paswdScuffed
         }
 
         dispatch(loginToWilma(credentials));
@@ -45,6 +56,19 @@ export default function Login() {
         navigate('/');
     }
 
+    useEffect(() => {
+
+        const handleEnter = (e) => {
+            switch (e.keyCode) {
+                case 13:
+                    login();
+                    break;
+            }
+        }
+
+        document.addEventListener('keydown', handleEnter);
+        return () => {document.removeEventListener('keydown', handleEnter);}
+    }, [])
 
     return (
         <BlurLayer className={styles['content']} isLoading={auth.isLoading}>
@@ -54,11 +78,11 @@ export default function Login() {
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
                 <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Käyttäjätunnus</h3>
-                    <input type='text' placeholder='matti.heikkinen' onInput={e => setUsername(e.target.value)} />
+                    <input ref={usernameElement} type='text' autoComplete='on' placeholder='matti.heikkinen' onChange={e => setUsername(e.target.value)} />
                 </form>
                 <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Salasana</h3>
-                    <input type='password' placeholder='*************' onInput={e => setPassword(e.target.value)} />
+                    <input ref={passwordElement} type='password' autoComplete='on' placeholder='*************' onChange={e => setPassword(e.target.value)} />
                 </form>
                 <form className={styles['terms-of-service']}>
                     <h2>Ymmärrän, että <strong>OtaWilma ei ole</strong> virallinen Wilman
