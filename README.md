@@ -53,7 +53,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 To compile this need the file `config.json` in the project directory. Its default contents are: 
 
-```
+```json5
 {
     "versionLabel": "LOCAL BUILD",
     "wilmaApi": "https://beta.wilma-api.tuukk.dev/api",
