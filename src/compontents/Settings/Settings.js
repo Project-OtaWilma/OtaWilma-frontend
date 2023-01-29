@@ -82,7 +82,33 @@ export default function Settings() {
                     </div>
                 </div>
             </BlurLayer>
+            <Footer />
         </>
+    )
+}
+
+const Footer = () => {
+    const onClick = (url) => {
+        window.open(url);
+    }
+
+    return (
+        <div className={styles['footer']}>
+            <div 
+                className={styles['ref']}
+                onClick={() => onClick("https://github.com/Project-OtaWilma")}
+            >
+                <div className={styles['github']} />
+                <h4>GitHub</h4>
+            </div>
+            <div 
+                className={styles['ref']}
+                onClick={() => onClick("https://discord.gg/s3KEkNUrw9")}
+            >
+                <div className={styles['discord']} />
+                <h4>Discord</h4>
+            </div>
+        </div>
     )
 }
 

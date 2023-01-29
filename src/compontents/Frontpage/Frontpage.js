@@ -330,9 +330,9 @@ const HomeworkGroupObject = ({group}) => {
     return (
         <div className={styles['group-object']}>
             <div className={`${styles['group-code']} ${styles[group.type]}`}>
-                <h2>{group.caption}</h2>
-                <h4>{group.name}</h4>
-                <h3>{group.teachers.length > 0 ? group.teachers[0].name : null}</h3>
+                {group.caption ? <h2>{group.caption}</h2> : null}
+                {group.name ? <h4>{group.name}</h4> : null}
+                <h3>{group.teachers && group.teachers.length > 0 ? group.teachers[0].name : null}</h3>
             </div>
             <div className={styles['homework-list']}>
                 <h5>Kotitehtävät</h5>

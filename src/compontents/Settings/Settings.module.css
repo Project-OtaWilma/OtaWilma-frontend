@@ -1041,6 +1041,58 @@
     font-style: italic;
 }
 
+
+.footer {
+    position: absolute;
+    bottom: 0 !important;
+
+    height: 40px;
+    width: 96%;
+    left: 2%;
+    padding-top: 5px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-top: solid 1px var(--border-main);
+}
+
+.footer .ref {
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 30%;
+
+    cursor: pointer;
+}
+
+.github {
+    height: 20px;
+    width: 20px;
+
+    background-size: 20px 20px !important;
+    background-repeat: no-repeat !important;
+    background-image: url(../../assets/img/github.svg);
+    filter: brightness(0);
+}
+
+.discord {
+    height: 20px;
+    width: 20px;
+
+    background-size: 20px 20px !important;
+    background-repeat: no-repeat !important;
+    background-image: url(../../assets/img/discord.svg);
+    filter: brightness(0);
+}
+
+.ref h4 {
+    color: black;
+}
+
 @media screen and (max-width: 1600px) {
     .content {
         width: 98%;
