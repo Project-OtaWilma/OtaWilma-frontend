@@ -226,9 +226,9 @@ export const MapCompontent = ({zoom, onLoad}) => {
       }}
     />
     <path
-    onClick={() => onLoad('1513')}
+    onClick={() => onLoad('1518')}
       style={{
-        opacity: rooms.list['content'].includes('1513') ? 1 : 0.5,
+        opacity: rooms.list['content'].includes('1518') ? 1 : 0.5,
         cursor: 'pointer',
         fill: "var(--map-fill)",
         stroke: "var(--map-outline)",
@@ -631,7 +631,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
       x={239}
       y={393}
       style={{
-        opacity: rooms.list['content'].includes('1513') ? 1 : 0.5,
+        opacity: rooms.list['content'].includes('1518') ? 1 : 0.5,
         fill: 'var(--map-h1)',
         fontFamily: "'Arial-BoldMT','Arial',sans-serif",
         fontWeight: 700,
@@ -639,13 +639,13 @@ export const MapCompontent = ({zoom, onLoad}) => {
       }}
       transform="translate(369.241 -142.799) scale(.77083)"
     >
-      {"1513"}
+      {"1518"}
     </text>
     <text
       x={239}
       y={393}
       style={{
-        opacity: rooms.list['content'].includes('1513') ? 1 : 0.5,
+        opacity: rooms.list['content'].includes('1518') ? 1 : 0.5,
         fill: 'var(--map-h1)',
         fontFamily: "'ArialMT','Arial',sans-serif",
         fontSize: "39.089px",

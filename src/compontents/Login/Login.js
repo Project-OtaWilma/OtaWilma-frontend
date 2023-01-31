@@ -32,24 +32,15 @@ export default function Login() {
     const usernameElement = useRef(null);
     const passwordElement = useRef(null);
 
-
     const login = () => {
-
-        // FUCK YOU REACT, FUCK YOU
-        var usrnameScuffed = username
-        var paswdScuffed = password
-        if (usrnameScuffed == "") usrnameScuffed = usernameElement.current.value;
-        if (paswdScuffed == "") paswdScuffed = passwordElement.current.value;
-        
         setLoginError('');
-
-        if (!termsOfService || !agreement) return setLoginError('You must agree to both')
-
         const credentials =
         {
-            username: usrnameScuffed,
-            password: paswdScuffed
+            username: username != "" ? username : usernameElement.current.value,
+            password: password != "" ? password : passwordElement.current.value
         }
+
+        if (!termsOfService || !agreement) return setLoginError('You must agree to both')
 
         dispatch(loginToWilma(credentials));
         saveAgreement();
