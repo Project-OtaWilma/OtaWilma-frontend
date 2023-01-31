@@ -141,6 +141,9 @@ export default function Frontpage() {
                         <div className={styles["link"]}>
                             <a target="_blank" href="https://www.lounaat.info/otaniemi">Lounaat - Otaniemi</a>
                         </div>
+                        <div className={styles["link"]}>
+                            <a target="_blank" href="https://kanttiinit.fi/">Lounaat - Kanttiinit</a>
+                        </div>
                         <h3>Ruokailuvuorot</h3>
                         <div className={styles["link"]}>
                             <a target="_blank"
