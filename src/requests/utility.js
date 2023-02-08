@@ -55,7 +55,7 @@ const fetchJson = (url, options = {
                 }
             })
             .catch(err => {
-                return reject({ err: 'Failed to fetch the request', status: 500 });
+                return reject({ err: 'Failed to fetch the request', status: 501 });
             })
     });
 }

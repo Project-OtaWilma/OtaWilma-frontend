@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSchedule, getWeek } from '../../features/schedule/scheduleSlice'
-import { useTray, getTrayList, getPeriod, getTrayCourse, updateSelections, getFriendSelections, selectCourse, deselectCourse } from '../../features/courses/traySlice';
+import { useTray, getTrayList, getPeriod, getTrayCourse, updateSelections, getFriendSelections, selectCourse, deselectCourse, resetError } from '../../features/courses/traySlice';
 import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import styles from './CourseTray.module.css';
@@ -84,7 +84,8 @@ export default function CourseTray() {
 
     return (
         <>
-            <BlurLayer className={styles['content']} isLoading={tray.isSelecting}>
+            {tray.error ? <ErrorWindow /> : null}
+            <BlurLayer className={styles['content']} isLoading={tray.isSelecting || tray.error}>
                 <div className={styles['tray-list']}>
                     <TrayList open={open} onLoad={loadPeriod}/>
                 </div>
@@ -494,6 +495,19 @@ const CourseInfoObject = ({course: hash}) => {
                     )
                 })
             }
+        </div>
+    )
+}
+
+const ErrorWindow = () => {
+    const tray = useSelector(useTray);
+    const dispatch = useDispatch();
+    return (
+        <div className={styles['error-window']}>
+            <div className={styles['background']} />
+            <h1>Kurssivalinnan muuttaminen epäonnistui</h1>
+            <h2>{tray.error}</h2>
+            <h4 onClick={() => dispatch(resetError())}>sulje</h4>
         </div>
     )
 }

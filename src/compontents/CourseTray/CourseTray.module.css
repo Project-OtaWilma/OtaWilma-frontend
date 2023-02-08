@@ -796,6 +796,65 @@ button:disabled {
     pointer-events: none;
 }
 
+.error-window {
+    position: absolute;
+    width: 350px;
+    height: 200px;
+
+    background-color: var(--background-darker);
+    z-index: 3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-left: solid 10px var(--error);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.error-window .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../assets/img/otakarhu-confused.svg);
+
+    opacity: 10%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.error-window h1 {
+    color: var(--error);
+    font-size: 25px;
+    text-align: center;
+    margin: 15px;
+}
+
+.error-window h2 {
+    text-align: center;
+    width: 70%;
+
+    font-family: 'semi-bold';
+}
+
+.error-window h4 {
+    position: absolute;
+    opacity: 50%;
+
+    bottom: 10px;
+
+    font-size: 14px;
+    color: var(--font-h2);
+
+    cursor: pointer;
+}
+
+.error-window h4:hover {
+    opacity: 75%;
+}
+
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;

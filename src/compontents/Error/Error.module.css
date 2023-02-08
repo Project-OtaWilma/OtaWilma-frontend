@@ -44,6 +44,7 @@
 .error-object h1 {
     margin: 15px;
     color: black;
+    text-align: center;
 }
 
 .error-object h3 {

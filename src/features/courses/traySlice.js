@@ -92,8 +92,14 @@ export const selectCourse = createAsyncThunk(
                 return resolve({changed: true, hash: hash})
             })
             .catch(err => {
+                if (err.status == 400) {
+                    const error = err.error.error ?? "Kurssivalinnan muuttamien epäonnistui tuntemattomista syistä";
+                    return resolve({ changed: false, error: error});
+                }
+                
                 thunkAPI.dispatch(handleError(err));
                 return reject();
+                
             })
             
         });
@@ -112,6 +118,11 @@ export const deselectCourse = createAsyncThunk(
                 return resolve({changed: true, hash: hash})
             })
             .catch(err => {
+                if (err.status == 400) {
+                    const error = err.error.error ?? "Kurssivalinnan muuttamien epäonnistui tuntemattomista syistä";
+                    return resolve({changed: false, error: error});
+                }
+
                 thunkAPI.dispatch(handleError(err));
                 return reject();
             })
@@ -173,9 +184,15 @@ export const traySlice = createSlice({
 
         },
         friends: {},
-        isSelecting: false
+        isSelecting: false,
+        error: null
     },
-    reducers: {},
+    reducers: {
+        resetError: (state) => {
+            state.error = null;
+            return state;
+        } 
+    },
     extraReducers: {
         [getTrayList.fulfilled]: (state, action) => {
             if(!action.payload.changed) {
@@ -265,6 +282,11 @@ export const traySlice = createSlice({
             })
         },
         [selectCourse.fulfilled]: (state, action) => {
+            if (!action.payload.changed) {
+                console.log(action.payload);
+                state.error = action.payload['error'];
+                return;
+            }
             const hash = action.payload['hash'];
             
             state.courses[hash].isSelected = true;
@@ -273,9 +295,15 @@ export const traySlice = createSlice({
             state.isSelecting = false;
         },
         [selectCourse.pending]: (state, action) => {
-            state.isSelecting = true;
+            state.isSelecting = false;
         },
         [deselectCourse.fulfilled]: (state, action) => {
+            if (!action.payload.changed) {
+                console.log(action.payload);
+                state.error = action.payload['error'];
+                return;
+            }
+
             const hash = action.payload['hash'];
             
             state.courses[hash].isSelected = false;
@@ -284,7 +312,7 @@ export const traySlice = createSlice({
             state.isSelecting = false;
         },
         [deselectCourse.pending]: (state, action) => {
-            state.isSelecting = true;
+            state.isSelecting = false;
         },
     },
 });
@@ -295,7 +323,10 @@ export const useTray = (state) => ({
     courses: state.tray.courses,
     selected: state.tray.selected,
     friends: state.tray.friends,
-    isSelecting: state.tray.isSelecting
+    isSelecting: state.tray.isSelecting,
+    error: state.tray.error
 });
+
+export const { resetError } = traySlice.actions;
 
 export default traySlice.reducer;
