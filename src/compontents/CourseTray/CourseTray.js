@@ -276,6 +276,7 @@ const TrayInfoContainer = ({open, course, current, filter, setFilter}) => {
 const TraySchedule = ({current}) => {
     const schedule = useSelector(useSchedule);
     if(!current) return <></>
+    if(!Object.keys(periods).includes(current.period)) return <div className={`${styles['schedule']} ${styles['error']}`}><h6>Tarjottimelle ei ole saatavilla lukujärjestystä</h6></div>
 
     const date = periods[current.period].toLocaleDateString('fi-FI');
     const week = schedule.schedule[date];
