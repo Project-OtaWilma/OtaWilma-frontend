@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSchedule, getWeek } from '../../features/schedule/scheduleSlice'
-import { useTray, getTrayList, getPeriod, getTrayCourse, updateSelections, getFriendSelections, selectCourse, deselectCourse, resetError } from '../../features/courses/traySlice';
+import { useTray, getTrayList, getPeriod, getTrayCourse, updateSelections, getFriendSelections, selectCourse, deselectCourse, resetError, getOwnPlan, planCourse, deplanCourse, getFriendsPlans } from '../../features/courses/traySlice';
 import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 
 import styles from './CourseTray.module.css';
@@ -33,6 +33,7 @@ export default function CourseTray() {
     });
     const [course, setCourse] = useState(null);
     const [current, setCurrent] = useState(null);
+    const [mode, setMode] = useState('SELECT');
 
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
@@ -80,20 +81,43 @@ export default function CourseTray() {
         saveFilter(f.type, [...filter[f.type], ...f.value]);
     }
 
+    const switchMode = (selected) => {
+        if(selected === mode) {
+            return;
+        }
+
+        if(tray.planned.isLoading) {
+            dispatch(getOwnPlan({auth: auth.token}));
+            dispatch(getFriendsPlans({auth: auth.token}));
+        }
+
+        setMode(selected);
+    }
+
+    const appendPlan = (code) => {
+        console.log(code);
+        if(tray.planned.own.includes(code)) {
+            dispatch(deplanCourse({auth: auth.token, code: code}))
+        } else {
+            dispatch(planCourse({auth: auth.token, code: code}))
+        }
+    }
+
     useEffect(() => { initialize() }, []);
 
     return (
         <>
+            <ModeDisclaimer mode={mode}/>
             {tray.error ? <ErrorWindow /> : null}
             <BlurLayer className={styles['content']} isLoading={tray.isSelecting || tray.error}>
                 <div className={styles['tray-list']}>
                     <TrayList open={open} onLoad={loadPeriod}/>
                 </div>
                 <div className={styles['tray-main']}>
-                    <PeriodContainer open={open} filter={filter} onLoad={loadCourse} onClose={closePeriod} onHover={e => setCurrent(e)}/>
+                    <PeriodContainer open={open} filter={filter} mode={mode} onLoad={loadCourse} onClose={closePeriod} onHover={e => setCurrent(e)} onPlan={e => appendPlan(e)}/>
                 </div>
                 <div className={styles['tray-info']}>
-                    <TrayInfoContainer open={open} course={course} filter={filter} setFilter={applyFilter} current={current}/>
+                    <TrayInfoContainer open={open} course={course} filter={filter} setFilter={applyFilter} current={current} mode={mode} onSwitch={switchMode}/>
                 </div>
             </BlurLayer>
         </>
@@ -135,34 +159,53 @@ const ListTrayObject = ({open, name, periods, onLoad, onHover}) => {
 
 const ListPeriodObject = ({open, period, onLoad}) => {
     return (
-        <h2 
-            className={open.includes(period.hash) ? styles['selected'] : null}
+        <div
+            className={`${styles['tray-object']} ${open.includes(period.hash) ? styles['selected'] : null}`}
             onClick={() => onLoad(period.hash)}
         >
-            {period.name}
-        </h2>
+            <h2>{period.name}</h2>
+            {
+                open.includes(period.hash) ? 
+                <h6 className={period.closed ? styles['closed'] : null}>{period.closed ? 'Suljettu' : 'Avoin'}</h6>
+                :
+                null
+            }
+            <h3>{period.status}</h3>
+        </div>
     )
 }
 
-const PeriodContainer = ({open, filter, onLoad, onClose, onHover}) => {
+const PeriodContainer = ({open, filter, mode, onLoad, onClose, onHover, onPlan}) => {
     const tray = useSelector(useTray);
     const periods = tray.periods;
 
-    if(open.length == 0) return <PlaceHolder className={styles['tray-placeholder']} />
+    if(open.length == 0) return  <PlaceHolder className={styles['tray-placeholder']} />
 
     return (
         <>
             {
                 open.map((hash, i) => {
                     const period = periods[hash];
-                    return <TrayPeriodObject key={i} hash={hash} period={period} filter={filter} onLoad={onLoad} onClose={onClose} onHover={onHover}/>
+                    return <TrayPeriodObject key={i} hash={hash} period={period} filter={filter} mode={mode} onLoad={onLoad} onClose={onClose} onHover={onHover} onPlan={onPlan}/>
                 })
             }
         </>
     )
 }
 
-const TrayPeriodObject = ({hash, period, filter, onLoad, onClose, onHover}) => {
+const ModeDisclaimer = ({mode}) => {
+    if(mode == 'SELECT') return <></>
+
+    return (
+        <div className={styles['mode-disclaimer']}>
+            <h6>
+                <strong>Suunnittelutila</strong> - muutoksia ei tallenneta
+            </h6>
+        </div>
+    )
+}
+
+const TrayPeriodObject = ({hash, period, filter, mode, onLoad, onClose, onHover, onPlan}) => {
     const [hidden, setHidden] = useState(false);
 
     if(period.isLoading) return <div className={styles['period']}>
@@ -176,14 +219,12 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose, onHover}) => {
                 <button onClick={() => setHidden(!hidden)} className={styles['hide-period']}>
                     <h6 className={hidden ? styles['open'] : styles['closed']}></h6>
                 </button>
-                <button onClick={() => onClose(hash)} className={styles['disable-period']}>
-
-                </button>
+                <button onClick={() => onClose(hash)} className={styles['disable-period']}> </button>
             </div>
             <>
                 {
                     period.bars.map((bar, i) => {
-                        return <TrayBarObject key={i} bar={bar} filter={filter} onLoad={onLoad} onHover={onHover} />
+                        return <TrayBarObject key={i} bar={bar} filter={filter} mode={mode} onLoad={onLoad} onHover={onHover} onPlan={onPlan} />
                     })
                 }
             </>
@@ -191,10 +232,11 @@ const TrayPeriodObject = ({hash, period, filter, onLoad, onClose, onHover}) => {
     )
 }
 
-const TrayBarObject = ({bar, filter, onLoad}) => {
+const TrayBarObject = ({bar, filter, mode, onLoad, onPlan}) => {
     const tray = useSelector(useTray);
+    const editMode = mode == 'PLAN';
     const courses = tray.courses;
-    const friends = tray.friends;
+    const friends = editMode ? tray.planned.friends : tray.friends;
 
     return (
         <div className={styles['bar']}>
@@ -202,10 +244,11 @@ const TrayBarObject = ({bar, filter, onLoad}) => {
             <div className={styles['course-list']}>
                 {
                     bar.courses.map((hash, i) => {
-                        const course = courses[hash];
+                        const course = {...courses[hash], class: editMode ? courses[hash].class.replaceAll('on', 'off') : courses[hash].class};
                         const list = friends[course.code];
+                        const planned = tray.planned.own.includes(course.code);
                         
-                        return <TrayCourseObject key={i} friends={list ? list : []} course={course} filter={filter} onLoad={onLoad} />
+                        return <TrayCourseObject key={i} friends={list ? list : []} mode={mode} planned={planned} course={course} filter={filter} onLoad={onLoad} onPlan={onPlan} />
                     })
                 }
             </div>
@@ -213,7 +256,7 @@ const TrayBarObject = ({bar, filter, onLoad}) => {
     )
 }
 
-const TrayCourseObject = ({friends, course, filter, onLoad}) => {
+const TrayCourseObject = ({friends, course, filter, mode, planned, onLoad, onPlan}) => {
 
     if((filter.subject.length > 0 || filter.lops.length > 0 || filter.search) && !(!course.info.grade)) return <></>
 
@@ -226,12 +269,14 @@ const TrayCourseObject = ({friends, course, filter, onLoad}) => {
     const color = friends.length > 0 ? randomColor(friend) : null;
     const hasFriends = friends.length > 0 && (filter.friends.length > 0 ? (friends.filter(f => filter.friends.includes(f)).length > 0) : true);
 
+    const className = planned && mode == 'PLAN' ? course.class.replaceAll('off', 'on') : course.class;
+    
     return (
         <div 
-            className={course.class.split(' ').map(c => styles[c]).join(' ')}
-            onClick={() => onLoad(course.hash)}
+            className={className.split(' ').map(c => styles[c]).join(' ')}
+            onClick={() => {if(mode == 'SELECT') {onLoad(course.hash)} else {onPlan(course.code)}}}
             style={{
-                borderLeft: color && hasFriends ? `solid 3px var(${color})` : null
+                borderLeft: color && hasFriends ? `solid 3px var(${color})` : null,
             }}
         >
             {course.code}
@@ -260,23 +305,35 @@ const TrayCourseObject = ({friends, course, filter, onLoad}) => {
     )
 }
 
-const TrayInfoContainer = ({open, course, current, filter, setFilter}) => {
+const TrayInfoContainer = ({open, course, current, filter, setFilter, mode, onSwitch}) => {
+    const editMode = mode == 'SELECT';
     return (
-        <>
-
-            <TraySchedule current={current}/>
+        <div>
+            <div className={styles['edit-mode']}>
+                <h5 onClick={() => onSwitch('SELECT')} className={mode == 'SELECT' ? styles['selected'] : null} >Valintatila</h5>
+                <h5 onClick={() => onSwitch('PLAN')} className={mode == 'PLAN' ? styles['selected'] : null} >Suunnittelutila</h5>
+            </div>
+            {editMode ? <TraySchedule current={current}/> : null}
             <h1>Toiminnot</h1>
             {open.length > 0 ? <SearchBarObject setFilter={setFilter} /> : <></>}
             {open.length > 0 ? <FilterObject filter={filter} setFilter={setFilter}/> : <></>}
-            <h1>Tietoa kurssista</h1>
-            {open.length > 0 ? <CourseInfoObject course={course}/> : <></>}
-        </>
+            {editMode ? 
+            <>
+                <h1>Tietoa kurssista</h1>
+                {open.length > 0 ? <CourseInfoObject course={course}/> : <></>}
+            </>
+            :
+            <>
+                <h3 className={styles['mode-explanation']}>"<strong>Pikavalinta on käytössä</strong>. Suunnittele kurssivalintojasi valitsemalla vapaasti kursseja ennen kurssitarjottimen julkaisua. <strong>Ystävät joille olet jakanut kurssivalintasi näkevät myös suunnitelmasi.</strong>"</h3>
+            </>
+            }
+        </div>
     )
 }
 
 const TraySchedule = ({current}) => {
     const schedule = useSelector(useSchedule);
-    if(!current) return <></>
+    if(!current) return <div className={styles['schedule']}></div>
     if(!Object.keys(periods).includes(current.period)) return <div className={`${styles['schedule']} ${styles['error']}`}><h6>Tarjottimelle ei ole saatavilla lukujärjestystä</h6></div>
 
     const date = periods[current.period].toLocaleDateString('fi-FI');

@@ -378,6 +378,85 @@ const fetchApi = (auth, hash) => {
     });
 }
 
+const fetchOwnPlan = (auth, hash) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaApi}/plan-api/self`;
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const fetchFriendsPlans = (auth, hash) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaApi}/plan-api/friends`;
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const addToPlan = (auth, code) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaApi}/plan-api/planned/add/${code}`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
+const removeFromPlan = (auth, code) => {
+    return new Promise(async (resolve, reject) => {
+        const url = `${otaWilmaApi}/plan-api/planned/remove/${code}`;
+
+        fetchJson(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': auth
+            },
+        })
+            .then(res => {
+                return resolve(res);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
 
 export {
     login,
@@ -396,5 +475,9 @@ export {
     listTokens,
     fetchApi,
     useToken,
-    fetchFriendSelections
+    fetchFriendSelections,
+    fetchOwnPlan,
+    fetchFriendsPlans,
+    addToPlan,
+    removeFromPlan
 }
