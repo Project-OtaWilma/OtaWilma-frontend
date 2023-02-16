@@ -103,7 +103,7 @@ export default function Frontpage() {
                                 digitaulukot</a>
                         </div>
                         <div className={styles["link"]}>
-                            <a target="_blank" href="https://www.sanomapro.fi/">Sanomapro - digikirjat</a>
+                            <a target="_blank" href="https://kampus.sanomapro.fi/">Sanomapro - digikirjat</a>
                         </div>
                         <div className={styles["link"]}>
                             <a target="_blank" href="https://opiskelija.otava.fi/materiaalit/omat">Otava -
