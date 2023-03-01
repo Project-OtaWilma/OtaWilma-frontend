@@ -380,7 +380,7 @@ const NewsList = () => {
 
     return (
         <>
-            <Link to={'/'}>Tiedotteet</Link>
+            <Link to={'/news'}>Tiedotteet</Link>
             {
                 list['content'].map((id, i) => {
                     return <NewsObject key={i} news={map[id]}/>
@@ -418,7 +418,7 @@ const MessageList = () => {
 
     return (
         <>
-            <Link to={'/'}>Viestit</Link>
+            <Link to={'/messages'}>Viestit</Link>
             {
                 list['inbox']['content'].slice(0, 10).map((id, i) => {
                     return <MessageObject key={i} message={map[id]}/>
