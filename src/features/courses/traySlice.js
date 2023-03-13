@@ -8,8 +8,12 @@ import {
 } from '../../requests/wilma-api';
 
 import {
+    addToPlan,
     fetchFriendSelections,
-    fetchSelections
+    fetchFriendsPlans,
+    fetchOwnPlan,
+    fetchSelections,
+    removeFromPlan
 } from '../../requests/theme-api';
 
 import { handleError } from '../errors/errorSlice';
@@ -92,8 +96,14 @@ export const selectCourse = createAsyncThunk(
                 return resolve({changed: true, hash: hash})
             })
             .catch(err => {
+                if (err.status == 400) {
+                    const error = err.error.error ?? "Kurssivalinnan muuttamien epäonnistui tuntemattomista syistä";
+                    return resolve({ changed: false, error: error});
+                }
+                
                 thunkAPI.dispatch(handleError(err));
                 return reject();
+                
             })
             
         });
@@ -112,6 +122,11 @@ export const deselectCourse = createAsyncThunk(
                 return resolve({changed: true, hash: hash})
             })
             .catch(err => {
+                if (err.status == 400) {
+                    const error = err.error.error ?? "Kurssivalinnan muuttamien epäonnistui tuntemattomista syistä";
+                    return resolve({changed: false, error: error});
+                }
+
                 thunkAPI.dispatch(handleError(err));
                 return reject();
             })
@@ -158,6 +173,98 @@ export const getFriendSelections = createAsyncThunk(
     }
 )
 
+export const getOwnPlan = createAsyncThunk(
+    'tray/getOwnPlan',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const tray = thunkAPI.getState().tray;
+            const auth = options['auth'];
+            if(!tray.planned.isLoading) return resolve({changed: false})
+            
+            fetchOwnPlan(auth)
+            .then(res => {
+                return resolve({changed: true, list: res})
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
+export const getFriendsPlans = createAsyncThunk(
+    'tray/getFriendsPlans',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const tray = thunkAPI.getState().tray;
+            const auth = options['auth'];
+            if(!tray.planned.isLoading) return resolve({changed: false})
+            
+            fetchFriendsPlans(auth)
+            .then(res => {
+                return resolve({changed: true, map: res})
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
+export const planCourse = createAsyncThunk(
+    'tray/planCourse',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const tray = thunkAPI.getState().tray;
+            const auth = options['auth'];
+            const code = options['code'];
+            
+            addToPlan(auth, code)
+            .then(res => {
+                return resolve({changed: true, code: code})
+            })
+            .catch(err => {
+                console.log(err);
+                if(err.status == 400) {
+                    return resolve({changed: false});
+                }
+
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
+
+export const deplanCourse = createAsyncThunk(
+    'tray/deplanCourse',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const tray = thunkAPI.getState().tray;
+            const auth = options['auth'];
+            const code = options['code'];
+            
+            removeFromPlan(auth, code)
+            .then(res => {
+                return resolve({changed: true, code: code})
+            })
+            .catch(err => {
+                if(err.status == 400) {
+                    return resolve({changed: false});
+                }
+
+                thunkAPI.dispatch(handleError(err));
+                return reject();
+            })
+            
+        });
+    }
+)
 
 export const traySlice = createSlice({
     name: 'tray',
@@ -169,13 +276,22 @@ export const traySlice = createSlice({
         periods: {},
         courses: {},
         selected: [],
-        overview: {
-
-        },
+        overview: {},
         friends: {},
-        isSelecting: false
+        planned: {
+            own: [],
+            friends: {},
+            isLoading: true
+        },
+        isSelecting: false,
+        error: null
     },
-    reducers: {},
+    reducers: {
+        resetError: (state) => {
+            state.error = null;
+            return state;
+        } 
+    },
     extraReducers: {
         [getTrayList.fulfilled]: (state, action) => {
             if(!action.payload.changed) {
@@ -187,12 +303,14 @@ export const traySlice = createSlice({
             Object.keys(schools).forEach(school => {
                 schools[school].forEach((period, i) => {
                     if(!state.tray.list[school]) state.tray.list[school] = [];
-                    state.tray.list[school].push({name: period.name, hash: period.href});
+                    state.tray.list[school].push({name: period.name, hash: period.href, closed: period.closed, status: period.status});
 
                     state.periods[period.href] = {
                         school: school,
                         name: period.name,
                         isLoading: true,
+                        closed: period.closed,
+                        status: period.status,
                         index: i,
                         bars: []
                     }
@@ -249,7 +367,8 @@ export const traySlice = createSlice({
             if(!action.payload.changed) {
                 return;
             }
-            const list = action.payload['list'];
+
+            const list = action.payload['list'] ?? [];
 
             list.forEach(course => {state.overview[course.period] = state.overview[course.period] ?[...state.overview[course.period], course]: [course];})
         },
@@ -265,6 +384,10 @@ export const traySlice = createSlice({
             })
         },
         [selectCourse.fulfilled]: (state, action) => {
+            if (!action.payload.changed) {
+                state.error = action.payload['error'];
+                return;
+            }
             const hash = action.payload['hash'];
             
             state.courses[hash].isSelected = true;
@@ -273,9 +396,14 @@ export const traySlice = createSlice({
             state.isSelecting = false;
         },
         [selectCourse.pending]: (state, action) => {
-            state.isSelecting = true;
+            state.isSelecting = false;
         },
         [deselectCourse.fulfilled]: (state, action) => {
+            if (!action.payload.changed) {
+                state.error = action.payload['error'];
+                return;
+            }
+
             const hash = action.payload['hash'];
             
             state.courses[hash].isSelected = false;
@@ -284,8 +412,59 @@ export const traySlice = createSlice({
             state.isSelecting = false;
         },
         [deselectCourse.pending]: (state, action) => {
+            state.isSelecting = false;
+        },
+        [getOwnPlan.fulfilled]: (state, action) => {
+            if(!action.payload.changed) {
+                return;
+            }
+
+            state.planned.own = [...state.planned.own, ...action.payload.list]
+            state.planned.isLoading = false;
+            state.isSelecting = false;
+        },
+        [getFriendsPlans.fulfilled]: (state, action) => {
+            if(!action.payload.changed) {
+                return;
+            }
+            const map = action.payload['map'];
+            const m = state.planned.friends;
+            
+            Object.keys(map).forEach(username => {
+                map[username].forEach(c => {m[c.trim()] = m[c.trim()] ? (m[c.trim()].includes(username) ? m[c.trim()] : [...m[c.trim()], username]) : [username]})
+            })
+        },
+        [getOwnPlan.pending]: (state, action) => {
             state.isSelecting = true;
         },
+        [planCourse.fulfilled]: (state, action) => {
+            const code = action.payload['code'];    
+            if(!action.payload.changed) {
+                state.isSelecting = false;
+                state.error = 'Sinun tulee hyväksyä käyttöehdot kurssivalintojen käsittelystä. "Asetukset" -> "Kurssivalintojen jakaminen"';
+                return;
+            }
+
+            state.planned.own = [...state.planned.own, code];
+            state.isSelecting = false;
+        },
+        [planCourse.pending]: (state, action) => {
+            state.isSelecting = true;
+        },
+        [deplanCourse.fulfilled]: (state, action) => {
+            const code = action.payload['code'];
+            if(!action.payload.changed) {
+                state.isSelecting = false;
+                state.error = 'Sinun tulee hyväksyä käyttöehdot kurssivalintojen käsittelystä. "Asetukset" -> "Kurssivalintojen jakaminen"';
+                return;
+            }
+
+            state.planned.own = state.planned.own.filter(c => c != code)
+            state.isSelecting = false;
+        },
+        [deselectCourse.pending]: (state, action) => {
+            state.isSelecting = true;
+        }
     },
 });
 
@@ -295,7 +474,11 @@ export const useTray = (state) => ({
     courses: state.tray.courses,
     selected: state.tray.selected,
     friends: state.tray.friends,
-    isSelecting: state.tray.isSelecting
+    isSelecting: state.tray.isSelecting,
+    planned: state.tray.planned,
+    error: state.tray.error,
 });
+
+export const { resetError } = traySlice.actions;
 
 export default traySlice.reducer;

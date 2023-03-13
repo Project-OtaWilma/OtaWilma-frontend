@@ -62,10 +62,12 @@ export const scheduleSlice = createSlice({
                     for (let j = i; j < le.length; j++) {
                         const l = le[j];
                         const h = l.endRaw + groupOffset;
+                        const e = `${day} ${l.end}`;
+                        const s = `${day} ${l.start}`;
 
                         height = ((h - 400) > height ? (h - 400) : height);
     
-                        le[j] = {...l, startRaw: l.startRaw + groupOffset, endRaw: h}
+                        le[j] = {...l, startRaw: l.startRaw + groupOffset, endRaw: h, endTime: e, startTime: s}
                     }
     
                     le[i] = {...le[i], durationRaw: le[i].durationRaw + groupOffset}

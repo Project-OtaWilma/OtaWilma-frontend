@@ -41,20 +41,45 @@
     border-left: solid 2px var(--border-main);
 }
 
-.period-list h2 {
+.tray-object {
     padding: 5px;
 
     cursor: pointer;
     user-select: none;
-    transition: opacity .2s ease-in-out;
 }
 
-.period-list h2.selected {
+.tray-object h6 {
+    width: 40px;
+    text-align: center;
+    margin-top: 5px;
+    padding: 3px;
+
+    background-color: var(--accent-main);
+    border-radius: 4px;
+
+    font-size: 10px;
+    color: var(--font-h5);
+}
+
+.tray-object .closed {
+    background-color: var(--error) !important;
+}
+
+.tray-object.selected h2 {
     font-family: 'bold';
 }
 
-.period-list h2:hover {
+.tray-object h2 {
+    transition: opacity .2s ease-in-out;
+}
+
+.tray-object:hover h2 {
     opacity: 50%;
+}
+
+.tray-object h3 {
+    font-size: 11px;
+    padding: 2px;
 }
 
 .tray-loading-screen {
@@ -76,6 +101,43 @@
     background-color: var(--background-main);
 
     overflow-y: scroll;
+}
+
+.mode-disclaimer {
+    position: fixed;
+    height: 30px;
+    width: 110%;
+    opacity: 50%;
+
+    top: 50px;
+
+    background-color: var(--accent-main);
+    pointer-events: none;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mode-explanation {
+    text-align: center;
+    line-height: 1.1;
+}
+
+.mode-disclaimer h6 {
+    min-width: 300px;
+    height: 20px;
+
+    font-size: 15px;
+    padding-top: 4px;
+    color: var(--font-h5);
+}
+
+h6 strong {
+    font-family: 'bold';
 }
 
 .tray-main .period {
@@ -258,7 +320,7 @@
     transition: opacity .2s ease-in-out;
 
     pointer-events: none;
-    z-index: 4;
+    z-index: 7;
 }
 
 .course-data h2 {
@@ -305,6 +367,7 @@
 
     thereforte, will only work for periods in:
     "Espoon kesälukio 2022"
+    "Espoon kesälukio 2023"
     "Otaniemen lukio 2021-2022"
     "Otaniemen lukio 2022-2023"
     "Otaniemen lukio 21-22, opiskelijat 18, 19 ja 20"
@@ -320,6 +383,7 @@
     color: rgb(90, 90, 90) !important;
 
     pointer-events: none;
+    z-index: 0;
 }
 
 .k70F27363_35245-off,
@@ -327,12 +391,14 @@
 .kAB14633F_1381-off,
 .kAB14633F_1388-off,
 .kB5DAF4F1_27576-off,
-.k5C1BC722_1174-off {
+.k5C1BC722_1174-off,
+.kD2F126D9_1381-off {
     background-color: var(--L2021-mandatory-main);
 }
 
 .k70F27363_35249-off,
-.kB5DAF4F1_27580-off {
+.kB5DAF4F1_27580-off,
+.kD2F126D9_1892-off {
     background-color: var(--L2021-g-optional-main);
 }
 
@@ -340,7 +406,8 @@
 .kAB14633F_1519-off,
 .kB5DAF4F1_29537-off,
 .kB5DAF4F1_31827-off,
-.kB5DAF4F1_31827-off {
+.kB5DAF4F1_31827-off,
+.kD2F126D9_1945-off {
     background-color: var(--L2021-l-optional-main);
 }
 
@@ -369,7 +436,8 @@
 .kAB14633F_1381-on,
 .kAB14633F_1388-on,
 .kB5DAF4F1_27576-on,
-.k5C1BC722_1174-on {
+.k5C1BC722_1174-on,
+.kD2F126D9_1381-on {
     background-color: var(--L2021-mandatory-selected);
     border: solid 3px black;
 
@@ -378,7 +446,8 @@
 }
 
 .k70F27363_35249-on,
-.kB5DAF4F1_27580-on {
+.kB5DAF4F1_27580-on,
+.kD2F126D9_1892-on {
     background-color: var(--L2021-g-optional-selected);
     border: solid 3px black;
 
@@ -387,7 +456,8 @@
 }
 
 .k70F27363_35253-on,
-.kAB14633F_1519-on {
+.kAB14633F_1519-on,
+.kD2F126D9_1945-on {
     background-color: var(--L2016-l-optional-selected);
     border: solid 3px black;
 
@@ -433,6 +503,31 @@
     background-color: var(--background-main);
 
     overflow-y: scroll;
+}
+
+.tray-info .edit-mode {
+    background-color: var(--accent-main);
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.edit-mode h5 {
+    cursor: pointer;
+    user-select: none;
+}
+
+.edit-mode h5:hover {
+    font-family: 'bold';
+}
+
+.edit-mode .selected {
+    font-family: 'bold';
 }
 
 .tray-info-loading-screen {
@@ -709,6 +804,21 @@
     background-repeat: no-repeat;
 }
 
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error h6 {
+    text-align: center;
+    opacity: 50%;
+    color: var(--font-h2);
+    pointer-events: none;
+    user-select: none;
+}
+
 .schedule .day {
     width: calc((100% / 5));
     display: flex;
@@ -774,6 +884,68 @@ button:disabled {
     pointer-events: none;
 }
 
+.error-window {
+    position: absolute;
+    width: 350px;
+    height: auto;
+
+    background-color: var(--background-darker);
+    z-index: 3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-left: solid 10px var(--accent-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+    padding-bottom: 40px;
+}
+
+.error-window .background {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    background-image: url(../../assets/img/otakarhu-confused.svg);
+    background-size: contain;
+
+    opacity: 10%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.error-window h1 {
+    color: var(--font-h1);
+    font-size: 25px;
+    text-align: center;
+    margin: 15px;
+}
+
+.error-window h2 {
+    text-align: center;
+    width: 70%;
+
+    font-family: 'regular';
+    font-style: italic;
+}
+
+.error-window h4 {
+    position: absolute;
+    opacity: 50%;
+
+    bottom: 10px;
+
+    font-size: 14px;
+    color: var(--font-h2);
+
+    cursor: pointer;
+}
+
+.error-window h4:hover {
+    opacity: 75%;
+}
+
 @media screen and (max-width: 1400px) {
     .content {
         width: 98%;
@@ -837,5 +1009,9 @@ button:disabled {
     .content {
         height: calc(100% - 50px - 5%);
         bottom: 2.5%;
+    }
+
+    .mode-disclaimer {
+        height: 87%;
     }
 }

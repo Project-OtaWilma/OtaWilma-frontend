@@ -8,14 +8,11 @@ import {
 
 import { login as loginToOtaWilma } from './theme-api'
 
-
-    //const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-    const wilmaAPI = 'https://beta.wilma-api.tuukk.dev/api/';
-    //const wilmaAPI = 'http://localhost:3001/api/';
+const { wilmaApi } = require('../config.json');
 
 const login = (credentials) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}login`;
+        const url = `${wilmaApi}/login`;
 
         fetchJson(url, {
             method: 'POST',
@@ -41,7 +38,7 @@ const login = (credentials) => {
 
 const getVersion = () => {
     return new Promise(async (resolve, reject) => {
-        const url = `${wilmaAPI}version/get`;
+        const url = `${wilmaApi}/version/get`;
         const cached = await loadCache('version-cache', url).catch(() => { });
         const version = cached ? cached.version : null;
 
@@ -71,7 +68,7 @@ const fetchMessages = (auth, path, limit) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}messages/${path}/?limit=${limit}`,
+        fetchJson(`${wilmaApi}/messages/${path}/?limit=${limit}`,
             {
                 headers: { 'token': auth }
             })
@@ -88,7 +85,7 @@ const fetchMessageContent = (auth, hash) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}messages/${hash}`,
+        fetchJson(`${wilmaApi}/messages/${hash}`,
             {
                 headers: { 'token': auth }
             })
@@ -105,7 +102,7 @@ const fetchNews = (auth, path, limit) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}/news/${path}?limit=${limit}`,
+        fetchJson(`${wilmaApi}//news/${path}?limit=${limit}`,
             {
                 headers: { 'token': auth }
             })
@@ -122,7 +119,7 @@ const fetchNewsContent = (auth, hash) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}news/${hash}`,
+        fetchJson(`${wilmaApi}/news/${hash}`,
             {
                 headers: { 'token': auth }
             })
@@ -137,7 +134,7 @@ const fetchNewsContent = (auth, hash) => {
 
 const fectchCourseList = (lops) => {
     return new Promise(async (resolve, reject) => {
-        const url = `${wilmaAPI}lops/${lops}/courses/list`;
+        const url = `${wilmaApi}/lops/${lops}/courses/list`;
 
         fetchJson(url, {
             method: 'GET',
@@ -156,7 +153,7 @@ const fetchGradeBook = (auth, filter) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}gradebook/?filter=${filter}`,
+        fetchJson(`${wilmaApi}/gradebook/?filter=${filter}`,
             {
                 headers: { 'token': auth }
             })
@@ -173,7 +170,7 @@ const fetchCourse = (lops, id) => {
     return new Promise(async (resolve, reject) => {
         // override to using stable api
         // const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-        const url = `${wilmaAPI}lops/${lops}/courses/get/${id}`;
+        const url = `${wilmaApi}/lops/${lops}/courses/get/${id}`;
 
         fetchJson(url, {
             method: 'GET',
@@ -192,7 +189,7 @@ const fetchCourseType = (lops, id) => {
     return new Promise(async (resolve, reject) => {
         // override to using stable api
         // const wilmaAPI = 'https://wilma-api.tuukk.dev/api/';
-        const url = `${wilmaAPI}lops/${lops}/courses/subject/${id}`;
+        const url = `${wilmaApi}/lops/${lops}/courses/subject/${id}`;
 
         fetchJson(url, {
             method: 'GET',
@@ -209,7 +206,7 @@ const fetchCourseType = (lops, id) => {
 
 const fetchSchedule = (auth, date = Date) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
+        const url = `${wilmaApi}/schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
 
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
@@ -230,7 +227,7 @@ const fetchSchedule = (auth, date = Date) => {
 
 const fetchHomeworkGroups = (auth) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}homework`;
+        const url = `${wilmaApi}/homework`;
 
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
@@ -253,7 +250,7 @@ const fetchTrayList = (auth) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}course-tray/list`,
+        fetchJson(`${wilmaApi}/course-tray/list`,
             {
                 headers: { 'token': auth }
             })
@@ -268,7 +265,7 @@ const fetchTrayList = (auth) => {
 
 const fetchPeriod = (auth, hash) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}course-tray/${hash}`;
+        const url = `${wilmaApi}/course-tray/${hash}`;
 
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
@@ -291,7 +288,7 @@ const fetchTrayCourse = (auth, hash) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}course-tray/courses/${hash}`,
+        fetchJson(`${wilmaApi}/course-tray/courses/${hash}`,
             {
                 headers: { 'token': auth }
             })
@@ -309,7 +306,7 @@ const fetchTrayCourseInfo = (hash) => {
         const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaAPI}course-tray/courses/info/${hash}`,
+        fetchJson(`${wilmaApi}/course-tray/courses/info/${hash}`,
             {
                 headers: { 'token': auth }
             })
@@ -324,7 +321,7 @@ const fetchTrayCourseInfo = (hash) => {
 
 const CourseTraySelect = (auth, hash) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}course-tray/select/${hash}`;
+        const url = `${wilmaApi}/course-tray/select/${hash}`;
 
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
@@ -345,7 +342,7 @@ const CourseTraySelect = (auth, hash) => {
 
 const CourseTrayDeselect = (auth, hash) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}course-tray/deselect/${hash}`;
+        const url = `${wilmaApi}/course-tray/deselect/${hash}`;
 
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
@@ -366,7 +363,7 @@ const CourseTrayDeselect = (auth, hash) => {
 
 const fetchTeacherList = () => {
     return new Promise(async (resolve, reject) => {
-        const url = `${wilmaAPI}teachers/list`;
+        const url = `${wilmaApi}/teachers/list`;
 
         fetchJson(url, {
             method: 'GET',
@@ -383,7 +380,7 @@ const fetchTeacherList = () => {
 
 const fetchTeacherInfo = (value, isID) => {
     return new Promise((resolve, reject) => {
-        const url = isID ? `${wilmaAPI}teachers/id/${value}` : `${wilmaAPI}teachers/name/${value}`;
+        const url = isID ? `${wilmaApi}/teachers/id/${value}` : `${wilmaApi}/teachers/name/${value}`;
 
         fetchJson(url, {
             method: 'GET'
@@ -398,9 +395,53 @@ const fetchTeacherInfo = (value, isID) => {
     });
 }
 
+const fetchRoomList= (auth) => {
+    return new Promise((resolve, reject) => {
+        const url = `${wilmaApi}/rooms/list`;
+
+        if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'token': auth
+            }
+        })
+            .then(list => {
+                return resolve(list);
+            })
+            .catch(err => {
+                return reject(err);
+            })
+
+    });
+}
+
+const fetchRoomSchedule= (auth, room, date = new Date()) => {
+    return new Promise((resolve, reject) => {
+        const url = `${wilmaApi}/rooms/${room}/schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
+
+        if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
+
+        fetchJson(url, {
+            method: 'GET',
+            headers: {
+                'token': auth
+            }
+        })
+            .then(room => {
+                return resolve(room);
+            })
+            .catch(err => {
+                return reject(err);
+            })
+
+    });
+}
+
 const logout = () => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaAPI}logout`;
+        const url = `${wilmaApi}/logout`;
 
         const auth = getCookie('token');
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
@@ -441,5 +482,7 @@ export {
     fetchTeacherList,
     fetchTeacherInfo,
     CourseTraySelect,
-    CourseTrayDeselect
+    CourseTrayDeselect,
+    fetchRoomList,
+    fetchRoomSchedule
 }

@@ -13,6 +13,7 @@ import homeworkSlice from '../features/schedule/homeworkSlice';
 import teacherSlice from '../features/teachers/teacherSlice';
 import apiSlice from '../features/api/apiSlice';
 import versionSlice from '../features/version/versionSlice';
+import roomSlice from '../features/schedule/roomSlice';
 
 export default configureStore({
   reducer: {
@@ -29,6 +30,7 @@ export default configureStore({
     homework: homeworkSlice,
     teachers: teacherSlice,
     api: apiSlice,
-    version: versionSlice
+    version: versionSlice,
+    rooms: roomSlice
   },
 });

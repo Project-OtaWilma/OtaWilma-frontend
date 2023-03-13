@@ -21,6 +21,22 @@
 ![](/img/filter.jpg) Same tray as [in this example](#share-courses-with-your-friends), but only the subjects I might want to study on my sophomore year are shown.
 
 
+## Keyboard support
+
+OtaWilmas basic navigation has keyboard support so you can move around tabs wihtout using your mouse. Bindings are as follows:
+
+```
+Enter - Login
+Q - Frontpage
+W - Messages
+E - Grades
+R - Course-tray
+A - News
+S - Teachers
+D - Maps
+F - Settings
+```
+
 
 ## Available Scripts
 
@@ -48,3 +64,15 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Requirements
+
+To compile this need the file `config.json` in the project directory. Its default contents are: 
+
+```json5
+{
+    "versionLabel": "LOCAL BUILD",
+    "wilmaApi": "https://beta.wilma-api.tuukk.dev/api",
+    "otaWilmaApi": "https://beta.otawilma-api.tuukk.dev/api"
+}
+```

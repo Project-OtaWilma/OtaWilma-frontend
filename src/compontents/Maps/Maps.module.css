@@ -1,0 +1,360 @@
+body {
+    background-color: var(--background-main);
+}
+
+text {
+    pointer-events: none;
+    user-select: none;
+}
+
+:root {
+    --map-outline: gray;
+    --map-background: white;
+    --map-details: gray;
+    --map-fill: white;
+    --map-h1: gray;
+}
+
+.content {
+    position: absolute;
+    width: 95%;
+    height: 85%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-left: solid 10px var(--accent-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    background-color: var(--map-background);
+}
+
+.side-selector {
+    position: absolute;
+    left: 0;
+    width: 40px;
+    left: 10px;
+    height: 300px;
+
+    background-color: var(--accent-main);
+
+    border-radius: 20px;
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 4;
+}
+
+.floor-list {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.floor-list h5 {
+    font-size: 20px;
+    margin: 10px;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+.floor-list h5:hover {
+    font-family: 'bold';
+}
+
+.selected {
+    font-family: 'bold';
+}
+
+.map {
+    position: absolute;
+    width: calc(100%);
+    height: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+    background-image: url(../../assets/img/grid.svg);
+    background-position: center center;
+
+    border-right: solid 5px var(--accent-main);
+
+    transition: filter .2s ease-in-out;
+}
+
+.map-object {
+    position: absolute;
+    width: 2560px;
+    height: 1440px;
+
+    transition: scale .2s ease-out;
+}
+
+.map-loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.room-info {
+    position: absolute;
+    width: 600px;
+    height: 100%;
+
+    background-color: var(--map-background);
+
+    z-index: 4;
+
+    top: 0px;
+    right: 0;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.room-info .image {
+    position: absolute;
+    width: 100%;
+    height: 340px;
+    top: 0;
+
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.room-info .title {
+    position: absolute;
+    top: 250px;
+    left: 20px;
+}
+
+.title h1 {
+    font-size: 35px;
+    padding-left: 10px;
+}
+
+.title h3 {
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.title h4 {
+    color: var(--font-h3);
+    font-size: 15px;
+    padding: 5px;
+    padding-left: 10px;
+
+    opacity: 50%;
+}
+
+.room-info .info {
+    position: absolute;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+    top: 275px;
+}
+
+.info h6 {
+    margin-right: 40px;
+
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--accent-main);
+    color: var(--font-h5);
+}
+
+.room-info button {
+    position: absolute;
+
+    bottom: 10px;
+    left: 10px;
+
+    font-size: 17px;
+    background: none;
+
+    opacity: 75%;
+    transition: opacity .2s ease-in-out;
+    cursor: pointer;
+
+    color: var(--font-h2);
+}
+
+.room-info button:hover {
+    opacity: 100%;
+}
+
+.schedule {
+    position: absolute;
+    width: 550px;
+    height: 320px;
+
+    border-top: solid 1px var(--border-main);
+    padding-top: 15px;
+
+    top: 350px;
+    left: 25px;
+
+    display: flex;
+    flex-direction: row;
+
+    margin: 10px;
+    padding-left: 1px;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.schedule .day {
+    width: calc((100% / 5));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-left: solid 1px var(--border-main);
+}
+
+.hour {
+    /* this was a mistake */
+    position: absolute;
+
+    width: calc((100% / 5 - 5px));
+    min-height: 10px;
+
+    margin-bottom: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    border: solid 1px var(--border-main);
+    background-color: var(--schedule-main);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hour h1 {
+    text-shadow: 0 0 7px var(--shadow-darker);
+
+    color: var(--schedule-h1);
+    margin: 10px;
+    font-size: 10px;
+
+    align-self: flex-start;
+}
+
+.data {
+    height: 90%;
+    width: 90%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.data .group {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.data a,
+.data h2 {
+    text-shadow: 0 0 7px var(--shadow-darker);
+    color: var(--schedule-h1);
+    font-size: 10px;
+    padding: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    text-decoration: none;
+
+    pointer-events: all;
+    font-family: 'semi-bold';
+    transition: opacity .2s ease-in-out;
+
+    min-width: 15px;
+
+    opacity: 50%;
+}
+
+.data .code {
+    opacity: 75%;
+}
+
+.data a {
+    font-weight: 'bold';
+}
+
+.data a:hover {
+    opacity: 100%;
+}
+
+
+.data h3 {
+    font-size: 10px;
+    width: 100%;
+    padding-bottom: 2px;
+
+    color: var(--error);
+    opacity: 75%;
+}
+
+.no-week {
+    position: absolute;
+    text-align: center;
+
+    align-self: center;
+    width: 100%;
+
+    font-size: 17px;
+    opacity: 50%;
+}
+
+.room-loading-screen {
+    position: absolute;
+    width: 600px;
+    height: 100%;
+    z-index: 4;
+
+    top: 0px;
+    right: 0;
+}
+
+.schedule-loading-screen {
+    position: absolute;
+    width: 550px;
+    height: 320px;
+
+    border-top: solid 1px var(--border-main);
+    padding-top: 15px;
+
+    top: 350px;
+    left: 25px;
+}

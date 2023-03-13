@@ -359,6 +359,13 @@ const NumberInput = ({field, k: key}) => {
     }, [theme]);
 
     const updateValue = (v) => {
+        console.log([field, key]);
+        
+        if(key==="hue-rotate") {
+            const val = `${Math.min(Math.max(v, -180), 180)}`;
+            return setValue(val);
+        } 
+        
         const val = `${Math.min(Math.max(v, 0), 200)}`;
         setValue(val);
     }
