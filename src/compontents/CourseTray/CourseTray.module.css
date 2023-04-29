@@ -386,6 +386,7 @@ h6 strong {
     z-index: 0;
 }
 
+.kCFC108FF_50713-off,
 .k70F27363_35245-off,
 .k70F27363_35780-off,
 .kAB14633F_1381-off,
@@ -396,12 +397,14 @@ h6 strong {
     background-color: var(--L2021-mandatory-main);
 }
 
+.kCFC108FF_50717-off,
 .k70F27363_35249-off,
 .kB5DAF4F1_27580-off,
 .kD2F126D9_1892-off {
     background-color: var(--L2021-g-optional-main);
 }
 
+.kCFC108FF_50721-off,
 .k70F27363_35253-off,
 .kAB14633F_1519-off,
 .kB5DAF4F1_29537-off,
@@ -422,6 +425,7 @@ h6 strong {
     background-color: var(--L2016-g-optional-main);
 }
 
+.kCFC108FF_50868-off,
 .k5C1BC722_1188-off,
 .k5C1BC722_1217-off,
 .k5C1BC722_1662-off,
@@ -431,6 +435,7 @@ h6 strong {
 
 /* k5C1BC722_1188-off */
 
+.kCFC108FF_50713-on,
 .k70F27363_35245-on,
 .k70F27363_35780-on,
 .kAB14633F_1381-on,
@@ -445,6 +450,7 @@ h6 strong {
     color: white !important;
 }
 
+.kCFC108FF_50717-on,
 .k70F27363_35249-on,
 .kB5DAF4F1_27580-on,
 .kD2F126D9_1892-on {
@@ -484,6 +490,7 @@ h6 strong {
     color: white !important;
 }
 
+.kCFC108FF_50868-on,
 .k5C1BC722_1188-on,
 .k5C1BC722_1217-on,
 .k5C1BC722_1662-on,
