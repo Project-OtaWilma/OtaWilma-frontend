@@ -12,16 +12,6 @@ export default function Navbar() {
     const navigate = useNavigate();
     const keyMap = {81:'/', 87:'/messages', 69: '/grades', 82:'/tray', 65:'/news', 83:'/teachers', 68:'/maps', 70:'/settings' }
 
-	useEffect(() => {
-		const handleEnter = (e) => {
-			if (!Object.keys(keyMap).includes(`${e.keyCode}`)) return
-			navigate(keyMap[e.keyCode])
-		}
-
-		document.addEventListener('keydown', handleEnter);
-		return () => {document.removeEventListener('keydown', handleEnter);}
-	    }, [])
-
 
     return (
         <div className={styles['top']}>

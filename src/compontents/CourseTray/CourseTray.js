@@ -103,7 +103,7 @@ export default function CourseTray() {
         }
     }
 
-    useEffect(() => { initialize() }, []);
+    useEffect(initialize, []);
 
     return (
         <>
