@@ -41,6 +41,13 @@
             "--L2016-g-optional-selected": "Valittu valtakunnalinen soveltava kurssi (LOPS 2016)",
             "--course-tray-h1": "Kurssien tekstin ensisijainen väri"
         },
+        "Kartat": {
+            "--map-outline": "Kartan ääriviivat",
+            "--map-background": "Kartan tausta",
+            "--map-details": "Kartan yksityiskohdat",
+            "--map-fill": "Kartan huoneiden taustan väri",
+            "--map-h1": "Kartan tekstin väri"
+        },
         "Muu": {
             "--login-main": "Painikkeiden ensisijainen väri",
             "--login-lighter": "Painikkeiden toissijainen väri",

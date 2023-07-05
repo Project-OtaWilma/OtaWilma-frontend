@@ -8,8 +8,8 @@ text {
 }
 
 :root {
-    --map-outline: gray;
-    --map-background: white;
+    --map-outline: #808080;
+    --map-background: #ffffff;
     --map-details: gray;
     --map-fill: white;
     --map-h1: gray;
