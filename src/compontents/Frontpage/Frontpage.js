@@ -4,20 +4,47 @@ import { useAuth } from '../../features/authentication/authSlice';
 import { useMessages, getMessages } from '../../features/messages/messageSlice';
 import { useGrades, getGradebook } from '../../features/grades/gradeSlice';
 import { useNews, getNews } from '../../features/news/newsSlice';
-import { useSchedule, getWeek } from '../../features/schedule/scheduleSlice';
+import { useSchedule, getWeek, getMonth } from '../../features/schedule/scheduleSlice';
 import { useHomework, getGroups } from '../../features/schedule/homeworkSlice';
 
 import styles from './Frontpage.module.css';
 import { Link } from 'react-router-dom';
 
-import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
+import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 import { useRef } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+const weekdays = [
+    'Maanantai',
+    'Tiistai',
+    'Keskiviikko',
+    'Torstai',
+    'Perjantai',
+    'Lauantai',
+    'Sunnuntai'
+]
+
+const months = [
+    'Tammikuu',
+    'Helmikuu',
+    'Maaliskuu',
+    'Huhtikuu',
+    'Toukokuu',
+    'Kesäkuu',
+    'Heinäkuu',
+    'Elokuu',
+    'Syyskuu',
+    'Lokakuu',
+    'Marraskuu',
+    'Joulukuu'
+]
+
 
 export default function Frontpage() {
     const [category, setCategory] = useState('schedule');
+    const [open, setOpen] = useState(false);
+    const [current, setCurrentDate] = useState(new Date());
     
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
@@ -25,15 +52,16 @@ export default function Frontpage() {
     const now = new Date();
     
     const days = [
-        new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
-        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14)
+        new Date(now.getFullYear(), now.getMonth() + 2, now.getDate()),
+        new Date(now.getFullYear(), now.getMonth() + 2, now.getDate() + 7),
+        new Date(now.getFullYear(), now.getMonth() + 2, now.getDate() + 14)
     ]
     
     const initialize = () => {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
         dispatch(getGradebook({auth: auth.token}))
+        dispatch(getMonth({auth: auth.token}))
 
         loadSchedule();
     }
@@ -50,125 +78,138 @@ export default function Frontpage() {
         dispatch(getGroups({auth: auth.token}));
     }
 
+    const loadCalendar = (direction) => {
+        const d = new Date(current.getFullYear(), current.getMonth() + direction, current.getDate());
+        dispatch(getMonth({auth: auth.token, date: d}))
+        setCurrentDate(d);
+    }
+
     // componentDidMount
     useEffect(() => { initialize() }, []);
 
     return (
-        <div className={styles['content']}>
-            <div className={styles['top-container']}>
-                <div className={styles['left']}>
-                    <div className={styles['side-bar']}>
-                        <div className={styles['side-bar-content']}>
-                            <h5 onClick={() => loadSchedule()} className={category == 'schedule' ? styles['selected'] : null}>Työjärjestys</h5>
-                            <h5 onClick={() => loadHomework()}  className={category == 'homework' ? styles['selected'] : null}>Kotitehtävät</h5>
+        <>
+            {open ? <ScheduleWindow current={current} loadCalendar={loadCalendar} onClose={() => setOpen(false)} /> : null}
+            <BlurLayer className={styles['content']} isLoading={open}>
+                <div className={styles['top-container']}>
+                    <div className={styles['left']}>
+                        <div className={styles['side-bar']}>
+                            <div className={styles['side-bar-content']}>
+                                <h5 onClick={() => loadSchedule()} className={category == 'schedule' ? styles['selected'] : null}>Työjärjestys</h5>
+                                <h5 onClick={() => loadHomework()}  className={category == 'homework' ? styles['selected'] : null}>Kotitehtävät</h5>
+                            </div>
+                        </div>  
+                        <div className={styles['schedule']}>
+                            {category == 'schedule' ? <Schedule days={days}/> : <HomeworkContainer />}
                         </div>
-                    </div>  
-                    <div className={styles['schedule']}>
-                        {category == 'schedule' ? <Schedule days={days}/> : <HomeworkContainer />}
+                        <button
+                            onClick={() => setOpen(!open)}
+                            className={styles['schedule-fullscreen']}
+                        ></button>
+                    </div>
+                    <div className={styles['middle']}>
+                        <Clock />
+                </div>
+                    <div className={styles['right']}>
+                        <div className={styles['news']}>
+                            <NewsList />
+                        </div>
                     </div>
                 </div>
-                <div className={styles['middle']}>
-                    <Clock />
-               </div>
-                <div className={styles['right']}>
-                    <div className={styles['news']}>
-                        <NewsList />
+                <div className={styles['bottom-container']}>
+                    <div className={styles['left']}>
+                    <div className={styles['grades']}>
+                            <GradeList />
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className={styles['bottom-container']}>
-                <div className={styles['left']}>
-                <div className={styles['grades']}>
-                        <GradeList />
-                    </div>
-                </div>
-                <div className={styles['middle']}>
-                    <div className={styles["links"]}>
-                        <h1>Linkit</h1>
-                        <h3>Opiskelu</h3>
+                    <div className={styles['middle']}>
+                        <div className={styles["links"]}>
+                            <h1>Linkit</h1>
+                            <h3>Opiskelu</h3>
 
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://classroom.google.com/">Google Classroom</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://www.microsoft.com/fi-fi/microsoft-teams/log-in">Microsoft
-                                Teams</a>
-                        </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://classroom.google.com/">Google Classroom</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://www.microsoft.com/fi-fi/microsoft-teams/log-in">Microsoft
+                                    Teams</a>
+                            </div>
 
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://espoo.inschool.fi/">Wilma - espoo</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://digikirja.otava.fi/tietokantajulkaisut/maol-2020/">MAOL
-                                digitaulukot</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://kampus.sanomapro.fi/">Sanomapro - digikirjat</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://opiskelija.otava.fi/materiaalit/omat">Otava -
-                                digikirjat</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://app.studeo.fi/auth/login">Studeo -
-                                digikirjat</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://shop.edita.fi/digiedita/omat-tuotteet">Edita -
-                                digikirjat</a>
-                        </div>
-                        <h3>Hyödyllinen</h3>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://lomalaskuri.tk/OtaniemenLukio/Etusivu">Lomalaskuri</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank"
-                                href="https://www.espoo.fi/fi/otaniemen-lukio/kalenteri-otaniemen-lukio">Otaniemen lukio
-                                - Kalenteri</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank"
-                                href="https://www.espoo.fi/fi/otaniemen-lukio/opiskelijalle-otaniemen-lukio#section-33736">Otaniemen
-                                Lukio - opiskelijalle</a>
-                        </div>
-                        <h3>Ruokailu</h3>
-                        <div className={styles["link"]}>
-                            <a target="_blank"
-                                href="https://www.amica.fi/ravintolat/ravintolat-kaupungeittain/espoo/tietokyla/">Amica
-                                -
-                                Otaniemen lukio</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://www.lounaat.info/otaniemi">Lounaat - Otaniemi</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank" href="https://kanttiinit.fi/">Lounaat - Kanttiinit</a>
-                        </div>
-                        <h3>Ruokailuvuorot</h3>
-                        <div className={styles["link"]}>
-                            <a target="_blank"
-                                href="https://drive.google.com/file/d/1NrGciABX7vW9lq7q4mA7xfoNEmPrRr_z/view">Ruokailuvuorot
-                                - 1. periodi</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank"
-                                href="https://drive.google.com/file/d/1ql4Ko64915NAWrsDyyDqXynhrX1z3Duw/view?usp=sharing">Ruokailuvuorot
-                                - 2. periodi</a>
-                        </div>
-                        <div className={styles["link"]}>
-                            <a target="_blank"
-                                href="https://drive.google.com/file/d/1jCpX8_HOmXCvfGjJ3t_VC4cjIXNsPbwd/view?usp=sharing">Ruokailuvuorot
-                                - 3. periodi</a>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://espoo.inschool.fi/">Wilma - espoo</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://digikirja.otava.fi/tietokantajulkaisut/maol-2020/">MAOL
+                                    digitaulukot</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://kampus.sanomapro.fi/">Sanomapro - digikirjat</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://opiskelija.otava.fi/materiaalit/omat">Otava -
+                                    digikirjat</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://app.studeo.fi/auth/login">Studeo -
+                                    digikirjat</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://shop.edita.fi/digiedita/omat-tuotteet">Edita -
+                                    digikirjat</a>
+                            </div>
+                            <h3>Hyödyllinen</h3>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://lomalaskuri.tk/OtaniemenLukio/Etusivu">Lomalaskuri</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank"
+                                    href="https://www.espoo.fi/fi/otaniemen-lukio/kalenteri-otaniemen-lukio">Otaniemen lukio
+                                    - Kalenteri</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank"
+                                    href="https://www.espoo.fi/fi/otaniemen-lukio/opiskelijalle-otaniemen-lukio#section-33736">Otaniemen
+                                    Lukio - opiskelijalle</a>
+                            </div>
+                            <h3>Ruokailu</h3>
+                            <div className={styles["link"]}>
+                                <a target="_blank"
+                                    href="https://www.amica.fi/ravintolat/ravintolat-kaupungeittain/espoo/tietokyla/">Amica
+                                    -
+                                    Otaniemen lukio</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://www.lounaat.info/otaniemi">Lounaat - Otaniemi</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank" href="https://kanttiinit.fi/">Lounaat - Kanttiinit</a>
+                            </div>
+                            <h3>Ruokailuvuorot</h3>
+                            <div className={styles["link"]}>
+                                <a target="_blank"
+                                    href="https://drive.google.com/file/d/1NrGciABX7vW9lq7q4mA7xfoNEmPrRr_z/view">Ruokailuvuorot
+                                    - 1. periodi</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank"
+                                    href="https://drive.google.com/file/d/1ql4Ko64915NAWrsDyyDqXynhrX1z3Duw/view?usp=sharing">Ruokailuvuorot
+                                    - 2. periodi</a>
+                            </div>
+                            <div className={styles["link"]}>
+                                <a target="_blank"
+                                    href="https://drive.google.com/file/d/1jCpX8_HOmXCvfGjJ3t_VC4cjIXNsPbwd/view?usp=sharing">Ruokailuvuorot
+                                    - 3. periodi</a>
+                            </div>
                         </div>
                     </div>
+                    <div className={styles['right']}>
+                        <div className={styles['messages']}>
+                            <MessageList />
+                        </div>
+                    </div> 
                 </div>
-                <div className={styles['right']}>
-                    <div className={styles['messages']}>
-                        <MessageList />
-                    </div>
-                </div> 
-            </div>
-        </div>
+            </BlurLayer>
+        </>
     )
 }
 
@@ -227,11 +268,11 @@ const Schedule = ({days}) => {
         <>
             {
                 map.map((date, i) => {
-                    const d = Object.keys(schedule.schedule).find(week => schedule.schedule[week].range.includes(date));
+                    const d = Object.keys(schedule.weeks).find(week => schedule.weeks[week].range.includes(date));
             
-                    if (schedule.schedule.isLoading || !schedule.loaded.includes(d)) return <LoadingScreen key={i} className={styles['loading-screen']} />;
+                    if (schedule.weeks.isLoading || !schedule.loaded.includes(d)) return <LoadingScreen key={i} className={styles['loading-screen']} />;
                 
-                    const week = schedule['schedule'][d];
+                    const week = schedule['weeks'][d];
                     return <WeekObject key={i} week={week} />
                 })
             }
@@ -485,4 +526,136 @@ const GradeObject = ({subject, grade}) => {
             <ul><a>Laajuus </a><a>{grade.points}</a></ul>
         </div>
     )
+}
+
+const ScheduleWindow = ({current, loadCalendar, onClose}) => {
+    const schedule = useSelector(useSchedule);
+    const month = schedule.months[current.getMonth() + 1];
+
+    if (!month) return <LoadingScreen className={styles['schedule-loading-screen']} />
+
+    const range = calculateDaysInMonth(current.getMonth(), current.getFullYear());
+    const weeks = range.reduce((a, b, i) => {
+        const ch = Math.floor(i / 7); 
+        a[ch] = [].concat((a[ch] || []), b);
+        return a
+    }, []);
+
+    return (
+        <div className={styles['schedule-window']}>
+            <button className={styles['schedule-left']} onClick={() => loadCalendar(-1)}>{"<"}</button>
+            <button className={styles['schedule-right']} onClick={() => loadCalendar(1)}>{">"}</button>
+            <div className={styles['current-info']}>
+                <h2>{`${months[current.getMonth()]} ${current.getFullYear()}`}</h2>
+            </div>
+            <button className={styles['close']} onClick={onClose} >Sulje</button>
+            <div className={styles['weekday-row']}>
+                <div className={styles['weekday-list']}>
+                    {
+                        weekdays.map(weekday => {
+                            return <h2 key={weekday}>{weekday}</h2>
+                        })
+                    }
+                </div>
+            </div>
+            <div className={styles['rows']}>
+                {
+                    weeks.splice(0, 5).map((week, i) => {
+                        return (
+                            <div key={`week-${i}`} className={styles['schedule-row']}>
+                                {
+                                    week.map(day => {
+                                        const raw = day.toLocaleDateString('fi-FI', {'day': '2-digit', 'month': '2-digit', 'year': 'numeric'});
+                                        const selected = month.range.includes(raw);
+
+                                        return (
+                                            <div
+                                                className={styles['schedule-day']}
+                                                style={{opacity: selected ? 1 : 0.4}}
+                                            >
+                                                <CalendarDayObject current={current} date={raw} dateTime={day} />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </div>
+    )
+}
+
+const CalendarDayObject = ({current, date, dateTime}) => {
+    const schedule = useSelector(useSchedule);
+    const month = schedule.months[current.getMonth() + 1];
+    if (!month) return <></>
+
+    const day = month.days[date.split('.').reverse().join('-')];
+    if (!day) return <><div className={styles['date']}><h1>{months[dateTime.getMonth()]}</h1></div><div className={styles['data']}></div></>
+    return (
+        <>
+            <div className={styles['date']}>
+                <h1 className={dateTime.getDay() == 6 || dateTime.getDay() == 0 ? styles['weekend'] : null}>{dateTime.getDate().toLocaleString(undefined, {minimumIntegerDigits: 2})}</h1>
+            </div>
+            <div className={styles['data']}>
+                {
+                    day.lessons.map(lesson => {
+                        return (
+                            <CalendarLessonObject lesson={lesson} />
+                        )
+                    })
+                }
+            </div>
+        </>
+    )
+}
+
+const CalendarLessonObject = ({lesson}) => {
+    const { empty, durationRaw } = lesson;
+    const height = durationRaw * 0.5;
+
+    if (empty) return <div className={styles['lesson-empty']} style={{height: height}}></div>
+
+    const group = lesson.groups[0];
+    const teacher = (group.teachers[0] ?? {}).caption;
+
+    return (
+        <div
+            className={styles['lesson']}
+            style={{height: height}}
+        >
+            <div className={styles['group']}>
+                <h2>{group.code}</h2>
+                <h2 style={{fontFamily: 'bold'}}>{teacher ?? ''}</h2>
+            </div>
+        </div>
+    )
+}
+
+// What the fuck is even this :D
+const calculateDaysInMonth = (month, year) => {
+    const date = new Date(year, month, 1);
+    let d1 = date;
+    let d2 = date;
+    const days = [];
+
+    while (d1.getMonth() === month) {
+        days.push(new Date(d1));
+        d1.setDate(d1.getDate() + 1);
+    }
+
+    d2 = new Date(d2.getFullYear(), d2.getMonth() - 1, d2.getDate());
+    while (days[6].getDay() != 0) {
+        d2.setDate(d2.getDate() - 1);
+        days.unshift(new Date(d2));
+    }
+
+    while (days.length < 35) {
+        days.push(new Date(d1));
+        d1.setDate(d1.getDate() + 1);
+    }
+
+    return days;
 }

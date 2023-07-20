@@ -967,6 +967,237 @@
     position: absolute;
 }
 
+.schedule-fullscreen {
+    position: absolute;
+    bottom: 1.7%;
+    right: 1.45%;
+
+    height: 25px;
+    width: 25px;
+
+    background-color: transparent;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url(../../assets/img/full-screen.svg);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 75%;
+
+    cursor: pointer;
+}
+
+.schedule-window {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    max-width: 1200px;
+    max-height: 1300px;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    background-color: var(--background-main);
+
+    padding: 5px;
+
+    z-index: 5;
+}
+
+.schedule-loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    z-index: 5;
+}
+
+.schedule-left {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+}
+
+.schedule-right {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+}
+
+.schedule-left,
+.schedule-right {
+    padding: 10px;
+    font-size: 20px;
+
+    border-radius: 4px;
+
+    background-color: var(--accent-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+    color: var(--font-h5);
+
+    z-index: 6;
+
+    cursor: pointer;
+}
+
+.schedule-left:hover,
+.schedule-right:hover {
+    opacity: 75%;
+}
+
+.current-info {
+    position: absolute;
+
+    left: 10px;
+    top: 50px;
+
+    padding: 10px;
+    background-color: var(--accent-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+    border-radius: 4px;
+
+    z-index: 7;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    font-size: 20px;
+    padding: 2px;
+
+    background: none;
+
+    cursor: pointer;
+
+    z-index: 6;
+
+    color: var(--font-h2);
+}
+
+.close:hover {
+    opacity: 75%;
+}
+
+.current-info h2 {
+    color: var(--font-h5);
+}
+
+.rows {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 40px);
+
+    top: 40px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.weekday-row {
+    position: absolute;
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-top: -5px;
+    height: 45px;
+
+    background-color: var(--accent-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 6;
+}
+
+.weekday-list {
+    width: calc(100% - 20px);
+    height: 90%;
+    margin-left: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.weekday-list h2 {
+    width: calc(100% / 7);
+    text-align: center;
+
+    color: var(--font-h5);
+}
+
+.schedule-row {
+    height: auto;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.schedule-day {
+    width: calc(100% / 7);
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.schedule-day .date {
+    height: 30px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.date .weekend {
+    color: var(--error);
+}
+
+.lesson {
+    background-color: var(--schedule-main);
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.schedule-day .data {
+    width: 95%;
+    height: 95%;
+
+    min-height: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    user-select: none;
+    margin-bottom: 10px;
+
+    border-left: solid 1px var(--border-main);
+    padding-left: 3px;
+}
+
+
 @media screen and (max-width: 1400px) {
     .top-container .left {
         position: absolute;

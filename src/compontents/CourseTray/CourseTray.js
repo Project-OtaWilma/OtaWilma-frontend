@@ -337,7 +337,7 @@ const TraySchedule = ({current}) => {
     if(!Object.keys(periods).includes(current.period)) return <div className={`${styles['schedule']} ${styles['error']}`}><h6>Tarjottimelle ei ole saatavilla lukujärjestystä</h6></div>
 
     const date = periods[current.period].toLocaleDateString('fi-FI');
-    const week = schedule.schedule[date];
+    const week = schedule.weeks[date];
 
     if(!week) return <div className={styles['schedule-loading-screen']} />
 

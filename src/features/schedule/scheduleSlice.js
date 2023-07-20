@@ -10,7 +10,7 @@ export const getWeek = createAsyncThunk(
     'schdule/getWeek',
     async (options, thunkAPI) => {
         return new Promise((resolve, reject) => {
-            const schedule = thunkAPI.getState().schedule.schedule;
+            const schedule = thunkAPI.getState().schedule.weeks;
 
             
             const auth = options['auth'];
@@ -33,10 +33,32 @@ export const getWeek = createAsyncThunk(
     }
 )
 
+export const getMonth = createAsyncThunk(
+    'schdule/getMonth',
+    async (options, thunkAPI) => {
+        return new Promise((resolve, reject) => {
+            const schedule = thunkAPI.getState().schedule.weeks;
+
+            const auth = options['auth'];
+            const date = new Date((options['date'] ? options['date'] : (new Date())).getFullYear(), (options['date'] ? options['date'] : (new Date())).getMonth(), 1);
+
+            fetchSchedule(auth, date, true)
+            .then(schedule => {
+                return resolve({changed: true, month: schedule.month, schedule: schedule});
+            })
+            .catch(err => {
+                thunkAPI.dispatch(handleError(err))
+                return reject();
+            })
+        });
+    }
+)
+
 export const scheduleSlice = createSlice({
     name: 'schedule',
     initialState: {
-        schedule: {},
+        weeks: {},
+        months: {},
         loaded: [],
         isLoading: false,
     },
@@ -76,7 +98,7 @@ export const scheduleSlice = createSlice({
                 schedule.days[day].lessons = le;
             });
 
-            state.schedule[date] = {
+            state.weeks[date] = {
                 week: schedule.week,
                 height: height,
                 range: schedule.weekRange,
@@ -92,14 +114,58 @@ export const scheduleSlice = createSlice({
         },
         [getWeek.pending]: (state, action) => {
             state.isLoading = true;
+        },
+        [getMonth.fulfilled]: (state, action) => {
+            if(!action.payload.changed) {
+                return;
+            }
+
+            const month = action.payload.month;
+            const schedule = action.payload.schedule;
+
+            Object.keys(schedule.days).forEach(date => {
+                const day = schedule.days[date];
+                let last = 510;
+
+                day.lessons.forEach((lesson, i) => {
+                    const { startRaw, endRaw, durationRaw } = lesson;
+                    const delta = startRaw - last;
+                    if (delta > 0) {
+                        day.lessons.push({
+                            groups: [],
+                            start: toMinutes(last),
+                            startRaw: last,
+                            end: toMinutes(startRaw),
+                            endRaw: startRaw,
+                            durationRaw: delta,
+                        });
+                    }
+                    last = endRaw;
+                });
+
+                day.lessons = day.lessons.sort((a, b) => a.startRaw - b.startRaw).map(lesson => ({...lesson, empty: lesson.groups.length <= 0}));
+            });
+
+            state.months[month] = {
+                month: month,
+                range: schedule.monthRange,
+                days: schedule.days
+            }
+        },
+        [getMonth.pending]: (state, action) => {
+            //
+        },
+        [getMonth.rejected]: (state, action) => {
+            //
         }
     },
 });
 
-
+const toMinutes = (i) => `${Math.floor(i / 60).toLocaleString(undefined, {minimumIntegerDigits: 2})}:${(((i / 60) - Math.floor(i / 60)) * 60).toLocaleString(undefined, {minimumIntegerDigits: 2})}`;
 
 export const useSchedule = (state) => ({
-    schedule: state.schedule.schedule,
+    weeks: state.schedule.weeks,
+    months: state.schedule.months,
     loaded: state.schedule.loaded,
     isLoading: state.schedule.isLoading,
 });
