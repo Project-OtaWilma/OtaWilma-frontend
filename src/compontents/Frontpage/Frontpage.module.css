@@ -1049,6 +1049,22 @@
     opacity: 75%;
 }
 
+.schedule-info {
+    position: absolute;
+
+    top: -20px;
+    font-size: 17px;
+
+    opacity: 0;
+
+    color: var(--font-h2);
+    text-shadow: 0 0 10px var(--font-h2);
+
+    transition: opacity .3s ease-in-out;
+
+    z-index: 3;
+}
+
 .current-info {
     position: absolute;
 
@@ -1167,6 +1183,33 @@
 
 .date .weekend {
     color: var(--error);
+}
+
+.event {
+    height: auto;
+    width: calc(98% - 5px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2px;
+    margin: 2px;
+
+    background-color: var(--background-darker);
+
+    border-left: solid 5px var(--L2021-mandatory-main);
+}
+
+.event.full {
+    border-left: solid 5px var(--L2021-g-optional-main);
+}
+
+.event h4 {
+    color: var(--font-h2);
+    width: 90%;
+    font-size: 12px;
 }
 
 .lesson {

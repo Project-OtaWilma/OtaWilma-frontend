@@ -19,7 +19,18 @@ const periods = {
     '70F27363_36415': new Date('2023-02-13'), //4A.
     '70F27363_36416': new Date('2023-03-13'), //4B.
     '70F27363_36417': new Date('2023-04-17'), //5A.
-    '70F27363_36418': new Date('2023-05-08') //5B.
+    '70F27363_36418': new Date('2023-05-08'), //5B.
+
+    'CFC108FF_55180': new Date('2023-08-15'), //1A.
+    'CFC108FF_55181': new Date('2023-09-12'), //1B.
+    'CFC108FF_55182': new Date('2023-10-10'), //2A.
+    'CFC108FF_55183': new Date('2023-11-07'), //2B.
+    'CFC108FF_55184': new Date('2023-12-12'), //3A.
+    'CFC108FF_55185': new Date('2024-01-16'), //3B.
+    'CFC108FF_55186': new Date('2024-02-13'), //4A.
+    'CFC108FF_55187': new Date('2024-03-13'), //4B.
+    'CFC108FF_55188': new Date('2024-04-17'), //5A.
+    'CFC108FF_55189': new Date('2024-05-08') //5B.,
 }
 
 export default function CourseTray() {
@@ -95,7 +106,6 @@ export default function CourseTray() {
     }
 
     const appendPlan = (code) => {
-        console.log(code);
         if(tray.planned.own.includes(code)) {
             dispatch(deplanCourse({auth: auth.token, code: code}))
         } else {

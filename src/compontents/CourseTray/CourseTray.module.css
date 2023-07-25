@@ -386,6 +386,16 @@ h6 strong {
     z-index: 0;
 }
 
+.ksuor-on {
+    opacity: 100% !important;
+    border: solid 3px black;
+    pointer-events: all;
+
+    background-color: rgb(115, 115, 115);
+    color: var(--font-h4) !important;
+    z-index: 1;
+}
+
 .kCFC108FF_50713-off,
 .k70F27363_35245-off,
 .k70F27363_35780-off,

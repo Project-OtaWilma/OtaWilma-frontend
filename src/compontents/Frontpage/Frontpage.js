@@ -44,6 +44,7 @@ const months = [
 export default function Frontpage() {
     const [category, setCategory] = useState('schedule');
     const [open, setOpen] = useState(false);
+    const [hover, setHover] = useState(false);
     const [current, setCurrentDate] = useState(new Date());
     
     const dispatch = useDispatch();
@@ -52,9 +53,9 @@ export default function Frontpage() {
     const now = new Date();
     
     const days = [
-        new Date(now.getFullYear(), now.getMonth() + 2, now.getDate()),
-        new Date(now.getFullYear(), now.getMonth() + 2, now.getDate() + 7),
-        new Date(now.getFullYear(), now.getMonth() + 2, now.getDate() + 14)
+        new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
+        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14)
     ]
     
     const initialize = () => {
@@ -99,13 +100,10 @@ export default function Frontpage() {
                                 <h5 onClick={() => loadHomework()}  className={category == 'homework' ? styles['selected'] : null}>Kotitehtävät</h5>
                             </div>
                         </div>  
-                        <div className={styles['schedule']}>
+                        <div className={styles['schedule']} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onDoubleClick={() => setOpen(true)}>
                             {category == 'schedule' ? <Schedule days={days}/> : <HomeworkContainer />}
                         </div>
-                        <button
-                            onClick={() => setOpen(!open)}
-                            className={styles['schedule-fullscreen']}
-                        ></button>
+                        <h1 style={{opacity: hover ? 0.75 : 0}} className={styles['schedule-info']}>Avaa kalenteri painamalla kahdesti</h1>
                     </div>
                     <div className={styles['middle']}>
                         <Clock />
@@ -529,18 +527,6 @@ const GradeObject = ({subject, grade}) => {
 }
 
 const ScheduleWindow = ({current, loadCalendar, onClose}) => {
-    const schedule = useSelector(useSchedule);
-    const month = schedule.months[current.getMonth() + 1];
-
-    if (!month) return <LoadingScreen className={styles['schedule-loading-screen']} />
-
-    const range = calculateDaysInMonth(current.getMonth(), current.getFullYear());
-    const weeks = range.reduce((a, b, i) => {
-        const ch = Math.floor(i / 7); 
-        a[ch] = [].concat((a[ch] || []), b);
-        return a
-    }, []);
-
     return (
         <div className={styles['schedule-window']}>
             <button className={styles['schedule-left']} onClick={() => loadCalendar(-1)}>{"<"}</button>
@@ -558,22 +544,42 @@ const ScheduleWindow = ({current, loadCalendar, onClose}) => {
                     }
                 </div>
             </div>
-            <div className={styles['rows']}>
+            <Calendar current={current} loadCalendar={loadCalendar} onClose={onClose} />
+        </div>
+    )
+}
+
+const Calendar = ({current, loadCalendar, onClose}) => {
+    const schedule = useSelector(useSchedule);
+    const month = schedule.months[current.getMonth() + 1];
+
+    if (!month) return <LoadingScreen className={styles['schedule-loading-screen']} />
+
+    const range = calculateDaysInMonth(current.getMonth(), current.getFullYear());
+    const weeks = range.reduce((a, b, i) => {
+        const ch = Math.floor(i / 7); 
+        a[ch] = [].concat((a[ch] || []), b);
+        return a
+    }, []);
+
+    return (
+        <div className={styles['rows']}>
                 {
                     weeks.splice(0, 5).map((week, i) => {
                         return (
                             <div key={`week-${i}`} className={styles['schedule-row']}>
                                 {
-                                    week.map(day => {
+                                    week.map((day, i) => {
                                         const raw = day.toLocaleDateString('fi-FI', {'day': '2-digit', 'month': '2-digit', 'year': 'numeric'});
                                         const selected = month.range.includes(raw);
 
                                         return (
                                             <div
+                                                key={`day-container-${i}`}
                                                 className={styles['schedule-day']}
                                                 style={{opacity: selected ? 1 : 0.4}}
                                             >
-                                                <CalendarDayObject current={current} date={raw} dateTime={day} />
+                                                <CalendarDayObject key={`day-${i}`} current={current} date={raw} dateTime={day} />
                                             </div>
                                         )
                                     })
@@ -583,7 +589,6 @@ const ScheduleWindow = ({current, loadCalendar, onClose}) => {
                     })
                 }
             </div>
-        </div>
     )
 }
 
@@ -601,14 +606,33 @@ const CalendarDayObject = ({current, date, dateTime}) => {
             </div>
             <div className={styles['data']}>
                 {
-                    day.lessons.map(lesson => {
+                    day.lessons.map((lesson, i) => {
                         return (
-                            <CalendarLessonObject lesson={lesson} />
+                            <CalendarLessonObject key={`lesson-${i}`} lesson={lesson} />
+                        )
+                    })
+                }
+                {
+                    day.events.map((event, i) => {
+                        return (
+                            <CalendarEventObject key={`event-${i}`} event={event} />
                         )
                     })
                 }
             </div>
         </>
+    )
+}
+
+const CalendarEventObject = ({event}) => {
+    const { fullDay } = event;
+
+    const label = fullDay ? event.summary : `${event.start} - ${event.summary}`;
+
+    return (
+        <div className={fullDay ? `${styles['event']} ${styles['full']}` : styles['event']}>
+            <h4>{label}</h4>
+        </div>
     )
 }
 

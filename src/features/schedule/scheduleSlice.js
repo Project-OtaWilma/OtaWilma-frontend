@@ -37,10 +37,14 @@ export const getMonth = createAsyncThunk(
     'schdule/getMonth',
     async (options, thunkAPI) => {
         return new Promise((resolve, reject) => {
-            const schedule = thunkAPI.getState().schedule.weeks;
+            const schedule = thunkAPI.getState().schedule.months;
 
             const auth = options['auth'];
             const date = new Date((options['date'] ? options['date'] : (new Date())).getFullYear(), (options['date'] ? options['date'] : (new Date())).getMonth(), 1);
+            const raw = date.toLocaleDateString('fi-FI');
+
+            const cached = Object.keys(schedule).includes(`${date.getMonth() + 1}`);
+            if (cached) return resolve({ changed: false });
 
             fetchSchedule(auth, date, true)
             .then(schedule => {
