@@ -169,7 +169,8 @@ body {
 }
 
 .disclaimer h1 {
-    color: white;
+    color: black;
+    font-family: 'bold';
     opacity: 75%;
 }
 

@@ -9,7 +9,7 @@ import {
 
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
-import { BlurLayer, LoadingScreen } from '../LoadingScreen/LoadingScreen';
+import { BlurLayer } from '../LoadingScreen/LoadingScreen';
 import { useVersion } from '../../features/version/versionSlice';
 
 const { versionLabel } = require('../../config.json');
@@ -36,8 +36,8 @@ export default function Login() {
         setLoginError('');
         const credentials =
         {
-            username: username != "" ? username : usernameElement.current.value,
-            password: password != "" ? password : passwordElement.current.value
+            username: username !== "" ? username : usernameElement.current.value,
+            password: password !== "" ? password : passwordElement.current.value
         }
 
         if (!termsOfService || !agreement) return setLoginError('You must agree to both')
@@ -54,11 +54,15 @@ export default function Login() {
                 case 13:
                     login();
                     break;
+                default:
+                    break;
             }
         }
 
         document.addEventListener('keydown', handleEnter);
         return () => {document.removeEventListener('keydown', handleEnter);}
+        // unsafe and unstable as fuck, but well it is react
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -69,7 +73,7 @@ export default function Login() {
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
                 <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Käyttäjätunnus</h3>
-                    <input ref={usernameElement} type='text' autoComplete='on' placeholder='matti.heikkinen' onChange={e => setUsername(e.target.value)} />
+                    <input ref={usernameElement} type='text' autoComplete='on' placeholder='matti.heikkinen' onChange={e => setUsername((e.target.value).toLowerCase())} />
                 </form>
                 <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Salasana</h3>

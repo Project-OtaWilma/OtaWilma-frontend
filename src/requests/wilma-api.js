@@ -204,9 +204,10 @@ const fetchCourseType = (lops, id) => {
     })
 }
 
-const fetchSchedule = (auth, date = Date) => {
+const fetchSchedule = (auth, date = Date, month) => {
     return new Promise((resolve, reject) => {
-        const url = `${wilmaApi}/schedule/week/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
+        const param = month ? 'month' : 'week';
+        const url = `${wilmaApi}/schedule/${param}/${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
 
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
