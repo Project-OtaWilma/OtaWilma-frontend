@@ -50,7 +50,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
           fill="none"
         />
         <path
-        onClick={() => onLoad('4270')}
+        onClick={() => onLoad('4265')}
           style={{
             cursor: "pointer",
             fill: "var(--map-fill)",
@@ -90,7 +90,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
           d="M1755 640h172v295h-172z"
         />
         <path
-        onClick={() => onLoad('4265')}
+        onClick={() => onLoad('4270')}
           style={{
             cursor: "pointer",
             fill: "var(--map-fill)",
@@ -474,7 +474,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
           }}
           transform="matrix(.33724 0 0 .33724 1468.37 748.281)"
         >
-          {"4265"}
+          {"4270"}
         </text>
         <text
           x={239}
@@ -512,7 +512,7 @@ export const MapCompontent = ({zoom, onLoad}) => {
           }}
           transform="matrix(.33724 0 0 .33724 1099.57 748.281)"
         >
-          {"4270"}
+          {"4265"}
         </text>
         <circle
       cx={1449.5}
