@@ -18,11 +18,11 @@ export default function Credits() {
                 </div>
                 <div className={styles['credits']}>
                     <h1>Matti Heikkinen</h1>
-                    <h3>"Autoit epätoivoisissa yrityksissa ottaa yhteyttä Vismaan. Yritysten epäonnistumisesta huolimatta olit innolla mukana projektissa."</h3>
+                    <h3>"Autoit epätoivoisissa yrityksissä ottaa yhteyttä Vismaan. Yritysten epäonnistumisesta huolimatta olit innolla mukana projektissa."</h3>
                 </div>
                 <div className={styles['credits']}>
                     <h1>Teppo Multimäki</h1>
-                    <h3>"Vaikka et varsinaisesti puskenut yhtäkään riviä koodia lähdekoodiin, päädyit silti olemaan hyödyllisin koko testaustiimistä. Onnistuit myös valittamaan eniten kaikeista projektissa mukana olleista."</h3>
+                    <h3>"Vaikka et varsinaisesti puskenut yhtäkään riviä koodia lähdekoodiin, päädyit silti olemaan hyödyllisin koko testaustiimistä. Onnistuit myös valittamaan eniten kaikista projektissa mukana olleista."</h3>
                 </div>
                 <div className={styles['credits']}>
                     <h1>Jere Hasu</h1>
@@ -30,7 +30,7 @@ export default function Credits() {
                 </div>
                 <div className={styles['credits']}>
                     <h1>Ville Kujala</h1>
-                    <h3>"Onnistuit puskemaan lähdekoodin yhden rivin koodia, joka lopulta ei oikeastaan edes toiminut. Olit kuitenkin ensimmäinen lähdekoodia muokannut henkilö, oli muokkaus sitten positiivinen tai negatiivinen."</h3>
+                    <h3>"Onnistuit puskemaan lähdekoodiin yhden rivin koodia, joka lopulta ei oikeastaan edes toiminut. Olit kuitenkin ensimmäinen lähdekoodia muokannut henkilö, oli muokkaus sitten positiivinen tai negatiivinen."</h3>
                 </div>
                 <div className={styles['credits']}>
                     <h1>Ville Hynninen</h1>
@@ -46,7 +46,7 @@ export default function Credits() {
                 </div>
                 <div className={styles['credits']}>
                     <h1>Minttu Poijärvi</h1>
-                    <h3>"Onnistuit haittaamaan ja vaikeuttamaan kehitystä ”pspsps”-viestejen avulla"</h3>
+                    <h3>"Onnistuit haittaamaan ja vaikeuttamaan kehitystä ”pspsps”-viestien avulla"</h3>
                 </div>
                 <div className={styles['credits']}>
                     <h1>Joonas Karjalainen</h1>
