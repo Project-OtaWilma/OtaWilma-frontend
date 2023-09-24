@@ -166,6 +166,23 @@ const fetchGradeBook = (auth, filter) => {
     });
 }
 
+const fetchYOResults = (auth) => {
+    return new Promise((resolve, reject) => {
+        if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
+
+        fetchJson(`${wilmaApi}/yo-results`,
+            {
+                headers: { 'token': auth }
+            })
+            .then(grades => {
+                return resolve(grades);
+            })
+            .catch(err => {
+                return reject(err);
+            });
+    });
+}
+
 const fetchCourse = (lops, id) => {
     return new Promise(async (resolve, reject) => {
         // override to using stable api
@@ -469,6 +486,7 @@ export {
     fetchMessages,
     fetchMessageContent,
     fetchGradeBook,
+    fetchYOResults,
     fetchNews,
     fetchNewsContent,
     fetchSchedule,

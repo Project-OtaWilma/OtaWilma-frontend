@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useMessages, getMessages } from '../../features/messages/messageSlice';
-import { useGrades, getGradebook } from '../../features/grades/gradeSlice';
+import { useGrades, getGradebook, getYOResults } from '../../features/grades/gradeSlice';
 import { useNews, getNews } from '../../features/news/newsSlice';
 import { useSchedule, getWeek, getMonth } from '../../features/schedule/scheduleSlice';
 import { useHomework, getGroups } from '../../features/schedule/homeworkSlice';
@@ -62,6 +62,7 @@ export default function Frontpage() {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
         dispatch(getGradebook({auth: auth.token}))
+        dispatch(getYOResults({auth: auth.token}))
         dispatch(getMonth({auth: auth.token}))
 
         loadSchedule();
@@ -116,7 +117,8 @@ export default function Frontpage() {
                 </div>
                 <div className={styles['bottom-container']}>
                     <div className={styles['left']}>
-                    <div className={styles['grades']}>
+                        <div className={styles['grades']}>
+                            <YoResultsObject />
                             <GradeList />
                         </div>
                     </div>
@@ -485,20 +487,23 @@ const MessageObject = ({message}) => {
 
 const GradeList = () => {
     const grades = useSelector(useGrades);
-    if (grades.isLoading) return <LoadingScreen className={styles['loading-screen']} />;
+    if (grades.isLoading) return <div className={styles['grade-loading-screen']} />;
+    if (grades.yoResults.length > 4) return null;
 
     return (
-        <>
-            <Link className={styles['title']} to={'/grades'}>Opinnot</Link>
-            <OverviewObject overview={grades['overview']} />
-            {
-                Object.keys(grades['subjects']).map((subject, i) => {
-                    const grade = grades['subjects'][subject];
+        <div className={styles['grade-container']}>
+            <div className={styles['grade-data']}>
+                <Link className={styles['title']} to={'/grades'}>Opinnot</Link>
+                <OverviewObject overview={grades['overview']} />
+                {
+                    Object.keys(grades['subjects']).map((subject, i) => {
+                        const grade = grades['subjects'][subject];
 
-                    return <GradeObject key={i} subject={subject} grade={grade} />
-                })
-            }
-        </>
+                        return <GradeObject key={i} subject={subject} grade={grade} />
+                    })
+                }
+            </div>
+        </div>
     )
 }
 
@@ -522,6 +527,58 @@ const GradeObject = ({subject, grade}) => {
             <h1>{subject}</h1>
             <ul><a>Arvosana </a><a>{grade.grade}</a></ul>
             <ul><a>Laajuus </a><a>{grade.points}</a></ul>
+        </div>
+    )
+}
+
+const YoResultsObject = () => {
+    const grades = useSelector(useGrades);
+    if (grades.isLoading) return null;
+    if (grades.yoResults.length <= 0) return null;
+
+    return (
+        <div className={styles['yo-container']}>
+            <div className={styles['yo-data']}>
+                <h1 className={styles['table-title']}>Ylioppilaskirjoitukset</h1>
+                <div className={`${styles['yo-column']} ${styles['head']}`}>
+                    <div className={styles['yo-row']}>
+                        <h2>YO-Oppiaine</h2>
+                    </div>
+                    <div className={styles['yo-row']}>
+                        <h2>Ajankohta</h2>
+                    </div>
+                    <div className={styles['yo-row']}>
+                        <h2>Alustavat</h2>
+                    </div>
+                    <div className={styles['yo-row']}>
+                        <h2>Arvosana</h2>
+                    </div>
+                </div>
+                {grades.yoResults.map((results, i) => {
+                    return <YoResultsColumn key={i} result={results} />
+                })}
+            </div>
+        </div>
+    )
+}
+
+const YoResultsColumn = ({result}) => {
+    const { subject, date, grade, points } = result;
+
+    return (
+        <div className={styles['yo-column']}>
+            <div className={styles['yo-row']}>
+                <h1>{subject.full}</h1>
+            </div>
+            <div className={styles['yo-row']}>
+                <h2>{date}</h2>
+            </div>
+            <div className={styles['yo-row']}>
+                <h2>{points ?? '---'}</h2>
+            </div>
+            <div className={styles['yo-row']}>
+                <h2>{grade ?? '---'}</h2>
+            </div>
         </div>
     )
 }
