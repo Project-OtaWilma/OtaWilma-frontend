@@ -146,14 +146,23 @@
 }
 
 .table-title {
-    font-size: 25px;
+    font-size: 22px;
     margin: 5px;
     padding: 5px;
     width: 90%;
-    
-    text-align: center;
 
-    pointer-events: none;
+    font-family: 'semibold';
+
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+
+    color: var(--font-h1);
+    margin: 10px;
+}
+
+.table-title:hover {
+    opacity: 75%;
 }
 
 .grade-container {

@@ -541,7 +541,7 @@ const YoResultsObject = () => {
     return (
         <div className={styles['yo-container']}>
             <div className={styles['yo-data']}>
-                <h1 className={styles['table-title']}>Ylioppilaskirjoitukset</h1>
+                <Link to={'/yo-results'} className={styles['table-title']}>Ylioppilaskirjoitukset</Link>
                 <div className={`${styles['yo-column']} ${styles['head']}`}>
                     <div className={styles['yo-row']}>
                         <h2>YO-Oppiaine</h2>
