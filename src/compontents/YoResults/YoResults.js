@@ -11,16 +11,29 @@ export default function YoResults() {
     const grades = useSelector(useGrades);
     const [current, setCurrent] = useState(0);
     const [subject, setSubject] = useState(null);
+    const [points, setPoints] = useState(0);
 
     useEffect(() => {
         const s = grades.yoResults.at(0);
         if (!s) return;
         setSubject(s.subject.short);
+        setPoints(s.points);
     }, [grades.yoResults]);
 
     const onSelect = (idx) => {
         setCurrent(idx)
         setSubject(grades.yoResults.at(idx).subject.short);
+        setPoints(grades.yoResults.at(idx).points);
+    }
+
+    const inc = () => {
+        if (points >= 299) return;
+        setPoints(points + 1);
+    }
+
+    const dec = () => {
+        if (points <= 1) return;
+        setPoints(points - 1);
     }
 
     return (
@@ -34,7 +47,7 @@ export default function YoResults() {
                 </div>
                 <div className={styles['bottom']}>
                     <div className={styles['table']}>
-                        <Table current={subject} />
+                        <Table current={subject} inc={inc} dec={dec} ownPoints={points} />
                     </div>
                 </div>  
             </div>
@@ -97,7 +110,7 @@ const YoResultInfo = ({current}) => {
     )
 }
 
-const Table = ({current}) => {
+const Table = ({current, inc, dec, ownPoints}) => {
     const result = useSelector(useGrades).yoResults.find(r => r.subject.short == current)
     const key = SUBJECTS[current];
     if (!key) return <></>
@@ -111,8 +124,18 @@ const Table = ({current}) => {
     return (
         <>
             <div className={styles['header']}>
-                <h1>{key}</h1>
-                <h2>{last} - {first}</h2>
+                {ownPoints ? <div className={styles['points']}>
+                    <h1>Omat pisteesi</h1>
+                    <div className={styles['controls']}>
+                        <button onClick={inc}>{"<"}</button>
+                        <h3>{ownPoints}</h3>
+                        <button onClick={dec}>{">"}</button>
+                    </div>
+                </div> : null}
+                <div className={styles['title']}>
+                    <h1>{key}</h1>
+                    <h2>{last} - {first}</h2>
+                </div>
             </div>
             <div className={`${styles['column']} ${styles['head']}`}>
                 <div className={styles['row']}>
@@ -139,7 +162,7 @@ const Table = ({current}) => {
             </div>
             {yearList.map((year, i) => {
                 const points = entries[year];
-                return <YoResultRow key={`s-${i}`} year={year} points={points} ownPoints={result.points} />
+                return <YoResultRow key={`s-${i}`} year={year} points={points} ownPoints={ownPoints} />
             })}
         </>
     )
