@@ -127,9 +127,9 @@ const Table = ({current, inc, dec, ownPoints}) => {
                 {ownPoints ? <div className={styles['points']}>
                     <h1>Omat pisteesi</h1>
                     <div className={styles['controls']}>
-                        <button onClick={inc}>{"<"}</button>
+                        <button onClick={dec}>{"<"}</button>
                         <h3>{ownPoints}</h3>
-                        <button onClick={dec}>{">"}</button>
+                        <button onClick={inc}>{">"}</button>
                     </div>
                 </div> : null}
                 <div className={styles['title']}>
