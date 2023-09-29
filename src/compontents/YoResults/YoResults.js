@@ -80,11 +80,16 @@ const YoResultInfo = ({current}) => {
     const result = useSelector(useGrades).yoResults.at(current);
     const grade = result.grade;
 
+    const overview = (result.pointsOvreview ?? '').split(',');
+
     return (
         <>
             <div className={styles['info']}>
                 <h1>Alustavat pisteet</h1>
-                <h2 className={styles['overview']}>{result.points ? `${result.pointsOvreview}=${result.points}` : 'Odottaa arviointia'}</h2>
+                {result.pointsOvreview ? <h2 className={styles['overview']}>
+                    {result.points ? overview.map(p => p == '-' || p == '0' ? <a style={{opacity: 0.5}}>{p} </a> : <a>{p} </a>) : null}
+                    <a>= {result.points}</a>
+                </h2> : <h2>Ei arvioitu</h2>}
                 <h1>Lopullinen arvosana</h1>
                 <h2 className={!grade ? styles['waiting'] : null}>{grade ?? 'julkaistaan 9.11.2023'}</h2>
             </div>
