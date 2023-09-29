@@ -1,0 +1,266 @@
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    max-width: 1300px;
+
+    background-color: var(--background-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    border-left: solid 10px var(--accent-main);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.side-bar {
+    position: absolute;
+
+    width: 350px;
+    height: 100%;
+
+    left: 0;
+
+    border-right: solid 1px var(--border-main);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.yo-object {
+    width: 90%;
+    margin: 5px;
+    padding: 5px;
+    border-left: solid 4px var(--accent-main);
+
+    cursor: pointer;
+}
+
+.yo-object h1 {
+    font-size: 20px;
+
+    user-select: none;
+}
+
+.yo-object a {
+    opacity: 75%;
+    margin-top: 10px;
+
+    user-select: none;
+}
+
+.yo-object h6 {
+    margin: 5px;
+    padding: 5px;
+
+    background-color: var(--accent-main);
+    width: 75px;
+    text-align: center;
+    font-size: 13px;
+
+    color: var(--font-h5);
+    border-radius: 4px;
+}
+
+.no {
+    background-color: var(--error) !important;
+}
+
+.yo-object a:nth-child(2) {
+    font-family: 'bold';
+}
+
+.yo-object:hover,
+.selected {
+    background-color: var(--accent-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.yo-object:hover h1,
+.yo-object:hover a,
+.selected h1,
+.selected a {
+    color: var(--font-h5);
+}
+
+.results {
+    position: absolute;
+
+    width: calc(100% - 350px);
+    height: 100%;
+
+    left: 350px;
+}
+
+.top {
+    position: absolute;
+
+    height: 25%;
+    width: 100%;
+
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info {
+    margin: 10px;
+    width: 90%;
+}
+
+.info h1 {
+    font-size: 25px;
+    margin: 10px;
+    padding: 10px;
+
+    width: 100%;
+
+    font-family: 'bold';
+
+    text-align: left;
+}
+
+.info .overview {
+    margin: 5px;
+    line-break: anywhere;
+
+    border: solid 1px var(--border-main);
+
+    background-color: var(--background-darker);
+    box-shadow: 0 0 15px var(--shadow-main);
+    font-style: italic;
+
+    font-size: 20px;
+
+    text-align: left;
+}
+
+.info h2 {
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+
+    font-family: 'bold';
+    font-size: 25px;
+}
+
+.info .waiting {
+    opacity: 50%;
+    font-family: 'regular';
+
+    font-size: 20px;
+    font-style: italic;
+}
+
+.bottom {
+    position: absolute;
+
+    height: 75%;
+    width: 100%;
+
+    top: 25%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.table {
+    width: 95%;
+    height: 95%;
+    
+    background-color: var(--background-darker);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header h1 {
+    margin: 10px;
+
+    font-size: 35px;
+}
+
+.header h2 {
+    font-size: 20px;
+
+    font-family: 'bold';
+    opacity: 75%;
+}
+
+.header {
+    width: 90%;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+}
+
+.column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+
+    width: 100%;
+
+    min-height: 40px;
+}
+
+.column.head h1 {
+    font-family: 'bold';
+    color: var(--font-h1);
+
+    font-style: unset;
+
+    opacity: 100%;
+}
+
+.row {
+    width: calc(100% / 7);
+    height: 90%;
+
+    margin: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.row:nth-child(1) h1 {
+    opacity: 100%;
+}
+
+.row h1 {
+    color: var(--font-h2);
+    font-style: italic;
+
+    font-size: 20px;
+
+    opacity: 50%;
+}
+
+.row:nth-child(1) {
+    width: 20%;
+}
+
+.row.active h1 {
+    font-family: 'bold';
+    opacity: 100%;
+}

@@ -13,6 +13,8 @@ import { Link } from 'react-router-dom';
 import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 import { useRef } from 'react';
 
+import Welcome from './Welcome';
+
 import { useNavigate } from 'react-router-dom';
 
 const weekdays = [

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { useAuth } from '../../features/authentication/authSlice';
 import { useErrors } from '../../features/errors/errorSlice';
+import { useGrades } from '../../features/grades/gradeSlice';
 
 import Frontpage from '../Frontpage/Frontpage';
 import Login from '../Login/Login';
@@ -16,6 +17,7 @@ import Teachers from '../Teachers/Teachers';
 import Settings from '../Settings/Settings';
 import Maps from '../Maps/Maps';
 import Error from '../Error/Error';
+import YoResults from '../YoResults/YoResults';
 
 import {
     BrowserRouter,
@@ -24,8 +26,10 @@ import {
     Router,
 } from "react-router-dom";
 
+
 function App() {
     const auth = useSelector(useAuth);
+    const grades = useSelector(useGrades);
     const errors = useSelector(useErrors);
 
     if(errors.fatal) return <Error />
@@ -40,6 +44,7 @@ function App() {
                     <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/messages/:id' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
+                    <Route path='/yo-results' element={auth.token && grades.yoResults.length > 0 ? <YoResults /> : <Frontpage />} />
                     <Route path='/news' element={auth.token ? <News /> : <Login />} />
                     <Route path='/news/:id' element={auth.token ? <News /> : <Login />} />
                     <Route path='/tray' element={auth.token ? <CourseTray /> : <Login />} />
