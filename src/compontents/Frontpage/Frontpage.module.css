@@ -101,7 +101,6 @@
     right: 0;
 }
 
-.grades,
 .messages,
 .news,
 .schedule {
@@ -119,6 +118,114 @@
 
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.grades {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.yo-container {
+    margin-top: 2.5%;
+    width: 95%;
+    height: auto;
+
+
+    box-shadow: 0 0 10px var(--shadow-main);
+    background-color: var(--background-main);
+
+    border-left: solid 5px var(--accent-main);
+
+    margin-bottom: 20px;
+}
+
+.table-title {
+    font-size: 25px;
+    margin: 5px;
+    padding: 5px;
+    width: 90%;
+    
+    text-align: center;
+
+    pointer-events: none;
+}
+
+.grade-container {
+    width: 95%;
+    height: 100%;
+
+
+    height: auto;
+    box-shadow: 0 0 10px var(--shadow-main);
+    background-color: var(--background-main);
+
+    border-left: solid 5px var(--accent-main);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.grade-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.yo-column {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+
+    margin: 5px;
+}
+
+.yo-row {
+    width: 25%;
+    height: auto;
+
+    padding: 2px;
+
+    font-size: 17px;
+
+    border: solid 1px var(--border-main);
+    margin-left: 2px;
+    margin-right: 2px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.yo-row:nth-child(1) {
+    width: 40%;
+}
+
+.yo-row:nth-child(2) h2 {
+    font-family: 'bold';
+}
+
+.yo-column.head .yo-row {
+    border: none;
+}
+
+.yo-column.head .yo-row h1,
+.yo-column.head .yo-row h2 {
+    font-family: 'semi-bold' !important;
+    color: var(--font-h2);
+
+    font-style: italic;
+}
+
+.yo-row h1 {
+    font-size: 15px;
+    text-align: center;
 }
 
 .message-list {
@@ -546,6 +653,23 @@
 .loading-screen {
     width: 100%;
     height: 100%;
+}
+
+.grade-loading-screen {
+    height: 95%;
+    width: 95%;
+    
+    box-shadow: 0 0 15px var(--shadow-main);
+    background-color: var(--background-main);
+
+    background-position: center;
+    background-size: 64px 64px;
+    background-repeat: no-repeat;
+
+    background-image: url(../../assets/img/loading-book.gif);
+
+
+    border-left: solid 5px var(--accent-main);
 }
 
 .homework {
@@ -1406,6 +1530,18 @@
     .grades h1 {
         font-size: 16px;
         padding: 0;
+    }
+
+    .grades h2 {
+        width: 90%;
+        color: var(--font-h1);
+        margin-left: 10px;
+
+        font-size: 17px;
+
+        font-family: 'semi-bold';
+
+        text-align: center;
     }
 
     .grades ul a {

@@ -1,0 +1,100 @@
+
+
+.content {
+    position: absolute;
+    width: 85%;
+    height: 85%;
+
+    max-width: 720px;
+    max-height: 800px;
+
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--background-darker);
+    border-left: solid 10px var(--accent-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.controls {
+    position: absolute;
+    height: 40px;
+    width: 95%;
+
+    bottom: 0;
+    left: 2.5%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    border-top: solid 1px var(--border-darker);
+}
+
+.controls button {
+    width: 30px;
+
+    font-family: 'bold';
+
+    background: none;
+
+    cursor: pointer;
+
+    color: var(--accent-main);
+    opacity: 75%;
+}
+
+.controls button:hover {
+    opacity: 100%;
+}
+
+.close {
+    position: absolute;
+    width: 60px;
+    right: 30px;
+    bottom: 10px;
+
+    font-size: 20px;
+}
+
+.dots {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+
+    margin: 10px;
+
+    background-color: var(--accent-main);
+    border-radius: 25%;
+    opacity: 50%;
+}
+
+.dot.active {
+    opacity: 100%;
+}
+
+.page {
+    position: absolute;
+
+    height: calc(100% - 41px);
+    width: calc(100% - 10px);
+
+    top: 0;
+    left: 10px;
+
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
