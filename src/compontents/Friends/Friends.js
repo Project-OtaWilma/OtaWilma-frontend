@@ -1,44 +1,41 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../features/authentication/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
+
+import styles from './Friends.module.css';
+
 import { useConfig, getConfig } from '../../features/themes/configSlice';
 import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
-
-import styles from './Settings.module.css';
 import { generateCode, getTokenList, publishData, removeCode, resetGenerated, useApi, applyCode } from '../../features/api/apiSlice';
 
-export const AccountInfo = ({onCreate}) => {
-    const config = useSelector(useConfig);
-
-    const [category, setCategory] = useState('share');
-    const [code, setCode] = useState(null);
-
-    if(config.isLoading) return <>Loading...</>
+export default function Friends() {
 
     return (
-        <>
-            <h1 className={styles['title']} id='friends'>Kaverit ja kurssivalintojen jakaminen</h1>
-            <div className={styles['sharing-menu']}>
-                <h5 onClick={() => setCategory('share')} className={category == 'share' ? styles['c-selected'] : null}>Jaa kaverille</h5>
-                <h5 onClick={() => setCategory('shared')} className={category == 'shared' ? styles['c-selected'] : null}>Jaetut kurssivalinnat</h5>
+        <div className={styles['content']}>
+            <div className={styles['side-bar']}>
+                <TokenList />
             </div>
-            {category == 'share' ? <Sharing /> : <TokenList />}
-        </>
+            <div className={styles['main']}>
+                <Sharing />
+            </div>
+        </div>
     )
 }
 
 const Sharing = () => {
     return (
         <div className={styles['sharing']}>
-            <PlaceHolder className={styles['sharing-background']}/>
-            <h1>Jaa kurssivalinnat kaverille</h1>
-            <h3>Kurssivalintojen jakaminen kavereiden kanssa helpottaa kaikille mieleisten valintojen tekemistä. <strong>Valintasi päivittyvät kavereillesi automaattisesti</strong>, ja voit helposti hallinnoida ketkä kaverisi saavat nähdä valintasi.</h3>
+            <div className={styles['header']}>
+                <h1>Jaa kurssivalinnat kaverille</h1>
+                <h3>Kurssivalintojen jakaminen kavereiden kanssa helpottaa kaikille mieleisten valintojen tekemistä. <strong>Valintasi päivittyvät kavereillesi automaattisesti</strong>, ja voit helposti hallinnoida ketkä kaverisi saavat nähdä valintasi.</h3>
+            </div>
 
 
             <div className={styles['code-actions']}>
                 <GenerateCode />
                 <UseCode />
             </div>
+            <PlaceHolder className={styles['sharing-background']} />
         </div>
     )
 }
@@ -67,6 +64,8 @@ const GenerateCode = () => {
         navigator.clipboard.writeText(api.generated);
         setCopyText('Kopioitu leikepöydälle');
     }
+
+    if (config.isLoading) return <LoadingScreen className={styles['share-loading-screen']} />;
 
     return (
         <div className={styles['share']}>
@@ -124,11 +123,13 @@ const UseCode = () => {
     )
 }
 
-
 const TokenList = () => {
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const api = useSelector(useApi);
+
+    const friends = (api.tokens['content'] ?? []).filter(token => token['user']);
+    const unused = (api.tokens['content'] ?? []).filter(token => !token['user']);
 
     const initialize = () => {
         dispatch(getTokenList({auth: auth.token}));
@@ -141,22 +142,25 @@ const TokenList = () => {
 
     useEffect(() => initialize(), [])
 
+    if (api.tokens.isLoading) return <LoadingScreen className={styles['shared-loading-screen']} />
+
     return (
         <div className={styles['shared']}>
-            <PlaceHolder className={styles['sharing-background']}/>
-            <h1>Jaetut kurssivalinnat</h1>
-            <h3>Olet jakanut kurssivalintasi alla oleville henkilöille. Näet listalla myös käyttämättömät kaverikoodit.</h3>
+            <div className={styles['header']}>
+             <h1>Jaetut kurssivalinnat</h1>
+             <h3>Olet jakanut kurssivalintasi alla oleville henkilöille. Näet listalla myös käyttämättömät kaverikoodit.</h3>
+            <h4>{`${friends.length} ${friends.length == 1 ? "Kaveria" : "Kaveria"}, ${unused.length} ${unused.length == 1 ? 'Käyttämätön' : 'Käyttämätöntä'}`}</h4>
+            </div>
             {
-                api.tokens.isLoading ? 
-                <LoadingScreen className={styles['shared-loading-screen']} />
-                    :
                 <div className={styles['token-list']}>
-                    {
-                        api.tokens['content'].map((token, i) => {
-                            
-                            return <TokenObject key={i} onRemove={() => remove(token['hash'])} token={{username: token['user'], hash: token['hash']}}/>
-                        })
-                    }
+                    <div className={styles['list']}>
+                        {
+                            api.tokens['content'].map((token, i) => {
+                                
+                                return <TokenObject key={i} onRemove={() => remove(token['hash'])} token={{username: token['user'], hash: token['hash']}}/>
+                            })
+                        }
+                    </div>
                 </div>
             }
         </div>
@@ -225,5 +229,3 @@ const shorten = (raw) => {
 const username = (raw) => {
     return raw.split('.').length > 1 ? [raw.split('.')[0], raw.split('.')[raw.split('.').length - 1]].map(u => `${u.charAt(0).toUpperCase()}${u.slice(1)}`).join(' ') : raw;
 }
-
-

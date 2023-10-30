@@ -1,0 +1,469 @@
+.content {
+    position: absolute;
+    width: 75%;
+    height: 85%;
+
+    max-width: 1300px;
+
+    background-color: var(--background-main);
+
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    border-left: solid 10px var(--accent-main);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.side-bar {
+    position: absolute;
+    width: 350px;
+    height: 100%;
+
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.main {
+    position: absolute;
+    width: calc(100% - 350px);
+    height: 100%;
+
+    left: 350px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.account {
+    width: calc(100% - 250px - 100px) !important;
+    max-width: 700px;
+}
+
+.account .title {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.sharing-menu {
+    width: 100%;
+    height: 40px;
+    background-color: var(--accent-main);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.sharing-menu h5 {
+    cursor: pointer;
+}
+
+.sharing-menu h5:hover {
+    font-family: 'bold';
+}
+
+.c-selected {
+    font-family: 'bold';
+}
+
+.sharing {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.sharing-background {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+
+    bottom: calc((100% - 256px) / 5);
+}
+
+.shared h1,
+.sharing h1 {
+    font-size: 25px;
+    margin: 10px;
+}
+
+.shared h3,
+.sharing h3 {
+    width: 80%;
+    padding: 5px;
+    font-size: 17px;
+    text-align: center;
+}
+
+.sharing form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 80%;
+    margin: 5px;
+}
+
+.sharing form h2 {
+    width: 90%;
+    text-align: left;
+    margin-left: 10px;
+    font-size: 13px;
+
+}
+
+.agreed {
+    opacity: 50%;
+    pointer-events: none;
+}
+
+.sharing h3 strong {
+    color: var(--font-h1);
+}
+
+.code-actions {
+    width: 90%;
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.share,
+.apply {
+    width: 50%;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.share {
+    border-right: solid 1px var(--border-main);
+}
+
+.apply {
+    border-left: solid 1px var(--border-main);
+}
+
+.share-loading-screen {
+    width: 50%;
+    height: 90%;
+}
+
+.shared-loading-screen {
+    width: 100%;
+
+    height: 100%;
+}
+
+.apply h2,
+.share h2 {
+    text-align: center;
+    margin: 15px;
+    opacity: 75%;
+
+    font-size: 13px;
+
+    width: 300px;
+}
+
+.generate {
+    width: 50%;
+
+    border-right: solid 1px var(--border-main);
+
+    width: 270px;
+
+    background: linear-gradient(to top, var(--login-main), var(--login-lighter));
+    transition: opacity .2s ease-in-out;
+
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#disabled {
+    pointer-events: none;
+    opacity: 60%;
+}
+
+.generate button {
+    padding: 10px;
+    background-color: transparent;
+    color: var(--font-h5);
+    cursor: pointer;
+}
+
+.generate input {
+    padding: 10px;
+    background-color: transparent;
+    color: var(--font-h5);
+    width: 200px;
+}
+
+.generate button:hover {
+    opacity: 75%;
+}
+
+.generate h3 {
+    margin-top: -60px;
+    position: absolute;
+}
+
+.generate h4 {
+    position: absolute;
+    margin-top: 75px;
+    color: var(--font-h2);
+    opacity: 75%;
+
+    cursor: pointer;
+}
+
+.generate h4:hover {
+    opacity: 100%;
+}
+
+.copy {
+    width: 20px;
+    height: 20px;
+
+    background-image: url(../../assets/img/external-link.svg);
+    background-position: center center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+
+    filter: brightness(0) invert();
+}
+
+.apply input {
+    font-size: 17px;
+    width: 210px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--background-darker);
+    z-index: 4;
+}
+
+.apply button {
+    background: linear-gradient(to top, var(--login-main), var(--login-lighter));
+    transition: opacity .2s ease-in-out;
+    color: var(--font-h5);
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.apply button h5 {
+    color: var(--font-h5);
+    transition: opacity .2s ease-in-out;
+}
+
+.apply button:hover h5 {
+    opacity: 75%;
+}
+
+.apply h4 {
+    font-size: 14px;
+    color: var(--error);
+    text-align: center;
+}
+
+.apply h5 {
+    font-size: 14px;
+    color: var(--login-lighter);
+    text-align: center;
+}
+
+.shared {
+    width: 100%;
+    height: 100%;
+}
+
+.shared .header {
+    width: 100%;
+    height: 20%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
+
+.shared h4 {
+    color: var(--font-h2);
+
+    opacity: 75%;
+    font-style: italic;
+
+    margin-top: 20px;
+}
+
+.sharing .header {
+    width: 90%;
+    height: auto;
+
+    margin-top: 5%;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+
+    background-color: var(--accent-main);
+    box-shadow: 0 0 15px var(--shadow-main);
+}
+
+.sharing .header h1 {
+    color: var(--font-h5);
+}
+
+.sharing .header h3 {
+    color: var(--font-h5);
+}
+
+.sharing .header h3 strong {
+    color: var(--font-h5);
+}
+
+.token-list {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+
+    top: 20%;
+
+    overflow-y: scroll;
+
+    border-top: solid 1px var(--border-main);
+}
+
+.list {
+    width: 100%;
+    height: auto;
+}
+
+
+.token-object {
+    margin: 10px;
+    padding: 10px;
+    border-bottom: solid 1px var(--border-main);
+}
+
+.token-object h3 {
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    margin-left: 5px;
+
+    opacity: 75%;
+}
+
+.token-object h6 {
+    background-color: var(--login-lighter);
+    width: 70px;
+    text-align: center;
+    padding: 3px;
+    color: var(--font-h5);
+    font-size: 12px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.token-object .user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user h2:nth-child(1) {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 25%;
+
+    color: var(--font-h5);
+    font-family: 'bold';
+    background-color: var(--L2021-mandatory-main);
+}
+
+.user h2:nth-child(2) {
+
+    font-family: 'bold';
+    color: var(--L2021-mandatory-main);
+}
+
+.token-object button {
+    margin-top: -7px;
+    margin-left: 248px;
+
+    background-color: transparent;
+    font-size: 15px;
+
+    color: var(--error);
+    opacity: 50%;
+
+    cursor: pointer;
+    transition: opacity .2s ease-in-out;
+}
+
+.token-object button:hover {
+    opacity: 100%;
+}
+
+.token-object .copyable {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--background-darker);
+    width: 250px;
+    margin-top: 5px;
+}
+
+.copyable .copy {
+    position: unset;
+    filter: brightness(0) invert(0) !important;
+    margin: 0;
+    padding: 0;
+
+    cursor: pointer;
+}
+
+.copytext {
+    text-align: center !important;
+    font-size: 14px !important;
+}
+
+.copyable .copy:hover {
+    opacity: 75%;
+}
+
+.copyable input {
+    background-color: transparent;
+    width: 210px;
+    font-size: 17px;
+    padding: 10px;
+    padding-right: 0;
+}

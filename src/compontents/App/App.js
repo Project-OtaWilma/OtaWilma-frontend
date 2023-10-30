@@ -18,6 +18,7 @@ import Settings from '../Settings/Settings';
 import Maps from '../Maps/Maps';
 import Error from '../Error/Error';
 import YoResults from '../YoResults/YoResults';
+import Friends from '../Friends/Friends';
 
 import {
     BrowserRouter,
@@ -45,6 +46,7 @@ function App() {
                     <Route path='/messages/:id' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/grades' element={auth.token ? <Gradebook /> : <Login />} />
                     <Route path='/yo-results' element={auth.token && grades.yoResults.length > 0 ? <YoResults /> : <Frontpage />} />
+                    <Route path='/friends' element={auth.token ? <Friends /> : <Login />}/>
                     <Route path='/news' element={auth.token ? <News /> : <Login />} />
                     <Route path='/news/:id' element={auth.token ? <News /> : <Login />} />
                     <Route path='/tray' element={auth.token ? <CourseTray /> : <Login />} />

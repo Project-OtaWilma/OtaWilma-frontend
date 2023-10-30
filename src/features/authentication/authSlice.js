@@ -6,7 +6,9 @@ import {
     logout
 } from '../../requests/wilma-api';
 import { handleError } from '../errors/errorSlice';
+import crypto from 'crypto-js';
 
+import config from '../../config.json'
 
 export const loginToWilma = createAsyncThunk(
     'auth/loginToWilma',
@@ -36,7 +38,6 @@ export const logoutFromWilma = createAsyncThunk(
     'auth/logoutFromWilma',
     async (data, thunkAPI) => {
         return new Promise((resolve, reject) => {
-
             logout(data)
                 .then(() => {
                     return resolve()
@@ -75,6 +76,32 @@ export const setAgreement = () => {
     return window.localStorage.setItem('agreement', true);
 }
 
+export const getSavedCredentials = () => {
+    const encrypted = window.localStorage.getItem('saved-credentials');
+    if(!encrypted) window.localStorage.setItem('saved-credentials', null);
+
+    if (encrypted === "null") return null;
+    
+    const decrypted = crypto.AES.decrypt(encrypted, config.signature).toString(crypto.enc.Utf8);
+    try {
+        const credentials = JSON.parse(decrypted);
+        return credentials;
+    } catch (e) {
+        window.localStorage.setItem('saved-credentials', null);
+        return;
+    }
+}
+
+export const setSavedCredentials = (credentials) => {
+    const raw = JSON.stringify(credentials);
+    const encrypted = crypto.AES.encrypt(raw, config.signature);
+
+    return window.localStorage.setItem('saved-credentials', encrypted);
+}
+
+export const resetSavedCredentials = () => {
+    return window.localStorage.setItem('saved-credentials', null);
+}
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -97,6 +124,7 @@ export const authSlice = createSlice({
                 const raw = error.error ? error.error.err : error.err;
                 state.loginError = Object.keys(errors).includes(raw) ? errors[raw] : raw;
                 state.isLoading = false;
+                resetSavedCredentials();
                 return;
             }
             const token = action.payload['token'];

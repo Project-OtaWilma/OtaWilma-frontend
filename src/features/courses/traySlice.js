@@ -165,6 +165,7 @@ export const getFriendSelections = createAsyncThunk(
                 return resolve({changed: true, map: res})
             })
             .catch(err => {
+                console.log(err);
                 thunkAPI.dispatch(handleError(err));
                 return reject();
             })
@@ -186,6 +187,7 @@ export const getOwnPlan = createAsyncThunk(
                 return resolve({changed: true, list: res})
             })
             .catch(err => {
+                console.log(err);
                 thunkAPI.dispatch(handleError(err));
                 return reject();
             })
@@ -207,6 +209,7 @@ export const getFriendsPlans = createAsyncThunk(
                 return resolve({changed: true, map: res})
             })
             .catch(err => {
+                console.log(err);
                 thunkAPI.dispatch(handleError(err));
                 return reject();
             })
@@ -254,6 +257,7 @@ export const deplanCourse = createAsyncThunk(
                 return resolve({changed: true, code: code})
             })
             .catch(err => {
+                console.log(err);
                 if(err.status == 400) {
                     return resolve({changed: false});
                 }
