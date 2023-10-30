@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: 50px;
 
     background-color: var(--accent-main);
     box-shadow: 0 0 15px var(--shadow-main);
@@ -118,6 +118,25 @@
 
 .logout:hover a {
     background-color: transparent;
+}
+
+.expand {
+    background: none;
+    color: var(--font-h5);
+    font-size: 25px;
+    height: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.expand h1 {
+    color: var(--font-h5);
+    height: 50%;
+    font-size: 20px;
+    margin-bottom: 5px;
 }
 
 @media screen and (max-width: 1250px) {

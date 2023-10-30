@@ -8,11 +8,43 @@ import { logoutFromWilma } from '../../features/authentication/authSlice';
 import styles from './Navbar.module.css'
 
 export default function Navbar() {
+    const [count, setCount] = useState(9)
     const config = useSelector(useConfig);
     const grades = useSelector(useGrades);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const keyMap = {81:'/', 87:'/messages', 69: '/grades', 82:'/tray', 65:'/news', 83:'/teachers', 68:'/maps', 70:'/settings' }
+
+    const links = {
+        '/messages': 'Viestit',
+        '/grades': 'Opinnot',
+        '/tray': 'Kurssitarjotin',
+        '/friends': 'Kaverit',
+        '/maps': 'Kartat',
+        '/new': 'Tiedotteet',
+        '/teachers': 'Opettajat',
+        '/settings': 'Asetukset'
+    }
+
+    const updateDimensions = () => {
+        const w = window.innerWidth;
+        if (w > 1700) {
+            setCount(9)
+        } 
+        else if (w > 1500 && w <= 1700) {
+            setCount(6)
+        }
+        else if (w > 1300 && w <= 1500) {
+            setCount(4)
+        }
+        else if (w > 1200 && w <= 1300) {
+            setCount(3)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("resize", updateDimensions);
+        return () => window.removeEventListener("resize", updateDimensions);
+    }, []);
 
 
     return (
@@ -27,15 +59,12 @@ export default function Navbar() {
                 </div>
             </div>
             <Link className={styles['logo-text']} to={'/'}><h1>OtaWilma</h1></Link>
-            <Link to={'/messages'}><h5>Viestit</h5></Link>
-            <Link to={'/grades'}><h5>Opinnot</h5></Link>
             {grades.yoResults.length > 0 ? <Link to={'/yo-results'}><h5>Ylioppilaskirjoitukset</h5></Link> : null}
-            <Link to={'/tray'}><h5>Kurssitarjotin</h5></Link>
-            <Link to={'/news'}><h5>Tiedotteet</h5></Link>
-            <Link to={'/teachers'}><h5>Opettajat</h5></Link>
-            <Link to={'/friends'}><h5>Kaverit</h5></Link>
-            <Link to={'/maps'}><h5>Kartat</h5></Link>
-            <Link to={'/settings'}><h5>Asetukset</h5></Link>
+            {Object.keys(links).slice(0, count).map(href => {
+                return <Link to={href}><h5>{links[href]}</h5></Link>
+            })}
+            {count < 9 ? <button className={styles['expand']}>{<h1>...</h1>}</button> : null}
+            
         </div>
     )
 }
