@@ -21,7 +21,6 @@ const login = (credentials) => {
         })
             .then(res => {
                 const token = res.token;
-
                 loginToOtaWilma(token)
                 .then(() => {
                     return resolve(res);

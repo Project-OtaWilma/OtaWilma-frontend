@@ -184,7 +184,7 @@
 
     font-size: 13px;
 
-    width: 300px;
+    width: 95%;
 }
 
 .generate {
@@ -466,4 +466,10 @@
     font-size: 17px;
     padding: 10px;
     padding-right: 0;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        width: 98%;
+    }
 }

@@ -11,8 +11,12 @@
 
 :root {
     font-family: 'regular';
+    --container: 0px;
 }
 
+.container {
+    margin-top: var(--container);
+}
 
 @font-face {
     font-family: 'bold';

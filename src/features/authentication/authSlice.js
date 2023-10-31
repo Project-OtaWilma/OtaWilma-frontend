@@ -14,7 +14,6 @@ export const loginToWilma = createAsyncThunk(
     'auth/loginToWilma',
     async (data, thunkAPI) => {
         return new Promise((resolve, reject) => {
-
             login(data)
                 .then(res => {
                     return resolve({error: false, token: res['token']})

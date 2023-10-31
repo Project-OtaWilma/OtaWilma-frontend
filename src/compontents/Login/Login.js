@@ -41,15 +41,13 @@ export default function Login() {
         };
 
         if (!termsOfService || !agreement) return setLoginError('You must agree to both')
-
         
         if (save) {
-            console.log("saving...");
             setSavedCredentials(credentials);
         } else {
             resetSavedCredentials(credentials);
         }
-        
+
         dispatch(loginToWilma(credentials));
         saveAgreement();
         navigate('/');
@@ -67,22 +65,9 @@ export default function Login() {
         setSave(true);
     }
 
+
     useEffect(() => {
         initialize();
-        const handleEnter = (e) => {
-            switch (e.keyCode) {
-                case 13:
-                    login();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        document.addEventListener('keydown', handleEnter);
-        return () => {document.removeEventListener('keydown', handleEnter);}
-        // unsafe and unstable as fuck, but well it is react
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -93,11 +78,11 @@ export default function Login() {
                 <h2>Kirjaudu sisään <strong>Wilma</strong>-tunnuksillasi</h2>
                 <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Käyttäjätunnus</h3>
-                    <input value={username} type='text' autoComplete='on' placeholder='matti.heikkinen' onChange={e => setUsername((e.target.value).toLowerCase())} />
+                    <input value={username} type='text' autoComplete='off' placeholder='matti.heikkinen' onChange={e => setUsername((e.target.value).toLowerCase())} />
                 </form>
                 <form className={styles['login-form']} onSubmit={e => {e.preventDefault(); login()}}>
                     <h3>Salasana</h3>
-                    <input value={password} type='password' autoComplete='on' placeholder='*************' onChange={e => setPassword(e.target.value)} />
+                    <input value={password} type='password' autoComplete='off' placeholder='*************' onChange={e => setPassword(e.target.value)} />
                 </form>
                 <form className={styles['terms-of-service']}>
                     <h2>Muista minut seuraavalla kerralla</h2>

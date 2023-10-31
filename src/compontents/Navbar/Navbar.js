@@ -8,7 +8,8 @@ import { logoutFromWilma } from '../../features/authentication/authSlice';
 import styles from './Navbar.module.css'
 
 export default function Navbar() {
-    const [count, setCount] = useState(9)
+    const [count, setCount] = useState(0);
+    const [expanded, setExpanded] = useState(false);
     const config = useSelector(useConfig);
     const grades = useSelector(useGrades);
     const dispatch = useDispatch();
@@ -20,35 +21,59 @@ export default function Navbar() {
         '/tray': 'Kurssitarjotin',
         '/friends': 'Kaverit',
         '/maps': 'Kartat',
-        '/new': 'Tiedotteet',
+        '/news': 'Tiedotteet',
         '/teachers': 'Opettajat',
         '/settings': 'Asetukset'
     }
 
+    const viewPorts = [
+        [9, [1650, 5000]],
+        [8, [1550, 1650]],
+        [6, [1550, 1650]],
+        [5, [1450, 1550]],
+        [4, [1350, 1450]],
+        [3, [1245, 1350]],
+        [5, [1200, 1245]],
+        [3, [900, 1200]],
+    ]
+
     const updateDimensions = () => {
+        setExpanded(false)
         const w = window.innerWidth;
-        if (w > 1700) {
-            setCount(9)
-        } 
-        else if (w > 1500 && w <= 1700) {
-            setCount(6)
-        }
-        else if (w > 1300 && w <= 1500) {
-            setCount(4)
-        }
-        else if (w > 1200 && w <= 1300) {
-            setCount(3)
-        }
+
+        viewPorts.forEach(([c, [min, max]], i) => {
+            if (w > min && w <= max) {
+                setCount(c);
+            }
+        });
     }
 
     useEffect(() => {
+        updateDimensions();
         window.addEventListener("resize", updateDimensions);
         return () => window.removeEventListener("resize", updateDimensions);
     }, []);
 
+    const onExpand = () => {
+        if (expanded) return onMinimize();
+
+        setCount(9);
+        setExpanded(true);
+        document.documentElement.style.setProperty('--container', '50px')
+        
+    }
+
+    const onMinimize = () => {
+        updateDimensions();
+        document.documentElement.style.setProperty('--container', '0px')
+    }
+
+    const onRedirect = () => {
+        onMinimize()
+    }
 
     return (
-        <div className={styles['top']}>
+        <div className={`${styles['top']} ${expanded ? styles['expanded'] : ''}`}>
             <div className={styles['user-info']}>
                 <div className={styles['user-data']}>
                     <h1>{config.value ? username(config.value['username']) : '...'}</h1>
@@ -58,12 +83,14 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
-            <Link className={styles['logo-text']} to={'/'}><h1>OtaWilma</h1></Link>
-            {grades.yoResults.length > 0 ? <Link to={'/yo-results'}><h5>Ylioppilaskirjoitukset</h5></Link> : null}
-            {Object.keys(links).slice(0, count).map(href => {
-                return <Link to={href}><h5>{links[href]}</h5></Link>
-            })}
-            {count < 9 ? <button className={styles['expand']}>{<h1>...</h1>}</button> : null}
+            <div className={styles['links']}>
+                <Link className={styles['logo-text']} to={'/'} onClick={onRedirect}><h1>OtaWilma</h1></Link>
+                {grades.yoResults.length > 0 ? <Link to={'/yo-results'} ><h5>Ylioppilaskirjoitukset</h5></Link> : null}
+                {Object.keys(links).slice(0, count).map(href => {
+                    return <Link onClick={onRedirect} to={href}><h5>{links[href]}</h5></Link>
+                })}
+                {(expanded || count < 9) ? <button onClick={onExpand} className={styles['expand']}>{<h1>...</h1>}</button> : <h1>a</h1>}
+            </div>
             
         </div>
     )

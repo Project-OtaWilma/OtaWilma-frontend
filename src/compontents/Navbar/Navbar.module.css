@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 50px;
+    height: auto;
 
     background-color: var(--accent-main);
     box-shadow: 0 0 15px var(--shadow-main);
@@ -15,8 +15,20 @@
     z-index: 5;
 }
 
-.top .logo-text {
+
+.top .links {
+    width: calc(100% - 350px);
     margin-left: 350px;
+
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.top.expanded .links {
+    justify-content: flex-start;
 }
 
 .logo-text h1 {
@@ -51,6 +63,7 @@
     pointer-events: none;
 }
 
+.top .expand:hover,
 .top a:hover {
     background-color: rgba(255, 255, 255, 0.174);
 }
@@ -70,7 +83,7 @@
 .user-info .user-data {
     position: absolute;
     width: 90%;
-    height: 120%;
+    height: 60px;
 
     margin-bottom: -25px;
 
@@ -110,6 +123,7 @@
 .user-data .logout a {
     margin: 0;
     padding: 0;
+    height: auto;
 }
 
 .logout:hover {
@@ -121,22 +135,26 @@
 }
 
 .expand {
+    cursor: pointer;
     background: none;
     color: var(--font-h5);
     font-size: 25px;
     height: 50px;
 
+    padding: 10px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-left: 20px;
 }
 
 .expand h1 {
     color: var(--font-h5);
     height: 50%;
     font-size: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 @media screen and (max-width: 1250px) {
@@ -144,11 +162,9 @@
         display: none;
     }
 
-    .top .logo-text {
-        margin-left: 0;
-    }
 
-    .top {
-        justify-content: center;
+    .top .links {
+        margin-left: 0;
+        width: 100%;
     }
 }
