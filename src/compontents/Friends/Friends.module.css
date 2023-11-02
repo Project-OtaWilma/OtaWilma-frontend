@@ -115,7 +115,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
 
     width: 80%;
     margin: 5px;
@@ -152,9 +152,12 @@
     width: 50%;
     height: 90%;
 
+    min-height: 275px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .share {
@@ -189,6 +192,8 @@
 
 .generate {
     width: 50%;
+
+    margin: 10px;
 
     border-right: solid 1px var(--border-main);
 
@@ -466,6 +471,57 @@
     font-size: 17px;
     padding: 10px;
     padding-right: 0;
+}
+
+.agreement {
+    position: absolute;
+
+    z-index: 5;
+
+    width: 600px;
+    height: 300px;
+
+    background-color: var(--background-darker);
+    box-shadow: 0 0 15px var(--shadow-main);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-left: solid 10px var(--accent-main);
+}
+
+.agreement .background {
+    position: absolute;
+    width: 256px;
+    height: 256px;
+
+    bottom: calc((100% - 256px) / 5);
+}
+
+.agreement h1 {
+    font-size: 30px;
+    margin: 20px;
+
+    font-family: 'semi-bold';
+}
+
+
+
+.agreement-form {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.agreement-form h2 {
+    margin: 10px;
+
+    line-height: 1.2;
+    font-size: 17px;
 }
 
 @media screen and (max-width: 1400px) {

@@ -5,19 +5,62 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './Friends.module.css';
 
 import { useConfig, getConfig } from '../../features/themes/configSlice';
-import { LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
+import { BlurLayer, LoadingScreen, PlaceHolder } from '../LoadingScreen/LoadingScreen';
 import { generateCode, getTokenList, publishData, removeCode, resetGenerated, useApi, applyCode } from '../../features/api/apiSlice';
 
 export default function Friends() {
+    const dispatch = useDispatch();
+    const auth = useSelector(useAuth);
+    const config = useSelector(useConfig);
+    const [isPublic, setPublic] = useState(false);
+
+    const initialize = () => {
+        dispatch(getTokenList({auth: auth.token}));
+    }
+
+    useEffect(() => {
+        if (!config.isLoading) {
+            if (config.value.public) {
+                setPublic(true);
+                initialize();
+            }
+        }
+    }, [config])
+
 
     return (
-        <div className={styles['content']}>
-            <div className={styles['side-bar']}>
-                <TokenList />
+        <>
+            {isPublic ? null : <Agreement isPublic={isPublic} />}
+            <BlurLayer className={styles['content']} isLoading={!isPublic} >
+                <div className={styles['side-bar']}>
+                    <TokenList />
+                </div>
+                <div className={styles['main']}>
+                    <Sharing />
+                </div>
+            </BlurLayer>
+        </>
+    )
+}
+
+const Agreement = ({ isPublic }) => {
+    const dispatch = useDispatch();
+    const auth = useSelector(useAuth);
+    const config = useSelector(useConfig);
+    const api = useSelector(useApi);
+    
+    const onAgree = () => {
+        dispatch(publishData({auth: auth.token}));
+    }
+
+    return (
+        <div className={styles['agreement']}>
+            <h1>Hyväksy käyttöehdot</h1>
+            <div className={styles['agreement-form']}>
+                <input type='checkbox' onChange={onAgree}/>
+                <h2>Ymmärrän, että jakamalla kurssivalintani <strong>luovutan tiedon kurssivalinnoistani Wilmasta riippumattomalle kolmannelle osapuolelle</strong>. OtaWilmalla ei ole oikeutta jakaa eikä tule jakamaan tietojasi eteenpäin</h2>
             </div>
-            <div className={styles['main']}>
-                <Sharing />
-            </div>
+            <PlaceHolder className={styles['background']} />
         </div>
     )
 }
@@ -56,10 +99,6 @@ const GenerateCode = () => {
         setCopyText('');
     }
 
-    const agree = () => {
-        dispatch(publishData({auth: auth.token}));
-    }
-
     const copy = () => {
         navigator.clipboard.writeText(api.generated);
         setCopyText('Kopioitu leikepöydälle');
@@ -71,11 +110,6 @@ const GenerateCode = () => {
         <div className={styles['share']}>
             <h1>Luo kaverikoodi</h1>
             <h2>Lähetä kaverikoodi yhdelle kavereistasi. Voit tarvittaessa luoda lisää ja hallita olemassa olevia kaverikoodeja <strong>Jaettu kurssivalinnat</strong> osiosta</h2>
-            
-            <form className={config.value['public'] ? styles['agreed'] : null}>
-                <input type='checkbox' onChange={() => agree()} checked={config.value['public']}/>
-                <h2>Ymmärrän, että jakamalla kurssivalintani <strong>luovutan tiedon kurssivalinnoistani Wilmasta riippumattomalle kolmannelle osapuolelle</strong>. OtaWilmalla ei ole oikeutta jakaa eikä tule jakamaan tietojasi eteenpäin</h2>
-            </form>
             
             <div id={config.value['public'] ? null : styles['disabled']} className={styles['generate']}>
                 {
@@ -127,21 +161,20 @@ const TokenList = () => {
     const dispatch = useDispatch();
     const auth = useSelector(useAuth);
     const api = useSelector(useApi);
+    const config = useSelector(useConfig);
 
     const friends = (api.tokens['content'] ?? []).filter(token => token['user']);
     const unused = (api.tokens['content'] ?? []).filter(token => !token['user']);
 
-    const initialize = () => {
-        dispatch(getTokenList({auth: auth.token}));
-    }
+
 
     const remove = (hash) => {
         console.log(hash);
         dispatch(removeCode({auth: auth.token, hash: hash}))
     }
 
-    useEffect(() => initialize(), [])
-
+    if (config.isLoading) return <LoadingScreen className={styles['shared-loading-screen']} />
+    if(!config.value.public) return <></>
     if (api.tokens.isLoading) return <LoadingScreen className={styles['shared-loading-screen']} />
 
     return (

@@ -89,7 +89,7 @@ export default function Navbar() {
                 {Object.keys(links).slice(0, count).map(href => {
                     return <Link onClick={onRedirect} to={href}><h5>{links[href]}</h5></Link>
                 })}
-                {(expanded || count < 9) ? <button onClick={onExpand} className={styles['expand']}>{<h1>...</h1>}</button> : <h1>a</h1>}
+                {(expanded || count < 9) ? <button onClick={onExpand} className={styles['expand']}>{<h1>...</h1>}</button> : null}
             </div>
             
         </div>
