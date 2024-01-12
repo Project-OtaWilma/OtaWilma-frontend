@@ -1,15 +1,15 @@
 # OtaWilma tietosuojaseloste
+> Päivitetty 6.1.2024
 
 ## Kaikessa yksinkertaisuudessaan
-#### Otawilma **käsittelee** [kohdassa 2.](#2-mitä-tietoja-käsitellään) listattuja tietoja, ja oppilaan halutessa voi **tallentaa** [kohdassa 4.](#4-otawilma-tarjoaa-oppilaalle-mahdollisuuden-tallentaa-ja-jakaa-omia-kurssivalintojaan) listattuja tietoja. Otawilma noudattaa tietosuojaselostettaan, mutta **ei ota** vastuuta Wilma-käyttäjän turvallisuudesta ongelmatilanteissa.
+> OtaWilma ohjlemistona on Tarkoitettu **Oppilaiden** käytettäväksi. Ohjelmistoa voivat käyttää kaikki `espoo.inschool.fi` alle kuuluvat Wilman oppilaskäyttäjät
+
+> OtaWilma **käsittelee** [[kts. 2]](#2-mitä-tietoja-käsitellään) listattuja tietoja, ja oppilaan halutessa voi **tallentaa** oppilaaseen liityviä tietoja [[kts. 4.]](#4-otawilma-tarjoaa-oppilaalle-mahdollisuuden-tallentaa-ja-jakaa-omia-kurssivalintojaan) listattuja tietoja. OtaWilma noudattaa tietosuojaselostettaan, mutta **ei ota** vastuuta oppilaan Wilma-käyttäjän turvallisuudesta ongelmatilanteissa. **Vastuu oppilaan Wilma-käyttäjästä on aina oppilaalla itsellään**
 <br>
 
-### HUOMAA:
-#### **Otawilma siirtyy julkiseen beta-testaukseen '01/12/2022'. Käyttöehtoihin saattaa tulla muutoksia ennen varsinaista julkaisua**
-<br>
 
 ## Sisällysluettelo
-- [1. Mihin tarkoitukseen henkilötietoja käsitellään](#1-mihin-tarkoitukseen-henkilötietoja-käsitellään)
+- [1. Minkä vuoksi henkilötietoja käsitellään](#1-mihin-tarkoitukseen-henkilötietoja-käsitellään)
 - [2. Mitä tietoja käsitellään?](#2-mitä-tietoja-käsitellään)
 - [3. Mistä tieto saadaan?](#3-mistä-tiedot-saadaan)
 - [4. OtaWilma tarjoaa oppilaalle mahdollisuuden tallentaa ja jakaa omia kurssivalintojaan](#4-otawilma-tarjoaa-oppilaalle-mahdollisuuden-tallentaa-ja-jakaa-omia-kurssivalintojaan)
@@ -18,27 +18,30 @@
 - [7. Miten tietoja suojataan?](#7-miten-tietoja-suojataan)
 - [8. Toiminta tietojen epätoivotun vuotamisen seurauksena](#8-toiminta-tietojen-epätoivotun-vuotamisen-seurauksena)
 
-- '**OtaWilmalla**' viitataan tässä tapauksessa Wilman rajapintoja hyödyntäviin avoimiin rajapintoihin, joihin mukaan lukeutuu selainpohjainen käyttöliittymä. OtaWilmann rajapinnoiksi luokittellaan seuraaavat osoitteet
-    - https://beta.otawilma.tuukk.dev
-    - https://beta.otawilma-api.tuukk.dev
-    - https://beta.wilma-api.tuukk.dev
-    #### '**OtaWilmalla**' saatetaan myös kontekstista riippuen viitata myös OtaWilman ylläpitoon
-- '**Palvelimella**' viitataan tässä tapauksessa Otawilman julkisiin rajapintoihin jotka kykenevät käsittelmään ja mahdollisesti tallentamaan oppilastietoja.
+## Määritelmät
+- '**Wilma**:llaa' viitataan Visma Enterprise OY:n tietojärjestelmää
+- '**OtaWilma**:lla' viitataan **Wilman**:sta haettua oppilaskohtaista tietoa hyödyntäviin avoimiin rajapintoihin, joihin mukaan lukeutuu selainpohjainen käyttöliittymä.
+
+- >**OtaWilma**:lla saatetaan myös kontekstista riippuen viitata myös OtaWilman ylläpitoon
+
+- '**Palvelimella**' viitataan tässä tapauksessa OtaWilman julkisiin rajapintoihin, jotka kykenevät käsittelemään ja oppilaan halutessa tallentamaan tietoja opinnoista.
 
 ## 1. Mihin tarkoitukseen henkilötietoja käsitellään?
-### OtaWilma hyödyntää Wilman julkista rajapintaa oppilaan tietojen käsittelemiseen ja näyttämiseen. Käsiteltävät henkilötiedot löytyvät kohdasta 2. erikseen tallennetujen tietojen käsittely kohdasta 4.
+OtaWilma hyödyntää **Wilman** julkista rajapintaa oppilaan tietojen käsittelemiseen ja näyttämiseen. [[kts.2]](#2-mitä-tietoja-käsitellään) Halutessaan oppilas voi myös antaa OtaWilmalle luvan tallentaa oppilaan määrittämiä tietoja [[kts. 4]](#4-otawilma-tarjoaa-oppilaalle-mahdollisuuden-tallentaa-ja-jakaa-omia-kurssivalintojaan)
 
 ## 2. Mitä tietoja käsitellään?
-### OtaWilman rajapinta käsittelee seuraavia tietoja opiskelijasta Wilman julkisen rajapinnan avulla. Käsittelyllä tarkoitetaan rajapinnassa saatavilla olevan tiedon pyytämistä ja muokkaamista. Käsiteltyjä tietoja ei tallenneta palvelimelle, ja mahdollisten ongelmatilanteiden lokitiedot eivät sisällä henkilökohtaisia tietoja.
+OtaWilman rajapinta käsittelee seuraavia tietoja opiskelijasta Wilmassa saatavilla olevien tietojen avulla. **Käsittelyllä** tarkoitetaan Wilmassa saatavilla olevan tiedon hakemista ja uudellenmuotoilua. Käsiteltyjä tietoja **ei tallenneta palvelimelle**, ja mahdollisten ongelmatilanteiden lokitiedot **eivät** sisällä henkilökohtaisia tietoja.
 
-### Palvelin voi käsitellä seuraavia tietoja
-- Opiskelijan primus-tilin Wilma käyttäjätunnus ja salasana
-- Tiedot oppiaineita ja oppimääriä koskevista valinnoista
+### Palvelin voi **käsitellä** seuraavia Wilmasta saatavia tietoja oppilaasta
+- Opiskelijan Wilma-käyttäjän käyttäjätunnus ja salasana
+- Opiskelijan oppiaineita, valintoja sekä oppimääriä koskevia tietoja
 - Opiskelijan arviointitiedot 
-- Opiskelijan vastaanottamat ja lähetetyt viestin
-- Opiskelijan poissaoloja koskevat tiedot
+- Opiskelijan vastaanottamat ja lähettämät Wilma-viestit
+- Opiskelijan työjärjestys ja luokkatilat
+- Opiskelijan poissaolot
+- Opiskelijan ylioppilaskirjoituksiin liittyvä suunnitelma ja alustavat pistemäärät
 
-### Palvelin **ei** voi käsitellä seuraavia tietoja edes käyttäjän toiveesta (vrt. [Wilman tietosuojaseloste](https://www.espoo.fi/fi/espoon-kaupunki/tietosuojaselosteet/kasvun-ja-oppimisen-toimialan-tietosuojaselosteet/tietosuojaseloste-henkilotietojen-kasittely-lukio-opetuksen-opiskelijarekisteri-suomenkielinen))
+### Palvelin **ei** voi käsitellä seuraavia tietoja (edes käyttäjän toiveesta) *(vrt. [Wilman tietosuojaseloste](https://www.espoo.fi/fi/espoon-kaupunki/tietosuojaselosteet/kasvun-ja-oppimisen-toimialan-tietosuojaselosteet/tietosuojaseloste-henkilotietojen-kasittely-lukio-opetuksen-opiskelijarekisteri-suomenkielinen))*
 
 - Opiskelijan nimi, henkilötunnus ja yhteystiedot sekä valokuva
 - Huoltajien nimi- ja yhteystiedot sekä Wilma-käyttäjätunnus
@@ -47,35 +50,37 @@
 - Opiskelijan koulunkäyntihistoria
 - Opiskelijan maahanmuuttoon liittyvät tiedot
 
-## 3. Mistä tiedot saadaan?
-### Tiedot saadaan Wilman julkisesta rajapinnasta oppilaan toimesta. Seloste mistä Wilma saa ja kerää tiedot löytyy [Täältä](https://www.espoo.fi/fi/espoon-kaupunki/tietosuojaselosteet/kasvun-ja-oppimisen-toimialan-tietosuojaselosteet/tietosuojaseloste-henkilotietojen-kasittely-lukio-opetuksen-opiskelijarekisteri-suomenkielinen)
+## 3. Mistä oppilastiedot saadaan?
+Kirjautumalla OtaWilmaan oppilas antaa OtaWilmalle luvan hakea hänen tietoja Wilman julkisesta rajapinnasta oppilaalle näytettäväksi OtaWilman käyttöliittymässä. [[kts. 2]](#2-mitä-tietoja-käsitellään) 
 
 
 ## 4. OtaWilma tarjoaa oppilaalle mahdollisuuden tallentaa ja jakaa omia kurssivalintojaan.
-### Mitä tietoja kerätään
+#### Mitä tietoja kerätään
 - Tiedot oppiaineita ja oppimääriä koskevista valinnoista
-- OtaWilman verkkokäyttöliittymässä olevan teema-editorin avulla luodut teemat
 
 ### Miten tietoja käsitellään
-#### Oppilaalla on mahdollisuus luovuttaa tallennettuja tietoja OtaWilman sisällä toisille Wilma-tunnuksen omaaville oppilaille. Oppilaalla on mahdollisuus käyttöliittymän avulla hallita kuka hänen tietoihinsa pääsee käsiksi, ja voi tavittaessa pyytää tietojensa poistamista palvelimilta.
-#### Oppilaan OtaWilmassa luomat teemat omistaa OtaWilma. OtaWilman ylläpidolla on tarvittaessa täysi oikeus nähdä ja poistaa teemoja ilmoittamatta asiasta käyttäjälle. 
+Oppilaalla on mahdollisuus luovuttaa tallennettuja tietoja OtaWilman sisällä toisille Wilma-tunnuksen omaaville oppilaille. Oppilaalla on mahdollisuus käyttöliittymän avulla hallita, kuka hänen tietoihinsa pääsee käsiksi ja voi tarvittaessa pyytää tietojensa poistamista palvelimilta.
+
+> Oppilaan **OtaWilmassa** luomat teemat omistaa OtaWilma. OtaWilman ylläpidolla on tarvittaessa täysi oikeus nähdä ja poistaa teemoja ilmoittamatta asiasta käyttäjälle. 
 
 ## 5. Luovutetaanko tai siirretäänkö tietoja OtaWilman ulkopuolelle?
-#### Oppilaan luovuttamia tietoja ei luovuteta Otawilman palvelimen ulkopuolelle. OtaWilma omaa kuitenkin oikeuden tallennettuun tietoon, ja voi tarvittaessa esimerkiksi poistaa oppilaalta kerättyjä tietoja. 
+Oppilaan luovuttamia tietoja **ei luovuteta** Otawilman palvelimen ulkopuolelle. 
 
 ## 6. Kuinka kauan tietoja säilytetään?
-#### Oppilaan mahdollisesti luovuttamia tietoja säilytetään 01.01.2024 asti. OtaWilma palveluna poistuu jo todennäköisesti syksyllä 2023 Otaniemen lukion siirtyessä pois Wilmasta.
+Oppilaan mahdollisesti luovuttamia tietoja säilytetään **kolmen vuoden ajan**. Ensimmäiset  käyttäjätiedot poistetaan siis `15.11.2023`
 
 ## 6.1 Milloin voin vaatia tietojeni poistamista
-#### Oppilaalla on oikeus pyytää tietojansa poistettavaksi ilman erityistä syytä milloin tahansa. OtaWilman ylläpidon tulee toimia poistamisvaatimuksen mukaisesti enintään kahden viikon päästä vaatimuksen vastaanottamisen jälkeen.
+**Oppilaalla on oikeus pyytää tietojansa poistettavaksi ilman erityistä syytä milloin tahansa.** OtaWilman ylläpidon tulee toimia poistamisvaatimuksen mukaisesti viimeistään kahden viikon päästä vaatimuksen vastaanottamisen jälkeen.
 
 ## 7. Miten tietoja suojataan?
-#### Oppilaan mahdollisesti luovuttamia tietoja säilytetään salatussa tietokannassa. Tietokantaan pääsun omaavat rajapinnat käyttävät turvallista protokollaa (https) tietojen siirtämiseen, ja kyseisiin rajapintoihin pääsevät käsiksi vain espoon alueella Wilma-tunnuksen omaavat henkilöt. OtaWilman kehittämisen vuoksi OtaWilman ylläpidolla on oikeus päästä käsiksi tietokannassa olevaan tietoon, mutta samalla kaikki tietoihin käsiksi pääsevät sitoutuvat myös noudattamaan tietojen luvottamiseen liittyivä säädöksiä (kts. kohta 5.)
+Oppilaan mahdollisesti luovuttamia tietoja säilytetään salatussa tietokannassa. OtaWilman kehittämisen vuoksi OtaWilman ylläpidolla on oikeus käsitellä tietokannassa olevaan tietoon, mutta **ei oikeutta** luovuttaa sitä eteenpäin ilman oppilaan suostumusta [[kts. 5]](#5-luovutetaanko-tai-siirretäänkö-tietoja-otawilman-ulkopuolelle)
 
 ## 8. Toiminta tietojen epätoivotun vuotamisen seurauksena
-### Mahdollisesta tietomurrosta tai vastaavasta tietojen ei-toivottuun vuotamiseen liittyvästä tapahtumasta josta vastuutta on Otawilma, ilmoitetaan käyttäjille välittömästi. Tilanteessa jossa OtaWilman palvelimen käyttöoikeudet olisivat vaarassa tulisi ylläpidon välittömästi sulkea palvelin tietojen väärinkäytön välttämiseksi. OtaWilma ei kuitenkaan ota vastuuta mahdollisesta väärinkäytöstä johtuvista seurauksista, ja käyttäehdot sekä tietosuojaseloste pätevät oletuksella että palvelu toimii odotetulla tavalla.
+Mahdollisesta tietomurrosta tai vastaavasta tietojen ei-toivottuun vuotamiseen liittyvästä tapahtumasta josta vastuutta on Otawilma, ilmoitetaan käyttäjille välittömästi.
+
+Tilanteessa jossa OtaWilman palvelimen käyttöoikeudet olisivat vaarassa sulkisi ylläpito palvelimen tietojen väärinkäytön välttämiseksi. *OtaWilma ei kuitenkaan ota vastuuta mahdollisesta väärinkäytöstä johtuvista seurauksista, ja tietosuojaseloste on voimassa oletuksella että palvelu toimii odotetulla tavalla.*
 
 ## Yhteydenotto
-### Tarvittaessa ota yhteyttä OtaWilman  ~~yksinäiseen~~ tällä hetkellä ainoaan kehittäjään: tuukka.moilanen@eduespoo.fi 
+Tarvittaessa ole yhteydessä OtaWilman kehittäjään: tuukka.moilanen@eduespoo.fi 
 
 

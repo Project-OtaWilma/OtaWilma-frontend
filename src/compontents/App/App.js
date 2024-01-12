@@ -26,6 +26,7 @@ import {
     Route,
     Router,
 } from "react-router-dom";
+import Statistics from '../Statistics/Statistics';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                 {auth.token ? <Navbar /> : <></>}
                 <Routes>
                     <Route path='/login' element={<Login />} />
+                    <Route path='/status' element={<Statistics />} />
                     <Route path='/' element={auth.token ? <Frontpage /> : <Login />} />
                     <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/messages/:id' element={auth.token ? <Messages /> : <Login />} />

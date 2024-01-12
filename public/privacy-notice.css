@@ -4,6 +4,7 @@
     outline: none;
     background: none;
     font-family: 'regular';
+    line-height: 1.2;
 }
 
 @font-face {
@@ -39,6 +40,7 @@ html {
     --font-h3: rgba(0, 0, 0, 0.637);
     --border-main: rgba(239, 240, 243, 1);
     --shadow-main: rgba(0, 0, 0, 0.16);
+    --border-darker: rgba(229, 220, 223, 1);
 }
 
 .container {
@@ -76,23 +78,17 @@ html {
 }
 
 .content h2 {
-    padding: 5px;
-    margin: 10px;
-
     color: var(--font-h2);
 }
 
 .content ul {
-    margin: 10px;
-    padding: 10px;
-    border-left: solid 3px var(--border-main);
+    margin: 20px;
 }
 
-.content ul li,
+
+.content li,
 .content ul a {
-    margin: 3px;
-    padding: 2px;
-    margin-left: 20px;
+    margin: 7px;
 }
 
 li,
@@ -100,8 +96,7 @@ h3,
 h4 {
     font-family: arial;
     font-weight: lighter;
-    padding: 5px;
-    margin: 5px;
+
     font-size: 17px;
 
     color: var(--font-h3) !important; 
@@ -110,5 +105,14 @@ h4 {
 }
 
 strong {
-    font-family: 'bold' !important;
+    font-family: 'semi-bold' !important;
+}
+
+blockquote {
+    background-color: var(--background-darker);
+    padding: 7px;
+
+    width: auto;
+    border-radius: 4px;
+    border-left: solid 5px var(--border-darker);
 }
