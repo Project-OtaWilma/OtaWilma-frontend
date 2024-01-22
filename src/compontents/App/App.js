@@ -41,8 +41,8 @@ function App() {
             <ThemeProvider>
                 {auth.token ? <Navbar /> : <></>}
                 <Routes>
-                    <Route path='/login' element={<Login />} />
                     <Route path='/status' element={<Statistics />} />
+                    <Route path='/login' element={<Login />} />
                     <Route path='/' element={auth.token ? <Frontpage /> : <Login />} />
                     <Route path='/messages' element={auth.token ? <Messages /> : <Login />} />
                     <Route path='/messages/:id' element={auth.token ? <Messages /> : <Login />} />

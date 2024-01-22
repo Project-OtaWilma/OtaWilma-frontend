@@ -16,7 +16,7 @@
 
 .left {
     position: absolute;
-    width: 40%;
+    width: 30%;
     height: 100%;
 
     left: 0;
@@ -26,7 +26,7 @@
 
 .right {
     position: absolute;
-    width: 60%;
+    width: 70%;
     height: 100%;
 
     right: 0;
@@ -35,6 +35,46 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; 
-
 }
 
+.top-decoration {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 75px;
+
+    background-color: var(--accent-main);
+
+    z-index: 3;
+}
+
+.statistics {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 100px);
+
+    top: 100px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow-y: scroll;
+}
+
+
+.requests,
+.timings,
+.requests-weekday,
+.percentage {
+    right: 0;
+    top: 0;
+    width: 90%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
