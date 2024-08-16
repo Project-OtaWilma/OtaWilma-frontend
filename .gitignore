@@ -10,7 +10,6 @@
 
 # production
 /build
-/src/config.json
 .env
 
 # misc
