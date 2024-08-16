@@ -2,5 +2,5 @@
     "versionLabel": "STABLE",
     "wilmaApi": "https://wilma.otawilma.fi/api",
     "otaWilmaApi": "https://api.otawilma.fi/api",
-    "signature": "signature_here"
+    "signature": "12345_6789_101213"
 }

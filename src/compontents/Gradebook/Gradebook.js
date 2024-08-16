@@ -84,7 +84,7 @@ const SubjectObject = ({subject, courses, onLoad}) => {
             <ul><a>{subject} </a><a>{grade}</a></ul>
             <div className={styles['course-list']}>
                 {
-                    Object.keys(courses).map((code, i) => {
+                    Object.keys(courses).sort().map((code, i) => {
                         const course = courses[code];
 
                         return <CourseObject key={i} course={course} onLoad={onLoad} />
