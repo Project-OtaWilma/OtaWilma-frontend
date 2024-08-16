@@ -85,13 +85,13 @@ export const getSavedCredentials = () => {
 
     if (encrypted === "null") return null;
     
-    const decrypted = crypto.AES.decrypt(encrypted, signature).toString(crypto.enc.Utf8);
     try {
+        const decrypted = crypto.AES.decrypt(encrypted, signature).toString(crypto.enc.Utf8);
         const credentials = JSON.parse(decrypted);
         return credentials;
     } catch (e) {
         window.localStorage.setItem('saved-credentials', null);
-        return;
+        return null;
     }
 }
 
