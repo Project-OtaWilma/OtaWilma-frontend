@@ -104,7 +104,7 @@ const YoResultInfo = ({current}) => {
                     <a>= {result.points}</a>
                 </h2> : <h2>Ei arvioitu</h2>}
                 <h1>Lopullinen arvosana</h1>
-                <h2 className={!grade ? styles['waiting'] : null}>{grade ?? 'julkaistaan 9.11.2023'}</h2>
+                <h2 className={!grade ? styles['waiting'] : null}>{grade ?? 'julkaistaan 14.11.2023'}</h2>
             </div>
         </>
     )
