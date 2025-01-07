@@ -57,7 +57,12 @@ export default function Messages() {
                         <div onClick={() => loadMessages('appointments')} className={category == 'appointments' ? styles['category-selected'] : null}>
                             <h1>Tapahtumakutsut</h1>
                         </div>
-                        <button onClick={() => { setBulkMode(true) }} className={styles['action']}>Avaa kaikki lukemattomat</button>
+                        {
+                            auth.isTeacher ?
+                            <button onClick={() => { setBulkMode(true) }} className={styles['action']}>Avaa kaikki lukemattomat</button>
+                            :
+                            null
+                        }
                     </>
                 }
 
