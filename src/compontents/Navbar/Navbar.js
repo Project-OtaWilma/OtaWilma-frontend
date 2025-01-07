@@ -72,6 +72,9 @@ export default function Navbar() {
         onMinimize()
     }
 
+    const linkList = auth.isStudent ? Object.keys(links) : Object.keys(links).filter(href => !['/grades', '/tray', '/friends'].includes(href));
+    const treshold = auth.isStudent ? 8 : 4;
+
     return (
         <div className={`${styles['top']} ${expanded ? styles['expanded'] : ''}`}>
             <div className={styles['user-info']}>
@@ -86,13 +89,10 @@ export default function Navbar() {
             <div className={styles['links']}>
                 <Link className={styles['logo-text']} to={'/'} onClick={onRedirect}><h1>OtaWilma</h1></Link>
                 {grades.yoResults.length > 0 ? <Link to={'/yo-results'} ><h5>Ylioppilaskirjoitukset</h5></Link> : null}
-                {Object.keys(links).slice(0, count).map(href => {
-                    if (auth.isTeacher && href == '/grades' || href == '/tray' || href == '/friends') {
-                        return null;
-                    }
+                {linkList.slice(0, count).map(href => {
                     return <Link onClick={onRedirect} to={href}><h5>{links[href]}</h5></Link>
                 })}
-                {(expanded || count < 9) ? <button onClick={onExpand} className={styles['expand']}>{<h1>...</h1>}</button> : null}
+                {(expanded || count < treshold) ? <button onClick={onExpand} className={styles['expand']}>{<h1>...</h1>}</button> : null}
             </div>
             
         </div>

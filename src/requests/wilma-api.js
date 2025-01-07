@@ -81,11 +81,11 @@ const fetchMessages = (auth, path, limit) => {
     });
 }
 
-const fetchMessageContent = (auth, hash) => {
+const fetchMessageContent = (auth, hash, autoUnread) => {
     return new Promise((resolve, reject) => {
         if (!auth) return reject({ err: 'Missing authentication', error: 401, redirect: true });
 
-        fetchJson(`${wilmaApi}/messages/${hash}`,
+        fetchJson(`${wilmaApi}/messages/${hash}${autoUnread ? '?autoUnread=true' : ''}`,
             {
                 headers: { 'token': auth }
             })

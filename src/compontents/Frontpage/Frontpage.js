@@ -53,12 +53,11 @@ export default function Frontpage() {
     const auth = useSelector(useAuth);
 
     const now = new Date();
+
+    const weekCount = auth.isStudent ? 3 : 5;
     
-    const days = [
-        new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
-        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 14)
-    ]
+    const days = Array(weekCount).fill(null).map((_, i) => new Date(now.getFullYear(), now.getMonth(), now.getDate() + (i * 7)))
+
     
     const initialize = () => {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
@@ -75,6 +74,7 @@ export default function Frontpage() {
 
     const loadSchedule = () => {
         setCategory('schedule');
+
         days.forEach(date => {
             dispatch(getWeek({auth: auth.token, date: date}))
         })
@@ -98,7 +98,7 @@ export default function Frontpage() {
         <>
             {open ? <ScheduleWindow current={current} loadCalendar={loadCalendar} onClose={() => setOpen(false)} /> : null}
             <BlurLayer className={styles['content']} isLoading={open}>
-                <div className={styles['top-container']}>
+                <div className={`${styles['top-container']} ${styles['full']}`}>
                     <div className={styles['left']}>
                         <div className={styles['side-bar']}>
                             <div className={styles['side-bar-content']}>

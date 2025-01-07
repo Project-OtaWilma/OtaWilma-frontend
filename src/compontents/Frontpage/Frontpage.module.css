@@ -33,6 +33,12 @@
     right: calc(250px + 300px);
 }
 
+.top-container.full .left {
+    height: 200%;
+
+    align-self: flex-start;
+}
+
 .top-container .middle {
     position: absolute;
     width: 250px;

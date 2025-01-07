@@ -35,12 +35,15 @@ export const getMessage = createAsyncThunk(
             const messages = thunkAPI.getState().messages;
             const auth = options['auth'];
             const id = options['id'];
+            const autoUnread = options['autoUnread'] ?? false;
+            const forceRefresh = options['forceRefresh'] ?? false;
             
-            if(messages.messages[id] && !messages.messages[id].isLoading) return resolve({changed: false, id: id})
             
-            fetchMessageContent(auth, id)
+            if(!forceRefresh && (messages.messages[id] && !messages.messages[id].isLoading)) return resolve({changed: false, id: id})
+            
+            fetchMessageContent(auth, id, autoUnread)
             .then(list => {
-                return resolve({changed: true, id: id, message: list[0]})
+                return resolve({changed: true, id: id, message: list[0], forceRefresh})
             })
             .catch(err => {
                 thunkAPI.dispatch(handleError(err))
@@ -91,14 +94,16 @@ export const messageSlice = createSlice({
                 return;
             }
 
-            const message = action.payload['message'];
+            const forceRefresh = action.payload['forceRefresh'] ?? false;
 
+            const message = action.payload['message'];
             state.messages[id] = {...state.messages[id], ...{
                 content: message.content,
                 replyList: message.replies,
                 fromWilma: message.fromWilma,
+                autoUnread: message.autoUnread,
                 isLoading: false,
-                new: false
+                new: forceRefresh ? false : message.autoUnread
             }}
         },
         [getMessage.rejected]: (state, action) => {

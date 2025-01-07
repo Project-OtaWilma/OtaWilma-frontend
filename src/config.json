@@ -1,6 +1,6 @@
 {
     "versionLabel": "STABLE",
-    "wilmaApi": "https://wilma.otawilma.fi/api",
+    "wilmaApi": "http://localhost:9304/api",
     "otaWilmaApi": "https://api.otawilma.fi/api",
     "signature": "12345_6789_101213"
 }
