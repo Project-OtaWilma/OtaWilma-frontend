@@ -63,9 +63,12 @@ export default function Frontpage() {
     const initialize = () => {
         dispatch(getMessages({auth: auth.token, path: 'inbox'}))
         dispatch(getNews({auth: auth.token, path: 'current'}))
-        dispatch(getGradebook({auth: auth.token}))
-        dispatch(getYOResults({auth: auth.token}))
         dispatch(getMonth({auth: auth.token}))
+        
+        if (auth.isStudent) {
+            dispatch(getGradebook({auth: auth.token}))
+            dispatch(getYOResults({auth: auth.token}))
+        }
 
         loadSchedule();
     }
@@ -100,7 +103,12 @@ export default function Frontpage() {
                         <div className={styles['side-bar']}>
                             <div className={styles['side-bar-content']}>
                                 <h5 onClick={() => loadSchedule()} className={category == 'schedule' ? styles['selected'] : null}>Työjärjestys</h5>
-                                <h5 onClick={() => loadHomework()}  className={category == 'homework' ? styles['selected'] : null}>Kotitehtävät</h5>
+                                {
+                                    auth.isStudent ?
+                                    <h5 onClick={() => loadHomework()}  className={category == 'homework' ? styles['selected'] : null}>Kotitehtävät</h5>
+                                    :
+                                    null
+                                }
                             </div>
                         </div>  
                         <div className={styles['schedule']} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} onDoubleClick={() => setOpen(true)}>
@@ -119,10 +127,16 @@ export default function Frontpage() {
                 </div>
                 <div className={styles['bottom-container']}>
                     <div className={styles['left']}>
-                        <div className={styles['grades']}>
+                    {
+                        auth.isStudent ?
+                            <div className={styles['grades']}>
                             <YoResultsObject />
                             <GradeList />
-                        </div>
+                        </div>  
+                        :
+                        null  
+                    }
+                        
                     </div>
                     <div className={styles['middle']}>
                         <div className={styles["links"]}>

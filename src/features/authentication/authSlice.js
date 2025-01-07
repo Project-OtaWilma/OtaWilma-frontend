@@ -9,6 +9,7 @@ import { handleError } from '../errors/errorSlice';
 import crypto from 'crypto-js';
 
 import config from '../../config.json';
+import { jwtDecode } from 'jwt-decode';
 const { signature } = config;
 
 export const loginToWilma = createAsyncThunk(
@@ -66,6 +67,12 @@ const getToken = () => {
     return getCookie('token') ? (getCookie('token') === 'null' ? null : getCookie('token')) : null;
 }
 
+const getTokenType = () => {
+    const token = getToken();
+    const payload = jwtDecode(token);
+    return payload.isTeacher ?? false;
+}
+
 export const getAgreement = () => {
     const agreement = window.localStorage.getItem('agreement');
     if(!agreement) window.localStorage.setItem('agreement', false);
@@ -110,6 +117,7 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         token: getToken(),
+        isTeacher: getTokenType(),
         loggedIn: !(!getToken()),
         loginError: null,
         isLoading: false,
@@ -161,7 +169,9 @@ export const useAuth = (state) => ({
     token: state.auth.token,
     loggedIn: state.auth.loggedIn,
     loginError: state.auth.loginError,
-    isLoading: state.auth.isLoading
+    isLoading: state.auth.isLoading,
+    isTeacher: state.auth.isTeacher,
+    isStudent: !state.auth.isTeacher,
 });
 
 export default authSlice.reducer;

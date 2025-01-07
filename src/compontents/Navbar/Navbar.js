@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getConfig, useConfig } from '../../features/themes/configSlice';
 import { useGrades } from '../../features/grades/gradeSlice';
-import { logoutFromWilma } from '../../features/authentication/authSlice';
+import { logoutFromWilma, useAuth } from '../../features/authentication/authSlice';
 
 import styles from './Navbar.module.css'
 
@@ -12,6 +12,7 @@ export default function Navbar() {
     const [expanded, setExpanded] = useState(false);
     const config = useSelector(useConfig);
     const grades = useSelector(useGrades);
+    const auth = useSelector(useAuth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,7 +23,6 @@ export default function Navbar() {
         '/friends': 'Kaverit',
         '/maps': 'Kartat',
         '/news': 'Tiedotteet',
-        '/teachers': 'Opettajat',
         '/settings': 'Asetukset'
     }
 
@@ -77,7 +77,7 @@ export default function Navbar() {
             <div className={styles['user-info']}>
                 <div className={styles['user-data']}>
                     <h1>{config.value ? username(config.value['username']) : '...'}</h1>
-                    <h2>Opiskelija</h2>
+                    <h2>{auth.isStudent ? 'Opiskelija' : auth.isTeacher ? 'Opettaja' : '?'}</h2>
                     <div className={styles['logout']} id="logout">
                     <a onClick={() => dispatch(logoutFromWilma())}>Kirjaudu ulos</a>
                     </div>
@@ -87,6 +87,9 @@ export default function Navbar() {
                 <Link className={styles['logo-text']} to={'/'} onClick={onRedirect}><h1>OtaWilma</h1></Link>
                 {grades.yoResults.length > 0 ? <Link to={'/yo-results'} ><h5>Ylioppilaskirjoitukset</h5></Link> : null}
                 {Object.keys(links).slice(0, count).map(href => {
+                    if (auth.isTeacher && href == '/grades' || href == '/tray' || href == '/friends') {
+                        return null;
+                    }
                     return <Link onClick={onRedirect} to={href}><h5>{links[href]}</h5></Link>
                 })}
                 {(expanded || count < 9) ? <button onClick={onExpand} className={styles['expand']}>{<h1>...</h1>}</button> : null}
