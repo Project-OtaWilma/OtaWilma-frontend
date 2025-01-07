@@ -98,7 +98,7 @@ export default function Frontpage() {
         <>
             {open ? <ScheduleWindow current={current} loadCalendar={loadCalendar} onClose={() => setOpen(false)} /> : null}
             <BlurLayer className={styles['content']} isLoading={open}>
-                <div className={`${styles['top-container']} ${styles['full']}`}>
+                <div className={`${styles['top-container']} ${auth.isTeacher ? styles['full'] : ''}`}>
                     <div className={styles['left']}>
                         <div className={styles['side-bar']}>
                             <div className={styles['side-bar-content']}>
