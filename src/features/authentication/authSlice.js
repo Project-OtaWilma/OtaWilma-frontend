@@ -69,6 +69,8 @@ const getToken = () => {
 
 const getTokenType = () => {
     const token = getToken();
+    if (!token) return false;
+    
     const payload = jwtDecode(token);
     return payload.isTeacher ?? false;
 }
